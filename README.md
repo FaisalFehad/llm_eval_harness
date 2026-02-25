@@ -58,6 +58,60 @@ npm run golden:validate:strict
 
 ---
 
+## Scoring Criteria
+
+Each golden record is scored against a 100-point matrix. Models are evaluated on how closely their output matches these scores.
+
+### 1. Role & Seniority (max 25 pts)
+
+| Points | Criteria |
+| ------ | -------- |
+| +25 | Senior Software Engineer, Tech Lead, Lead Engineer, Staff or Principal Engineer |
+| +15 | Full Stack Engineer, Mid-Level Software Engineer, Software Engineer II |
+| 0 | Junior roles, management roles (EM), or unrelated positions |
+
+### 2. Tech Stack & Domain (max 25 pts)
+
+| Points | Criteria |
+| ------ | -------- |
+| +10 | Node.js explicitly required |
+| +5 | JavaScript or TypeScript explicitly required |
+| +10 | AI, ML, or LLM experience explicitly mentioned |
+
+Points stack (e.g. Node.js + TypeScript + AI = 25). Capped at 25 for this category.
+
+### 3. Location & Work Arrangement (max 25 pts)
+
+| Points | Criteria |
+| ------ | -------- |
+| +25 | Fully Remote (UK-based or global) OR Hybrid in London |
+| +10 | Hybrid or On-site in UK outside London |
+| 0 | Location/arrangement unknown |
+| **-50** | **Hybrid or On-site located outside the UK** |
+
+### 4. Compensation (max 25 pts)
+
+| Points | Criteria |
+| ------ | -------- |
+| +25 | Base salary £100k or above |
+| +15 | Base salary £75k–£99k |
+| +5 | Base salary £55k–£74k |
+| 0 | Salary unknown or not listed |
+| **-30** | **Base salary below £45k** |
+
+### Label Mapping
+
+| Score | Label | Fit |
+| ----- | ----- | --- |
+| 85–100 | `good_fit` | Excellent |
+| 70–84 | `good_fit` | Good |
+| 50–69 | `maybe` | Maybe |
+| 0–49 | `bad_fit` | Bad |
+
+Final score = sum of all four categories, capped at 100, floored at 0.
+
+---
+
 ## Phase 2 — Naive Benchmark (~20 Ollama Models)
 
 Run all available local models against the golden 80 with no prompt tuning. Establishes a baseline and identifies which models are worth keeping.

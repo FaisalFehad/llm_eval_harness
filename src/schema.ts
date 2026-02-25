@@ -8,7 +8,6 @@ export const GoldenJobSchema = z.object({
   company: z.string().min(1),
   location: z.string().min(1).optional(),
   jd_text: z.string().min(40),
-  source_url: z.string().url().optional(),
   label: FitLabelSchema,
   score: z.number().int().min(0).max(100),
   reasoning: z.string().min(15).max(600),

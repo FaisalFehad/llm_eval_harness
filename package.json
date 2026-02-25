@@ -14,7 +14,8 @@
     "eval:baseline": "Creates the results/latest directory, validates golden data, builds Promptfoo tests, and runs a Promptfoo evaluation with the promptfooconfig.yaml configuration, outputting results in JSON and HTML formats with the description 'baseline'.",
     "week1:baseline": "Creates the results/week1_baseline directory, performs strict validation of golden data, builds Promptfoo tests, and runs a Promptfoo evaluation with the promptfooconfig.yaml configuration, outputting results in JSON and HTML formats with the description 'week1-baseline'.",
     "eval:tagged": "Runs the eval-tagged script located at src/cli/eval-tagged.ts.",
-    "iterations:summary": "Runs the summarize-iterations script located at src/cli/summarize-iterations.ts to generate a summary of iterations."
+    "iterations:summary": "Runs the summarize-iterations script located at src/cli/summarize-iterations.ts to generate a summary of iterations.",
+    "golden:generate-fake": "Generates fake job records using @faker-js/faker and appends them to data/golden_jobs.jsonl. Accepts --count, --seed, and --output flags."
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -26,7 +27,8 @@
     "eval:baseline": "mkdir -p results/latest && npm run golden:validate && npm run promptfoo:tests && npx promptfoo eval -c promptfooconfig.yaml -o results/latest/eval.json -o results/latest/eval.html --description baseline",
     "week1:baseline": "mkdir -p results/week1_baseline && npm run golden:validate:strict && npm run promptfoo:tests && npx promptfoo eval -c promptfooconfig.yaml -o results/week1_baseline/eval.json -o results/week1_baseline/eval.html --description week1-baseline",
     "eval:tagged": "tsx src/cli/eval-tagged.ts",
-    "iterations:summary": "tsx src/cli/summarize-iterations.ts"
+    "iterations:summary": "tsx src/cli/summarize-iterations.ts",
+    "golden:generate-fake": "tsx src/cli/generate-fake-golden.ts"
   },
   "keywords": [
     "typescript",
@@ -37,6 +39,7 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@faker-js/faker": "^9.0.0",
     "@types/node": "^25.3.0",
     "promptfoo": "^0.120.25",
     "tsx": "^4.21.0",

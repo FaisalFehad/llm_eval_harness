@@ -4,3 +4,4 @@ dist
 .env
 results/**/*.json
 results/**/*.html
+.DS_Store

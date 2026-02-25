@@ -15,7 +15,10 @@ function mulberry32(seed: number): () => number {
   };
 }
 
-function pickString(record: JobExportRecord, keys: string[]): string | undefined {
+function pickString(
+  record: JobExportRecord,
+  keys: string[],
+): string | undefined {
   for (const key of keys) {
     const value = record[key];
     if (typeof value === "string" && value.trim().length > 0) {
@@ -38,12 +41,24 @@ function isValidHttpUrl(value: string): boolean {
   }
 }
 
-function normalizeRecord(record: JobExportRecord, index: number): GoldenJob | null {
+function normalizeRecord(
+  record: JobExportRecord,
+  index: number,
+): GoldenJob | null {
   const jobId =
-    pickString(record, ["job_id", "id", "external_id"]) ?? `job-${String(index + 1)}`;
+    pickString(record, ["job_id", "id", "external_id"]) ??
+    `job-${String(index + 1)}`;
   const title = pickString(record, ["title", "job_title"]);
-  const company = pickString(record, ["company", "company_name", "employer_name"]);
-  const jdText = pickString(record, ["jd_text", "description", "job_description"]);
+  const company = pickString(record, [
+    "company",
+    "company_name",
+    "employer_name",
+  ]);
+  const jdText = pickString(record, [
+    "jd_text",
+    "description",
+    "job_description",
+  ]);
   const location = pickString(record, ["location", "city"]);
   const sourceUrl = pickString(record, ["source_url", "url", "job_url"]);
 
@@ -64,10 +79,6 @@ function normalizeRecord(record: JobExportRecord, index: number): GoldenJob | nu
 
   if (location) {
     normalized.location = location;
-  }
-
-  if (sourceUrl && isValidHttpUrl(sourceUrl)) {
-    normalized.source_url = sourceUrl;
   }
 
   return normalized;
