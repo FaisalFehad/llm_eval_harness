@@ -1,0 +1,47 @@
+{
+  "name": "ai_eval_harness",
+  "version": "1.0.0",
+  "description": "TypeScript eval harness for job-fit scoring models",
+  "type": "module",
+  "private": true,
+  "scriptsDescription": {
+    "build": "Compiles the TypeScript project using the configuration specified in tsconfig.json.",
+    "typecheck": "Performs type checking on the TypeScript project without emitting any output files.",
+    "golden:sample": "Runs the script to generate or sample golden data from an export, using src/cli/sample-golden-from-export.ts.",
+    "golden:validate": "Validates the golden jobs data in data/golden_jobs.jsonl using the script src/cli/validate-golden.ts.",
+    "golden:validate:strict": "Validates the golden jobs data with stricter size constraints (min-size 80, max-size 100, strict-size enabled) using src/cli/validate-golden.ts.",
+    "promptfoo:tests": "Builds Promptfoo test cases from golden jobs data and outputs them to data/promptfoo_tests.yaml using src/cli/build-promptfoo-tests.ts.",
+    "eval:baseline": "Creates the results/latest directory, validates golden data, builds Promptfoo tests, and runs a Promptfoo evaluation with the promptfooconfig.yaml configuration, outputting results in JSON and HTML formats with the description 'baseline'.",
+    "week1:baseline": "Creates the results/week1_baseline directory, performs strict validation of golden data, builds Promptfoo tests, and runs a Promptfoo evaluation with the promptfooconfig.yaml configuration, outputting results in JSON and HTML formats with the description 'week1-baseline'.",
+    "eval:tagged": "Runs the eval-tagged script located at src/cli/eval-tagged.ts.",
+    "iterations:summary": "Runs the summarize-iterations script located at src/cli/summarize-iterations.ts to generate a summary of iterations."
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc --noEmit",
+    "golden:sample": "tsx src/cli/sample-golden-from-export.ts",
+    "golden:validate": "tsx src/cli/validate-golden.ts --input data/golden_jobs.jsonl",
+    "golden:validate:strict": "tsx src/cli/validate-golden.ts --input data/golden_jobs.jsonl --min-size 80 --max-size 100 --strict-size",
+    "promptfoo:tests": "tsx src/cli/build-promptfoo-tests.ts --input data/golden_jobs.jsonl --output data/promptfoo_tests.yaml",
+    "eval:baseline": "mkdir -p results/latest && npm run golden:validate && npm run promptfoo:tests && npx promptfoo eval -c promptfooconfig.yaml -o results/latest/eval.json -o results/latest/eval.html --description baseline",
+    "week1:baseline": "mkdir -p results/week1_baseline && npm run golden:validate:strict && npm run promptfoo:tests && npx promptfoo eval -c promptfooconfig.yaml -o results/week1_baseline/eval.json -o results/week1_baseline/eval.html --description week1-baseline",
+    "eval:tagged": "tsx src/cli/eval-tagged.ts",
+    "iterations:summary": "tsx src/cli/summarize-iterations.ts"
+  },
+  "keywords": [
+    "typescript",
+    "evals",
+    "promptfoo",
+    "job-search"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^25.3.0",
+    "promptfoo": "^0.120.25",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "yaml": "^2.8.2",
+    "zod": "^4.3.6"
+  }
+}

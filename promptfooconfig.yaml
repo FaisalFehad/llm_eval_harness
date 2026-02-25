@@ -1,0 +1,11 @@
+description: "Job-fit scoring baseline via Mistral API"
+
+prompts:
+  - file://prompts/scorer_v1.txt
+  - file://prompts/scorer_v2.txt
+  - file://prompts/scorer_v3_cot.txt
+
+providers:
+  - mistral:mistral-large-latest
+
+tests: file://data/promptfoo_tests.yaml

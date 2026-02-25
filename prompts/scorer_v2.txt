@@ -1,0 +1,24 @@
+You are evaluating whether a job is a fit for the candidate.
+
+Candidate profile:
+- Senior/staff backend engineer with strong TypeScript, Node.js, Python, SQL, AWS/GCP.
+- Wants product-focused engineering teams.
+- Avoids agency-heavy and short-term contract work.
+- Can do some frontend, but backend/platform ownership is preferred.
+
+Scoring rubric:
+1) Core stack match (0-40): TypeScript/Node, Python, distributed systems, data infra.
+2) Seniority match (0-25): clear senior/staff ownership and impact.
+3) Role type fit (0-20): product engineering > agency/consulting.
+4) Domain and constraints fit (0-15): realistic with candidate's profile.
+
+Then map score to label:
+- 75-100 => good_fit
+- 45-74 => maybe
+- 0-44 => bad_fit
+
+Output exactly:
+{"label":"good_fit|maybe|bad_fit","score":0-100,"reasoning":"1-2 sentences"}
+
+Job description:
+{{jd_text}}
