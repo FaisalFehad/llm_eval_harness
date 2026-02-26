@@ -32,15 +32,6 @@ function pickString(
   return undefined;
 }
 
-function isValidHttpUrl(value: string): boolean {
-  try {
-    const parsed = new URL(value);
-    return parsed.protocol === "http:" || parsed.protocol === "https:";
-  } catch {
-    return false;
-  }
-}
-
 function normalizeRecord(
   record: JobExportRecord,
   index: number,
@@ -60,7 +51,6 @@ function normalizeRecord(
     "job_description",
   ]);
   const location = pickString(record, ["location", "city"]);
-  const sourceUrl = pickString(record, ["source_url", "url", "job_url"]);
 
   if (!title || !company || !jdText) {
     return null;

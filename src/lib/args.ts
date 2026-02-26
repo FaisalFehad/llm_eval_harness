@@ -54,7 +54,7 @@ export function getStringArg(args: ParsedArgs, key: string): string | undefined 
 
 export function getNumberArg(args: ParsedArgs, key: string): number | undefined {
   const value = getStringArg(args, key);
-  if (!value) {
+  if (value === undefined || value === "") {
     return undefined;
   }
 

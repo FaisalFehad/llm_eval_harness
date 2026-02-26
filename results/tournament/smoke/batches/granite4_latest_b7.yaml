@@ -1,0 +1,16 @@
+- description: 4374122289 | Fintech & Tech for Good | Profitable & Hyper-Growth Start-Up | Senior/Staff/Principal | Up to £150K | 3 Days Per Week LDN @ Owen Thomas | Pending B Corp™
+  vars:
+    jd_text: "About the job                                                               Fintech & Tech for Good | Profitable & Hyper-Growth Start-Up | Senior/Staff/Principal | Up to £150K | 3 Days Per Week LDNI have partnered up with an exciting start-up building the financial infrastructure that helps businesses in emerging markets pay their international suppliers faster, cheaper, and with confidence!In a very short time they have grown into a globally distributed team and crossed $1B+ in annualised transaction volume, and reached $10M+ in annualised revenue all while staying deeply focused on real-world impact.They are now looking for Senior, Staff & Principal engineers to come and be part of a company with a clear mission and target to make a positive change.The Role:      Own the end-to-end product lifecycle, from ideation and design to implementation, deployment, feedback, and measurementCommunicate new features with internal and external stakeholders, gathering input pre-implementation and supporting launchesDesign and build intuitive, high-performance web interfaces for business usersLead architectural decisions to improve scalability, observability, and codebase modularityMaintain high code quality through testing, documentation, and code reviewsMentor junior engineers through pairing, reviews, and ongoing feedback Skills Required:      Strong proficiency in React, TypeScript & Node.Proven frontend engineering skillsExperience working with Next.js, Express & PostgreSQLExperience in high pace early-stage businesses, with the ability to work end-to-end across the entire product development process, taking high ownership & accountability.A problem solving, product engineering mindset.Strong understanding of frontend & backend software engineering best practicesStrong written & verbal communication skills. Renumeration & Benefits:      Up to £170K base salaryEquitySign on bonus up to £5KOpportunity to work in their other offices abroad! If you are interested in the Fintech & Tech for Good | Profitable & Hyper-Growth Start-Up | Senior/Staff/Principal | Up to £150K | 3 Days Per Week LDN - please apply here and if I think you are a good fit, I'll be in touch! :)                                                                                                                              See more"
+    expected_label: bad_fit
+    expected_score: 25
+  metadata:
+    job_id: "4374122289"
+    expected_label: bad_fit
+    expected_score: 25
+  assert:
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return parsed.label === "bad_fit"; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.score === 'number' && Math.abs(parsed.score - 25) <= 20; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.reasoning === 'string' && parsed.reasoning.length >= 15; })()

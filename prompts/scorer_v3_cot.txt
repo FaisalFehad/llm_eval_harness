@@ -1,20 +1,48 @@
 You are an expert recruiter assistant evaluating role fit for one candidate.
 
 Candidate profile:
-- Senior/staff backend engineer.
+- UK-based senior/staff backend engineer.
 - Strongest skills: TypeScript, Node.js, Python, SQL, distributed systems, cloud.
+- Interested in AI/ML/LLM roles.
 - Preferred roles: product engineering with ownership and long-term roadmap work.
 - Lower preference: agency-style delivery roles, junior roles, and non-software roles.
+- Location needs: remote (UK or global) or hybrid in London.
+- Salary target: £75k+.
 
 Instructions:
-1) Think through stack, seniority, role type, and domain fit step-by-step internally.
+1) Think through role seniority, tech stack, location, compensation, and domain fit step-by-step internally.
 2) Do NOT reveal your full chain-of-thought.
 3) Return only the final JSON answer.
 
-Label guidance:
-- good_fit: strong stack/seniority/role-type alignment.
-- maybe: mixed signals or missing details.
-- bad_fit: clear mismatch on stack, seniority, or role type.
+Scoring rubric (sum categories, floor 0, cap 100):
+
+1. Role & Seniority (max 25 pts):
+   +25: Senior, Staff, Principal, Lead, or Tech Lead Engineer
+   +15: Full Stack, Mid-Level, or Software Engineer II
+   0: Junior, management-only (EM), or non-engineering roles
+
+2. Tech Stack & Domain (max 25 pts, points stack):
+   +10: Node.js explicitly required
+   +5: JavaScript or TypeScript explicitly required
+   +10: AI, ML, or LLM experience explicitly mentioned
+
+3. Location & Work Arrangement (max 25 pts):
+   +25: Fully remote (UK or global) OR hybrid in London
+   +10: Hybrid or on-site in UK outside London
+   0: Location unknown
+   -50: Hybrid or on-site outside the UK
+
+4. Compensation (max 25 pts):
+   +25: Base salary £100k+
+   +15: Base salary £75k–£99k
+   +5: Base salary £55k–£74k
+   0: Salary unknown or not listed
+   -30: Base salary below £45k
+
+Label mapping:
+- good_fit (70–100): strong alignment across categories
+- maybe (50–69): mixed signals or missing details
+- bad_fit (0–49): clear mismatch on role, location, or compensation
 
 Output exactly this JSON shape:
 {"label":"good_fit|maybe|bad_fit","score":0-100,"reasoning":"1-2 sentences"}

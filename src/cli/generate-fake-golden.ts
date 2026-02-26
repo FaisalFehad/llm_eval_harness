@@ -7,23 +7,7 @@ import path from "node:path";
 import { faker } from "@faker-js/faker";
 import { parseArgs, getStringArg, getNumberArg } from "../lib/args.js";
 import { readJsonlFile, writeJsonlFile } from "../lib/jsonl.js";
-
-// ---------------------------------------------------------------------------
-// Types
-// ---------------------------------------------------------------------------
-
-type FitLabel = "good_fit" | "maybe" | "bad_fit";
-
-interface GoldenJob {
-  job_id: string;
-  title: string;
-  company: string;
-  location?: string;
-  jd_text: string;
-  label: FitLabel;
-  score: number;
-  reasoning: string;
-}
+import type { FitLabel, GoldenJob } from "../schema.js";
 
 // ---------------------------------------------------------------------------
 // Massive Template Pools
@@ -262,10 +246,13 @@ interface ScoreBreakdown {
 
 function scoreRole(title: string): number {
   const t = title.toLowerCase();
+  // Management-only roles score 0 per rubric, even if they have seniority signals
+  if (t.includes("vp") || t.includes("head of") || t.includes("director") || t.includes("manager")) {
+    return 0;
+  }
   if (
     t.includes("senior") || t.includes("staff") || t.includes("lead") ||
-    t.includes("principal") || t.includes("distinguished") || t.includes("vp") ||
-    t.includes("head of") || t.includes("founding engineer")
+    t.includes("principal") || t.includes("distinguished") || t.includes("founding engineer")
   ) {
     return 25;
   }
@@ -288,15 +275,16 @@ function scoreStack(tags: string[]): number {
 
 function scoreLocation(location: string): number {
   const l = location.toLowerCase();
+  // Outside UK = -50 (must be checked before the UK city checks below)
   if (
     l.includes("usa") || l.includes("germany") || l.includes("netherlands") ||
     l.includes("canada") || l.includes("france") || l.includes("sweden") ||
-    l.includes("spain") || l.includes("ireland") || l.includes("australia") ||
-    l.includes("singapore") || l.includes("japan") || l.includes("finland") ||
-    l.includes("norway") || l.includes("denmark") || l.includes("switzerland") ||
-    l.includes("israel") || l.includes("uae") || l.includes("portugal") ||
-    l.includes("poland") || l.includes("czech") || l.includes("india") ||
-    l.includes("south africa")
+    l.includes("spain") || l.includes("ireland") || l.includes("dublin") ||
+    l.includes("australia") || l.includes("singapore") || l.includes("japan") ||
+    l.includes("finland") || l.includes("norway") || l.includes("denmark") ||
+    l.includes("switzerland") || l.includes("israel") || l.includes("uae") ||
+    l.includes("portugal") || l.includes("poland") || l.includes("czech") ||
+    l.includes("india") || l.includes("south africa")
   ) {
     return -50;
   }

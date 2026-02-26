@@ -15,7 +15,11 @@
     "week1:baseline": "Creates the results/week1_baseline directory, performs strict validation of golden data, builds Promptfoo tests, and runs a Promptfoo evaluation with the promptfooconfig.yaml configuration, outputting results in JSON and HTML formats with the description 'week1-baseline'.",
     "eval:tagged": "Runs the eval-tagged script located at src/cli/eval-tagged.ts.",
     "iterations:summary": "Runs the summarize-iterations script located at src/cli/summarize-iterations.ts to generate a summary of iterations.",
-    "golden:generate-fake": "Generates fake job records using @faker-js/faker and appends them to data/golden_jobs.jsonl. Accepts --count, --seed, and --output flags."
+    "golden:generate-fake": "Generates fake job records using @faker-js/faker and appends them to data/golden_jobs.jsonl. Accepts --count, --seed, and --output flags.",
+    "tournament:smoke": "Runs Round 1 (smoke test) of the tournament — all models against 10 stratified jobs. Drops models that can't parse JSON or score above random.",
+    "tournament:qualifying": "Runs Round 2 (qualifying) — smoke survivors against 30 jobs. Drops models below 55% accuracy or with high parse failure.",
+    "tournament:full": "Runs Round 3 (full eval) — qualifying survivors against all 103 golden jobs using eval-tagged.",
+    "tournament:auto": "Runs all 3 tournament rounds back-to-back automatically, passing survivors forward."
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -28,7 +32,11 @@
     "week1:baseline": "mkdir -p results/week1_baseline && npm run golden:validate:strict && npm run promptfoo:tests && npx promptfoo eval -c promptfooconfig.yaml -o results/week1_baseline/eval.json -o results/week1_baseline/eval.html --description week1-baseline",
     "eval:tagged": "tsx src/cli/eval-tagged.ts",
     "iterations:summary": "tsx src/cli/summarize-iterations.ts",
-    "golden:generate-fake": "tsx src/cli/generate-fake-golden.ts"
+    "golden:generate-fake": "tsx src/cli/generate-fake-golden.ts",
+    "tournament:smoke": "tsx src/cli/tournament.ts --round smoke",
+    "tournament:qualifying": "tsx src/cli/tournament.ts --round qualifying",
+    "tournament:full": "tsx src/cli/tournament.ts --round full",
+    "tournament:auto": "tsx src/cli/tournament.ts --round auto"
   },
   "keywords": [
     "typescript",
@@ -46,5 +54,8 @@
     "typescript": "^5.9.3",
     "yaml": "^2.8.2",
     "zod": "^4.3.6"
+  },
+  "dependencies": {
+    "ollama": "^0.6.3"
   }
 }

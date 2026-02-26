@@ -15,6 +15,11 @@ function runCommand(command: string, args: string[]): void {
     env: process.env,
   });
 
+  if (run.error) {
+    console.error(`Failed to run command "${command}": ${run.error.message}`);
+    process.exit(1);
+  }
+
   if (typeof run.status === "number" && run.status === 0) {
     return;
   }
@@ -75,9 +80,14 @@ async function main(): Promise<void> {
 
   // Snapshot config and prompts so every run is reproducible.
   await copyFile(configPath, path.join(runDir, "promptfooconfig.yaml"));
-  await copyFile("prompts/scorer_v1.txt", path.join(runDir, "scorer_v1.txt"));
-  await copyFile("prompts/scorer_v2.txt", path.join(runDir, "scorer_v2.txt"));
-  await copyFile("prompts/scorer_v3_cot.txt", path.join(runDir, "scorer_v3_cot.txt"));
+  const promptFiles = ["prompts/scorer_v1.txt", "prompts/scorer_v2.txt", "prompts/scorer_v3_cot.txt"];
+  for (const src of promptFiles) {
+    try {
+      await copyFile(src, path.join(runDir, path.basename(src)));
+    } catch {
+      // Prompt file may not exist if it was renamed or not yet created — skip silently
+    }
+  }
 
   const metadata = {
     tag,

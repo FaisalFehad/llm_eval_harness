@@ -1,0 +1,15 @@
+{
+  "smoke": {
+    "job_count": 10,
+    "max_parse_fail_pct": 30,
+    "min_label_accuracy_pct": 40,
+    "max_avg_seconds": 120
+  },
+  "qualifying": {
+    "job_count": 30,
+    "max_parse_fail_pct": 10,
+    "min_label_accuracy_pct": 55,
+    "max_score_mae": 30,
+    "max_avg_seconds": 60
+  }
+}

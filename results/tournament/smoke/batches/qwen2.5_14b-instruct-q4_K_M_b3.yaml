@@ -1,0 +1,40 @@
+- description: 1785765898 | Senior Product Engineer @ Jenkins - Zboncak
+  vars:
+    jd_text: |-
+      **About Jenkins - Zboncak**
+      We are an innovative team building a decentralized finance (DeFi) protocol for institutional grade assets. We're looking for a Senior Product Engineer who is passionate about building world-class products.
+
+      **The Role**
+      As our Senior Product Engineer, you will be:
+      - migrating monolithic systems to event-driven microservices
+      - optimizing database queries for tables with billions of rows
+      - architecting scalable backend systems from scratch
+
+      **What You'll Bring**
+      - Deep expertise in Rust, WASM, and performance-critical systems programming.
+      - A track record of solving complex technical hurdles
+      - Strong opinions, weakly held, regarding architecture and code quality
+
+      **Location & Salary**
+      - Location: Remote (UK)
+      - Salary: £120,000 - £140,000
+
+      **Benefits**
+      - Private health insurance and dental coverage
+      - Stock options/Equity in a high-growth startup
+      - Home office stipend and latest MacBook Pro
+
+      How to Apply: Send your GitHub profile and a brief summary of your best work.
+    expected_label: good_fit
+    expected_score: 75
+  metadata:
+    job_id: "1785765898"
+    expected_label: good_fit
+    expected_score: 75
+  assert:
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return parsed.label === "good_fit"; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.score === 'number' && Math.abs(parsed.score - 75) <= 20; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.reasoning === 'string' && parsed.reasoning.length >= 15; })()
