@@ -37,6 +37,8 @@ type TestJob = {
   description: string;
   vars: {
     jd_text: string;
+    job_title?: string;
+    job_location?: string;
     expected_label: string;
     expected_score: number;
   };
@@ -133,8 +135,17 @@ function extractPromptTemplate(prompts: unknown[]): string {
   );
 }
 
-function buildPrompt(template: string, jdText: string): string {
-  return template.replace("{{jd_text}}", () => jdText);
+function buildPrompt(
+  template: string,
+  vars: Record<string, string | number | boolean | null | undefined>,
+): string {
+  return template.replace(/{{\s*([a-zA-Z0-9_]+)\s*}}/g, (_match, key) => {
+    const value = vars[key];
+    if (value === undefined || value === null) {
+      return "";
+    }
+    return String(value);
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -147,8 +158,12 @@ async function createResponseGrammar(
   return await llama.createGrammarForJsonSchema({
     type: "object",
     properties: {
-      label: { type: "string", enum: ["good_fit", "maybe", "bad_fit"] },
+      loc: { type: "number" },
+      role: { type: "number" },
+      tech: { type: "number" },
+      comp: { type: "number" },
       score: { type: "number" },
+      label: { type: "string", enum: ["good_fit", "maybe", "bad_fit"] },
       reasoning: { type: "string" },
     },
   } as const);
@@ -606,7 +621,7 @@ export async function runEval(options: EvalOptions): Promise<EvalResults> {
 
     for (let jobIdx = 0; jobIdx < jobs.length; jobIdx++) {
       const job = jobs[jobIdx]!;
-      const prompt = buildPrompt(promptTemplate, job.vars.jd_text);
+      const prompt = buildPrompt(promptTemplate, job.vars);
       const expectedLabel = job.vars.expected_label;
       const expectedScore = job.vars.expected_score;
 

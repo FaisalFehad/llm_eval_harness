@@ -48,12 +48,12 @@ Before any model touches a job description, I need ground truth to measure again
 
 Each job is scored across four categories (25 pts each):
 
-| Category              | What scores high                                | Key penalties                  |
-| --------------------- | ----------------------------------------------- | ------------------------------ |
-| Role & Seniority      | Senior/Staff/Lead Engineer                      | Junior, management, unrelated  |
-| Tech Stack            | Node.js, TypeScript, AI/ML experience           | No relevant stack              |
-| Location              | Remote UK/global, hybrid London                 | **-50** for outside UK         |
-| Compensation          | £100k+ base                                     | **-30** for below £45k         |
+| Category         | What scores high                      | Key penalties                 |
+| ---------------- | ------------------------------------- | ----------------------------- |
+| Role & Seniority | Senior/Staff/Lead Engineer            | Junior, management, unrelated |
+| Tech Stack       | Node.js, TypeScript, AI/ML experience | No relevant stack             |
+| Location         | Remote UK/global, hybrid London       | **-50** for outside UK        |
+| Compensation     | £100k+ base                           | **-30** for below £45k        |
 
 Labels: 70–100 = `good_fit`, 50–69 = `maybe`, 0–49 = `bad_fit`.
 
@@ -95,15 +95,15 @@ So instead: a **3-round tournament** that drops bad models early.
 
 **6 of 16 models advanced. 10 eliminated.**
 
-| Model                        | Acc | Parse Fail | MAE  | Bias  | Speed  | Result |
-| ---------------------------- | --- | ---------- | ---- | ----- | ------ | ------ |
-| minimax-m2.5 (cloud)         | 70% | 0%         | 20.5 | +13.5 | 20.1s  | PASS   |
-| qwen3:8b                     | 50% | 20%        | 23.1 | +23.1 | 81.2s  | PASS   |
-| wizardlm2 (~7B)              | 40% | 0%         | 36.7 | +23.7 | 23.5s  | PASS   |
-| mistral-openorca:7b          | 40% | 0%         | 31.5 | +29.5 | 14.1s  | PASS   |
-| dolphin-llama3 (~8B)         | 40% | 0%         | 37.0 | +37.0 | 13.5s  | PASS   |
-| llama2:7b                    | 40% | 0%         | 38.5 | +37.5 | 15.6s  | PASS   |
-| _10 models eliminated_       |     |            |      |       |        | FAIL   |
+| Model                  | Acc | Parse Fail | MAE  | Bias  | Speed | Result |
+| ---------------------- | --- | ---------- | ---- | ----- | ----- | ------ |
+| minimax-m2.5 (cloud)   | 70% | 0%         | 20.5 | +13.5 | 20.1s | PASS   |
+| qwen3:8b               | 50% | 20%        | 23.1 | +23.1 | 81.2s | PASS   |
+| wizardlm2 (~7B)        | 40% | 0%         | 36.7 | +23.7 | 23.5s | PASS   |
+| mistral-openorca:7b    | 40% | 0%         | 31.5 | +29.5 | 14.1s | PASS   |
+| dolphin-llama3 (~8B)   | 40% | 0%         | 37.0 | +37.0 | 13.5s | PASS   |
+| llama2:7b              | 40% | 0%         | 38.5 | +37.5 | 15.6s | PASS   |
+| _10 models eliminated_ |     |            |      |       |       | FAIL   |
 
 Some things I didn't expect: all sub-5B models failed outright (~30% accuracy, basically random guessing). The largest local model (qwen2.5:14b) had the _worst_ accuracy — aggressive quantization to fit in 16 GB erased the size advantage entirely. And 14 of 16 models systematically over-scored everything. A model that rates every job as "good" is useless for filtering. Only the cloud model could correctly identify `maybe` jobs — every local model mapped them straight to `good_fit`.
 
@@ -113,10 +113,10 @@ Although I was pretty happy with qwen3:8b at 50% accuracy, 81.2s/job is still a 
 
 Then I came across llama.cpp and llama-server as runtimes instead of Ollama. This meant getting new GGUF models (Ollama models aren't compatible), but the speed difference was immediately obvious:
 
-| Runtime   | Model     | Acc | Speed  | Parse failures |
-| --------- | --------- | --- | ------ | -------------- |
-| Ollama    | qwen3:8b  | 50% | 81.2s  | 20%            |
-| llama.cpp | qwen3:8b  | 50% | 14.1s  | 0%             |
+| Runtime   | Model    | Acc | Speed | Parse failures |
+| --------- | -------- | --- | ----- | -------------- |
+| Ollama    | qwen3:8b | 50% | 81.2s | 20%            |
+| llama.cpp | qwen3:8b | 50% | 14.1s | 0%             |
 
 Same model, same accuracy, **5.8× faster**, zero parse failures. That extra headroom also opens the door to using bigger models than what I could previously run on Ollama, and potentially running multiple jobs in parallel.
 
@@ -134,25 +134,25 @@ I deleted `tournament.ts` (1,235 lines of Ollama client code, llama-server spawn
 
 Re-ran all candidates through node-llama-cpp with grammar-constrained JSON. 10 jobs, seed 42, balanced sampling.
 
-| #  | Model                      | Params | Acc     | MAE      | Bias     | Speed  |
-| -- | -------------------------- | ------ | ------- | -------- | -------- | ------ |
-| 1  | **gemma-3-4b-it**          | 4B     | **60%** | **26.8** | +26.8    | 11.7s  |
-| 2  | qwen3-8b-official          | 8B     | 50%     | 36.0     | +36.0    | 25.1s  |
-| 3  | qwen3-4b-instruct-2507     | 4B     | 50%     | 35.0     | +35.0    | 16.8s  |
-| 4  | meta-llama-3.1-8b          | 8B     | 40%     | 36.0     | +16.4    | 19.8s  |
-| 5  | ministral-3-8b-2512        | 8.4B   | 30%     | **24.5** | +7.5     | 22.4s  |
-| 6  | qwen2.5-7b-instruct        | 7.6B   | 30%     | 30.4     | **-2.6** | 16.0s  |
-| 7  | glider (PatronusAI)        | 3.8B   | 30%     | 31.6     | +23.4    | 29.7s  |
-| 8  | mistral-7b-instruct        | 7B     | 10%     | 22.8     | +5.2     | 16.7s  |
+| #   | Model                  | Params | Acc     | MAE      | Bias     | Speed |
+| --- | ---------------------- | ------ | ------- | -------- | -------- | ----- |
+| 1   | **gemma-3-4b-it**      | 4B     | **60%** | **26.8** | +26.8    | 11.7s |
+| 2   | qwen3-8b-official      | 8B     | 50%     | 36.0     | +36.0    | 25.1s |
+| 3   | qwen3-4b-instruct-2507 | 4B     | 50%     | 35.0     | +35.0    | 16.8s |
+| 4   | meta-llama-3.1-8b      | 8B     | 40%     | 36.0     | +16.4    | 19.8s |
+| 5   | ministral-3-8b-2512    | 8.4B   | 30%     | **24.5** | +7.5     | 22.4s |
+| 6   | qwen2.5-7b-instruct    | 7.6B   | 30%     | 30.4     | **-2.6** | 16.0s |
+| 7   | glider (PatronusAI)    | 3.8B   | 30%     | 31.6     | +23.4    | 29.7s |
+| 8   | mistral-7b-instruct    | 7B     | 10%     | 22.8     | +5.2     | 16.7s |
 
 **Gemma-3-4B-IT** is the clear winner — and it wasn't even supposed to be. It's the only model with both 100% good_fit detection and non-zero bad_fit detection. Every other model is either a "yes-man" that approves everything or a pessimist that rejects everything:
 
-| Model              | good_fit (of 4) | maybe (of 3) | bad_fit (of 3) |
-| ------------------ | --------------- | ------------ | -------------- |
-| **gemma-3-4b-it**  | 4/4 (100%)      | 1/3 (33%)    | 1/3 (33%)      |
-| qwen3-8b           | 4/4 (100%)      | 1/3 (33%)    | 0/3 (0%)       |
-| ministral-3-8b     | 0/4 (0%)        | 1/3 (33%)    | 2/3 (67%)      |
-| qwen2.5-7b         | 0/4 (0%)        | 2/3 (67%)    | 1/3 (33%)      |
+| Model             | good_fit (of 4) | maybe (of 3) | bad_fit (of 3) |
+| ----------------- | --------------- | ------------ | -------------- |
+| **gemma-3-4b-it** | 4/4 (100%)      | 1/3 (33%)    | 1/3 (33%)      |
+| qwen3-8b          | 4/4 (100%)      | 1/3 (33%)    | 0/3 (0%)       |
+| ministral-3-8b    | 0/4 (0%)        | 1/3 (33%)    | 2/3 (67%)      |
+| qwen2.5-7b        | 0/4 (0%)        | 2/3 (67%)    | 1/3 (33%)      |
 
 A few other things I found along the way: thinking mode (`think` vs `no_think`) never helped on any model — zero accuracy improvement, up to 38% slower. Model size doesn't predict quality — the 4B Gemma beat every 7B and 8B model tested. And Ministral has the best score calibration (24.5 MAE) and best bad_fit detection (67%) but can't recognise a good job to save its life — worth revisiting with prompt work.
 
@@ -162,12 +162,9 @@ After testing and benchmarking tens of models across three runtimes and running 
 
 ---
 
-## What's Next
+## Prompt engineering
 
-1. **Prompt engineering** — Gemma gets 60% with a basic prompt. Few-shot examples for bad_fit detection (the -50 location penalty, the -30 salary penalty) should push it past 70%.
-2. **Fine-tune Qwen3:8B** as the teacher model on the full golden set.
-3. **Distill to Granite4:350M** — run the teacher on a large batch, train the student on teacher outputs.
-4. **Measure the distillation gap** and iterate.
+Gemma-3-4B-IT tops out at **70% label accuracy** (v6c prompt, 10-job sample). Tested 5 prompt variants (v6–v9) — adding more examples, IF-THEN rules, or zero-point demonstrations all degraded accuracy. The remaining 30% misses are model-level limitations: hallucinating keywords not in the input, arithmetic errors on negative sums, and ignoring "Up to £X" comp rules. 70% appears to be this model's ceiling for prompt-only optimisation.
 
 ---
 

@@ -1,0 +1,211 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+
+description: "Job-fit scorer — v5 — tuned candidate profile, strict scoring"
+
+# ---------------------------------------------------------------------------
+# Prompt — v5
+# ---------------------------------------------------------------------------
+prompts:
+  - label: "job-fit-scorer-v5"
+    raw: |
+      You are a strict job‑fit scorer for one candidate. Score ONLY what is explicitly stated. Do NOT infer missing info.
+      
+      Use ONLY these fields:
+      - Job title: {{job_title}}
+      - Job location: {{job_location}}
+      - Job description: {{jd_text}}
+      
+      Field rules (no exceptions):
+      - Role & Seniority: use ONLY job_title (ignore jd_text).
+      - Location: use job_location, but override to outside‑UK if jd_text explicitly states a non‑UK location.
+      - Tech Stack: use ONLY jd_text (ignore job_title).
+      - Compensation: use ONLY jd_text (ignore job_title).
+      
+      Scoring rubric — sum four categories (floor 0, cap 100):
+      
+      1) Role & Seniority (max 25) — based on job_title only
+      +25 if title contains ANY of: Senior, Staff, Principal, Lead, Tech Lead, Head, Distinguished, VP, Snr
+      +15 if title contains ANY of: Full Stack / Full‑Stack / Fullstack, Mid‑Level / Mid Level / Midlevel, Software Engineer II / Engineer II / SWE II
+      0 otherwise
+      Important: Do NOT give +15 for “Engineer”, “Developer”, “Backend”, “Frontend”, “Architect”, “Manager”, or “Product” unless a +25/+15 keyword above appears.
+      Exception: If title contains “Founding Software Engineer”, role points = 0.
+      
+      2) Tech Stack (max 25, points stack; cap at 25) — based on jd_text only
+      +10: “Node.js”/“NodeJS” explicitly required or listed in core stack/requirements
+      +5: “JavaScript” or “TypeScript” explicitly required or listed in core stack/requirements
+      +10: AI/ML/LLM experience explicitly required (phrases like “experience with AI/ML/LLM”, “LLM integrations”, “ML models”, “AI/ML required”)
+      Do NOT give AI points if AI is only mentioned in company description, mission, market, or “interest in AI/tools”.
+      
+      3) Location & Work Arrangement (max 25)
+      - If jd_text explicitly states a non‑UK location (e.g., United States/USA/US, Middle East, Germany, Netherlands, Australia, India, Berlin, Amsterdam, Helsinki, Cape Town, Sydney, Bangalore), then location = -50.
+      Else use job_location:
+        +25: Remote (UK/England/Scotland/Wales/Northern Ireland/Global) OR hybrid/on‑site in London
+        +10: Hybrid/on‑site in UK outside London (UK/United Kingdom/England/Scotland/Wales/Northern Ireland or UK cities)
+        0: Location missing or unclear
+        -50: Location explicitly outside the UK
+      
+      4) Compensation (max 25) — base salary in GBP only (from jd_text)
+      - Only count base salary in GBP explicitly stated as salary/compensation.
+      - Ignore bonuses, equity, benefits, allowances, budgets, and non‑GBP amounts.
+      - If salary uses “k” notation (e.g., £100k, £80k‑150k, “up to £150K”), treat as below £45k (‑30).
+      - If a GBP range is given with full numbers (e.g., £90,000‑£105,000), use the midpoint.
+      +25: midpoint ≥ £100k
+      +15: midpoint £75k–£99k
+      +5: midpoint £55k–£74k
+      -30: midpoint < £45k
+      0: salary not stated
+      
+      Label mapping (must match score):
+      - good_fit: 70–100
+      - maybe: 50–69
+      - bad_fit: 0–49
+      
+      Return ONLY JSON:
+      {"label":"good_fit|maybe|bad_fit","score":0-100,"reasoning":"1-2 sentences including role/stack/location/comp points and total"}
+
+# ---------------------------------------------------------------------------
+# Providers — same as v1/v2
+# ---------------------------------------------------------------------------
+providers:
+  # Teacher model — best accuracy from smoke test (50%, 14.1s/job via llama.cpp)
+  - id: "node-llama-cpp:qwen3-8b"
+    config:
+      hf_model: "hf:Qwen/Qwen3-8B-GGUF:Q4_K_M"
+      temperature: 0
+      no_think: true
+
+  # Student model — distillation target (1.1s/job, near-zero bias, 3/3 maybe detection)
+  - id: "node-llama-cpp:granite4-350m"
+    config:
+      hf_model: "hf:ibm-granite/granite-4.0-350m-GGUF"
+      temperature: 0
+
+  # ---------------------------------------------------------------------------
+  # Previously tested via llama-server (openai-compat) — now native node-llama-cpp
+  # ---------------------------------------------------------------------------
+
+  # janhq/Jan-v3-4B — strongest result per parameter (40% acc, 0% parse fail, 9.6s/job)
+  - id: "node-llama-cpp:jan-v3-4b"
+    config:
+      hf_model: "hf:janhq/Jan-v3-4B-base-instruct"
+      no_think: true
+      temperature: 0
+
+  - id: "node-llama-cpp:jan-v3-4b-suggested"
+    config:
+      hf_model: "hf:janhq/Jan-v3-4B-base-instruct"
+      no_think: true
+      temperature: 0.7
+      top_p: 0.8
+      top_k: 20
+
+  # Rubric-aware reasoning, correct maybe detection (1/3), converted USD→GBP
+
+  # granite-4.0-350m at temp 0.5 — anomalous: 3/3 maybe correct, near-zero bias (-2.8)
+  - id: "node-llama-cpp:granite4-350m-warm"
+    config:
+      hf_model: "hf:ibm-granite/granite-4.0-350m-GGUF"
+      temperature: 0.5
+
+  # qwen3-8b unsloth GGUF — 40% acc, rubric-then-override bug, needs CoT prompt fix
+  - id: "node-llama-cpp:qwen3-8b-unsloth-nothink-true"
+    config:
+      hf_model: "hf:unsloth/Qwen3-8B-GGUF"
+      temperature: 0
+      no_think: true
+
+  - id: "node-llama-cpp:qwen3-8b-unsloth-nothink-false"
+    config:
+      hf_model: "hf:unsloth/Qwen3-8B-GGUF"
+      temperature: 0
+      no_think: false
+
+  # qwen3-8b official GGUF — best of llama.cpp batch (50% acc, 0% parse fail, 14.1s/job)
+  - id: "node-llama-cpp:qwen3-8b-official"
+    config:
+      hf_model: "hf:Qwen/Qwen3-8B-GGUF"
+      temperature: 0
+      no_think: true
+
+  - id: "node-llama-cpp:qwen3-8b-official-nothink-false"
+    config:
+      hf_model: "hf:Qwen/Qwen3-8B-GGUF"
+      temperature: 0
+      no_think: false
+
+  # failed
+  - id: "node-llama-cpp:mistral-7b-instruct-nothink-true"
+    config:
+      hf_model: "hf:MaziyarPanahi/Mistral-7B-Instruct-v0.3-GGUF"
+      temperature: 0
+      no_think: true
+
+  - id: "node-llama-cpp:mistral-7b-instruct-nothink-false"
+    config:
+      hf_model: "hf:MaziyarPanahi/Mistral-7B-Instruct-v0.3-GGUF"
+      temperature: 0
+      no_think: false
+
+  - id: "node-llama-cpp:meta-llama-3-1-8b-instruct-nothink-true"
+    config:
+      hf_model: "hf:bartowski/Meta-Llama-3.1-8B-Instruct-GGUF"
+      temperature: 0
+      no_think: true
+
+  - id: "node-llama-cpp:meta-llama-3-1-8b-instruct-nothink-false"
+    config:
+      hf_model: "hf:bartowski/Meta-Llama-3.1-8B-Instruct-GGUF"
+      temperature: 0
+      no_think: false
+
+  # ibm-granite/granite-4.0-h-1b-GGUF
+  - id: "node-llama-cpp:granite-4.0-h-1b"
+    config:
+      hf_model: "hf:ibm-granite/granite-4.0-h-1b-GGUF"
+      temperature: 0
+      no_think: false
+
+  # ibm-granite/granite-20b-code-instruct-8k
+  - id: "node-llama-cpp:granite-20b-code-instruct-8k"
+    config:
+      hf_model: "hf:ibm-granite/granite-20b-code-instruct-8k"
+      temperature: 0
+      no_think: false
+
+  # ---------------------------------------------------------------------------
+  # New candidates — suggested to beat qwen3-8b-official (50% acc baseline)
+  # ---------------------------------------------------------------------------
+
+  # Qwen3-4B-Instruct-2507 — newer instruction-tuned 4B, strong reasoning
+  - id: "node-llama-cpp:qwen3-4b-instruct-2507"
+    config:
+      hf_model: "hf:unsloth/Qwen3-4B-Instruct-2507-GGUF"
+      temperature: 0
+      no_think: true
+
+  # Qwen2.5-7B-Instruct — proven instruction follower, good at structured output
+  - id: "node-llama-cpp:qwen2.5-7b-instruct"
+    config:
+      hf_model: "hf:bartowski/Qwen2.5-7B-Instruct-GGUF"
+      temperature: 0
+
+  # GLIDER by PatronusAI — purpose-built for evaluation/scoring tasks
+  - id: "node-llama-cpp:glider"
+    config:
+      hf_model: "hf:PatronusAI/glider-gguf"
+      temperature: 0
+
+  # Gemma 3 4B IT — Google's instruction-tuned 4B, strong reasoning per parameter
+  - id: "node-llama-cpp:gemma-3-4b-it"
+    config:
+      hf_model: "hf:bartowski/google_gemma-3-4b-it-GGUF"
+      temperature: 0
+
+  # Ministral-3-8B-2512 — Mistral's latest small model, improved instruction following
+  - id: "node-llama-cpp:ministral-3-8b-2512"
+    config:
+      hf_model: "hf:unsloth/Ministral-3-8B-Instruct-2512-GGUF"
+      temperature: 0
+
+tests:
+  - file://data/promptfoo_tests.yaml

@@ -176,6 +176,8 @@ function toPromptfooTest(job: GoldenJob, scoreTolerance: number): PromptfooTest 
     description: `${job.job_id} | ${job.title} @ ${job.company}`,
     vars: {
       jd_text: job.jd_text,
+      job_title: job.title,
+      job_location: job.location,
       expected_label: job.label,
       expected_score: job.score,
     },

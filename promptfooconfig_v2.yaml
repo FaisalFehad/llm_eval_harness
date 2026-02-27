@@ -1,0 +1,212 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+
+description: "Job-fit scorer — v2 strict (reduced positive bias, explicit rubric adherence)"
+
+# ---------------------------------------------------------------------------
+# Prompt — v2 strict
+# Addresses: positive bias, recruiter post confusion, score-label mismatch,
+#             model not doing rubric math.
+# ---------------------------------------------------------------------------
+prompts:
+  - label: "job-fit-scorer-v2-strict"
+    raw: |
+      You are a strict job-fit scorer for one candidate. Score by the rubric ONLY — do not guess or inflate.
+
+      Candidate:
+      - UK-based senior/staff backend engineer (8+ yrs)
+      - Core stack: TypeScript, Node.js, Python, SQL, cloud/distributed systems
+      - Interested in AI/ML/LLM roles; prefers product teams over agency/consulting
+      - Target level: Senior, Staff, Principal, or Lead IC (NOT management-only)
+      - Location: remote (UK or global) or hybrid in London only
+      - Salary: £75k+ GBP base
+
+      IMPORTANT RULES:
+      - Score ONLY what the job description explicitly states. Do not assume or infer missing information.
+      - If salary is not listed, award 0 pts for compensation — do NOT guess.
+      - If location is unclear or missing, award 0 pts for location.
+      - Recruiter posts (third-party ads listing multiple roles or vague descriptions) should be scored as bad_fit unless they contain enough concrete detail to evaluate.
+      - The label MUST match the score range exactly. No exceptions.
+
+      Scoring rubric — sum these four categories (floor 0, cap 100):
+
+      1. Role & Seniority (max 25 pts):
+         +25: Senior, Staff, Principal, Lead, or Tech Lead Engineer
+         +15: Full Stack, Mid-Level, or Software Engineer II
+         0: Junior, management-only (EM), or non-engineering roles (DevOps, QA, Frontend-only)
+
+      2. Tech Stack & Domain (max 25 pts, points stack, cap at 25):
+         +10: Node.js explicitly required or listed
+         +5: JavaScript or TypeScript explicitly required or listed
+         +10: AI, ML, or LLM experience explicitly mentioned
+         0: If the primary stack is unrelated (e.g., Java, C#, Ruby only)
+
+      3. Location & Work Arrangement (max 25 pts):
+         +25: Fully remote (UK-based or global) OR hybrid in London
+         +10: Hybrid or on-site in UK outside London
+         0: Location unknown or not stated
+         -50: On-site or hybrid outside the UK (this alone makes the job bad_fit)
+
+      4. Compensation (max 25 pts):
+         +25: Base salary £100k+ GBP
+         +15: Base salary £75k–£99k GBP
+         +5: Base salary £55k–£74k GBP
+         0: Salary unknown, not listed, or given in non-GBP without clear conversion
+         -30: Base salary below £45k GBP
+
+      Label mapping (MUST match score):
+      - good_fit: score 70–100
+      - maybe: score 50–69
+      - bad_fit: score 0–49
+
+      Respond with ONLY a JSON object. No markdown, no explanation outside the JSON.
+      {"label":"good_fit|maybe|bad_fit","score":<integer 0-100>,"reasoning":"<1-2 sentences explaining category scores>"}
+
+      Job description:
+      {{jd_text}}
+
+# ---------------------------------------------------------------------------
+# Providers — same as v1, just referencing the new prompt
+# ---------------------------------------------------------------------------
+providers:
+  # Teacher model — best accuracy from smoke test (50%, 14.1s/job via llama.cpp)
+  - id: "node-llama-cpp:qwen3-8b"
+    config:
+      hf_model: "hf:Qwen/Qwen3-8B-GGUF:Q4_K_M"
+      temperature: 0
+      no_think: true
+
+  # Student model — distillation target (1.1s/job, near-zero bias, 3/3 maybe detection)
+  - id: "node-llama-cpp:granite4-350m"
+    config:
+      hf_model: "hf:ibm-granite/granite-4.0-350m-GGUF"
+      temperature: 0
+
+  # ---------------------------------------------------------------------------
+  # Previously tested via llama-server (openai-compat) — now native node-llama-cpp
+  # ---------------------------------------------------------------------------
+
+  # janhq/Jan-v3-4B — strongest result per parameter (40% acc, 0% parse fail, 9.6s/job)
+  - id: "node-llama-cpp:jan-v3-4b"
+    config:
+      hf_model: "hf:janhq/Jan-v3-4B-base-instruct"
+      no_think: true
+      temperature: 0
+
+  - id: "node-llama-cpp:jan-v3-4b-suggested"
+    config:
+      hf_model: "hf:janhq/Jan-v3-4B-base-instruct"
+      no_think: true
+      temperature: 0.7
+      top_p: 0.8
+      top_k: 20
+
+  # Rubric-aware reasoning, correct maybe detection (1/3), converted USD→GBP
+
+  # granite-4.0-350m at temp 0.5 — anomalous: 3/3 maybe correct, near-zero bias (-2.8)
+  - id: "node-llama-cpp:granite4-350m-warm"
+    config:
+      hf_model: "hf:ibm-granite/granite-4.0-350m-GGUF"
+      temperature: 0.5
+
+  # qwen3-8b unsloth GGUF — 40% acc, rubric-then-override bug, needs CoT prompt fix
+  - id: "node-llama-cpp:qwen3-8b-unsloth-nothink-true"
+    config:
+      hf_model: "hf:unsloth/Qwen3-8B-GGUF"
+      temperature: 0
+      no_think: true
+
+  - id: "node-llama-cpp:qwen3-8b-unsloth-nothink-false"
+    config:
+      hf_model: "hf:unsloth/Qwen3-8B-GGUF"
+      temperature: 0
+      no_think: false
+
+  # qwen3-8b official GGUF — best of llama.cpp batch (50% acc, 0% parse fail, 14.1s/job)
+  - id: "node-llama-cpp:qwen3-8b-official"
+    config:
+      hf_model: "hf:Qwen/Qwen3-8B-GGUF"
+      temperature: 0
+      no_think: true
+
+  - id: "node-llama-cpp:qwen3-8b-official-nothink-false"
+    config:
+      hf_model: "hf:Qwen/Qwen3-8B-GGUF"
+      temperature: 0
+      no_think: false
+
+  # failed
+  - id: "node-llama-cpp:mistral-7b-instruct-nothink-true"
+    config:
+      hf_model: "hf:MaziyarPanahi/Mistral-7B-Instruct-v0.3-GGUF"
+      temperature: 0
+      no_think: true
+
+  - id: "node-llama-cpp:mistral-7b-instruct-nothink-false"
+    config:
+      hf_model: "hf:MaziyarPanahi/Mistral-7B-Instruct-v0.3-GGUF"
+      temperature: 0
+      no_think: false
+
+  - id: "node-llama-cpp:meta-llama-3-1-8b-instruct-nothink-true"
+    config:
+      hf_model: "hf:bartowski/Meta-Llama-3.1-8B-Instruct-GGUF"
+      temperature: 0
+      no_think: true
+
+  - id: "node-llama-cpp:meta-llama-3-1-8b-instruct-nothink-false"
+    config:
+      hf_model: "hf:bartowski/Meta-Llama-3.1-8B-Instruct-GGUF"
+      temperature: 0
+      no_think: false
+
+  # ibm-granite/granite-4.0-h-1b-GGUF
+  - id: "node-llama-cpp:granite-4.0-h-1b"
+    config:
+      hf_model: "hf:ibm-granite/granite-4.0-h-1b-GGUF"
+      temperature: 0
+      no_think: false
+
+  # ibm-granite/granite-20b-code-instruct-8k
+  - id: "node-llama-cpp:granite-20b-code-instruct-8k"
+    config:
+      hf_model: "hf:ibm-granite/granite-20b-code-instruct-8k"
+      temperature: 0
+      no_think: false
+
+  # ---------------------------------------------------------------------------
+  # New candidates — suggested to beat qwen3-8b-official (50% acc baseline)
+  # ---------------------------------------------------------------------------
+
+  # Qwen3-4B-Instruct-2507 — newer instruction-tuned 4B, strong reasoning
+  - id: "node-llama-cpp:qwen3-4b-instruct-2507"
+    config:
+      hf_model: "hf:unsloth/Qwen3-4B-Instruct-2507-GGUF"
+      temperature: 0
+      no_think: true
+
+  # Qwen2.5-7B-Instruct — proven instruction follower, good at structured output
+  - id: "node-llama-cpp:qwen2.5-7b-instruct"
+    config:
+      hf_model: "hf:bartowski/Qwen2.5-7B-Instruct-GGUF"
+      temperature: 0
+
+  # GLIDER by PatronusAI — purpose-built for evaluation/scoring tasks
+  - id: "node-llama-cpp:glider"
+    config:
+      hf_model: "hf:PatronusAI/glider-gguf"
+      temperature: 0
+
+  # Gemma 3 4B IT — Google's instruction-tuned 4B, strong reasoning per parameter
+  - id: "node-llama-cpp:gemma-3-4b-it"
+    config:
+      hf_model: "hf:bartowski/google_gemma-3-4b-it-GGUF"
+      temperature: 0
+
+  # Ministral-3-8B-2512 — Mistral's latest small model, improved instruction following
+  - id: "node-llama-cpp:ministral-3-8b-2512"
+    config:
+      hf_model: "hf:unsloth/Ministral-3-8B-Instruct-2512-GGUF"
+      temperature: 0
+
+tests:
+  - file://data/promptfoo_tests.yaml
