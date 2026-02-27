@@ -1,32 +1,9 @@
-import { spawnSync } from "node:child_process";
 import { access, appendFile, copyFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
-import { getBooleanArg, getStringArg, parseArgs } from "../lib/args.js";
+import { getStringArg, parseArgs } from "../lib/args.js";
 import { ensureDir, ensureParentDir, sanitizeId, timestampForId } from "../lib/paths.js";
-
-function commandName(base: "npm" | "npx"): string {
-  return process.platform === "win32" ? `${base}.cmd` : base;
-}
-
-function runCommand(command: string, args: string[]): void {
-  const run = spawnSync(command, args, {
-    stdio: "inherit",
-    env: process.env,
-  });
-
-  if (run.error) {
-    console.error(`Failed to run command "${command}": ${run.error.message}`);
-    process.exit(1);
-  }
-
-  if (typeof run.status === "number" && run.status === 0) {
-    return;
-  }
-
-  const failureCode = run.status ?? 1;
-  process.exit(failureCode);
-}
+import { runEval } from "./eval-runner.js";
 
 function toCsvRow(columns: string[]): string {
   return columns
@@ -50,33 +27,22 @@ async function main(): Promise<void> {
   const args = parseArgs();
   const tag = getStringArg(args, "tag") ?? "iteration";
   const configPath = getStringArg(args, "config") ?? "promptfooconfig.yaml";
-  const skipBuildTests = getBooleanArg(args, "skip-build-tests");
   const timestamp = timestampForId();
   const runId = `${timestamp}_${sanitizeId(tag) || "iteration"}`;
   const runDir = path.join("results", "runs", runId);
-  const jsonOut = path.join(runDir, "eval.json");
-  const htmlOut = path.join(runDir, "eval.html");
   const metadataOut = path.join(runDir, "run_metadata.json");
   const logPath = path.join("results", "iteration_log.csv");
 
-  if (!skipBuildTests) {
-    runCommand(commandName("npm"), ["run", "promptfoo:tests"]);
-  }
-
   await ensureDir(runDir);
 
-  runCommand(commandName("npx"), [
-    "promptfoo",
-    "eval",
-    "-c",
+  // Run eval using node-llama-cpp directly
+  await runEval({
     configPath,
-    "-o",
-    jsonOut,
-    "-o",
-    htmlOut,
-    "--description",
+    jobCount: 103,
+    seed: 42,
     tag,
-  ]);
+    outputDir: runDir,
+  });
 
   // Snapshot config and prompts so every run is reproducible.
   await copyFile(configPath, path.join(runDir, "promptfooconfig.yaml"));
@@ -94,10 +60,7 @@ async function main(): Promise<void> {
     run_id: runId,
     created_at: new Date().toISOString(),
     config: configPath,
-    outputs: {
-      json: jsonOut,
-      html: htmlOut,
-    },
+    output_dir: runDir,
   };
 
   await writeFile(metadataOut, JSON.stringify(metadata, null, 2), "utf8");

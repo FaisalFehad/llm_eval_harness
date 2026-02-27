@@ -2,441 +2,188 @@
 
 A pipeline for building a fast, locally-running job-fit scoring model that matches the accuracy of large commercial LLMs — trained on your own taste.
 
-The technique is **LLM knowledge distillation**: use a large model (Claude) to generate high-quality labeled data at scale, then fine-tune a small local model to mimic it. End result: a model that runs in Ollama, costs nothing per inference, and scores jobs the way _you_ would.
+The technique is **LLM knowledge distillation**: use a large model to generate high-quality labeled data, then train a tiny model to mimic it. End result: a model that runs locally via llama.cpp, costs nothing per inference, and scores jobs the way _you_ would.
 
 ---
 
-## The Full Pipeline
+## Progress
 
 ```text
-Phase 1 → Ground Truth        80 hand-labeled jobs  →  golden_jobs.jsonl
-Phase 2 → Naive Benchmark     ~20 Ollama models × 3 prompts  →  drop the worst
-Phase 3 → Prompt Optimization Top models × better prompts × temperatures  →  keep 2-3
-Phase 4 → Synthetic Data      1000+ jobs → Claude labels them  →  training_data.jsonl
-Phase 5 → Fine-tuning         LoRA fine-tune best small model on Phase 4 data
-Phase 6 → Final Showdown      Custom model vs Claude vs best Ollama baseline
+1. Ground truth dataset          ✅  103 hand-scored jobs with 4-category rubric
+2. Tournament model selection    ✅  20 models tested across 3 runtimes, narrowed to 1
+3. llama.cpp migration           ✅  5.8× faster than Ollama, 0% parse failures
+4. Prompt engineering            ⬜  Gemma-3-4B-IT, validated against harness
+5. Fine-tune teacher (Qwen3:8B)  ⬜  On 70 hand-scored jobs, eval against held-out 30
+6. Generate distillation data    ⬜  Run teacher on large batch of real jobs
+7. Train student (Granite:350M)  ⬜  On teacher outputs, measure distillation gap
 ```
+
+---
+
+## How It Works
+
+```text
+golden_jobs.jsonl (103 hand-labeled jobs)
+    │
+    ▼
+build-promptfoo-tests → test subsets (10 / 30 / 103 jobs)
+    │
+    ▼
+eval-runner (node-llama-cpp, grammar-constrained JSON)
+    │
+    ▼
+results/runs/{timestamp}_{tag}/
+    ├── eval_results.json     (accuracy, MAE, bias, speed)
+    ├── details/*.json        (per-model confusion matrices)
+    └── promptfooconfig.yaml  (config snapshot for reproducibility)
+```
+
+Every eval run is snapshotted — config, prompts, and results — so iterations are fully reproducible.
 
 ---
 
 ## Phase 1 — Ground Truth Dataset
 
-The golden dataset is the benchmark everything else is measured against. Each record needs three fields that _you_ fill in:
+Before any model touches a job description, I need ground truth to measure against. I hand-labeled 103 jobs against a 100-point scoring rubric. Distribution is intentionally skewed (52 bad_fit, 40 maybe, 11 good_fit) because that reflects the real job market — most jobs aren't a great fit.
 
-```jsonc
-{
-  "job_id": "4371838647",
-  "title": "Senior Software Engineer",
-  "company": "FORT",
-  "jd_text": "...",
+Each job is scored across four categories (25 pts each):
 
-  // Your verdicts — these are the correct answers:
-  "label": "good_fit", // good_fit | maybe | bad_fit
-  "score": 75, // 0–100
-  "reasoning": "Strong TS/Node stack at a product-focused Series A.",
-}
-```
+| Category              | What scores high                                | Key penalties                  |
+| --------------------- | ----------------------------------------------- | ------------------------------ |
+| Role & Seniority      | Senior/Staff/Lead Engineer                      | Junior, management, unrelated  |
+| Tech Stack            | Node.js, TypeScript, AI/ML experience           | No relevant stack              |
+| Location              | Remote UK/global, hybrid London                 | **-50** for outside UK         |
+| Compensation          | £100k+ base                                     | **-30** for below £45k         |
 
-**Target size:** 80–100 records. Already sampled into `data/golden_jobs.jsonl`.
+Labels: 70–100 = `good_fit`, 50–69 = `maybe`, 0–49 = `bad_fit`.
 
-**Engineering notes (Phase 1):**
-
-- Final golden set: 103 records. Label distribution is intentionally skewed — 52 bad_fit, 40 maybe, 11 good_fit — because that reflects the real job market signal. Skewed distribution matters for sampling strategy in later phases.
-- Faker.js was used to generate synthetic JD variety for edge cases in the test suite (e.g., non-UK locations, missing salary, management roles). Ensures the eval isn't overfit to a narrow slice of the dataset.
-- Key lesson: hand-labeling even 103 records takes longer than expected. Having an explicit scoring rubric (the 4-category matrix) was essential — without it, scores drift as fatigue sets in.
-
-**Commands:**
-
-```bash
-# Sample from a jobs export
-npm run golden:sample -- --input data/jobs_export.jsonl --count 100 --seed 42
-
-# Validate labels
-npm run golden:validate:strict
-```
-
-**Candidate profile encoded in scoring prompts:**
-
-- 8+ years backend/platform engineering
-- Strong in TypeScript, Node.js, Python, SQL, cloud (AWS/GCP)
-- Wants product-focused IC roles (senior/staff level)
-- Avoids agency delivery, consulting, junior-heavy, and non-software roles
+Hand-labeling 103 records took longer than expected. Having the explicit rubric was essential — without it, scores drift as fatigue sets in. Midway through, a bad script run wiped all labels from `golden_jobs.jsonl` — went from 88 labeled records to 60 unlabeled ones with no git history to restore from. I had to re-label the surviving 57 real records and generated 46 synthetic jobs using Faker.js to fill gaps and cover edge cases (non-UK locations, missing salary, management roles).
 
 ---
 
-## Scoring Criteria
+## Phase 2 — Model Selection
 
-Each golden record is scored against a 100-point matrix. Models are evaluated on how closely their output matches these scores.
+### Starting point: Promptfoo + Mistral cloud API
 
-### 1. Role & Seniority (max 25 pts)
+I started with [Promptfoo](https://promptfoo.dev) as the eval framework, running evals against Mistral's cloud API (`mistral-large-latest`). The setup was simple — three prompt variants, one cloud provider, `npx promptfoo eval` to run. But it had problems: cloud API calls are slow and expensive for iterating, and I could only test one model at a time. I needed to test local models to find something I could actually fine-tune later.
 
-| Points | Criteria                                                                        |
-| ------ | ------------------------------------------------------------------------------- |
-| +25    | Senior Software Engineer, Tech Lead, Lead Engineer, Staff or Principal Engineer |
-| +15    | Full Stack Engineer, Mid-Level Software Engineer, Software Engineer II          |
-| 0      | Junior roles, management roles (EM), or unrelated positions                     |
+So I switched to **Ollama** for local model inference. This let me test many models for free, but immediately introduced new problems on my 16 GB MacBook Air.
 
-### 2. Tech Stack & Domain (max 25 pts)
+### Tournament approach
 
-| Points | Criteria                                       |
-| ------ | ---------------------------------------------- |
-| +10    | Node.js explicitly required                    |
-| +5     | JavaScript or TypeScript explicitly required   |
-| +10    | AI, ML, or LLM experience explicitly mentioned |
+The plan was to run all ~20 Ollama models against all 103 jobs — roughly 2,100 inferences. On my hardware, that's 8–12 hours with no early feedback.
 
-Points stack (e.g. Node.js + TypeScript + AI = 25). Capped at 25 for this category.
+I could have just picked a few models I thought would work, but I honestly had no idea how each one would perform. I could have also kept only the largest models — they're more likely to score well — but given my hardware constraints, I'm happy to trade a little accuracy for speed and not crashing my machine. Many of these models are obviously bad candidates (350M param models, old LLaMA 2, coding-only models). Why wait for a model to finish 103 jobs when it could be dropped after just 10?
 
-### 3. Location & Work Arrangement (max 25 pts)
+So instead: a **3-round tournament** that drops bad models early.
 
-| Points  | Criteria                                              |
-| ------- | ----------------------------------------------------- |
-| +25     | Fully Remote (UK-based or global) OR Hybrid in London |
-| +10     | Hybrid or On-site in UK outside London                |
-| 0       | Location/arrangement unknown                          |
-| **-50** | **Hybrid or On-site located outside the UK**          |
+- **Round 1 — Smoke test**: All models, 10 balanced jobs. Drop if accuracy < 40%, parse failures > 30%, or > 120s/job.
+- **Round 2 — Qualifying**: Survivors, 30 jobs. Tighter thresholds.
+- **Round 3 — Full eval**: Finalists only, all 103 jobs.
 
-### 4. Compensation (max 25 pts)
+### Things that broke along the way
 
-| Points  | Criteria                     |
-| ------- | ---------------------------- |
-| +25     | Base salary £100k or above   |
-| +15     | Base salary £75k–£99k        |
-| +5      | Base salary £55k–£74k        |
-| 0       | Salary unknown or not listed |
-| **-30** | **Base salary below £45k**   |
+**Prompt-to-golden mismatch.** Before any models ran, I found a critical bug: the scoring prompts had different label thresholds than the golden truth data. The prompt said `bad_fit = 0–39` but the golden data used `bad_fit = 0–49`. A model that scored a job 45 would correctly output `bad_fit` per the golden truth, but the prompt was telling it to output `maybe`. Every model was being evaluated against a rubric it wasn't given. Had to rewrite all prompts to match the golden rubric before any eval results were meaningful.
 
-### Label Mapping
+**Ollama OOM crashes.** Models would run 2–3 jobs fine, then crash with `fetch failed`. Turned out Ollama's default context window (40,960 tokens for qwen3:8b) pre-allocates ~11 GB of KV cache on a 16 GB machine — leaving almost nothing for macOS. Each job only needs ~2,000 tokens, so I was wasting 9 GB on capacity I'd never use. Setting `num_ctx: 4096` dropped RAM usage from ~11 GB to ~3–4 GB and eliminated the crashes.
 
-| Score  | Label      | Fit       |
-| ------ | ---------- | --------- |
-| 85–100 | `good_fit` | Excellent |
-| 70–84  | `good_fit` | Good      |
-| 50–69  | `maybe`    | Maybe     |
-| 0–49   | `bad_fit`  | Bad       |
+**Model memory bleeding.** Even after the context fix, models kept crashing when swapping. Ollama holds the previous model in RAM for 5 minutes by default. When the 7B model finished and the 14B tried to load, both were in memory simultaneously — 4.7 GB + 9 GB = game over on 16 GB. Fixed with `keep_alive: 0` to force immediate eviction after each model's test.
 
-Final score = sum of all four categories, capped at 100, floored at 0.
+**Fail-fast gap.** The initial logic only caught 100% failure rates. A model could succeed on 2 jobs then crash on the next 8, wasting time. Added a `consecutiveErrors >= 3` bail-out to detect mid-run Ollama crashes and move on.
 
----
-
-## Phase 2 — Tournament Model Selection
-
-### Why a tournament instead of brute force?
-
-The original plan was to run all ~20 Ollama models against all 103 golden jobs — roughly **2,100 inferences**. On hardware-constrained setups like my little Macbook Air with 16Gb RAM, can be a locker:
-
-- Ollama can only load **one model at a time**. Every model swap means unloading/reloading into RAM.
-- Many of these models are obviously bad candidates (350M param models, old LLaMA 2, coding-only models). Running them against 103 jobs each wastes hours on models that will clearly fail. So why wait for a model to finish 103 jobs when it could be dropped after just 10? - this could save MANY hours of runtime by eliminating bad models early.
-- A full brute-force run would take **8–12 hours** with no early feedback.
-- I could have selected only a few models but I honestly have no idea how each model could perform. I could have also kept the largest models only, as they have higher likelihood of better ratings, but given my hardware constraints, I am happy to trade a little bit of accuracy for speed and not crashing my machine.
-
-The solution is a **3-round tournament** that drops bad models early, so only worthy candidates get the full evaluation.
-
-### Round 1 — Smoke Test (all models, 10 jobs)
-
-Run every model against just **10 balanced jobs** (~3 good_fit, 4 maybe, 3 bad_fit). The smoke test uses **balanced** rather than proportional sampling because the golden set is skewed (52 bad_fit, 40 maybe, only 11 good_fit). With proportional sampling, 10 jobs would include just 1 good_fit — too few to meaningfully test that class. Balanced sampling gives every label fair representation so even with 10 jobs we can spot models that fail on specific categories.
-
-**Drop a model immediately if:**
-
-- Parse failure > 30% (can't produce valid JSON)
-- Label accuracy < 40% (worse than random guessing on 3 classes)
-- Average response time > 120 seconds per job
-- Model fails to load or OOM
-
-Expected: eliminates ~8–10 models in **~30–60 minutes**.
-
-```bash
-npm run tournament:smoke
-# Results → results/tournament/smoke/
-```
-
-### Smoke Test Results — Round 1
+### Smoke test results
 
 **6 of 16 models advanced. 10 eliminated.**
 
-#### Cloud models (1 passed, 2 eliminated)
+| Model                        | Acc | Parse Fail | MAE  | Bias  | Speed  | Result |
+| ---------------------------- | --- | ---------- | ---- | ----- | ------ | ------ |
+| minimax-m2.5 (cloud)         | 70% | 0%         | 20.5 | +13.5 | 20.1s  | PASS   |
+| qwen3:8b                     | 50% | 20%        | 23.1 | +23.1 | 81.2s  | PASS   |
+| wizardlm2 (~7B)              | 40% | 0%         | 36.7 | +23.7 | 23.5s  | PASS   |
+| mistral-openorca:7b          | 40% | 0%         | 31.5 | +29.5 | 14.1s  | PASS   |
+| dolphin-llama3 (~8B)         | 40% | 0%         | 37.0 | +37.0 | 13.5s  | PASS   |
+| llama2:7b                    | 40% | 0%         | 38.5 | +37.5 | 15.6s  | PASS   |
+| _10 models eliminated_       |     |            |      |       |        | FAIL   |
 
-| Model | Acc | Parse Fail | MAE | Bias | Avg/job | Result |
-| ----------------------------- | --- | ---------- | ---- | ----- | ------- | ------ |
-| minimax-m2.5:cloud            | 70% | 0%         | 20.5 | +13.5 | 20.1s   | PASS   |
-| mistral-large-3:675b-cloud    | 0%  | 100%       | —    | —     | 44.1s   | FAIL   |
-| ministral-3:14b-cloud         | 0%  | 100%       | —    | —     | 1.0s    | FAIL   |
+Some things I didn't expect: all sub-5B models failed outright (~30% accuracy, basically random guessing). The largest local model (qwen2.5:14b) had the _worst_ accuracy — aggressive quantization to fit in 16 GB erased the size advantage entirely. And 14 of 16 models systematically over-scored everything. A model that rates every job as "good" is useless for filtering. Only the cloud model could correctly identify `maybe` jobs — every local model mapped them straight to `good_fit`.
 
-minimax-m2.5 was the top performer across all 16 models — highest accuracy, lowest MAE, zero parse failures. The two cloud failures exited immediately with 100% parse failures after 2 jobs each. These are almost certainly misconfigured Ollama cloud endpoints (wrong API format or missing auth), not a reflection of the underlying models' intelligence.
+### The latency problem → llama.cpp
 
-#### Larger local models — 7B–8B (5 passed, 3 eliminated)
+Although I was pretty happy with qwen3:8b at 50% accuracy, 81.2s/job is still a long time to wait for iterative prompt engineering. It would be such a pain to wait hours to test each prompt on a decent number of jobs. So I kept trying other models hoping to find a sweet spot of similar accuracy but faster speed.
 
-| Model | Acc | Parse Fail | MAE | Bias | Avg/job | Result |
-| ----------------------------- | --- | ---------- | ---- | ----- | ------- | ------ |
-| qwen3:8b                      | 50% | 20%        | 23.1 | +23.1 | 81.2s   | PASS   |
-| wizardlm2:latest (~7B)        | 40% | 0%         | 36.7 | +23.7 | 23.5s   | PASS   |
-| mistral-openorca:7b           | 40% | 0%         | 31.5 | +29.5 | 14.1s   | PASS   |
-| dolphin-llama3:latest (~8B)   | 40% | 0%         | 37.0 | +37.0 | 13.5s   | PASS   |
-| llama2:7b                     | 40% | 0%         | 38.5 | +37.5 | 15.6s   | PASS   |
-| mistral-nemo:latest (~12B)    | 20% | 0%         | 37.1 | +21.9 | 26.5s   | FAIL   |
-| qwen2.5:7b-instruct           | 20% | 0%         | 35.2 | +11.4 | 14.4s   | FAIL   |
-| qwen2.5:14b-instruct-q4_K_M  | 10% | 0%         | 31.2 | +16.4 | 29.4s   | FAIL   |
+Then I came across llama.cpp and llama-server as runtimes instead of Ollama. This meant getting new GGUF models (Ollama models aren't compatible), but the speed difference was immediately obvious:
 
-qwen3:8b leads local models at 50% accuracy — the only local model that showed any `bad_fit` reasoning — but carries two caveats: 81.2s/job is the slowest survivor, and 20% parse failures suggest it still occasionally chokes on JSON output. If parse failures persist into qualifying, it won't survive Round 2.
+| Runtime   | Model     | Acc | Speed  | Parse failures |
+| --------- | --------- | --- | ------ | -------------- |
+| Ollama    | qwen3:8b  | 50% | 81.2s  | 20%            |
+| llama.cpp | qwen3:8b  | 50% | 14.1s  | 0%             |
 
-The three 40% local passes (mistral-openorca, dolphin-llama3, llama2:7b) passed by the skin of their teeth. All three predicted `good_fit` for every single job — they got 40% by correctly labelling the actual good_fits, while completely ignoring `maybe` (0/3) and `bad_fit` (0/3). These are "yes-man" models, not scorers.
+Same model, same accuracy, **5.8× faster**, zero parse failures. That extra headroom also opens the door to using bigger models than what I could previously run on Ollama, and potentially running multiple jobs in parallel.
 
-qwen2.5:14b-instruct-q4_K_M is the biggest surprise: the largest local model tested scored the worst label accuracy of any non-cloud model (10%). Aggressive q4_K_M quantization likely degraded instruction-following to the point where the model size advantage was erased.
+It wasn't completely smooth though. Running Qwen3 through llama-server, the model started returning empty `{}` responses — valid JSON but no actual content. The issue was Qwen3's thinking mode: the model was spending all its tokens on internal reasoning (`<think>` blocks) and the JSON grammar sampler was only getting the leftovers. Fixed by injecting `/no_think` as a system message. I also hit GPU OOM from prompt cache accumulation — llama-server was caching prompts across slots (~175 MB each), and after 5 jobs it had 781 MB of useless cache that crashed the process. Fixed with `--no-cache-prompt` since each job is independent anyway.
 
-#### Small local models — sub-5B (0 passed, 5 eliminated)
+### Ditching Promptfoo and the tournament
 
-| Model | Acc | Parse Fail | MAE | Bias | Avg/job | Result |
-| -------------------- | --- | ---------- | ---- | ----- | ------- | ------ |
-| qwen3:1.7b           | 30% | 20%        | 31.5 | +31.5 | 29.3s   | FAIL   |
-| granite4:350m        | 30% | 0%         | 31.5 | -8.5  | 1.9s    | FAIL   |
-| ministral-3:3b       | 20% | 0%         | 36.5 | -8.5  | 11.0s   | FAIL   |
-| granite4:latest      | 20% | 0%         | 36.0 | +26.0 | 8.8s    | FAIL   |
-| llama3.2:1b          | 20% | 0%         | 45.0 | +45.0 | 3.9s    | FAIL   |
+At this point I realised the speed improvement changed everything. The tournament was a solution to Ollama's latency — if each job takes 80 seconds, you need to be clever about which models you test. But at 14 seconds per job, I could just test everything. A 10-job eval gives a pretty accurate picture of model performance, and now it only takes 2 minutes instead of 13.
 
-No sub-5B model survived. The accuracy ceiling for this task seems to be around 30% at this scale — comparable to random guessing.
+So I rebuilt the whole eval pipeline. Promptfoo doesn't support node-llama-cpp as a provider — it talks to HTTP APIs, not native bindings. I had a choice: write a custom Promptfoo provider plugin, or just build my own eval runner. I built `eval-runner.ts` — it reads the same Promptfoo config YAML (keeping the nice schema and test format) but runs inference directly through node-llama-cpp. Grammar-constrained decoding means 0% parse failures — the model can only produce tokens that form valid JSON matching the expected schema. Parse failures had been a constant headache with Ollama; with grammar constraints they just disappeared.
 
-Notable: **granite4:350m** was the fastest model tested at 1.9s/job, produced valid JSON on every run, and — uniquely — was one of only two models with a negative score bias (-8.5), meaning it was slightly conservative rather than optimistic. Impressive behaviour for a 350M model, but 30% accuracy isn't enough to pass the threshold.
+I deleted `tournament.ts` (1,235 lines of Ollama client code, llama-server spawning, and 3-round tournament logic) and replaced it with `eval-runner.ts` (~500 lines). Promptfoo is still in the project — I use it for the YAML config schema and test generation — just not as the runtime anymore.
 
-**llama3.2:1b** didn't fail on JSON parsing — it produced syntactically valid JSON every time — but the label fields contained literal strings like `"good_fit|maybe|bad_fit"` (copied from the prompt format instructions) and `"Role & Seniority"` (copied from the rubric). It was parroting the prompt rather than reasoning. A fundamentally different failure mode: parse success, semantic failure.
+### Baseline results (node-llama-cpp)
 
-**qwen3 family scaling**: qwen3:1.7b scored 30% vs qwen3:8b's 50%, confirming a clear size effect within the same model family. The 1.7B variant was also slower (29.3s vs 81.2s) — likely because it struggles more per token, not because it does more work.
+Re-ran all candidates through node-llama-cpp with grammar-constrained JSON. 10 jobs, seed 42, balanced sampling.
 
-#### Key cross-cutting findings
+| #  | Model                      | Params | Acc     | MAE      | Bias     | Speed  |
+| -- | -------------------------- | ------ | ------- | -------- | -------- | ------ |
+| 1  | **gemma-3-4b-it**          | 4B     | **60%** | **26.8** | +26.8    | 11.7s  |
+| 2  | qwen3-8b-official          | 8B     | 50%     | 36.0     | +36.0    | 25.1s  |
+| 3  | qwen3-4b-instruct-2507     | 4B     | 50%     | 35.0     | +35.0    | 16.8s  |
+| 4  | meta-llama-3.1-8b          | 8B     | 40%     | 36.0     | +16.4    | 19.8s  |
+| 5  | ministral-3-8b-2512        | 8.4B   | 30%     | **24.5** | +7.5     | 22.4s  |
+| 6  | qwen2.5-7b-instruct        | 7.6B   | 30%     | 30.4     | **-2.6** | 16.0s  |
+| 7  | glider (PatronusAI)        | 3.8B   | 30%     | 31.6     | +23.4    | 29.7s  |
+| 8  | mistral-7b-instruct        | 7B     | 10%     | 22.8     | +5.2     | 16.7s  |
 
-- **Positive score bias is near-universal**: 14 of 16 models systematically over-scored. Bias ranged from +11 to +45. Only granite4:350m and ministral-3:3b had negative bias. Models that over-score are dangerous for this use case — the whole point is to filter out bad jobs, so a model that rates everything as "good" is useless regardless of parse-level metrics.
-- **`maybe` is a dead class**: Only minimax-m2.5:cloud correctly classified any `maybe` jobs (3/3). Every other survivor mapped `maybe` entirely to `good_fit`. This will matter in qualifying — if a model can't distinguish nuance, it won't be useful.
-- **Model size does not predict quality**: The largest local model (14B) had the worst accuracy. The 350M model had better JSON reliability than several 7B models. The best result came from a cloud model of unknown effective size.
-- **Cloud ≠ automatically better**: cloud APIs can fail completely (100% parse error) while a ~8B local model scores 50%. Connectivity and output format compatibility matter.
+**Gemma-3-4B-IT** is the clear winner — and it wasn't even supposed to be. It's the only model with both 100% good_fit detection and non-zero bad_fit detection. Every other model is either a "yes-man" that approves everything or a pessimist that rejects everything:
 
-### Round 2 — Qualifying (survivors, 30 jobs)
+| Model              | good_fit (of 4) | maybe (of 3) | bad_fit (of 3) |
+| ------------------ | --------------- | ------------ | -------------- |
+| **gemma-3-4b-it**  | 4/4 (100%)      | 1/3 (33%)    | 1/3 (33%)      |
+| qwen3-8b           | 4/4 (100%)      | 1/3 (33%)    | 0/3 (0%)       |
+| ministral-3-8b     | 0/4 (0%)        | 1/3 (33%)    | 2/3 (67%)      |
+| qwen2.5-7b         | 0/4 (0%)        | 2/3 (67%)    | 1/3 (33%)      |
 
-Surviving models face **30 stratified jobs** — enough data for statistically meaningful accuracy readings.
+A few other things I found along the way: thinking mode (`think` vs `no_think`) never helped on any model — zero accuracy improvement, up to 38% slower. Model size doesn't predict quality — the 4B Gemma beat every 7B and 8B model tested. And Ministral has the best score calibration (24.5 MAE) and best bad_fit detection (67%) but can't recognise a good job to save its life — worth revisiting with prompt work.
 
-**Drop if:**
+### Verdict
 
-- Label accuracy < 55%
-- Score MAE > 30
-- Parse failure > 10%
-- Average time > 60 seconds per job
-
-Expected: cuts to ~5–7 models in **~1–2 hours**.
-
-```bash
-npm run tournament:qualifying
-# Results → results/tournament/qualifying/
-```
-
-### Round 3 — Full Eval (finalists, all 103 jobs)
-
-Only the ~5–7 survivors run against the full golden set. Uses the existing `eval-tagged` infrastructure for full metrics and result snapshots.
-
-```bash
-npm run tournament:full
-# Results → results/runs/ (via eval-tagged)
-```
-
-### Auto mode — run all 3 rounds unattended
-
-```bash
-npm run tournament:auto
-# Chains smoke → qualifying → full, passing survivors forward automatically
-```
-
-**Time comparison:**
-
-| Approach               | Inferences | Est. Time  |
-| ---------------------- | ---------- | ---------- |
-| Brute force (21 × 103) | ~2,100     | 8–12 hours |
-| Tournament (likely)    | ~960       | 3–5 hours  |
-
-Thresholds for each round are tunable in `configs/tournament_thresholds.json`.
-
-**Engineering notes (Phase 2):**
-
-- **Prompt-to-golden mismatch (critical bug)**: All 4 scoring prompts (`promptfooconfig.yaml` + `prompts/scorer_v*.txt`) had wrong label thresholds and were missing key rubric dimensions (e.g., wrong bad_fit boundary at 39 instead of 49, missing AI/ML +10 bonus, wrong compensation scale). Would have made all eval metrics meaningless — models scored against a different rubric than the golden labels. Fixed by rewriting all prompts to match the golden rubric exactly before running any evals.
-- **Ollama OOM crashes mid-run ("fetch failed")**: Models like qwen3:8b default to a 40,960-token context window, which pre-allocates ~11 GB KV cache on a 16 GB machine. After 2–3 successful jobs, Ollama would crash, causing all subsequent calls to fail with `fetch failed`. Fix: set `num_ctx: 4096` — sufficient for job scoring since each call is stateless and prompts are ~1500–2000 tokens. **Before vs after (qwen3:8b):** crashed at job 4 (early exit, 0 jobs completed) → completed all 10 jobs at 81.2 s/job avg. KV cache dropped from ~11 GB to ~3–4 GB. **qwen2.5:7b-instruct** benefited most from the smaller allocation: all 10 jobs completed at 14.4 s/job avg with 0 parse failures.
-- **Fail-fast logic gap**: Initial logic only caught 100% failure rates (`parseFails === testsCompleted`). Partial failures (2 successes then crash) weren't caught, wasting time. Added `consecutiveErrors >= 3` bail-out to detect mid-run Ollama crashes.
-- **Model memory bleeding between tests**: Previous models stayed resident in Ollama RAM while the next model loaded, causing OOM. Fixed with `keep_alive: 0` (Ollama API param to immediately evict the model from memory after use).
-- **qwen2.5:14b is a hard hardware limit**: 9 GB model on a 16 GB system fails consistently. Graceful failure is handled; no code change can fix a RAM ceiling. Noted as a threshold for what hardware class this system requires.
-- **Brute-force was infeasible**: 21 models × 103 jobs = ~2,100 inferences at 30–120 s/job = potentially 12+ hours, with the worst models consuming the same time as the best. Tournament cut this to ~960 inferences with early results after 30–60 minutes.
-
-**Metrics captured per model:**
-
-| Metric             | Why it matters                            |
-| ------------------ | ----------------------------------------- |
-| Label accuracy     | % of labels matching your ground truth    |
-| Score MAE          | Mean absolute error vs your golden scores |
-| Parse failure rate | % of outputs that aren't valid JSON       |
-| Avg time per job   | End-to-end latency (seconds)              |
+After testing and benchmarking tens of models across three runtimes and running hundreds of eval tests, I've gathered enough data to make decisions about which model to tune and what their weaknesses are. The prompt is still the bottleneck — all models struggle with the same failure modes. So I'll start optimising my prompt to get as much as possible from Gemma and see how far it can go before fine-tuning.
 
 ---
 
-## Phase 3 — Prompt Optimization
+## What's Next
 
-For the surviving models, iterate on:
+1. **Prompt engineering** — Gemma gets 60% with a basic prompt. Few-shot examples for bad_fit detection (the -50 location penalty, the -30 salary penalty) should push it past 70%.
+2. **Fine-tune Qwen3:8B** as the teacher model on the full golden set.
+3. **Distill to Granite4:350M** — run the teacher on a large batch, train the student on teacher outputs.
+4. **Measure the distillation gap** and iterate.
 
-1. **Few-shot examples** — include 2–3 examples from the golden set directly in the prompt. Biggest single accuracy boost for small models.
-2. **Temperature** — try 0.0, 0.3, 0.7. Lower = more consistent JSON, less hallucination.
-3. **Rubric clarity** — explicit scoring rubric with point breakdowns (see `prompts/scorer_v2.txt`).
-4. **Chain-of-thought** — internal reasoning before final answer (see `prompts/scorer_v3_cot.txt`).
+---
 
-Each iteration is tagged and tracked:
+## Running It
 
 ```bash
-npm run eval:tagged -- --tag v2_stack_weighting
-npm run eval:tagged -- --tag v3_few_shot
-npm run eval:tagged -- --tag v4_temp0_cot
+# Build test sets from golden data
+npm run golden:sample -- --input data/jobs_export.jsonl --count 100 --seed 42
+npm run golden:validate:strict
 
-npm run iterations:summary
+# Run eval (node-llama-cpp, auto-downloads models)
+npm run eval:runner
+
+# Tagged eval run (snapshots config + results)
+npm run eval:tagged -- --tag "prompt-v2"
+
+# Compare runs
+npm run compare:runs
 ```
-
-Each tagged run saves: eval results, prompt snapshots, run metadata, and a log row in `results/iteration_log.csv`.
-
-**Keep the top 2–3 models after this phase.**
-
----
-
-## Phase 4 — Synthetic Training Data (Claude as Labeler)
-
-Pull 500–2000 job descriptions from your jobs DB and send them through Claude to generate high-quality labeled data at scale.
-
-**Cost:** ~$1.50–$5 for 1000 jobs using Claude Haiku (~500 token avg JD).
-
-**Output schema** — same as golden_jobs, minus manual fields:
-
-```jsonc
-{ "job_id": "...", "jd_text": "...", "label": "...", "score": ..., "reasoning": "..." }
-```
-
-```bash
-npm run generate:synthetic -- --input data/jobs_export.jsonl --count 1000
-# Resumable — skips already-processed records
-# Output → data/synthetic_labels.jsonl
-```
-
-**Combine** golden (hand-labeled, ~80) + synthetic (Claude-labeled, ~1000) → `data/training_data.jsonl`.
-
-The golden set is weighted more heavily during fine-tuning since it reflects your actual judgement.
-
----
-
-## Phase 5 — Fine-tuning
-
-Take the best small model from Phase 3 (likely Phi-3 Mini, Llama 3.2 3B, or Gemma 2 2B) and fine-tune it using LoRA on the training data.
-
-**Tool: [Unsloth](https://github.com/unslothai/unsloth)**
-
-- 2× faster than vanilla HuggingFace training
-- 60% less VRAM — works on a laptop or free Colab GPU
-- Exports directly to GGUF for Ollama
-
-**Training data format (instruction tuning):**
-
-```json
-{
-  "instruction": "Score this job for the candidate profile below.\n\n[profile]",
-  "input": "[jd_text]",
-  "output": "{\"label\":\"good_fit\",\"score\":78,\"reasoning\":\"...\"}"
-}
-```
-
-```bash
-# Format training data
-python training/format_training_data.py
-
-# Fine-tune (run in Colab or locally with GPU)
-python training/finetune.py
-
-# Load into Ollama
-ollama create job-scorer -f training/Modelfile
-```
-
-**Experiment tracking:** [Weights & Biases](https://wandb.ai) — free, auto-generates loss curves and model comparison charts.
-
----
-
-## Phase 6 — Final Showdown
-
-Benchmark three things head-to-head on the golden 80:
-
-| Model                   | Accuracy | Score MAE | Speed  | RAM    | Cost/job |
-| ----------------------- | -------- | --------- | ------ | ------ | -------- |
-| Claude Haiku (API)      | baseline | baseline  | fast   | 0      | ~$0.003  |
-| Best Ollama baseline    | ?        | ?         | medium | 4–8 GB | free     |
-| Fine-tuned custom model | ?        | ?         | fast   | 2–4 GB | free     |
-
-The story: **a 3B model fine-tuned on Claude's output nearly matches Claude's accuracy, runs locally for free.**
-
-```bash
-npm run benchmark:final
-# Results → results/final_showdown/
-```
-
----
-
-## Project Structure
-
-```text
-ai_eval_harness/
-├── data/
-│   ├── golden_jobs.jsonl          # Hand-labeled ground truth (80–100 records)
-│   ├── synthetic_labels.jsonl     # Claude-generated training labels
-│   ├── training_data.jsonl        # Combined (golden + synthetic)
-│   └── promptfoo_tests.yaml       # Generated — Promptfoo test cases
-├── prompts/
-│   ├── scorer_v1.txt              # Baseline prompt
-│   ├── scorer_v2.txt              # Rubric-based prompt
-│   └── scorer_v3_cot.txt          # Chain-of-thought prompt
-├── configs/
-│   └── tournament_thresholds.json # Tunable pass/fail thresholds per round
-├── results/
-│   ├── tournament/                # Phase 2 tournament rounds (smoke/qualifying/full)
-│   ├── runs/                      # Tagged iteration runs
-│   ├── iteration_log.csv          # Run history
-│   └── final_showdown/            # Phase 6 comparison
-├── src/cli/
-│   ├── sample-golden-from-export.ts
-│   ├── validate-golden.ts
-│   ├── build-promptfoo-tests.ts
-│   ├── sample-test-subset.ts    # Stratified subset sampler for tournament rounds
-│   ├── tournament.ts            # Tournament runner (smoke → qualifying → full)
-│   ├── eval-tagged.ts
-│   └── summarize-iterations.ts
-├── training/
-│   ├── format_training_data.py    # Prepares Unsloth input
-│   ├── finetune.py                # Unsloth LoRA training script
-│   └── Modelfile                  # Ollama model definition
-├── docs/
-│   └── week1_week2_checklist.md
-└── promptfooconfig.yaml
-```
-
----
-
-## Requirements
-
-- Node.js 20+
-- Ollama with models pulled (for Phase 2/3)
-- Python 3.10+ with Unsloth (for Phase 5)
-- `ANTHROPIC_API_KEY` env var (for Phase 4 synthetic labeling)
-
-```bash
-npm install
-```
-
----
-
-## Commands Reference
-
-| Command                               | Description                                              |
-| ------------------------------------- | -------------------------------------------------------- |
-| `npm run golden:sample`               | Sample records from a jobs export                        |
-| `npm run golden:validate`             | Validate golden dataset schema                           |
-| `npm run golden:validate:strict`      | Validate with strict size (80–100 rows)                  |
-| `npm run promptfoo:tests`             | Build Promptfoo test cases from golden data              |
-| `npm run week1:baseline`              | Run baseline eval (validates + builds tests + runs eval) |
-| `npm run eval:tagged -- --tag <name>` | Run a tagged iteration                                   |
-| `npm run iterations:summary`          | Show recent run history                                  |
-| `npm run tournament:smoke`            | Round 1 — all models vs 10 jobs, drop failures           |
-| `npm run tournament:qualifying`       | Round 2 — survivors vs 30 jobs, tighten thresholds       |
-| `npm run tournament:full`             | Round 3 — finalists vs all 103 jobs                      |
-| `npm run tournament:auto`             | Run all 3 rounds back-to-back                            |

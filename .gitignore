@@ -6,3 +6,5 @@ results/**/*.json
 results/**/*.html
 .DS_Store
 .claude
+models/
+data/promptfoo_tests_eval.yaml
