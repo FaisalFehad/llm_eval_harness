@@ -27,14 +27,14 @@
     "golden:validate": "tsx src/cli/validate-golden.ts --input data/golden_jobs.jsonl",
     "golden:validate:strict": "tsx src/cli/validate-golden.ts --input data/golden_jobs.jsonl --min-size 80 --max-size 100 --strict-size",
     "promptfoo:tests": "tsx src/cli/build-promptfoo-tests.ts --input data/golden_jobs.jsonl --output data/promptfoo_tests.yaml",
-    "eval": "tsx src/cli/eval-runner.ts",
-    "eval:quick": "tsx src/cli/eval-runner.ts --jobs 10",
-    "eval:full": "tsx src/cli/eval-runner.ts --jobs 103",
+    "eval": "tsx --expose-gc src/cli/eval-runner.ts",
+    "eval:quick": "tsx --expose-gc src/cli/eval-runner.ts --jobs 10",
+    "eval:full": "tsx --expose-gc src/cli/eval-runner.ts --jobs 103",
     "eval:tagged": "tsx src/cli/eval-tagged.ts",
     "iterations:summary": "tsx src/cli/summarize-iterations.ts",
     "compare": "tsx src/cli/compare-runs.ts",
     "golden:generate-fake": "tsx src/cli/generate-fake-golden.ts",
-    "prompt-lab": "tsx src/cli/prompt-lab.ts"
+    "prompt-lab": "tsx --expose-gc src/cli/prompt-lab.ts"
   },
   "keywords": [
     "typescript",

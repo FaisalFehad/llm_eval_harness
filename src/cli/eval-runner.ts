@@ -1,6 +1,7 @@
 import { spawnSync } from "node:child_process";
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 import { getLlama, LlamaChatSession, resolveModelFile } from "node-llama-cpp";
 import YAML from "yaml";
@@ -107,6 +108,7 @@ function getModelConfig(provider: string | ProviderConfig): {
   hfModel: string;
   temperature: number;
   noThink: boolean;
+  contextSize: number;
 } {
   if (typeof provider === "string") {
     throw new Error(
@@ -121,6 +123,7 @@ function getModelConfig(provider: string | ProviderConfig): {
     hfModel,
     temperature: typeof cfg.temperature === "number" ? cfg.temperature : 0,
     noThink: cfg.no_think === true,
+    contextSize: typeof cfg.context_size === "number" ? cfg.context_size : 4096,
   };
 }
 
@@ -550,7 +553,6 @@ export async function runEval(options: EvalOptions): Promise<EvalResults> {
   const jobs = await loadTestJobs(testFile);
   const promptTemplate = extractPromptTemplate(baseConfig.prompts);
   const perJobTimeoutMs = 420_000; // 7 min per job
-  const contextSize = 4096;
 
   // Initialize node-llama-cpp once
   console.log("Initializing llama.cpp runtime...");
@@ -571,7 +573,7 @@ export async function runEval(options: EvalOptions): Promise<EvalResults> {
     const provider = providers[i]!;
     const modelId = getProviderId(provider);
     const displayName = getDisplayName(provider);
-    const { hfModel, temperature, noThink } = getModelConfig(provider);
+    const { hfModel, temperature, noThink, contextSize } = getModelConfig(provider);
 
     console.log(`\n[${i + 1}/${providers.length}] Evaluating: ${displayName}`);
     console.log("-".repeat(40));
@@ -775,6 +777,10 @@ export async function runEval(options: EvalOptions): Promise<EvalResults> {
         earlyExitReason = earlyExitResult.reason;
         break;
       }
+
+      // Release memory between jobs to reduce RAM pressure
+      global.gc?.();
+      await new Promise((r) => setTimeout(r, 100));
     }
 
     // Dispose model from GPU memory before loading the next one
@@ -866,7 +872,11 @@ async function main(): Promise<void> {
   });
 }
 
-main().catch((error) => {
-  console.error(error instanceof Error ? error.message : String(error));
-  process.exit(1);
-});
+// Only run when this file is the direct entry point (not when imported by prompt-lab)
+const __filename = fileURLToPath(import.meta.url);
+if (process.argv[1] && path.resolve(process.argv[1]) === __filename) {
+  main().catch((error) => {
+    console.error(error instanceof Error ? error.message : String(error));
+    process.exit(1);
+  });
+}

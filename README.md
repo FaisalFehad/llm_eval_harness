@@ -12,7 +12,7 @@ The technique is **LLM knowledge distillation**: use a large model to generate h
 1. Ground truth dataset          ✅  103 hand-scored jobs with 4-category rubric
 2. Tournament model selection    ✅  20 models tested across 3 runtimes, narrowed to 1
 3. llama.cpp migration           ✅  5.8× faster than Ollama, 0% parse failures
-4. Prompt engineering            ⬜  Gemma-3-4B-IT, validated against harness
+4. Prompt engineering            ✅  Gemma-3-4B-IT (70%), Qwen3-4B (80%)
 5. Fine-tune teacher (Qwen3:8B)  ⬜  On 70 hand-scored jobs, eval against held-out 30
 6. Generate distillation data    ⬜  Run teacher on large batch of real jobs
 7. Train student (Granite:350M)  ⬜  On teacher outputs, measure distillation gap
@@ -162,9 +162,42 @@ After testing and benchmarking tens of models across three runtimes and running 
 
 ---
 
-## Prompt engineering
+# Prompt Optimisation
 
 Gemma-3-4B-IT tops out at **70% label accuracy** (v6c prompt, 10-job sample). Tested 5 prompt variants (v6–v9) — adding more examples, IF-THEN rules, or zero-point demonstrations all degraded accuracy. The remaining 30% misses are model-level limitations: hallucinating keywords not in the input, arithmetic errors on negative sums, and ignoring "Up to £X" comp rules. 70% appears to be this model's ceiling for prompt-only optimisation.
+
+### Qwen3-4B-Instruct-2507
+
+Tested Qwen3-4B as an alternative to Gemma, starting from the same v6 prompt that was Gemma's best. Qwen3-4B immediately outperformed Gemma — **80% label accuracy** on the first run vs Gemma's 70% ceiling — using the exact same prompt and rubric.
+
+| Version              | Prompt change                                         | Accuracy | MAE      | Bias      | Speed     | Status           |
+| -------------------- | ----------------------------------------------------- | -------- | -------- | --------- | --------- | ---------------- |
+| v9 (baseline)        | Gemma v6 prompt, no changes                           | **80%**  | 12.5     | +12.5     | 55.4s     | Best prompt      |
+| v10                  | Added CAUTION gate, Example C, empty-field extraction | 60%      | 14       | +14       | 111.3s    | Regressed        |
+| v11                  | v9 + rewording "Up to" rule only                      | 70%      | 15       | +15       | 27.4s     | Regressed        |
+| **v9 + infra fixes** | **Same v9 prompt, GC between jobs**                   | **80%**  | **12.5** | **+12.5** | **28.1s** | **Best overall** |
+
+**Key finding:** more verbose prompts hurt this 4B model. v10 added ~50% more prompt text and accuracy dropped by 20 percentage points. v11 changed a single line and still introduced a regression. The v9 baseline (identical to Gemma v6) remains the best prompt for both models.
+
+#### Issues and fixes
+
+**RAM pressure causing timeouts and degraded inference.** The first v10 run got 5/5 correct on completed jobs, then timed out at 421s on job 6. The second run completed all 10 but only hit 60% accuracy. Same prompt, different results — RAM pressure was degrading inference quality. Fixed by adding `global.gc?.()` + 100ms pause between jobs and `--expose-gc` to the tsx invocation. This cut latency from 55.4s to 28.1s per job — a **2× speedup**.
+
+**Context size truncation.** Reducing `context_size` from 4096 to 2048 caused accuracy to drop. The longest JD in the test set is 6,295 characters (~1,574 tokens); combined with the ~470-token prompt, total context hits ~2,044 tokens — right at the 2048 limit. Reverted to 4096.
+
+#### Remaining misses (2/10)
+
+Both misses are consistent across all runs — the model gets them wrong every time regardless of prompt wording:
+
+1. **Spencer Inc** (expected: maybe 50, predicted: good_fit 75): The model's reasoning is correct — it computes loc=10, role=0, tech=15, comp=25 = 50 = maybe. But its JSON output says 75/good_fit. This is a reasoning-to-output mismatch: the model talks itself to the right answer then writes the wrong number.
+
+2. **Fintech "Up to £150K"** (expected: bad_fit 25, predicted: good_fit 90): The model ignores the "Up to £X = comp 0" rule entirely, treating "Up to £170K" as a £170K midpoint and scoring comp=25. Three different prompt wordings for this rule all failed — the model simply doesn't apply negative/zero-scoring rules to high-looking numbers.
+
+Both are model-level limitations, not prompt issues — candidates for fine-tuning.
+
+#### Results
+
+Qwen3-4B-Instruct-2507 with the v9 prompt is the best local model tested so far: **80% accuracy at 28s/job**, beating Gemma's 70% ceiling with the same prompt. The remaining 20% errors are model-level limitations (reasoning/output mismatch, ignoring zero-score rules) that prompt engineering alone can't fix. I would like to try my luck with a larger model, hopefully it will be better at applying the rules and doing arithmetic, but for now Qwen3-4B has gone a long way!.
 
 ---
 
