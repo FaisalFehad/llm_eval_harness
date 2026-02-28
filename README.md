@@ -223,6 +223,30 @@ v10 added explicit if/then keyword matching with worked examples for the exact f
 
 Model size doesn't help here — the 8B Llama is worse than the 4B Qwen at this task. Not worth further prompt iteration.
 
+### Qwen2.5-7B-Instruct
+
+Tested Qwen2.5-7B as a middle ground — same architecture family as the winning Qwen3-4B but larger (7B) and an older generation. Previously scored 30% in the baseline tournament with the old prompt.
+
+| Version       | Prompt change                                          | Accuracy | MAE  | Bias | Speed | Status  |
+| ------------- | ------------------------------------------------------ | -------- | ---- | ---- | ----- | ------- |
+| v9 (baseline) | Gemma v6 prompt, no changes                            | 70%      | 10.5 | +8.5 | 21.5s | Best    |
+| v10           | Stricter comp rules, "Up to" example, 4 CRITICAL rules | 70%      | 12.0 | +6.0 | 23.5s | No gain |
+
+**Key finding:** v9 jumped from 30% → 70% (the structured prompt is doing most of the work). Bias is positive (+8.5) like Qwen3-4B, but the model has two unfixable problems:
+
+1. **Salary hallucination** — fabricates GBP salary figures for jobs that don't have them (Oracle US job predicted as having "£79,800-£178,100")
+2. **Ignores "Up to £X" rule** — despite a worked example showing exactly this pattern (Owen Thomas, +60 error), the model still scores comp=25
+
+v10 added CRITICAL rules and Example C targeting these failures. Result: fixed Happl but regressed Lead DevOps — net zero. The Owen Thomas miss (+60 error) persisted unchanged, proving the model can't learn this rule from prompt alone.
+
+| Model | Size | Best Accuracy | MAE | Key weakness |
+| --- | --- | --- | --- | --- |
+| Qwen3-4B-Instruct-2507 | 4B | **80%** | 12.5 | "Up to £X" overscoring |
+| Qwen2.5-7B-Instruct | 7B | 70% | 10.5 | Salary hallucination |
+| Meta-Llama-3.1-8B-Instruct | 8B | 60% | 15.5 | Can't detect keywords |
+
+Qwen3-4B remains the winner — smaller, faster, and more accurate than both larger models.
+
 ---
 
 ## Running It
