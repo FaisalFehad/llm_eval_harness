@@ -199,6 +199,30 @@ Both are model-level limitations, not prompt issues — candidates for fine-tuni
 
 Qwen3-4B-Instruct-2507 with the v9 prompt is the best local model tested so far: **80% accuracy at 28s/job**, beating Gemma's 70% ceiling with the same prompt. The remaining 20% errors are model-level limitations (reasoning/output mismatch, ignoring zero-score rules) that prompt engineering alone can't fix. I would like to try my luck with a larger model, hopefully it will be better at applying the rules and doing arithmetic, but for now Qwen3-4B has gone a long way!.
 
+### Meta-Llama-3.1-8B-Instruct
+
+Tested Llama 3.1 8B as a larger (8B) alternative, hoping the extra parameters would help with rule-following and arithmetic. Previously scored 40% in the baseline tournament — started from the same v9 prompt.
+
+| Version       | Prompt change                                    | Accuracy | MAE  | Bias  | Speed  | Status  |
+| ------------- | ------------------------------------------------ | -------- | ---- | ----- | ------ | ------- |
+| v9 (baseline) | Gemma v6 prompt, no changes                      | 60%      | 15.5 | -15.5 | 23.1s  | Best    |
+| v10           | Explicit if/then keyword matching + 4 examples   | 60%      | 18.5 | -14.5 | 20.9s  | No gain |
+
+**Key finding:** Llama 3.1 8B has the opposite problem to Qwen — it **underscores** (bias -15.5) instead of overscoring (+12.5). It has perfect bad_fit detection (3/3) and correctly handles the "Up to £X = comp 0" rule that Qwen can't learn. But it can't reliably detect keywords in job titles — scoring "Senior Backend Engineer" as role=0 and "London Area, United Kingdom" as loc=0.
+
+| Trait              | Qwen3-4B       | Llama 3.1 8B   |
+| ------------------ | -------------- | -------------- |
+| Accuracy           | **80%**        | 60%            |
+| Bias               | +12.5          | -15.5          |
+| good_fit recall    | **4/4 (100%)** | 1/4 (25%)      |
+| bad_fit recall     | 2/3 (67%)      | **3/3 (100%)** |
+| "Up to £X" rule    | Ignores it     | **Correct**    |
+| Keyword matching   | **Solid**      | Broken         |
+
+v10 added explicit if/then keyword matching with worked examples for the exact failing patterns ("Senior Backend Engineer" → 25, "Lead DevOps Architect" → 25). This fixed role detection for some jobs but broke tech stack scoring for others — net zero. The ScaleXP failure is particularly bad: the model scores 0 on a job where the title is "Senior Backend Engineer" and the location is "London Area, United Kingdom" — it can't even read the input fields.
+
+Model size doesn't help here — the 8B Llama is worse than the 4B Qwen at this task. Not worth further prompt iteration.
+
 ---
 
 ## Running It
