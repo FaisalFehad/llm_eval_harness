@@ -12,7 +12,7 @@ The technique is **LLM knowledge distillation**: use a large model to generate h
 1. Ground truth dataset          ✅  103 hand-scored jobs with 4-category rubric
 2. Tournament model selection    ✅  20 models tested across 3 runtimes, narrowed to 1
 3. llama.cpp migration           ✅  5.8× faster than Ollama, 0% parse failures
-4. Prompt engineering            ✅  Gemma-3-4B-IT (70%), Qwen3-4B (80%)
+4. Prompt engineering            ✅  5 models tested, Qwen3-4B best (80%)
 5. Fine-tune teacher (Qwen3:8B)  ⬜  On 70 hand-scored jobs, eval against held-out 30
 6. Generate distillation data    ⬜  Run teacher on large batch of real jobs
 7. Train student (Granite:350M)  ⬜  On teacher outputs, measure distillation gap
@@ -162,7 +162,11 @@ After testing and benchmarking tens of models across three runtimes and running 
 
 ---
 
-# Prompt Optimisation
+## Phase 4 — Prompt Engineering
+
+Starting from the v9 prompt (the best from Gemma optimization), each model was tested with the same baseline, then iterated with targeted prompt changes until accuracy plateaued. The pattern: most models hit ceiling on v9 itself — additional prompt complexity consistently degraded accuracy on small models.
+
+### Gemma-3-4B-IT
 
 Gemma-3-4B-IT tops out at **70% label accuracy** (v6c prompt, 10-job sample). Tested 5 prompt variants (v6–v9) — adding more examples, IF-THEN rules, or zero-point demonstrations all degraded accuracy. The remaining 30% misses are model-level limitations: hallucinating keywords not in the input, arithmetic errors on negative sums, and ignoring "Up to £X" comp rules. 70% appears to be this model's ceiling for prompt-only optimisation.
 
@@ -239,13 +243,31 @@ Tested Qwen2.5-7B as a middle ground — same architecture family as the winning
 
 v10 added CRITICAL rules and Example C targeting these failures. Result: fixed Happl but regressed Lead DevOps — net zero. The Owen Thomas miss (+60 error) persisted unchanged, proving the model can't learn this rule from prompt alone.
 
-| Model | Size | Best Accuracy | MAE | Key weakness |
-| --- | --- | --- | --- | --- |
-| Qwen3-4B-Instruct-2507 | 4B | **80%** | 12.5 | "Up to £X" overscoring |
-| Qwen2.5-7B-Instruct | 7B | 70% | 10.5 | Salary hallucination |
-| Meta-Llama-3.1-8B-Instruct | 8B | 60% | 15.5 | Can't detect keywords |
+70% is this model's ceiling — same issues as other models, just different flavours.
 
-Qwen3-4B remains the winner — smaller, faster, and more accurate than both larger models.
+### WizardLM-2-7B
+
+Tested WizardLM-2-7B as a creative/reasoning-oriented alternative. Previously scored 40% in the baseline tournament.
+
+| Version | Prompt change | Accuracy | MAE | Bias | Speed | Status |
+| --- | --- | --- | --- | --- | --- | --- |
+| v9 (baseline) | Gemma v6 prompt, no changes | 60% | 20.0 | +20.0 | 23.0s | Yes-man |
+
+**Key finding:** the model is a **yes-man** — all 5 completed predictions were identical: score 90, good_fit, with the reasoning copy-pasted verbatim from Example A ("Senior role in London with Node.js/TS and £100k midpoint salary"). Only 5 of 10 jobs completed before timeout.
+
+The model isn't applying the scoring rubric — it's parroting the worked example regardless of input. This is worse than overscoring; it's zero discrimination between jobs. Not worth iterating.
+
+### Cross-model comparison
+
+| Model | Size | Best Accuracy | MAE | Bias | Key weakness |
+| --- | --- | --- | --- | --- | --- |
+| **Qwen3-4B-Instruct-2507** | 4B | **80%** | 12.5 | +12.5 | "Up to £X" overscoring |
+| Gemma-3-4B-IT | 4B | 70% | 26.8 | +26.8 | Keyword hallucination, arithmetic |
+| Qwen2.5-7B-Instruct | 7B | 70% | 10.5 | +8.5 | Salary hallucination |
+| Meta-Llama-3.1-8B-Instruct | 8B | 60% | 15.5 | -15.5 | Can't detect keywords |
+| WizardLM-2-7B | 7B | 60% | 20.0 | +20.0 | Yes-man (parrots example) |
+
+Model size doesn't predict accuracy — the 4B Qwen3 beats every 7B and 8B model. All models share the same v9 prompt baseline; additional prompt complexity consistently hurts small models. The remaining errors are model-level limitations (hallucination, arithmetic, rule-ignoring) that only fine-tuning can address.
 
 ---
 
