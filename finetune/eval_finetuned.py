@@ -169,9 +169,20 @@ def main():
                         help="Path to adapter checkpoint (omit for baseline)")
     parser.add_argument("--test-file", type=str, default=DEFAULT_TEST_FILE,
                         help=f"JSONL file with test jobs (default: {DEFAULT_TEST_FILE})")
+    parser.add_argument("--prompt", type=str, default=None,
+                        help="Path to prompt template .txt file (omit to use built-in default)")
     parser.add_argument("--verbose", action="store_true",
                         help="Print each prediction")
     args = parser.parse_args()
+
+    # Load prompt template (file overrides built-in default)
+    prompt_template = PROMPT_TEMPLATE
+    if args.prompt:
+        with open(args.prompt) as f:
+            prompt_template = f.read()
+        print(f"Prompt: {args.prompt}")
+    else:
+        print("Prompt: built-in default")
 
     # Resolve adapter path to directory (mlx_lm expects the adapters dir)
     adapter_path = None
@@ -205,11 +216,20 @@ def main():
     parse_failures = 0
 
     for i, job in enumerate(test_examples, 1):
-        prompt_text = PROMPT_TEMPLATE.format(
-            job_title=job["title"],
-            job_location=job.get("location", ""),
-            jd_text=job["jd_text"],
-        )
+        # File-based prompts use {{variable}} (promptfoo style) — use replace() to
+        # avoid conflicts with JSON curly braces in worked examples.
+        # Built-in PROMPT_TEMPLATE uses {variable} (Python format style).
+        if args.prompt:
+            prompt_text = (prompt_template
+                .replace("{{job_title}}", job["title"])
+                .replace("{{job_location}}", job.get("location", ""))
+                .replace("{{jd_text}}", job["jd_text"]))
+        else:
+            prompt_text = prompt_template.format(
+                job_title=job["title"],
+                job_location=job.get("location", ""),
+                jd_text=job["jd_text"],
+            )
 
         messages = [
             {"role": "system",  "content": "/no_think"},
@@ -235,7 +255,7 @@ def main():
 
         if parsed is None:
             parse_failures += 1
-            print(f"[{i:2d}] PARSE FAIL — {job['title'][:50]}")
+            print(f"[{i:2d}/{len(test_examples)}] PARSE FAIL — {job['title'][:50]}")
             print(f"      Raw output: {response[:100]}")
             results.append({"label_match": False, "parse_fail": True,
                              "golden_label": job["label"]})
@@ -246,11 +266,14 @@ def main():
         results.append(scored)
 
         status = "✓" if scored["label_match"] else "✗"
+        correct_so_far = sum(r["label_match"] for r in results if not r.get("parse_fail"))
+        running_pct = correct_so_far / i * 100
         if args.verbose or not scored["label_match"]:
-            print(f"[{i:2d}] {status} {job['title'][:45]:<45} "
+            print(f"[{i:2d}/{len(test_examples)}] {status} {job['title'][:40]:<40} "
                   f"golden={job['label']:<10} pred={scored['pred_label']:<10} "
                   f"loc={scored['pred_loc']} role={scored['pred_role']} "
-                  f"tech={scored['pred_tech']} comp={scored['pred_comp']}")
+                  f"tech={scored['pred_tech']} comp={scored['pred_comp']}  "
+                  f"({running_pct:.0f}%)")
 
     # ── Summary ───────────────────────────────────────────────────────────────
     n = len(results)
