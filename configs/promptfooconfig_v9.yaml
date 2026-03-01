@@ -1,14 +1,12 @@
 # yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
 
-description: "Job-fit scorer — v11 — qwen3-4b-instruct-2507 — v9 baseline + stronger 'Up to' rule + GC fixes"
+description: "Job-fit scorer — v9 — v6c base (2 examples) + IF-THEN label rules"
 
 # ---------------------------------------------------------------------------
-# Prompt — v11
-# Changes from v9:
-#   1. Strengthened "Up to £X" = 0 rule (extra clarifying line, no verbose gate)
+# Prompt — v9
 # ---------------------------------------------------------------------------
 prompts:
-  - label: "job-fit-scorer-v11"
+  - label: "job-fit-scorer-v9"
     raw: |
       You are a mechanical job-fit scorer. Follow every rule exactly. Score ONLY what is explicitly written. Do NOT infer or assume.
 
@@ -52,7 +50,7 @@ prompts:
 
       Converting "k" notation: £100k = £100,000. £80k-£120k = £80,000-£120,000.
       - If a range is given (e.g. £80,000-£120,000), use the midpoint.
-      - "Up to £X" or "to £X" (no lower bound) is NOT a range. comp = 0.
+      - "Up to £X" with no lower bound = salary not stated, score 0.
 
         +25 if midpoint >= £100,000
         +15 if midpoint £75,000-£99,999
@@ -84,24 +82,69 @@ prompts:
 
       Score each category independently, then total = max(0, min(100, loc+role+tech+comp)).
 
-      Label MUST match total:
-        good_fit: 70-100
-        maybe:    50-69
-        bad_fit:  0-49
+      Assign label from total:
+        IF total >= 70 THEN label = "good_fit"
+        IF total >= 50 AND total <= 69 THEN label = "maybe"
+        IF total <= 49 THEN label = "bad_fit"
 
       Return ONLY this JSON:
       {"loc":0,"role":0,"tech":0,"comp":0,"score":0,"label":"bad_fit","reasoning":"brief"}
 
 # ---------------------------------------------------------------------------
-# Providers — qwen3-4b-instruct-2507 only
+# Providers
 # ---------------------------------------------------------------------------
 providers:
+  # Gemma 3 4B IT — primary test model
+  - id: "node-llama-cpp:gemma-3-4b-it"
+    config:
+      hf_model: "hf:bartowski/google_gemma-3-4b-it-GGUF"
+      temperature: 0
+
+  # Teacher model
+  - id: "node-llama-cpp:qwen3-8b"
+    config:
+      hf_model: "hf:Qwen/Qwen3-8B-GGUF:Q4_K_M"
+      temperature: 0
+      no_think: true
+
+  - id: "node-llama-cpp:granite4-350m"
+    config:
+      hf_model: "hf:ibm-granite/granite-4.0-350m-GGUF"
+      temperature: 0
+
+  - id: "node-llama-cpp:granite4-350m-warm"
+    config:
+      hf_model: "hf:ibm-granite/granite-4.0-350m-GGUF"
+      temperature: 0.5
+
+  - id: "node-llama-cpp:jan-v3-4b"
+    config:
+      hf_model: "hf:janhq/Jan-v3-4B-base-instruct"
+      no_think: true
+      temperature: 0
+
+  - id: "node-llama-cpp:qwen3-8b-official"
+    config:
+      hf_model: "hf:Qwen/Qwen3-8B-GGUF"
+      temperature: 0
+      no_think: true
+
   - id: "node-llama-cpp:qwen3-4b-instruct-2507"
     config:
-      hf_model: "hf:unsloth/Qwen3-4B-Instruct-2507-GGUF:Q4_K_M"
+      hf_model: "hf:unsloth/Qwen3-4B-Instruct-2507-GGUF"
       temperature: 0
       no_think: true
       context_size: 4096
+
+  - id: "node-llama-cpp:qwen2.5-7b-instruct"
+    config:
+      hf_model: "hf:bartowski/Qwen2.5-7B-Instruct-GGUF"
+      temperature: 0
+
+  - id: "node-llama-cpp:ministral-3-8b-2512"
+    config:
+      hf_model: "hf:unsloth/Ministral-3-8B-Instruct-2512-GGUF"
+      temperature: 0
 
 tests:
   - file://data/promptfoo_tests.yaml

@@ -8,3 +8,7 @@ results/**/*.html
 .claude
 models/
 data/promptfoo_tests_eval.yaml
+finetune/adapters/*.safetensors
+eval_qwen3.log
+data/new_uk_jobs_scored.jsonl
+data/software_engineer_salaries_scored.jsonl

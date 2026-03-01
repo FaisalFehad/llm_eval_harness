@@ -1,0 +1,253 @@
+- description: 4371308941 | Senior Backend Engineer @ ScaleXP
+  vars:
+    jd_text: "About the job                                                               ScaleXPScaleXP is a smart finance automation platform. We help SMEs automate their finance and sales operations by integrating disparate business systems. By automating these tasks we save our customers time, give them confidence in their data, and provide insights that were previously not possible. Both the business and team are fast growing. Now is a very interesting time to join ScaleXP.How do we do thisUsing python we integrate with 10+ Accounting, CRM, and payment platforms, we run asynchronous ELT tasks. Storing the data, normalising the data so we can work with data from separate systems like they are the same, and build smart automations on top of this.These automations vary from NLP to extract dates from documents, using elastic search to match separate data sources together, or building time based schedules from multiple data sources.Since there are a lot of variables, edge cases, and complex domain knowledge, we heavily rely on automated testing.Your role in thisIn this role you will:      Work closely with product & customer success to create solutions that actually solve the end users problems.Create and maintain new 3rd party integrations.Create and maintain new automations on top of the imported data.Make POCs/MVPs for potential new features.Support DevOps efforts.Improve the Quality, Scalability, Security, and Reliability of the BE as a whole. Who we're looking forWe're looking for someone with at least,      5+ years of BE development experience.2+ years of Python experience.2+ years of Relational Database experience. Additional experience in the following are a plus: Django, Celery, Postgres, Docker, Terraform, AWS, Integrating 3rd party APIs, building APIs, Unit & Integration testing.We're looking for someone who has an end-to-end mindset. You can take ownership of a task, propose a solution and plan, involve the right parties, asks the right questions, and can deliver independently if necessary.Preferably you're someone that understands no one person knows everything, and is willing to learn, but also explain and teach others.Experience in a startup is a big plus, you enjoy working in a team with rapid iterations.LocationScaleXP is a hybrid working company. We work from our central London office 2 days a week. We do allow the occasional work from abroad, for example to visit family.                                                                                                                              See more"
+    job_title: Senior Backend Engineer
+    job_location: London Area, United Kingdom (Hybrid)
+    expected_label: maybe
+    expected_score: 50
+  metadata:
+    job_id: "4371308941"
+    expected_label: maybe
+    expected_score: 50
+  assert:
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return parsed.label === "maybe"; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.score === 'number' && Math.abs(parsed.score - 50) <= 20; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.reasoning === 'string' && parsed.reasoning.length >= 15; })()
+- description: 4374122289 | Fintech & Tech for Good | Profitable & Hyper-Growth Start-Up | Senior/Staff/Principal | Up to £150K | 3 Days Per Week LDN @ Owen Thomas | Pending B Corp™
+  vars:
+    jd_text: "About the job                                                               Fintech & Tech for Good | Profitable & Hyper-Growth Start-Up | Senior/Staff/Principal | Up to £150K | 3 Days Per Week LDNI have partnered up with an exciting start-up building the financial infrastructure that helps businesses in emerging markets pay their international suppliers faster, cheaper, and with confidence!In a very short time they have grown into a globally distributed team and crossed $1B+ in annualised transaction volume, and reached $10M+ in annualised revenue all while staying deeply focused on real-world impact.They are now looking for Senior, Staff & Principal engineers to come and be part of a company with a clear mission and target to make a positive change.The Role:      Own the end-to-end product lifecycle, from ideation and design to implementation, deployment, feedback, and measurementCommunicate new features with internal and external stakeholders, gathering input pre-implementation and supporting launchesDesign and build intuitive, high-performance web interfaces for business usersLead architectural decisions to improve scalability, observability, and codebase modularityMaintain high code quality through testing, documentation, and code reviewsMentor junior engineers through pairing, reviews, and ongoing feedback Skills Required:      Strong proficiency in React, TypeScript & Node.Proven frontend engineering skillsExperience working with Next.js, Express & PostgreSQLExperience in high pace early-stage businesses, with the ability to work end-to-end across the entire product development process, taking high ownership & accountability.A problem solving, product engineering mindset.Strong understanding of frontend & backend software engineering best practicesStrong written & verbal communication skills. Renumeration & Benefits:      Up to £170K base salaryEquitySign on bonus up to £5KOpportunity to work in their other offices abroad! If you are interested in the Fintech & Tech for Good | Profitable & Hyper-Growth Start-Up | Senior/Staff/Principal | Up to £150K | 3 Days Per Week LDN - please apply here and if I think you are a good fit, I'll be in touch! :)                                                                                                                              See more"
+    job_title: Fintech & Tech for Good | Profitable & Hyper-Growth Start-Up | Senior/Staff/Principal | Up to £150K | 3 Days Per Week LDN
+    job_location: London Area, United Kingdom (Hybrid)
+    expected_label: bad_fit
+    expected_score: 25
+  metadata:
+    job_id: "4374122289"
+    expected_label: bad_fit
+    expected_score: 25
+  assert:
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return parsed.label === "bad_fit"; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.score === 'number' && Math.abs(parsed.score - 25) <= 20; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.reasoning === 'string' && parsed.reasoning.length >= 15; })()
+- description: 4375738047 | Full Stack Engineer @ Quikr
+  vars:
+    jd_text: "Location: Remote (United States) Employment Type: Full-time Build End-to-End Products Used by Businesses Worldwide We are hiring Full Stack Engineers on behalf of a fast-growing, venture-backed B2B technology company. The engineering team is expanding to support new product initiatives and increasing customer demand. This role involves working across the stack to design, build, and maintain user-facing features and the backend systems that power them. Candidates who enjoy owning features from concept to deployment are encouraged to apply. What You’ll Do • Design, develop, and maintain full-stack features and applications • Build responsive user interfaces and robust backend services • Develop and integrate APIs and data storage solutions • Collaborate with product managers, designers, and other engineers • Participate in code reviews and contribute to engineering standards • Debug issues across the stack and improve performance and reliability • Write clean, maintainable, well-tested code • Contribute to technical discussions and architectural decisions Preferred Technical Experience • Modern frontend frameworks (e.g., React, Angular, or similar) • Backend development using Node.js, Python, Java, Go, or comparable technologies • Working with RESTful APIs and databases (SQL or NoSQL) • Experience with TypeScript or modern JavaScript ecosystems Experience with one or more frontend and backend technologies is typically sufficient. Equivalent experience with similar tools will also be considered. Who Should Apply • Engineers with experience delivering end-to-end software solutions • Developers comfortable working across both frontend and backend layers • Problem solvers who can balance usability, performance, and reliability • Professionals who communicate clearly and collaborate effectively • Candidates able to manage tasks independently in a remote environment Nice to Have • Experience with cloud platforms (e.g., AWS, Azure, or GCP) • Familiarity with containerization and CI/CD pipelines • Understanding of microservices or modular architectures • Experience building customer-facing web applications What You’ll Gain • Opportunity to build features used by real business customers • Exposure to modern development tools and practices • Collaborative environment with cross-functional teams • Ability to influence product direction and technical decisions • Experience working in a fast-paced startup environment Compensation & Benefits • Competitive base salary • Performance-based compensation components where applicable • Benefits package provided by the employer • Remote work flexibility within the United States Specific compensation details will be discussed during the hiring process and are aligned with experience and market benchmarks. Hiring Process Qualified candidates may be invited to complete an initial screening, which may include a structured interview and/or role-relevant technical assessment. Selected candidates will proceed to interviews with the engineering team. Equal Opportunity Employer The employer is committed to providing equal employment opportunities to all qualified applicants without regard to race, color, religion, sex, sexual orientation, gender identity, national origin, disability, veteran status, or other protected characteristics. … more"
+    job_title: Full Stack Engineer
+    job_location: United States
+    expected_label: bad_fit
+    expected_score: 0
+  metadata:
+    job_id: "4375738047"
+    expected_label: bad_fit
+    expected_score: 0
+  assert:
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return parsed.label === "bad_fit"; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.score === 'number' && Math.abs(parsed.score - 0) <= 20; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.reasoning === 'string' && parsed.reasoning.length >= 15; })()
+- description: 1785765898 | Senior Product Engineer @ Jenkins - Zboncak
+  vars:
+    jd_text: |-
+      **About Jenkins - Zboncak**
+      We are an innovative team building a decentralized finance (DeFi) protocol for institutional grade assets. We're looking for a Senior Product Engineer who is passionate about building world-class products.
+
+      **The Role**
+      As our Senior Product Engineer, you will be:
+      - migrating monolithic systems to event-driven microservices
+      - optimizing database queries for tables with billions of rows
+      - architecting scalable backend systems from scratch
+
+      **What You'll Bring**
+      - Deep expertise in Rust, WASM, and performance-critical systems programming.
+      - A track record of solving complex technical hurdles
+      - Strong opinions, weakly held, regarding architecture and code quality
+
+      **Location & Salary**
+      - Location: Remote (UK)
+      - Salary: £120,000 - £140,000
+
+      **Benefits**
+      - Private health insurance and dental coverage
+      - Stock options/Equity in a high-growth startup
+      - Home office stipend and latest MacBook Pro
+
+      How to Apply: Send your GitHub profile and a brief summary of your best work.
+    job_title: Senior Product Engineer
+    job_location: Remote (UK)
+    expected_label: good_fit
+    expected_score: 75
+  metadata:
+    job_id: "1785765898"
+    expected_label: good_fit
+    expected_score: 75
+  assert:
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return parsed.label === "good_fit"; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.score === 'number' && Math.abs(parsed.score - 75) <= 20; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.reasoning === 'string' && parsed.reasoning.length >= 15; })()
+- description: 4374147500 | Senior Backend Engineer @ Happl
+  vars:
+    jd_text: "About the job                                                               We’re building the next generation of employee benefits infrastructure.At Happl, we help global teams design, manage, and scale benefits that actually work for their people by using AI, across flex allowances, benefits, insurance, recognition, and wellbeing, all in one intelligent platform.Happl is backed by leading investors such as YCombinator, 6Degrees Capital, and more, known for backing leading companies such as Deel, Rippling, Airbnb, Coinbase, Dropbox, and most recently was awarded a place in the UK’s top 100 startups for 2026.About The RoleAs a Senior Backend Engineer at Happl, your mission is to build the systems that power a global, AI-first benefits platform.You’ll design, build, and scale backend services that are reliable, secure, and performant, enabling our product teams to move fast while supporting complex real-world use cases across payroll, finance, and employee benefits.This role is for someone who enjoys ownership, thrives in fast-moving environments, and wants to build foundational systems that directly impact how companies support their people.What You’ll Be DoingThis role sits within our Engineering team and works closely with Product, Frontend, Data, and Customer teams across the full development lifecycle. You’ll help shape how we build and scale our backend by focusing on:      Designing and scaling the backend architecture powering a global, AI-first platformBuilding and owning core services across benefits, allowances, payments, and reportingDeveloping scalable data models and ensure integrity across systemsImproving platform reliability, performance, security, and observabilityAutomating workflows and Go Rules to streamline complex operationsCollaborating closely with product and frontend teams to ship end-to-end featuresWriting clean, well-tested, production-ready codeUsing AI tools to accelerate development and iterationContribute to architecture, technical decisions, and engineering standards You’ll play a key role in ensuring Happl’s backend scales as our customer base, features, and global footprint grow.What We’re Looking For      4+ years experience as a Backend or Software EngineerStrong experience with modern backend languages and frameworks (e.g. Typescript, Golang)Experience designing and consuming APIs (REST, event-driven systems)Solid understanding of databases (SQL / PostgreSQL) and data modellingExperience building and scaling production systemsFamiliarity with cloud infrastructure and CI/CD workflowsComfortable working with integrations and third-party servicesExperience using AI tools (e.g. ChatGPT, Claude) as part of your workflowClear communicator who works well with both technical and non-technical stakeholdersProactive, detail-oriented, and comfortable taking ownership If you don’t meet every requirement but feel this role fits your trajectory, we’d still love to hear from you.Why join Happl      Help shape the future of employee benefitsCompetitive base salary and commissionMeaningful equity in an early stage growing businessFlexible hybrid working from day oneAccess to your own Happl benefits platformOptional enrolment in Private Health InsuranceOptional enrolment in Dental insurance, including family coverA flexible Wellbeing budget to spend on whatever wellbeing means to youLearning & Development (L&D) allowancePension scheme from day oneRapid career progression in a scaling commercial team About The Interview      Call 1: 20-min Intro call with Ben (COO & CoS)Call 2: 30-min deep dive with Lee (Head of Engineering)Short TaskCall 3: 30-min deep dive with Ben T (CEO & Founder) Additional DetailsLocation: London, WaterlooTeam: EngineeringWorking arrangement: Hybrid (3+ Days in Office)#BS-L1                                                                                                                              See more"
+    job_title: Senior Backend Engineer
+    job_location: London, England, United Kingdom (Hybrid)
+    expected_label: maybe
+    expected_score: 65
+  metadata:
+    job_id: "4374147500"
+    expected_label: maybe
+    expected_score: 65
+  assert:
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return parsed.label === "maybe"; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.score === 'number' && Math.abs(parsed.score - 65) <= 20; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.reasoning === 'string' && parsed.reasoning.length >= 15; })()
+- description: 4367481960 | Senior Full Stack Engineer @ Ellipse
+  vars:
+    jd_text: About the job                                                               Senior Full-Stack Engineer (FootballViz)About summaryEllipse is an industry leader in the collection, analysis and dissemination of live sports performance data. Our goal is to engage a diverse audience with new stories about the sports we love. We create products and services across cricket, football, horse racing, rugby and tennis that enrich the experience of fans, athletes, and teams worldwide. Our data is a central component of media coverage, betting operations, athlete feedback and coach decision-making in some of the biggest competitions. Job descriptionWith ambitious growth plans, we are seeking an experienced Senior Full Stack Engineer to join our dynamic team, focused on football. In this role, you will be responsible for designing, implementing, and maintaining software applications across our football technology stack. As a Senior Engineer, you will play a crucial role in driving innovation, mentoring team members, and ensuring the scalability, performance, and security of our applications. If you have the technical know-how, along with some interest in football and how unique statistics can unearth compelling stories, this role is for you!Responsibilities      Lead and oversee the core development behind our football data applications and services.Understand business requirements and translate them into technical specifications.Develop and implement strategies for processing data from various sources and aggregating the data into a format suitable for searching and analysis.The ideal candidate is expected to collaborate and lead the DevOps efforts to manage the deployment pipeline, CI/CD processes, and release management frameworks. Requirements      The ability to design, develop, test, and deploy web applications in Python from the front-end (UI/UX) to the back-end (server, database), and create responsive interfaces using HTML, CSS, and JavaScript frameworks using Vue.js.Backend DevelopmentStrong proficiency in Python.At least 3+ years of commercial experience working at a master level using Flask, FastAPI, and similar frameworks, building scalable, resilient, and high-performance APIs and services.Asynchronous task processing using RabbitMQ and Celery.Experience with real-time messaging using WebSockets, such as Ably including two-way updates between servers and web portals using Redis-backed SSE event distribution.Strong understanding of system design, service boundaries, and scalability.Frontend DevelopmentProficient in JavaScript.Experience building and maintaining complex Vue.js applications.Ability to integrate frontend applications with RESTful and async backend services.Databases & Data ManagementSolid experience with relational databases and cloud data stores (e.g. EC2, S3).Database design, optimisation, and management using SQLAlchemy and raw SQL.Understanding of data integrity, migrations, and performance tuning.DevOps & DeploymentContainerisation using Docker.Orchestration and scaling with Kubernetes.Experience with automated deployment pipelines and CI/CD workflows.Architecture & Engineering PracticesExperience with cloud platforms (AWS).Strong system architecture mindset.Experience designing scalable, maintainable, and production-ready systems.Familiarity with best practices around reliability, observability, and performance.Experience mentoring or reviewing code for other engineers.Desirable but not essentialExperience working in distributed systems.Exposure to NoSQL and Graph databases.Experience working with sports data and/or video/Image analysis frameworks.Experience working in a fast-paced environment, to be able to work effectively with various leadership roles across the businesses, provide guidance and mentorship to other developers, share knowledge and leverage best practices.Ability to work as part of a team but also be comfortable working alone on projects under your own initiative, and accurately communicatin
+    job_title: Senior Full Stack Engineer
+    job_location: London Area, United Kingdom (Hybrid)
+    expected_label: maybe
+    expected_score: 55
+  metadata:
+    job_id: "4367481960"
+    expected_label: maybe
+    expected_score: 55
+  assert:
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return parsed.label === "maybe"; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.score === 'number' && Math.abs(parsed.score - 55) <= 20; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.reasoning === 'string' && parsed.reasoning.length >= 15; })()
+- description: 4371949806 | Senior Fullstack Engineer @ Oliver Bernard
+  vars:
+    jd_text: "About the job                                                               Senior Fullstack EngineerLocation: 2 days p/week in LondonSalary: Up to £100k plus equitySenior Fullstack Engineer – Would you like the opportunity to work for an organisation who are building technology to empower the independent economy?They’re currently building an AI-powered platform that acts as connective tissue across conversations, orders, payments, and discovery.As a Senior Fullstack Engineer, you will be responsible for helping build the foundation of their agent-powered platform. This is a hands-on role where you’ll work across the entire stack. You won’t be confined to a narrow part of the system. Instead, you’ll contribute across architecture, product decisions, implementation, and delivery within a collaborative and high-trust engineering team.Requirements:      4+ years’ experience working as a Fullstack EngineerNext.js FE + BE, Node.js, TypeScriptExperience working on AI / agentic systems would be a huge bonus. If you’re a Senior Fullstack Engineer who’s looking to work in a fast-paced start-up, please apply.                                                                                                                              See more"
+    job_title: Senior Fullstack Engineer
+    job_location: London Area, United Kingdom (Hybrid)
+    expected_label: bad_fit
+    expected_score: 35
+  metadata:
+    job_id: "4371949806"
+    expected_label: bad_fit
+    expected_score: 35
+  assert:
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return parsed.label === "bad_fit"; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.score === 'number' && Math.abs(parsed.score - 35) <= 20; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.reasoning === 'string' && parsed.reasoning.length >= 15; })()
+- description: 4374501376 | Front End Software Develper @ Oracle
+  vars:
+    jd_text: "Job Description Join a team that is modernizing healthcare through cloud-native, AI-powered solutions. In this role, you will design and deliver end-to-end experiences — from elegant, accessible user interfaces to resilient services operating at massive scale. You will collaborate closely with Product, UX, and Platform Engineering teams to build secure, high-availability features that clinicians and patients rely on every day. This is a fast-paced, Agile environment with CI/CD best practices, where you will continuously improve code quality, performance, and maintainability. Your work will directly shape intuitive user experiences and robust APIs that power Oracle Health’s mission-critical platforms. Key Responsibilities Develop and maintain large-scale Single Page Applications (SPAs) with robust state management and modular architecture Build responsive, accessible user interfaces that meet WCAG and inclusive design standards Integrate frontend applications with REST and/or GraphQL services, optimizing data fetching and caching strategies Implement comprehensive testing strategies (unit and end-to-end), CI/CD pipelines, performance budgets, and monitoring Partner with UX and design teams to evolve prototypes into production-ready interfaces Contribute to shared design systems, reusable component libraries, and technical documentation Required Qualifications (Experience level scaled based on seniority) Bachelor’s degree in Computer Science or related field (or equivalent practical experience) Demonstrated experience building complex, large-scale frontend applications Expertise in JavaScript/TypeScript (ES6+), React, Redux (or similar state management frameworks) Strong command of HTML5, CSS3 (Sass/Less), responsive design, and cross-browser compatibility Experience with frontend testing frameworks (Jest, Mocha/Chai, React Testing Library, Puppeteer, Cypress, or Selenium) Proficiency with build tools and package managers (Webpack, npm/yarn) and Git-based version control Strong understanding of performance optimization techniques (code splitting, lazy loading, bundle optimization) and frontend security best practices Experience with containerized deployments (Docker/Kubernetes) and CI/CD workflows Preferred Qualifications Experience conducting accessibility audits and using accessibility tooling Familiarity with design tools such as Figma, Sketch, or InVision Backend collaboration experience (Node.js, Express, or Java) Experience with feature flags, A/B testing, and product analytics Qualifications Disclaimer: Certain US customer or client-facing roles may be required to comply with applicable requirements, such as immunization and occupational health mandates. Range and benefit information provided in this posting are specific to the stated locations only US: Hiring Range in USD from: $79,800 - $178,100 per year. May be eligible for bonus and equity. Oracle maintains broad salary ranges for its roles in order to account for variations in knowledge, skills, experience, market conditions and locations, as well as reflect Oracle’s differing products, industries and lines of business. Candidates are typically placed into the range based on the preceding factors as well as internal peer equity. Oracle US offers a comprehensive benefits package which includes the following: Medical, dental, and vision insurance, including expert medical opinion Short term disability and long term disability Life insurance and AD&D Supplemental life insurance (Employee/Spouse/Child) Health care and dependent care Flexible Spending Accounts Pre-tax commuter and parking benefits 401(k) Savings and Investment Plan with company match Paid time off: Flexible Vacation is provided to all eligible employees assigned to a salaried (non-overtime eligible) position. Accrued Vacation is provided to all other employees eligible for vacation benefits. For employees working at least 35 hours per week, the vacation accrual rate is 13 days annually for the first three years of employment and 18 days annually for subsequent years of employment. Vacation accrual is prorated for employees working between 20 and 34 hours per week. Employees working fewer than 20 hours per week are not eligible for vacation. 11 paid holidays Paid sick leave: 72 hours of paid sick leave upon date of hire. Refreshes each calendar year. Unused balance will carry over each year up to a maximum cap of 112 hours. Paid parental leave Adoption assistance Employee Stock Purchase Plan Financial planning and group legal Voluntary benefits including auto, homeowner and pet insurance The role will generally accept applications for at least three calendar days from the posting date or as long as the job remains posted. Career Level - IC3 About Us Only Oracle brings together the data, infrastructure, applications, and expertise to power everything from industry innovations to life-saving care. And with AI embedded across our products and services, we help customers turn that promise into a better future for all. Discover your potential at a company leading the way in AI and cloud solutions that impact billions of lives. True innovation starts when everyone is empowered to contribute. That’s why we’re committed to growing a workforce that promotes opportunities for all with competitive benefits that support our people with flexible medical, life insurance, and retirement options. We also encourage employees to give back to their communities through our volunteer programs. We’re committed to including people with disabilities at all stages of the employment process. If you require accessibility assistance or accommodation for a disability at any point, let us know by emailing accommodation-request_mb@oracle.com or by calling 1-888-404-2494 in the United States. Oracle is an Equal Employment Opportunity Employer. All qualified applicants will receive consideration for employment without regard to race, color, religion, sex, national origin, sexual orientation, gender identity, disability and protected veterans’ status, or any other characteristic protected by law. Oracle will consider for employment qualified applicants with arrest and conviction records pursuant to applicable law.… more Benefits found in job post Vision insurance, Commuter benefits, 401(k)"
+    job_title: Front End Software Develper
+    job_location: United States
+    expected_label: bad_fit
+    expected_score: 0
+  metadata:
+    job_id: "4374501376"
+    expected_label: bad_fit
+    expected_score: 0
+  assert:
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return parsed.label === "bad_fit"; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.score === 'number' && Math.abs(parsed.score - 0) <= 20; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.reasoning === 'string' && parsed.reasoning.length >= 15; })()
+- description: 7820757944 | Backend Systems Developer @ Spencer Inc
+  vars:
+    jd_text: |-
+      **About Spencer Inc**
+      We are an innovative team building a consumer fintech app revolutionizing micro-investing. We're looking for a Backend Systems Developer who is passionate about building world-class products.
+
+      **The Role**
+      As our Backend Systems Developer, you will be:
+      - architecting scalable backend systems from scratch
+      - ensuring 99.99% uptime for mission-critical services
+      - mentoring mid-level engineers through code reviews and pair programming
+      - implementing zero-trust security architectures
+
+      **What You'll Bring**
+      - Deep expertise in Node.js, TypeScript, and PostgreSQL using Prisma/Drizzle.
+      - A track record of solving complex technical hurdles
+      - Strong opinions, weakly held, regarding architecture and code quality
+
+      **Location & Salary**
+      - Location: Hybrid - Bristol, UK
+      - Salary: £120,000 - £140,000
+
+      **Benefits**
+      - Annual learning and development budget of £2,000
+      - Private health insurance and dental coverage
+      - Unlimited PTO and flexible working hours
+
+      How to Apply: Send your GitHub profile and a brief summary of your best work.
+    job_title: Backend Systems Developer
+    job_location: Hybrid - Bristol, UK
+    expected_label: maybe
+    expected_score: 50
+  metadata:
+    job_id: "7820757944"
+    expected_label: maybe
+    expected_score: 50
+  assert:
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return parsed.label === "maybe"; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.score === 'number' && Math.abs(parsed.score - 50) <= 20; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.reasoning === 'string' && parsed.reasoning.length >= 15; })()
+- description: 7010087404 | Frontend Developer @ Jast, Dach and Crist
+  vars:
+    jd_text: |-
+      **About Jast, Dach and Crist**
+      We are an innovative team building an e-commerce engine powering global luxury brands. We're looking for a Frontend Developer who is passionate about building world-class products.
+
+      **The Role**
+      As our Frontend Developer, you will be:
+      - building internal tools to improve developer velocity
+      - implementing zero-trust security architectures
+      - evangelizing engineering best practices across the organization
+
+      **What You'll Bring**
+      - Deep expertise in Java 21, Spring Boot 3, and Kafka for event-driven architecture.
+      - A track record of solving complex technical hurdles
+      - Strong opinions, weakly held, regarding architecture and code quality
+
+      **Location & Salary**
+      - Location: Amsterdam, Netherlands
+      - Salary: £55,000 - £65,000
+
+      **Benefits**
+      - Generous parental leave and childcare support
+      - Private health insurance and dental coverage
+      - Annual learning and development budget of £2,000
+
+      How to Apply: Send your GitHub profile and a brief summary of your best work.
+    job_title: Frontend Developer
+    job_location: Amsterdam, Netherlands
+    expected_label: bad_fit
+    expected_score: 0
+  metadata:
+    job_id: "7010087404"
+    expected_label: bad_fit
+    expected_score: 0
+  assert:
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return parsed.label === "bad_fit"; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.score === 'number' && Math.abs(parsed.score - 0) <= 20; })()
+    - type: javascript
+      value: (() => { const parsed = JSON.parse(output); return typeof parsed.reasoning === 'string' && parsed.reasoning.length >= 15; })()

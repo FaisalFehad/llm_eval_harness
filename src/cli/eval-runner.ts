@@ -469,7 +469,7 @@ async function generateTestSubset(
 ): Promise<void> {
   const args = [
     "tsx",
-    "src/cli/sample-test-subset.ts",
+    "src/cli/sample-balanced-eval-subset.ts",
     "--count",
     String(count),
     "--seed",
@@ -578,11 +578,18 @@ export async function runEval(options: EvalOptions): Promise<EvalResults> {
     console.log(`\n[${i + 1}/${providers.length}] Evaluating: ${displayName}`);
     console.log("-".repeat(40));
 
-    // Resolve model (downloads from HF on first run)
+    // Resolve model (downloads from HF on first run, or use local GGUF)
     let model: Awaited<ReturnType<typeof llama.loadModel>>;
     try {
-      console.log(`  Resolving model: ${hfModel}...`);
-      const modelPath = await resolveModelFile(hfModel, modelsDir);
+      let modelPath: string;
+      if (hfModel.endsWith(".gguf") && !hfModel.startsWith("hf:")) {
+        // Local GGUF file path (absolute or relative)
+        modelPath = path.resolve(hfModel);
+        console.log(`  Using local model: ${modelPath}...`);
+      } else {
+        console.log(`  Resolving model: ${hfModel}...`);
+        modelPath = await resolveModelFile(hfModel, modelsDir);
+      }
       console.log(`  Loading model into memory...`);
       model = await llama.loadModel({ modelPath });
     } catch (err) {
@@ -856,7 +863,7 @@ export async function runEval(options: EvalOptions): Promise<EvalResults> {
 
 async function main(): Promise<void> {
   const args = parseArgs();
-  const configPath = getStringArg(args, "config") ?? "promptfooconfig.yaml";
+  const configPath = getStringArg(args, "config") ?? "configs/promptfooconfig_v9.yaml";
   const modelFilter = getStringArg(args, "model");
   const jobCount = getNumberArg(args, "jobs") ?? 103;
   const rawSeed = getNumberArg(args, "seed") ?? 42;

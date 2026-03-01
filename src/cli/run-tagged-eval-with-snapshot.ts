@@ -26,7 +26,7 @@ async function ensureIterationLog(logPath: string): Promise<void> {
 async function main(): Promise<void> {
   const args = parseArgs();
   const tag = getStringArg(args, "tag") ?? "iteration";
-  const configPath = getStringArg(args, "config") ?? "promptfooconfig.yaml";
+  const configPath = getStringArg(args, "config") ?? "configs/promptfooconfig_v9.yaml";
   const timestamp = timestampForId();
   const runId = `${timestamp}_${sanitizeId(tag) || "iteration"}`;
   const runDir = path.join("results", "runs", runId);

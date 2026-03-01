@@ -1,0 +1,36 @@
+# MLX LoRA config for Qwen3-4B-Instruct-2507 fine-tuning
+#
+# Usage:
+#   source .venv/bin/activate
+#   mlx_lm.lora --config finetune/lora_config.yaml
+#   (or: python -m mlx_lm lora --config finetune/lora_config.yaml)
+#
+# Pre-requisites:
+#   python3 -m venv .venv && source .venv/bin/activate
+#   pip install mlx-lm
+
+model: "mlx-community/Qwen3-4B-Instruct-2507-4bit"
+data: "data/finetune/mlx"
+train: true
+fine_tune_type: "lora"
+
+# LoRA hyperparameters
+lora_parameters:
+  rank: 4              # Low rank — 93 examples (oversampled), narrow pattern-correction task
+  scale: 4.0           # alpha/rank = 16/4 (mlx-lm v0.30+ uses scale, not alpha)
+  dropout: 0.05        # Light regularization against overfitting
+
+# Training parameters
+batch_size: 1          # M1 16GB constraint
+iters: 400             # ~4.3 epochs over 93 examples (oversampled)
+learning_rate: 1.0e-5  # Conservative — correcting output patterns, not teaching new knowledge
+warmup_steps: 20
+max_seq_length: 2560     # Longest example is ~2350 tokens; 2560 gives headroom without wasting memory
+
+# Output
+adapter_path: "finetune/adapters"
+save_every: 100        # Checkpoint every 100 iters
+
+# Memory optimization
+mask_prompt: true      # Only train on assistant responses
+grad_checkpoint: true  # Required on M1 16GB — without it OOMs

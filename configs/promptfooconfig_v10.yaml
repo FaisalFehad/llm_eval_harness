@@ -1,12 +1,14 @@
 # yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
 
-description: "Job-fit scorer — v9 — meta-llama-3.1-8b-instruct — starting from gemma v6 baseline"
+description: "Job-fit scorer — v10 — v9 rules, reasoning-before-scores format (diagnostic)"
 
 # ---------------------------------------------------------------------------
-# Prompt — v9 (based on gemma-3-4b-it v6 — the best performing prompt)
+# Prompt — v10
+# Same rules as v9. Only change: output format forces reasoning BEFORE each score.
+# Purpose: test whether thinking-first improves accuracy on Qwen3-4B.
 # ---------------------------------------------------------------------------
 prompts:
-  - label: "job-fit-scorer-v9"
+  - label: "job-fit-scorer-v10"
     raw: |
       You are a mechanical job-fit scorer. Follow every rule exactly. Score ONLY what is explicitly written. Do NOT infer or assume.
 
@@ -62,42 +64,38 @@ prompts:
 
       Example A (good_fit):
       Title: "Senior Software Engineer" | Location: "London Area, United Kingdom (Hybrid)" | JD requires Node.js, TypeScript, salary £90,000-£110,000.
-      → loc: 25 (London, UK)
-      → role: 25 (Senior)
-      → tech: 15 (Node.js +10, TypeScript +5)
-      → comp: 25 (midpoint £100,000)
-      → total: 25+25+15+25 = 90 → good_fit
-      {"loc":25,"role":25,"tech":15,"comp":25,"score":90,"label":"good_fit","reasoning":"Senior role in London with Node.js/TS and £100k midpoint salary."}
+      {"loc_reason":"London Area UK = hybrid London","loc":25,"role_reason":"Senior in title","role":25,"tech_reason":"Node.js +10, TypeScript +5","tech":15,"comp_reason":"£90k-£110k midpoint £100k >= £100k","comp":25,"score":90,"label":"good_fit"}
 
       Example B (bad_fit):
-      Title: "Full Stack Engineer" | Location: "United States" | JD mentions React, Node.js, TypeScript, competitive salary.
-      → loc: -50 (United States = outside UK)
-      → role: 15 (Full Stack)
-      → tech: 15 (Node.js +10, TypeScript +5; React = 0)
-      → comp: 0 (no GBP salary)
-      → total: max(0, -50+15+15+0) = 0 → bad_fit
-      {"loc":-50,"role":15,"tech":15,"comp":0,"score":0,"label":"bad_fit","reasoning":"US location (-50) makes total negative, floored to 0."}
+      Title: "Software Developer" | Location: "Dublin, Ireland" | JD requires Java, Spring Boot. Salary up to £65,000.
+      {"loc_reason":"Ireland is not in the UK = outside UK","loc":-50,"role_reason":"no Senior/Lead/Full Stack keyword","role":0,"tech_reason":"Java and Spring Boot not in scoring list","tech":0,"comp_reason":"'up to' with no lower bound = 0","comp":0,"score":0,"label":"bad_fit"}
+
+      Example C (bad_fit):
+      Title: "Software Engineer" | Location: "London Area, United Kingdom (Hybrid)" | JD requires Python, Django. No salary stated.
+      {"loc_reason":"London hybrid","loc":25,"role_reason":"no Senior/Lead/Full Stack keyword","role":0,"tech_reason":"Python and Django not in scoring list","tech":0,"comp_reason":"no salary stated","comp":0,"score":25,"label":"bad_fit"}
 
       ===== OUTPUT FORMAT =====
 
-      Score each category independently, then total = max(0, min(100, loc+role+tech+comp)).
+      For each category, first explain WHY in the reason field, THEN give the score.
+      Total = max(0, min(100, loc+role+tech+comp)).
 
-      Label MUST match total:
-        good_fit: 70-100
-        maybe:    50-69
-        bad_fit:  0-49
+      Assign label from total:
+        IF total >= 70 THEN label = "good_fit"
+        IF total >= 50 AND total <= 69 THEN label = "maybe"
+        IF total <= 49 THEN label = "bad_fit"
 
       Return ONLY this JSON:
-      {"loc":0,"role":0,"tech":0,"comp":0,"score":0,"label":"bad_fit","reasoning":"brief"}
+      {"loc_reason":"why","loc":0,"role_reason":"why","role":0,"tech_reason":"why","tech":0,"comp_reason":"why","comp":0,"score":0,"label":"bad_fit"}
 
 # ---------------------------------------------------------------------------
-# Providers — meta-llama-3.1-8b-instruct only
+# Providers
 # ---------------------------------------------------------------------------
 providers:
-  - id: "node-llama-cpp:meta-llama-3.1-8b-instruct"
+  - id: "node-llama-cpp:qwen3-4b-instruct-2507"
     config:
-      hf_model: "hf:bartowski/Meta-Llama-3.1-8B-Instruct-GGUF"
+      hf_model: "hf:unsloth/Qwen3-4B-Instruct-2507-GGUF"
       temperature: 0
+      no_think: true
       context_size: 4096
 
 tests:
