@@ -16,21 +16,22 @@ The technique is **LLM knowledge distillation**: use a large model to generate h
 5. Data correction               ✅  Fixed 20 golden jobs (loc/comp scoring errors)
 6. Fine-tune best 4B model       ✅  LoRA fine-tuned Qwen3-4B: 39.8% → 90.9% on held-out test set
 7. Real-world eval + prompt fix  ✅  81.9% → 95.8% on 72 real UK LinkedIn jobs (prompt change only)
-8. Generate distillation data    ⬜  Run teacher on large batch of real jobs
-9. Train student (Granite:350M)  ⬜  On teacher outputs, measure distillation gap
+8. OOD testing + domain gate     ✅  88.9% on 72 random non-software UK jobs; domain gate added (v11)
+9. Generate distillation data    ⬜  Run teacher on large batch of real jobs
+10. Train student (Granite:350M) ⬜  On teacher outputs, measure distillation gap
 ```
 
 ### Accuracy over time — Qwen3-4B
 
-Each bar is a different measurement stage. The dataset changes between stages (held-out test vs real LinkedIn jobs), so the dip at stage 3 is expected — it's a harder, genuinely unseen dataset, not a regression.
+Each bar is a different measurement stage. The dataset changes between stages, so dips are expected — they reflect harder data, not regressions.
 
 ```mermaid
 xychart-beta
     title "Qwen3-4B Label Accuracy by Stage"
-    x-axis ["1. Baseline", "2. Fine-tuned", "3. Real-world", "4. Prompt fix"]
+    x-axis ["1. Baseline", "2. Fine-tuned", "3. Real-world", "4. Prompt fix", "5. OOD test", "6. OOD + gate"]
     y-axis "Label Accuracy %" 0 --> 100
-    bar [39.8, 90.9, 81.9, 95.8]
-    line [39.8, 90.9, 81.9, 95.8]
+    bar [39.8, 90.9, 81.9, 95.8, 88.9, 98.6]
+    line [39.8, 90.9, 81.9, 95.8, 88.9, 98.6]
 ```
 
 | # | Stage | Dataset | Accuracy | What changed |
@@ -38,7 +39,11 @@ xychart-beta
 | 1 | Baseline | 103 corrected golden jobs | 39.8% | Qwen3-4B downloaded, v9 prompt, no training |
 | 2 | LoRA fine-tune | 33 held-out test jobs | 90.9% | Trained on 70 jobs (93 oversampled), iter 200 |
 | 3 | Real-world test | 72 real UK LinkedIn jobs | 81.9% | Same fine-tuned model, different data distribution |
-| 4 | Prompt fix | 72 real UK LinkedIn jobs | 95.8% | v10 prompt — no retraining, just clearer instructions |
+| 4 | Prompt fix | 72 real UK LinkedIn jobs | 95.8% | v10 prompt — clearer location rules + worked example |
+| 5 | OOD test | 72 random non-software UK jobs | 88.9% | v10 prompt on completely unseen domain |
+| 6 | OOD + domain gate | 72 random non-software UK jobs | 98.6%* | v11 prompt — Step 0 domain check added |
+
+_\* 69/70 valid outputs — v11 introduced 2 parse failures not present in v10_
 
 ---
 
@@ -809,6 +814,67 @@ Re-ran all 72 jobs with the new prompt to get the real headline number:
 Two are genuine model errors; one is a labeling bug in the golden data. The "Up to £X" failure has appeared in every phase of this project — prompt engineering, fine-tuning, and now prompt v10. The prompt alone won't fix it. It's a fine-tuning candidate for the next round.
 
 **The key lesson:** prompt engineering should always come before fine-tuning. The model wasn't broken — it had the right knowledge. It just needed a clear enough instruction to override its own prior. A prompt change takes 5 minutes and is instantly reversible. Fine-tuning takes hours, is hard to undo, and can damage other things that already work.
+
+---
+
+---
+
+## Out-of-Distribution (OOD) Testing
+
+> **What OOD means:** A model is "in-distribution" when test data looks similar to training data. OOD testing breaks that assumption deliberately — feeding the model data from a completely different context to check whether it learned genuine rules, or just memorised patterns.
+
+After reaching 95.8% on UK LinkedIn software jobs, a question came up: every job in both the training and eval sets was a software engineering role. Similar titles, familiar JD language, mostly London and major UK cities. Could the model be pattern-matching on surface features it had seen before, rather than actually applying the rubric?
+
+### The dataset
+
+72 random UK LinkedIn jobs — none software-related. Built to be as different from training data as possible:
+
+| Property        | Design choice |
+|-----------------|---------------|
+| Roles           | Nurses, chefs, town planners, event managers, letting agents, support workers |
+| Seniority       | All levels mixed — not just senior roles |
+| Locations       | Spread across the UK: Fort William, Brecon, Bicester, Golborne — deliberately avoiding London |
+| Labels          | All `bad_fit` — none score enough under the rubric to qualify |
+
+### Round 1 — v10 prompt: 88.9% (64/72)
+
+**88.9% on jobs it was never trained on, from industries it has never seen.** That's not memorisation — that's the rubric being genuinely learned.
+
+All 8 failures predicted `maybe` at exactly score=50. Two patterns:
+
+| Pattern | Count | Example | Why it scored 50 |
+|---------|------:|---------|-----------------|
+| Seniority keyword + UK location | 7 | Senior Event Manager, York | "Senior" → role=25 + UK → loc=25 = 50 |
+| High GBP salary + UK location   | 1 | Enterprise Architect, Birmingham | comp=25 + loc=25 = 50 |
+
+The model wasn't confused — it was following the rubric exactly. The rubric awards +25 for any title containing "Senior" or "Lead", regardless of domain. A Senior Town Planner in Leeds hits the same rule as a Senior Software Engineer in London.
+
+**Is this a bug or a feature?** The rubric was designed for software jobs and has no concept of domain. A "Senior IT Support Technician" scoring `maybe` isn't a model error — it's a rubric gap. Whether it matters depends on whether you'd consider applying. In this case: no. Senior non-software roles aren't relevant, and surfacing them as `maybe` adds noise.
+
+### Round 2 — v11 prompt (domain gate added): 98.6% (69/70 valid)
+
+A Step 0 was added to the prompt before any scoring — a domain check that exits immediately for non-software roles:
+
+```text
+===== STEP 0: JOB DOMAIN (check this FIRST) =====
+This rubric scores software/tech engineering roles ONLY.
+If the job title clearly indicates a non-software role, return bad_fit immediately.
+```
+
+| Metric | v10 | v11 |
+|--------|----:|----:|
+| Label accuracy (valid) | 64/72 = **88.9%** | 69/70 = **98.6%** |
+| Overall (incl. parse fails) | 64/72 = **88.9%** | 69/72 = **95.8%** |
+| Parse failures | 0 | 2 |
+| Label failures | 8 | 1 |
+
+The domain gate fixed 7 of 8 failures. Non-software jobs now return all zeros (`loc=0 role=0 tech=0 comp=0`) — Step 0 exits before any scoring runs.
+
+**The trade-off:** v11 introduced 2 parse failures that v10 didn't have. The fine-tuned model learned to always generate a full scored JSON — when told to short-circuit at Step 0, it occasionally glitches (truncated JSON, repetition loops). A known LLM failure mode when the output format changes.
+
+**1 remaining failure:** Enterprise Architect (Birmingham) — `comp=25 + loc=25 = 50 → maybe`. The domain gate doesn't catch it; "Architect" is borderline tech. A fine-tuning candidate for the next round.
+
+The same principle applied here as with the location fix: **prompt before retraining**. A prompt change takes minutes and is instantly reversible. Fine-tuning takes hours and can break things that already work.
 
 ---
 

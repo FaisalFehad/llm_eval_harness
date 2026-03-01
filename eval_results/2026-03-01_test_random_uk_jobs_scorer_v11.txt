@@ -1,0 +1,127 @@
+Output: eval_results/2026-03-01_test_random_uk_jobs_scorer_v11.txt
+Prompt: prompts/scorer_v11.txt
+Loading model with adapter: finetune/adapters
+Model: mlx-community/Qwen3-4B-Instruct-2507-4bit
+────────────────────────────────────────────────────────────
+Running eval on 72 test examples...
+
+[ 1/72] ✓ Social Care Assistant                    golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (100%)
+[ 2/72] ✓ Lead Interior Designer                   golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (100%)
+[ 3/72] ✓ Event Manager                            golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (100%)
+[ 4/72] ✓ Licensed Practical Nurse                 golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (100%)
+[ 5/72] ✓ Summer TEFL English Teacher              golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (100%)
+[ 6/72] ✓ Full-Time Assistant Manager              golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (100%)
+[ 7/72] ✓ AWS Cloud Architect                      golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+[ 8/72] ✓ Business Analyst                         golden=bad_fit    pred=bad_fit    loc=-50 role=0 tech=0 comp=0  (100%)
+[ 9/72] ✓ Online Personal Trainer - Part Time      golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (100%)
+[10/72] ✓ Abuse Investigator (national Security)   golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+[11/72] ✓ Senior IT Support Technician             golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+[12/72] ✓ Dispenser                                golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (100%)
+[13/72] ✓ English Language Summer School Teacher - golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (100%)
+[14/72] ✓ Volvo Receptionist / Host                golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (100%)
+[15/72] ✓ Online Personal Trainer - Part Time      golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (100%)
+[16/72] ✓ Licensed Practical Nurse                 golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (100%)
+[17/72] ✓ Office/Facilities Manager (10 Month Ftc) golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (100%)
+[18/72] ✓ Senior Director Commercial Planning, Tra golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (100%)
+[19/72] PARSE FAIL — Facilities Lead
+      Raw output: taxp:0,"role":0,"tech":0,"comp":0,"score":0,"label":"bad_fit","reasoning":"non-software role"}
+[20/72] ✓ Senior Event Manager                     golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (95%)
+[21/72] ✓ Senior Town Planner                      golden=bad_fit    pred=bad_fit    loc=-50 role=0 tech=0 comp=0  (95%)
+[22/72] ✓ Real Estate Property Viewing Agent       golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (95%)
+[23/72] ✓ Sous Chef                                golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (96%)
+[24/72] ✓ Licensed Practical Nurse $750 Sign On Bo golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (96%)
+[25/72] ✓ Radiographer                             golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (96%)
+[26/72] ✓ Sous Chef                                golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (96%)
+[27/72] ✓ Events Manager - Maternity Cover 12 Mont golden=bad_fit    pred=bad_fit    loc=-50 role=0 tech=0 comp=0  (96%)
+[28/72] ✓ PIP2 Investigator (cid)                  golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (96%)
+[29/72] ✓ Content Writer (fixed Term)              golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (97%)
+[30/72] ✓ Solutions Architect                      golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=15 comp=0  (97%)
+[31/72] ✓ Security Officer                         golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (97%)
+[32/72] PARSE FAIL — Business Analyst
+      Raw output: orns
+
+orns
+
+orns
+
+orns
+
+orns
+
+orns
+
+orns
+
+orns
+
+orns
+
+orns
+
+orns
+
+orns
+
+orns
+
+orns
+
+orns
+
+orns
+
+orns
+[33/72] ✓ Game Systems Programmer                  golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (94%)
+[34/72] ✓ Apprentice Receptionist                  golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (94%)
+[35/72] ✓ Physical Fitness Trainer (manchester, Uk golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (94%)
+[36/72] ✓ Class 2 Driver                           golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (94%)
+[37/72] ✓ Support Worker                           golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (95%)
+[38/72] ✗ Enterprise Architect – Birmingham/Flexib golden=bad_fit    pred=maybe      loc=25 role=0 tech=0 comp=25  (92%)
+[39/72] ✓ IVF Administrator / Receptionist         golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (92%)
+[40/72] ✓ Investigator (hybrid)                    golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (92%)
+[41/72] ✓ Customer Service Representative          golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (93%)
+[42/72] ✓ Executive Assistant                      golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (93%)
+[43/72] ✓ Content Creation And Copyrighters - Volu golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (93%)
+[44/72] ✓ Security Officer                         golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (93%)
+[45/72] ✓ Sous Chef - Village Hotels - 40hrs       golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (93%)
+[46/72] ✓ Senior Lettings Negotiator               golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (93%)
+[47/72] ✓ Content Writer (seo Focus)               golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (94%)
+[48/72] ✓ Receptionist                             golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (94%)
+[49/72] ✓ Compliance Officer (fire Safety)         golden=bad_fit    pred=bad_fit    loc=-50 role=0 tech=0 comp=0  (94%)
+[50/72] ✓ Interior Design Manager                  golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (94%)
+[51/72] ✓ Sous Chef, Gordon Ramsay At The Mere     golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (94%)
+[52/72] ✓ Frontend Developer (12-month Fixed-term  golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (94%)
+[53/72] ✓ Solutions Architect                      golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (94%)
+[54/72] ✓ Security Officer                         golden=bad_fit    pred=bad_fit    loc=-50 role=0 tech=0 comp=0  (94%)
+[55/72] ✓ Social Work Team Manager                 golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (95%)
+[56/72] ✓ Healthcare Assistant - Wards 38 + 39, Sh golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (95%)
+[57/72] ✓ Administrative Assistant | $35/hr Remote golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (95%)
+[58/72] ✓ Beauty Advisor/Artist Beauty Advisor     golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (95%)
+[59/72] ✓ Logistics Coordinator                    golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (95%)
+[60/72] ✓ Chef/Supervisor Mobile                   golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (95%)
+[61/72] ✓ Belfast Cities Planning Design Team Lead golden=bad_fit    pred=bad_fit    loc=-50 role=0 tech=0 comp=0  (95%)
+[62/72] ✓ Logistics Coordinator                    golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (95%)
+[63/72] ✓ Aesop Beauty Advisor | Melbourne Interna golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (95%)
+[64/72] ✓ IT Support Technician (apprenticeship)   golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (95%)
+[65/72] ✓ Interior Designer                        golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (95%)
+[66/72] ✓ Receptionist - Blackpool (ref: 15014)    golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (95%)
+[67/72] ✓ Relief Security Officer                  golden=bad_fit    pred=bad_fit    loc=-50 role=0 tech=0 comp=0  (96%)
+[68/72] ✓ Licensed Practical Nurse $1500 Sign On B golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (96%)
+[69/72] ✓ Festival & Events Retail Team Manager    golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (96%)
+[70/72] ✓ Senior Town Planner (environmental)      golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (96%)
+[71/72] ✓ English Language Summer School Teacher - golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (96%)
+[72/72] ✓ HGV Class 1 'relief' Night Trunk Driver  golden=bad_fit    pred=bad_fit    loc=-50 role=0 tech=0 comp=0  (96%)
+
+════════════════════════════════════════════════════════════
+RESULTS
+════════════════════════════════════════════════════════════
+Total examples:  72
+Parse failures:  2
+Valid outputs:   70
+
+Label accuracy:  69/70 = 98.6%  (baseline: 39.8%)
+
+Field accuracy: (no component scores in golden — label-only eval)
+
+Per-label breakdown:
+  bad_fit   : 69/70 = 99%

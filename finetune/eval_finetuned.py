@@ -14,10 +14,25 @@ Usage:
 """
 
 import argparse
+import datetime
 import json
 import re
 import sys
 from pathlib import Path
+
+
+class Tee:
+    """Write to multiple streams simultaneously (terminal + file)."""
+    def __init__(self, *streams):
+        self.streams = streams
+
+    def write(self, data):
+        for s in self.streams:
+            s.write(data)
+
+    def flush(self):
+        for s in self.streams:
+            s.flush()
 
 from mlx_lm import load, generate
 
@@ -25,7 +40,7 @@ from mlx_lm import load, generate
 
 MODEL_ID        = "mlx-community/Qwen3-4B-Instruct-2507-4bit"
 DEFAULT_TEST_FILE = "data/finetune/test.jsonl"
-MAX_TOKENS      = 300
+MAX_TOKENS      = 150
 
 PROMPT_TEMPLATE = """\
 You are a mechanical job-fit scorer. Follow every rule exactly. Score ONLY what is explicitly written. Do NOT infer or assume.
@@ -173,7 +188,20 @@ def main():
                         help="Path to prompt template .txt file (omit to use built-in default)")
     parser.add_argument("--verbose", action="store_true",
                         help="Print each prediction")
+    parser.add_argument("--output-dir", type=str, default="eval_results",
+                        help="Directory to save output (default: eval_results/)")
     args = parser.parse_args()
+
+    # Set up output file — auto-named from test file + prompt + date
+    output_dir = Path(args.output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    date_str = datetime.date.today().isoformat()
+    test_stem = Path(args.test_file).stem
+    prompt_stem = Path(args.prompt).stem if args.prompt else "builtin"
+    output_file = output_dir / f"{date_str}_{test_stem}_{prompt_stem}.txt"
+    log_fh = open(output_file, "w")
+    sys.stdout = Tee(sys.__stdout__, log_fh)
+    print(f"Output: {output_file}")
 
     # Load prompt template (file overrides built-in default)
     prompt_template = PROMPT_TEMPLATE
