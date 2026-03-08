@@ -1,0 +1,59 @@
+You are a job-fit classifier. Classify the job below into semantic categories using ONLY these rules. Do not infer or assume. Output ONLY valid JSON.
+
+Inputs:
+- Title: {{job_title}}
+- Location: {{job_location}}
+- Description: {{jd_text}}
+
+LOCATION — use ONLY the location field. Ignore the description. Ignore "City Of" / "Greater".
+LONDON_OR_REMOTE: Contains "London" or "Remote" (any case/format).
+UK_OTHER: Inside the UK but not London, not Remote.
+OUTSIDE_UK: Not in the United Kingdom. This includes Ireland (Republic of), all EU/US/Asia/etc.
+MISSING: No location provided or unclear.
+
+ROLE — check title only (case-insensitive). Highest match wins.
+SENIOR_PLUS: senior, staff, principal, lead, tech lead, head, distinguished, vp, snr, founding, engineer iii, swe iii.
+MID_LEVEL: full stack, full-stack, fullstack, mid-level, midlevel, software engineer ii, engineer ii, swe ii.
+Fallback: if no title match, check the first hiring sentence of the description. If it contains senior/staff/principal/lead/tech lead → MID_LEVEL. Otherwise → NO_SENIORITY.
+
+TECH — scan the full description. Case-insensitive. Classify what combination was found.
+- node.js / node / nodejs → counts as "Node"
+- javascript / typescript → counts as "JS/TS" (once, even if both appear)
+- AI/ML/LLM experience explicitly REQUIRED (not "nice to have", not company description) → counts as "AI/ML"
+- All other tech (react, python, go, java, ruby, .net, etc.) = ignored. You MUST mention any prominent ignored tech in your reasoning with "→ ignored".
+Then classify:
+NONE: No Node, no JS/TS, no required AI/ML found.
+JS_TS: JS/TS only.
+NODE: Node only.
+NODE_JS_TS: Node + JS/TS.
+AI_ML: AI/ML only.
+JS_TS_AI_ML: JS/TS + AI/ML.
+NODE_AI_ML: Node + AI/ML.
+NODE_JS_TS_AI_ML: Node + JS/TS + AI/ML.
+
+COMP — scan description for £ followed by a number. Case-insensitive.
+- Ignore all non-GBP currencies (USD $, EUR €, AUD, etc.). Mention them in reasoning with "→ ignored".
+- Ignore daily rates (£X/day, £X per day, £X p/d). Mention in reasoning with "→ daily rate ignored".
+- "Up to £X" or "to £X" with no lower bound → UP_TO_ONLY.
+- Convert "k" to thousands. Use midpoint of ranges.
+NO_GBP: No GBP annual salary found, or only non-GBP/daily rates present, or midpoint £45k-£54,999.
+UP_TO_ONLY: "Up to £X" / "to £X" with no lower bound.
+BELOW_45K: GBP midpoint < £45,000.
+RANGE_55_74K: GBP midpoint £55,000–£74,999.
+RANGE_75_99K: GBP midpoint £75,000–£99,999.
+ABOVE_100K: GBP midpoint ≥ £100,000.
+
+REASONING FORMAT — cite what you found AND what you ignored for each field. Examples:
+
+loc: 'London, England, United Kingdom' → London found → LONDON_OR_REMOTE. role: 'Senior' in title → SENIOR_PLUS. tech: node.js found, typescript found, react ignored, python ignored → NODE_JS_TS. comp: '£85,000-£120,000' midpoint £102.5k → ABOVE_100K.
+
+loc: 'San Francisco, CA, United States' → not UK → OUTSIDE_UK. role: 'Senior' in title → SENIOR_PLUS. tech: node.js found, javascript found, go ignored → NODE_JS_TS. comp: '$150,000-$200,000' USD ignored, no GBP → NO_GBP.
+
+loc: 'Manchester, England' → UK not London/Remote → UK_OTHER. role: 'Full Stack' in title → MID_LEVEL. tech: typescript found, no node → JS_TS. comp: 'Up to £90,000' no lower bound → UP_TO_ONLY.
+
+loc: 'Dublin, Ireland' → Ireland (not UK) → OUTSIDE_UK. role: 'Engineer III' in title → SENIOR_PLUS. tech: python found but ignored, java found but ignored, no node, no js/ts → NONE. comp: '€80,000-€100,000' EUR ignored → NO_GBP.
+
+loc: 'Belfast, Northern Ireland' → UK → UK_OTHER. role: 'Software Developer' no keyword → checked JD → no senior keyword → NO_SENIORITY. tech: react found but ignored → NONE. comp: '£350/day' daily rate ignored → NO_GBP.
+
+Return ONLY this JSON:
+{"reasoning":"...","loc":"MISSING","role":"NO_SENIORITY","tech":"NONE","comp":"NO_GBP"}

@@ -1,0 +1,57 @@
+Output: eval_results/2026-03-02_linkedin_teacher_v2_eval_scorer_v9.1_Qwen3-4B-Instruct-2507-4bit.txt
+Prompt: prompts/scorer_v9.1.txt
+Loading model with adapter: finetune/adapters_v2b
+Model: mlx-community/Qwen3-4B-Instruct-2507-4bit
+────────────────────────────────────────────────────────────
+Running eval on 1 selected job(s) (of 101 total)...
+
+══════════════════════════════════════════════════════════════════════
+  Job #37: Software Developer (remote)
+  Company:  Mind Friend
+  Location: Leeds, England, United Kingdom
+  Verdict:  ✓ CORRECT
+──────────────────────────────────────────────────────────────────────
+
+  Field    │   Golden │    Model │   Diff │      
+  ─────────┼──────────┼──────────┼────────┼──────
+  loc      │       10 │       10 │      — │     ✓
+  role     │        0 │        0 │      — │     ✓
+  tech     │       15 │       15 │      — │     ✓
+  comp     │        0 │        0 │      — │     ✓
+  ─────────┼──────────┼──────────┼────────┼──────
+  score    │       25 │       25 │        │      
+  label    │  bad_fit │  bad_fit │        │     ✓
+
+  Model reasoning: UK outside London/Remote (10), no seniority keyword (0), tech stack (15), no GBP salary (0).
+
+  Raw model output:
+  <think>
+
+</think>
+
+{"loc":10,"role":0,"tech":15,"comp":0,"score":25,"label":"bad_fit","reasoning":"UK outside London/Remote (10), no seniority keyword (0), tech stack (15), no GBP salary (0).","location":"Leeds, England, United Kingdom"}
+
+
+════════════════════════════════════════════════════════════
+RESULTS
+════════════════════════════════════════════════════════════
+Total examples:  1
+Parse failures:  0
+Valid outputs:   1
+
+Label accuracy:  1/1 = 100.0%  (baseline: 39.8%)
+
+Field accuracy:
+  loc:   1/1 = 100.0%
+  role:  1/1 = 100.0%
+  tech:  1/1 = 100.0%
+  comp:  1/1 = 100.0%
+
+Per-label breakdown:
+  bad_fit   : 1/1 = 100%
+
+Error patterns:
+  Over-scoring:   0  (predicted higher than golden)
+  Under-scoring:  0  (predicted lower than golden)
+  Other:          0  (e.g. good_fit↔maybe)
+  Parse failures: 0

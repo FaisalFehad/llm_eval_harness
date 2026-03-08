@@ -1,0 +1,57 @@
+Output: eval_results/2026-03-02_linkedin_teacher_v2_eval_human_corrected_scorer_v9.2_Qwen3-4B-Instruct-2507-4bit.txt
+Prompt: prompts/scorer_v9.2.txt
+Loading model with adapter: finetune/adapters_v2b
+Model: mlx-community/Qwen3-4B-Instruct-2507-4bit
+────────────────────────────────────────────────────────────
+Running eval on 1 selected job(s) (of 101 total)...
+
+══════════════════════════════════════════════════════════════════════
+  Job #30: Senior Full-Stack Developer
+  Company:  Yolk Recruitment Ltd
+  Location: City Of Bristol, England, United Kingdom
+  Verdict:  ✗ WRONG
+──────────────────────────────────────────────────────────────────────
+
+  Field    │   Golden │    Model │   Diff │      
+  ─────────┼──────────┼──────────┼────────┼──────
+  loc      │       10 │       10 │      — │     ✓
+  role     │       25 │        0 │    -25 │     ✗
+  tech     │       15 │        0 │    -15 │     ✗
+  comp     │        0 │        0 │      — │     ✓
+  ─────────┼──────────┼──────────┼────────┼──────
+  score    │       50 │       10 │        │      
+  label    │    maybe │  bad_fit │        │     ✗
+
+  Model reasoning: UK outside London/Remote (0), seniority not matched (0), no matching tech (0), no GBP salary (0).
+
+  Raw model output:
+  <think>
+
+</think>
+
+{"loc":10,"role":0,"tech":0,"comp":0,"score":10,"label":"bad_fit","reasoning":"UK outside London/Remote (0), seniority not matched (0), no matching tech (0), no GBP salary (0)."}
+
+
+════════════════════════════════════════════════════════════
+RESULTS
+════════════════════════════════════════════════════════════
+Total examples:  1
+Parse failures:  0
+Valid outputs:   1
+
+Label accuracy:  0/1 = 0.0%  (baseline: 39.8%)
+
+Field accuracy:
+  loc:   1/1 = 100.0%
+  role:  0/1 = 0.0%
+  tech:  0/1 = 0.0%
+  comp:  1/1 = 100.0%
+
+Per-label breakdown:
+  maybe     : 0/1 = 0%
+
+Error patterns:
+  Over-scoring:   0  (predicted higher than golden)
+  Under-scoring:  1  (predicted lower than golden)
+  Other:          0  (e.g. good_fit↔maybe)
+  Parse failures: 0

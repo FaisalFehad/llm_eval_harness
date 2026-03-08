@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 
-import { getStringArg, parseArgs } from "../lib/args.js";
+import { getNumberArg, getStringArg, parseArgs } from "../lib/args.js";
 import { readJsonlFile, writeJsonlFile } from "../lib/jsonl.js";
 import type { FitLabel } from "../schema.js";
 
@@ -29,7 +29,27 @@ type MLXTrainingExample = {
 };
 
 /**
- * Build the user message by filling the v9 prompt template with job variables.
+ * Seeded shuffle (Fisher-Yates) for deterministic train/valid splits.
+ */
+function seededShuffle<T>(arr: T[], seed: number): T[] {
+  const result = [...arr];
+  // Simple mulberry32 PRNG
+  let s = seed | 0;
+  const rand = () => {
+    s = (s + 0x6d2b79f5) | 0;
+    let t = Math.imul(s ^ (s >>> 15), 1 | s);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [result[i], result[j]] = [result[j]!, result[i]!];
+  }
+  return result;
+}
+
+/**
+ * Build the user message by filling the prompt template with job variables.
  */
 function buildUserMessage(
   promptTemplate: string,
@@ -90,6 +110,9 @@ async function main(): Promise<void> {
     getStringArg(args, "output-dir") ?? "data/finetune/mlx";
   const promptPath =
     getStringArg(args, "prompt") ?? "prompts/scorer_v9.txt";
+  const validPct = getNumberArg(args, "valid-pct") ?? 0;
+  // Default to Qwen3 for backwards compatibility (existing teacher training)
+  const modelName = getStringArg(args, "model") ?? "qwen3";
 
   // Read the prompt template
   const promptTemplate = await readFile(promptPath, "utf8");
@@ -117,19 +140,46 @@ async function main(): Promise<void> {
     process.exit(1);
   }
 
+  // /no_think is Qwen3-specific — other models get a neutral system message
+  const systemMsg = modelName.toLowerCase().includes("qwen3")
+    ? "/no_think"
+    : "Respond with JSON only.";
+  console.log(`System message: "${systemMsg}"`);
+
   // Format as MLX chat training examples
   const examples: MLXTrainingExample[] = jobs.map((job) => ({
     messages: [
-      { role: "system" as const, content: "/no_think" },
+      { role: "system" as const, content: systemMsg },
       { role: "user" as const, content: buildUserMessage(promptTemplate, job) },
       { role: "assistant" as const, content: buildAssistantResponse(job) },
     ],
   }));
 
+  // Split into train/valid if --valid-pct is set
+  let trainExamples = examples;
+  let validExamples: MLXTrainingExample[] = [];
+
+  if (validPct > 0 && validPct < 100) {
+    const shuffled = seededShuffle(examples, 42);
+    const validCount = Math.max(1, Math.round(shuffled.length * validPct / 100));
+    validExamples = shuffled.slice(0, validCount);
+    trainExamples = shuffled.slice(validCount);
+    console.log(
+      `\nSplit: ${trainExamples.length} train, ${validExamples.length} valid (${validPct}%, seed=42)`,
+    );
+  }
+
   // Write training file
   const trainPath = `${outputDir}/train.jsonl`;
-  await writeJsonlFile(trainPath, examples);
-  console.log(`\nWrote ${examples.length} training examples to ${trainPath}`);
+  await writeJsonlFile(trainPath, trainExamples);
+  console.log(`\nWrote ${trainExamples.length} training examples to ${trainPath}`);
+
+  // Write validation file if split was requested
+  if (validExamples.length > 0) {
+    const validPath = `${outputDir}/valid.jsonl`;
+    await writeJsonlFile(validPath, validExamples);
+    console.log(`Wrote ${validExamples.length} validation examples to ${validPath}`);
+  }
 
   // Print a sample
   const sample = examples[0];

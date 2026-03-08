@@ -1,0 +1,372 @@
+Output: eval_results/2026-03-02_linkedin_teacher_v2_eval_human_corrected_scorer_v9.2_adapters_v2b_fused.txt
+Prompt: prompts/scorer_v9.2.txt
+Loading baseline model (no adapter)
+Model: finetune/adapters_v2b_fused
+────────────────────────────────────────────────────────────
+Running eval on 101 test examples...
+
+[  1/101] ✗  18.4s  Data Developer                              bad_fit→maybe           0%
+                    loc  10→ 25 ✗ │ role   0→  0 ✓ │ tech   0→  0 ✓ │ comp   0→  0 ✓
+                    Job in UK with Remote (UK-based) and no London mention, so +25 for UK remote; no seniority keywords,
+
+[  2/101] ✓  19.9s  Senior Software Engineer (full Stack) - Re  maybe                  50%
+[  3/101] ✗  24.7s  Lead Full Stack Engineer                    maybe→good_fit         33%
+                    loc  10→ 10 ✓ │ role  25→ 25 ✓ │ tech  15→ 15 ✓ │ comp   0→ 25 ✗
+                    Bristol, UK (in UK, no London/remote) → +10; Lead Full Stack Engineer → +25 (Lead); Node.js and Type
+
+[  4/101] ✗  24.5s  Full Stack Software Engineer                bad_fit→maybe          25%
+                    loc  10→ 10 ✓ │ role  15→ 15 ✓ │ tech   0→ 15 ✗ │ comp   0→  5 ✗
+                    In UK (Sheffield), no London/remote, so +10; Full Stack → +15; Node.js and TypeScript not explicitly
+
+[  5/101] ✗  17.6s  Senior Software Engineer (c++)              bad_fit→maybe          20%
+                    loc  10→ 10 ✓ │ role  25→ 25 ✓ │ tech   0→  0 ✓ │ comp   0→  0 ✓
+                    In UK (Edinburgh), no London/remote, so +10; Senior in title (+25); no Node.js/TypeScript/AI mention
+
+[  6/101] ✓  19.2s  Senior Machine Learning Engineer            good_fit               33%
+[  7/101] ✗  19.9s  Web Frontend Engineer - Js, Css, React, Fl  bad_fit→maybe          29%
+                    loc  10→ 25 ✗ │ role   0→  0 ✓ │ tech   5→ 15 ✗ │ comp   0→  0 ✓
+                    In UK (Glasgow, Scotland), remote role; no seniority keywords; JS/TS mentioned in JD; no GBP salary 
+
+[  8/101] ✗  20.1s  Senior Data Engineer                        maybe→good_fit         25%
+                    loc  10→ 10 ✓ │ role  25→ 25 ✓ │ tech   0→ 10 ✗ │ comp  15→ 25 ✗
+                    Bristol, UK (in UK, no London/remote) → +10; Senior in title → +25; Kafka/Spark/Cloud mentioned → +1
+
+[  9/101] ✓  14.3s  Senior AI Solutions Engineer - Up To £135k  maybe                  33%
+[ 10/101] ✗  24.5s  Senior Solutions Engineer                   bad_fit→maybe          30%
+                    loc  10→ 25 ✗ │ role  25→ 25 ✓ │ tech   0→ 15 ✗ │ comp   0→  0 ✓
+                    Job located in UK with London mention (25), Senior title (25), and AI/ML experience required (15); n
+
+[ 11/101] ✓  20.4s  Lead Software Engineer (full Stack)         good_fit               36%
+[ 12/101] !  18.0s  Frontend Developer (angular, Ionic) - NEW   PARSE FAIL
+           Raw (364 chars): {"loc":10,"role":25,"tech":15,"comp":0,"score":50,"label":"maybe","reasoning":"In UK (Bristol), no London/remote, so +10; Senior in title (+25); Angular/Ionic only, no Node.js/TS required, so tech: 5 (TypeScript) +10 (Angular/IONIC not counted as Node/JS or TS), but only TypeScript and Angular/IONIC — only TypeScript (+5) and no Node.js, so 5; salary not stated,
+[ 13/101] ✗  22.3s  Software Engineer - Python - Container Ima  bad_fit→maybe          31%
+                    loc  10→ 25 ✗ │ role   0→  0 ✓ │ tech   0→  0 ✓ │ comp   0→  0 ✓
+                    Job in Glasgow, Scotland (UK), so loc = +25; no Senior/Lead keywords in title, so role = 0; no Node.
+
+[ 14/101] ✗  24.5s  Senior Software Developer                   bad_fit→maybe          29%
+                    loc -50→  0 ✗ │ role  25→ 25 ✓ │ tech  15→ 15 ✓ │ comp   0→  0 ✓
+                    Location in Kitchener, Ontario, Canada (not UK) → 0; role has 'Senior' → +25; tech has Node.js (+10)
+
+[ 15/101] ✗  19.0s  Intern - Frontend Developer                 bad_fit→maybe          27%
+                    loc  10→ 10 ✓ │ role   0→  0 ✓ │ tech   5→  5 ✓ │ comp   0→  0 ✓
+                    Birmingham, England (UK) → in UK, no London/remote → +10; title has 'Intern' → no senior/mid-level k
+
+[ 16/101] ✗  17.8s  Python Developer                            bad_fit→good_fit       25%
+                    loc  10→ 10 ✓ │ role   0→ 25 ✗ │ tech   0→ 10 ✗ │ comp  25→ 25 ✓
+                    Bristol, UK (in UK, no London/remote) → +10; Senior in title → +25; AI/ML experience required → +10;
+
+[ 17/101] ✗  16.4s  Graduate Software Engineer                  bad_fit→maybe          24%
+                    loc  10→ 25 ✗ │ role   0→ 15 ✗ │ tech   0→ 10 ✗ │ comp   0→  0 ✓
+                    In UK (Sheffield), no London or remote, so +25; Full-Stack in title → +15; Java/C++ mentioned → +10 
+
+[ 18/101] ✗  16.1s  Full Stack Engineer (contract) - TypeScrip  bad_fit→maybe          22%
+                    loc  10→ 25 ✗ │ role  15→ 15 ✓ │ tech  15→ 15 ✓ │ comp   0→  0 ✓
+                    In UK (Leeds), has 'Mid-level' and 'Full Stack' keywords; has Node.js and TypeScript; no GBP salary 
+
+[ 19/101] ✗  19.2s  Senior Lead Software Engineer - Python & A  bad_fit→maybe          21%
+                    loc  10→ 10 ✓ │ role  25→ 25 ✓ │ tech   0→ 10 ✗ │ comp   0→  0 ✓
+                    In UK (Glasgow), no London/remote, so +10; Senior in title (+25); Python and AWS mentioned, no Node.
+
+[ 20/101] ✓  19.0s  Principal Full Stack Developer - 18 Month   maybe                  25%
+[ 21/101] ✗  16.4s  Solutions Architect, Lloyd's Market         bad_fit→maybe          24%
+                    loc  25→ 25 ✓ │ role   0→ 25 ✗ │ tech   0→  0 ✓ │ comp   0→  0 ✓
+                    Job in London (UK) with London mention → +25; title has 'Solutions Architect' → no senior/lead keywo
+
+[ 22/101] ✗  15.5s  Full Stack Engineer                         bad_fit→maybe          23%
+                    loc  10→ 10 ✓ │ role  15→ 15 ✓ │ tech   0→ 10 ✗ │ comp   0→  0 ✓
+                    In UK (Sheffield, England), no London/remote, so +10; Full Stack title → +15; Node.js not mentioned,
+
+[ 23/101] !  21.0s  Fullstack Senior Software Engineer (cards)  PARSE FAIL
+           Raw (313 chars): {"loc":10,"role":25,"tech":10,"comp":25,"score":70,"label":"good_fit","reasoning":"Location in Manchester, UK (not London or remote) → +10; title has 'Senior' → +25; JD requires Java (no bonus points), Node.js/React mentioned as plus → +10 for Node.js; salary £72,702-£88,858 → midpoint £80,780 → ≥£75k → +15 (but
+[ 24/101] ✗  23.2s  Python And Kubernetes Software Engineer -   bad_fit→maybe          21%
+                    loc  10→ 25 ✗ │ role   0→  0 ✓ │ tech   0→ 10 ✗ │ comp   0→  0 ✓
+                    Job in Glasgow, Scotland (UK), so +25 for UK location with London/Remote not present; no Senior/Lead
+
+[ 25/101] ✗  21.3s  Software Engineer I                         bad_fit→maybe          20%
+                    loc  25→ 25 ✓ │ role   0→ 15 ✗ │ tech   0→ 10 ✗ │ comp   0→  0 ✓
+                    In London, UK (25), role has 'Software Engineer' with 'Full Stack' (15), tech has Node.js (10), no G
+
+[ 26/101] !  21.2s  Front End Engineer - Serve                  PARSE FAIL
+           Raw (368 chars): {"loc":25,"role":15,"tech":15,"comp":0,"score":55,"label":"maybe","reasoning":"Belfast, Northern Ireland (UK) → in UK and contains 'Remote' → +25; role has 'Front End Engineer' → mid-level (Full Stack/Software Engineer II equivalent) → +15; tech has React, TypeScript, NextJS (TS +5), but no Node.js or AI/ML → only 5 for TS; no GBP salary → comp=0; total 55 → maybe."
+[ 27/101] ✗  16.6s  (senior) Software Engineer                  bad_fit→maybe          19%
+                    loc  10→ 10 ✓ │ role  25→ 25 ✓ │ tech   5→ 15 ✗ │ comp   0→  0 ✓
+                    In UK (Cambridge, England), so +10 for location; Senior in title → +25 for role; Node.js and TypeScr
+
+[ 28/101] ✗  15.3s  Senior Front-End Developer, Angular         bad_fit→maybe          18%
+                    loc  10→ 10 ✓ │ role  25→ 25 ✓ │ tech   5→ 15 ✗ │ comp   0→  0 ✓
+                    In UK (Cheshire East), no London/remote, so +10; Senior in title (+25); Angular/TypeScript mentioned
+
+[ 29/101] ✓  16.8s  Senior Software Engineer, Full Stack        maybe                  21%
+[ 30/101] !  17.8s  Senior Full-Stack Developer                 PARSE FAIL
+           Raw (335 chars): {"loc":10,"role":25,"tech":15,"comp":25,"score":75,"label":"good_fit","reasoning":"Bristol, UK (in UK, no London/remote), Senior in title, Full-Stack role, TypeScript/Node.js/React mentioned, salary up to £60k (midpoint £60k → 55k, so 5 points), but AI/ML not required, so no AI points; tech: 5 (TypeScript), 10 (Node.js not listed), 0
+[ 31/101] ✗  17.9s  Software Engineer (front End, Back End Or   bad_fit→maybe          19%
+                    loc  10→ 10 ✓ │ role  15→ 15 ✓ │ tech   5→ 15 ✗ │ comp   0→ 15 ✗
+                    In UK (Glasgow), no London/remote, so +10; role has 'Full Stack' → +15; tech has TypeScript and Reac
+
+[ 32/101] ✗  20.6s  Engineering Supervisor - Dayshift           bad_fit→maybe          19%
+                    loc  10→ 10 ✓ │ role   0→  0 ✓ │ tech   0→  0 ✓ │ comp   0→ 25 ✗
+                    In UK (Glasgow), no London/remote, so +10; no senior/lead keywords, so 0 role; no tech stack mention
+
+[ 33/101] !  17.3s  Data Engineer                               PARSE FAIL
+           Raw (355 chars): {"loc":25,"role":0,"tech":20,"comp":25,"score":70,"label":"good_fit","reasoning":"In UK (Leeds area), remote with day-1 kit collection in Leeds; role has no senior/mid-level keywords, so 0; tech: 10 for Azure Data Factory, 5 for Power BI, 5 for CI/CD, 0 for Node.js/JS/Python/Go/etc. (no Node.js/JS listed); however, hands-on Azure, Fabric, ETL, Data Lake
+[ 34/101] ✓  18.6s  Scientist - Data / Machine Learning         bad_fit                21%
+[ 35/101] ✗  18.1s  Software Engineer III – GenAI, Python, AWS  bad_fit→maybe          20%
+                    loc  10→ 10 ✓ │ role   0→ 25 ✗ │ tech   0→ 10 ✗ │ comp   0→  0 ✓
+                    In UK (Glasgow), no London/remote, so +10; Senior in title (+25); Python and GenAI/LLM mentioned (10
+
+[ 36/101] ✗  19.9s  Junior Software Developer - Observability   bad_fit→maybe          19%
+                    loc  10→ 25 ✗ │ role   0→  0 ✓ │ tech   0→  0 ✓ │ comp   0→  0 ✓
+                    Job in Glasgow, Scotland (UK), so +25 for UK location with remote work; no seniority keywords, so 0 
+
+[ 37/101] ✗  14.3s  Software Developer (remote)                 bad_fit→maybe          19%
+                    loc  10→ 25 ✗ │ role  15→ 25 ✗ │ tech  15→ 15 ✓ │ comp   0→  0 ✓
+                    Job in UK with London/remote mention (+25), Senior role (+25), Node.js and TypeScript (+15), no GBP 
+
+[ 38/101] ✓  16.8s  Lead Full Stack Software Developer          maybe                  21%
+[ 39/101] ✗  16.7s  DevOps Engineer                             bad_fit→maybe          21%
+                    loc  10→ 10 ✓ │ role   0→  0 ✓ │ tech   0→  0 ✓ │ comp   0→ 25 ✗
+                    In UK (Staffordshire), no London/remote, so +10; no senior keywords, so 0 role; no Node.js/TypeScrip
+
+[ 40/101] ✗  21.2s  Full Stack Engineer                         bad_fit→maybe          20%
+                    loc  10→ 10 ✓ │ role  15→ 15 ✓ │ tech  15→ 15 ✓ │ comp   0→ 25 ✗
+                    Bristol, UK (in UK, no London/remote), Full Stack (15), Node.js+TypeScript (15), salary £50-100k (mi
+
+[ 41/101] ✗  13.7s  Software Engineer                           bad_fit→maybe          20%
+                    loc  10→ 10 ✓ │ role   0→  0 ✓ │ tech  15→ 15 ✓ │ comp   0→  0 ✓
+                    Bristol, UK (in UK, no London/remote), no seniority keywords, Node.js and TypeScript mentioned, no G
+
+[ 42/101] ✗  18.8s  Data Scientist                              bad_fit→maybe          19%
+                    loc  10→ 10 ✓ │ role  15→  0 ✗ │ tech  10→ 20 ✗ │ comp   0→  0 ✓
+                    In UK (Abingdon-On-Thames, England), no London/remote, so +10; no senior/lead keywords, so 0 role; A
+
+[ 43/101] !  17.6s  Senior Software Engineer                    PARSE FAIL
+           Raw (357 chars): {"loc":0,"role":25,"tech":10,"comp":0,"score":35,"label":"maybe","reasoning":"Location in Waterloo, Ontario, Canada (not UK) → 0; role has 'Senior' → +25; tech has Python/Flask/FastAPI/Django (no Node.js/JS/ML) → 0 for Node/JS, +10 for Python (not listed in rules), but only +10 for Python if in core stack — however, Python not in required tech list, so 0;
+[ 44/101] ✗  18.8s  Software Engineer III- Data Engineer, Java  bad_fit→maybe          18%
+                    loc  10→ 10 ✓ │ role   0→ 25 ✗ │ tech   0→ 10 ✗ │ comp   0→  0 ✓
+                    In UK (Glasgow), no London/remote, so +10; Senior in title (+25); Java/Python mentioned, no Node.js/
+
+[ 45/101] ✗  19.7s  Data Scientist                              bad_fit→maybe          18%
+                    loc  10→ 10 ✓ │ role   0→ 25 ✗ │ tech   0→ 10 ✗ │ comp   0→  0 ✓
+                    In UK (England), no London/remote, so +10; Senior in title (+25); Python and AI/ML mentioned (AI/ML 
+
+[ 46/101] ✗  18.6s  Senior Full Stack Engineer (perm) - Typesc  maybe→good_fit         17%
+                    loc  10→ 25 ✗ │ role  25→ 25 ✓ │ tech  15→ 25 ✗ │ comp   0→  0 ✓
+                    In UK (Edinburgh), contains London or remote? No, but in UK and has 'Senior' in title → +25 for role
+
+[ 47/101] ✗  16.6s  Angular Developer                           bad_fit→maybe          17%
+                    loc  10→ 10 ✓ │ role   0→  0 ✓ │ tech   5→ 15 ✗ │ comp   0→  0 ✓
+                    In UK (Bristol), no London/remote, so +10; no senior/lead keywords, so 0 role; TypeScript and JavaSc
+
+[ 48/101] ✗  16.6s  Frontend Developer                          bad_fit→maybe          17%
+                    loc  10→ 10 ✓ │ role   0→ 25 ✗ │ tech   5→ 15 ✗ │ comp   0→  0 ✓
+                    In UK (Leeds), no London/remote, so +10; Senior in title (+25); React/TypeScript in JD (+5 for TS, +
+
+[ 49/101] ✗  17.4s  Python Developer                            bad_fit→maybe          16%
+                    loc  10→ 10 ✓ │ role   0→ 15 ✗ │ tech   5→ 10 ✗ │ comp   0→  5 ✗
+                    In UK (Leeds), no London/remote, so +10; role has 'Software Engineer' (mid-level), so +15; tech has 
+
+[ 50/101] ✗  19.1s  Platform Engineer                           bad_fit→maybe          16%
+                    loc  10→ 10 ✓ │ role   0→  0 ✓ │ tech   0→ 10 ✗ │ comp   0→  5 ✗
+                    Job in Cardiff, UK (in UK, no London/remote), so +10; no seniority keywords, so 0; Node.js required,
+
+[ 51/101] ✗  15.0s  Lead Software Engineer                      bad_fit→maybe          16%
+                    loc  10→ 25 ✗ │ role  25→ 25 ✓ │ tech   5→ 15 ✗ │ comp   0→  0 ✓
+                    In UK location with London-like designation (Bristol), so +25; role has 'Lead' → +25; tech has JavaS
+
+[ 52/101] ✗  20.2s  Full Stack Developer                        bad_fit→maybe          15%
+                    loc  10→ 10 ✓ │ role  15→ 15 ✓ │ tech  15→ 15 ✓ │ comp   0→  0 ✓
+                    In UK (Leeds, England), no London/remote, so +10; Full Stack in title → +15; Node.js and TypeScript 
+
+[ 53/101] ✓  21.3s  UK Senior Applied AI Solution Engineer      good_fit               17%
+[ 54/101] ✓  22.8s  Senior Software Engineer, Full Stack - Fin  maybe                  19%
+[ 55/101] ✗  22.7s  Senior Software Engineer, Live              bad_fit→maybe          18%
+                    loc  10→ 25 ✗ │ role  25→ 25 ✓ │ tech   5→ 15 ✗ │ comp   0→  0 ✓
+                    Job in Cambridge, England (UK), so +25 for UK location with no London/remote; Senior in title → +25 
+
+[ 56/101] ✗  19.0s  Senior Software Engineer                    bad_fit→maybe          18%
+                    loc  10→ 10 ✓ │ role  25→ 25 ✓ │ tech   5→ 10 ✗ │ comp   0→  0 ✓
+                    In UK (Bristol), no London or Remote, so +10; Senior in title (+25); tech stack includes Java, C++, 
+
+[ 57/101] ✗  17.7s  Junior Software Engineer - Up To £50,000 -  bad_fit→maybe          18%
+                    loc  10→ 10 ✓ │ role   0→  0 ✓ │ tech   0→  0 ✓ │ comp   0→  0 ✓
+                    Job in Oxfordshire, England (UK), no London or Remote, so +10; no senior or mid-level keywords, so 0
+
+[ 58/101] ✗  18.3s  Mid-Level Java Engineer                     bad_fit→maybe          17%
+                    loc  10→ 10 ✓ │ role  15→ 15 ✓ │ tech   0→  0 ✓ │ comp   0→ 15 ✗
+                    In UK (Bristol), no London/remote, so +10; Mid-Level title → +15; no Node.js/JS/ML mentioned; salary
+
+[ 59/101] ✗  18.5s  DevOps Engineer                             bad_fit→maybe          17%
+                    loc  10→ 10 ✓ │ role   0→ 25 ✗ │ tech   0→  0 ✓ │ comp   0→  0 ✓
+                    Job in Birmingham, England (UK), so +10 for UK location without London/Remote; Senior in title (+25)
+
+[ 60/101] ✗  21.6s  Graduate eCommerce Web Developer - Hybrid   bad_fit→maybe          17%
+                    loc  10→ 25 ✗ │ role   0→ 15 ✗ │ tech   5→ 15 ✗ │ comp   0→  0 ✓
+                    In UK (Birmingham), no London or remote, so +25; Full-Stack keyword in title → +15; JavaScript/Alpin
+
+[ 61/101] ✗  14.9s  Full Stack Developer - Fixed Term Contract  bad_fit→maybe          16%
+                    loc  10→ 25 ✗ │ role  15→ 25 ✗ │ tech   0→ 15 ✗ │ comp   0→  0 ✓
+                    In UK with remote option (+25), Senior level (+25), Node.js and TypeScript (+15), no GBP salary stat
+
+[ 62/101] ✗  20.3s  Senior Software Engineer (full Stack Web)   bad_fit→maybe          16%
+                    loc  10→ 25 ✗ │ role  25→ 25 ✓ │ tech   5→ 15 ✗ │ comp   0→  0 ✓
+                    In UK with London mention (25), Senior role (25), Full Stack (25), Node.js and JavaScript/TypeScript
+
+[ 63/101] ✗  16.8s  Senior Software Developer (react) - Up To   maybe→good_fit         16%
+                    loc  25→ 25 ✓ │ role  25→ 25 ✓ │ tech   0→ 10 ✗ │ comp   0→ 25 ✗
+                    London location (UK with London) → +25; Senior in title → +25; React not in core stack (no Node.js/T
+
+[ 64/101] ✗  24.5s  Senior Software Developer                   bad_fit→maybe          16%
+                    loc -50→  0 ✗ │ role  25→ 25 ✓ │ tech   0→ 15 ✗ │ comp   0→  0 ✓
+                    Location in Waterloo, Ontario, Canada (not UK) → 0; Senior in title → +25; Node.js/TypeScript not me
+
+[ 65/101] ✗  16.7s  Junior Developer                            bad_fit→maybe          15%
+                    loc  25→ 25 ✓ │ role   0→ 15 ✗ │ tech   0→ 10 ✗ │ comp   0→  0 ✓
+                    In UK with London mention (25), Full-Stack in title (15), Node.js required (10), no GBP salary state
+
+[ 66/101] ✗  18.2s  Senior UI Developer                         bad_fit→maybe          15%
+                    loc  10→ 10 ✓ │ role  25→ 25 ✓ │ tech   5→ 15 ✗ │ comp   0→  0 ✓
+                    In UK (Cambridge), no London or Remote, so +10; Senior in title (+25); UI/UX relevant tech (TypeScri
+
+[ 67/101] ✗  19.3s  Director Of Engineering                     bad_fit→maybe          15%
+                    loc  10→ 10 ✓ │ role   0→ 25 ✗ │ tech   0→  0 ✓ │ comp   0→  0 ✓
+                    Glasgow, Scotland (UK) → in UK, no London/Remote → +10; title has 'Director' → +25; no Node.js/TypeS
+
+[ 68/101] ✗  18.4s  Frontend Developer                          bad_fit→maybe          15%
+                    loc  10→ 10 ✓ │ role   0→  0 ✓ │ tech   5→ 15 ✗ │ comp   0→ 15 ✗
+                    In UK (Leeds), no London/remote, so +10; no senior/mid-level keywords, so 0 role; TypeScript +5, Rea
+
+[ 69/101] ✓  27.1s  Software Engineer, Frontend                 bad_fit                16%
+[ 70/101] ✗  18.5s  Senior Software Engineer, Photos UI         bad_fit→maybe          16%
+                    loc  10→ 25 ✗ │ role  25→ 25 ✓ │ tech   0→ 10 ✗ │ comp   0→  0 ✓
+                    In UK (Cambridge), Senior role (25), AI/ML experience required (10), no GBP salary mentioned.
+
+[ 71/101] ✗  20.7s  Graduate Software Engineer                  bad_fit→maybe          15%
+                    loc  10→ 10 ✓ │ role   0→  0 ✓ │ tech   0→ 15 ✗ │ comp   0→  0 ✓
+                    Belfast, UK (in UK, no London/remote), graduate role (no senior/mid-level keywords), tech: AI/ML men
+
+[ 72/101] !  22.9s  Senior Software Engineer - Backend AI Nati  PARSE FAIL
+           Raw (298 chars): {"loc":10,"role":25,"tech":15,"comp":25,"score":75,"label":"good_fit","reasoning":"Location in Glasgow, UK (not London or Remote) → +10; title contains 'Senior' → +25; JD requires Node.js → +10, TypeScript → +5; salary range £65k-80k → midpoint £72.5k → +25 (≥£75k? No, but ≥£55k → +5; however, £72
+[ 73/101] ✗  20.9s  Senior Software Engineer – Builds And Rele  bad_fit→maybe          15%
+                    loc  10→ 25 ✗ │ role  25→ 25 ✓ │ tech   0→ 10 ✗ │ comp   0→  0 ✓
+                    In UK (Cambridge), Senior role (25), build/CI/CD focus with C/C++ and CMake (10 for build systems), 
+
+[ 74/101] ✗  17.4s  Developer – Angular, Ionic, Git - Bristol   bad_fit→maybe          15%
+                    loc  10→ 10 ✓ │ role   0→ 15 ✗ │ tech   5→ 15 ✗ │ comp   0→  0 ✓
+                    In UK (Bristol), no London/remote, so +10; role has 'Developer' and 'Mobile' but no Senior/Lead keyw
+
+[ 75/101] ✓  24.2s  Lead Software Engineer (full Stack) - Reac  maybe                  16%
+[ 76/101] ✓  18.9s  Software Engineer                           bad_fit                17%
+[ 77/101] ✗  17.1s  Senior Data Engineer                        bad_fit→maybe          17%
+                    loc  10→ 10 ✓ │ role  25→ 25 ✓ │ tech   0→ 10 ✗ │ comp   0→  0 ✓
+                    In UK (Bristol), no London/remote, so +10; Senior in title (+25); Elastic Stack and Apache NiFi ment
+
+[ 78/101] ✗  22.1s  Data Engineer - Palantir                    bad_fit→maybe          17%
+                    loc   0→ 10 ✗ │ role   0→  0 ✓ │ tech   0→  0 ✓ │ comp   0→  0 ✓
+                    Job location is in Greater Leeds Area, which is in the UK but does not contain 'London' or 'Remote',
+
+[ 79/101] ✗  19.9s  Full Stack Developer                        bad_fit→maybe          16%
+                    loc  10→ 10 ✓ │ role  15→ 25 ✗ │ tech  15→ 15 ✓ │ comp   0→  0 ✓
+                    In UK (Edinburgh), no London/remote, so +10; Senior in title (+25); Node.js and TypeScript required 
+
+[ 80/101] ✗  19.0s  Senior Full Stack Quality Engineer          maybe→good_fit         16%
+                    loc  25→ 25 ✓ │ role  25→ 25 ✓ │ tech   0→ 10 ✗ │ comp   0→ 25 ✗
+                    London-based role with Senior title (25), London mentioned (25), Node.js required (10), salary midpo
+
+[ 81/101] ✗  23.8s  Java Full Stack Developer                   bad_fit→maybe          16%
+                    loc  10→ 10 ✓ │ role  15→ 15 ✓ │ tech   5→  5 ✓ │ comp   0→  0 ✓
+                    Bristol, UK (in UK, no London/remote), Full Stack in title (15), TypeScript/JS (5), no GBP salary st
+
+[ 82/101] !  18.5s  Senior Full Stack Engineer (python & React  PARSE FAIL
+           Raw (326 chars): {"loc":10,"role":25,"tech":15,"comp":25,"score":75,"label":"good_fit","reasoning":"Glasgow, Scotland (UK) → in UK, no London/remote → +10; Senior in title → +25; Full Stack → +15; Python/React mentioned, no Node.js/TS → 0 for Node/JS/TS; AI mentioned as 'AI assisted coding' → not required → 0; salary £75k-£85k → midpoint £80
+[ 83/101] ✗  22.8s  Graduate Machine Learning Engineer          bad_fit→maybe          16%
+                    loc  10→ 10 ✓ │ role   0→  0 ✓ │ tech  15→ 10 ✗ │ comp   0→  0 ✓
+                    In UK (Oxford, England), no London/remote mentioned; graduate role with no senior keywords; ML libra
+
+[ 84/101] ✗  18.2s  Machine Learning Engineer                   bad_fit→maybe          15%
+                    loc  10→ 25 ✗ │ role   0→  0 ✓ │ tech   0→ 10 ✗ │ comp   0→  0 ✓
+                    Job in UK (Oxford, England), contains 'Remote' → +25; no seniority keywords → 0; tech: LLM/ML experi
+
+[ 85/101] ✓  23.0s  Senior Software Engineer - Full-Stack       maybe                  16%
+[ 86/101] ✗  31.6s  Staff Software Engineer (team Lead) - Engi  bad_fit→maybe          16%
+                    loc  10→ 10 ✓ │ role  25→ 25 ✓ │ tech   0→ 10 ✗ │ comp   0→  0 ✓
+                    In UK (Cardiff, Wales), in UK but no London/Remote; Staff role (25); tech stack includes Java (0), A
+
+[ 87/101] ✗  19.1s  Solution Architect                          bad_fit→maybe          16%
+                    loc  25→ 25 ✓ │ role   0→ 25 ✗ │ tech   0→  0 ✓ │ comp   0→  0 ✓
+                    In London (UK), with London mention; Senior in title; no tech stack points (no Node.js, JS, AI); no 
+
+[ 88/101] ✗  27.5s  Associate Software Engineer - (graduate)    bad_fit→maybe          16%
+                    loc  25→ 25 ✓ │ role   0→ 15 ✗ │ tech   5→ 10 ✗ │ comp   0→  0 ✓
+                    In London, UK (25), role has 'Full-stack' (15), tech has Python/TypeScript (10), no GBP salary menti
+
+[ 89/101] ✗  20.2s  Full Stack Engineer                         bad_fit→maybe          16%
+                    loc  10→ 10 ✓ │ role  15→ 15 ✓ │ tech   0→ 10 ✗ │ comp   0→  0 ✓
+                    Bath, UK (in UK, no London/remote) → +10; Full Stack → +15; Python/React/Node.js not required; AI no
+
+[ 90/101] ✗  18.7s  Senior Sharepoint Developer                 maybe→good_fit         16%
+                    loc  25→ 25 ✓ │ role  25→ 25 ✓ │ tech   5→ 15 ✗ │ comp   0→ 25 ✗
+                    In UK with London mention, Senior in title, tech stack includes TypeScript/JavaScript/React (5+10), 
+
+[ 91/101] ✗  27.6s  Data Engineer                               bad_fit→maybe          15%
+                    loc  10→ 10 ✓ │ role   0→  0 ✓ │ tech   0→  0 ✓ │ comp   0→  0 ✓
+                    Job in Leeds, England (UK), no London or Remote mentioned; in UK but not London → +10; no Senior/Lea
+
+[ 92/101] !  53.7s  Senior Software Engineer, Product Engineer  PARSE FAIL
+           Raw (377 chars): {"loc":0,"role":25,"tech":15,"comp":0,"score":40,"label":"maybe","reasoning":"Location is in Waterloo, Ontario, Canada (not UK), so outside UK → -50, but only scored 0 as per rule; role: Senior → +25; tech: Node.js and TypeScript mentioned → +15; no GBP salary stated → comp: 0. Total: 40 (after applying -50 for UK exclusion, but rule says 'if outside UK → -50', so actual loc
+[ 93/101] ✗  22.3s  Full Stack Web Developer                    bad_fit→maybe          15%
+                    loc  10→ 10 ✓ │ role  15→ 15 ✓ │ tech   5→ 10 ✗ │ comp   0→  0 ✓
+                    In UK (Birmingham, Dudley, Halesowen), no London or Remote; Full Stack title gives +15; WordPress, H
+
+[ 94/101] ✗  23.4s  Data Scientist                              bad_fit→maybe          15%
+                    loc  10→ 10 ✓ │ role  15→ 25 ✗ │ tech  10→ 10 ✓ │ comp   0→  0 ✓
+                    In UK (Leeds), no London/remote, so +10; Senior in title (+25); AI/ML/LLM experience required (+10);
+
+[ 95/101] ✗  21.6s  Python Software Engineer - Ubuntu Hardware  bad_fit→maybe          15%
+                    loc  10→ 25 ✗ │ role   0→  0 ✓ │ tech   0→  0 ✓ │ comp   0→  0 ✓
+                    Job in Glasgow, UK (in UK, no London/remote), so +25 for location; no senior or full-stack keywords,
+
+[ 96/101] ✗  19.3s  Senior Developer                            bad_fit→maybe          15%
+                    loc  10→ 10 ✓ │ role  25→ 25 ✓ │ tech   5→ 15 ✗ │ comp   0→  0 ✓
+                    In UK (Edinburgh), no London/remote, so +10; Senior in title (+25); full stack (+15); TypeScript and
+
+[ 97/101] ✓  22.2s  Senior Full Stack Engineer                  maybe                  15%
+[ 98/101] ✗  16.3s  Backend Developer                           bad_fit→maybe          15%
+                    loc  10→ 10 ✓ │ role   0→  0 ✓ │ tech   0→  0 ✓ │ comp   0→  0 ✓
+                    Job in Bristol, UK (within UK, no London/remote), so +10; no seniority keywords, no core tech like N
+
+[ 99/101] ✗  21.5s  Junior Data Scientist                       bad_fit→maybe          15%
+                    loc  10→ 10 ✓ │ role   0→  0 ✓ │ tech   0→  0 ✓ │ comp -30→  0 ✗
+                    Job in UK (Abingdon, England), no London or Remote mention; role lacks Senior/Lead keywords; no AI/M
+
+[100/101] !  21.9s  Machine Learning Engineer, AI Foundations   PARSE FAIL
+           Raw (283 chars): {"loc":10,"role":25,"tech":10,"comp":25,"score":70,"label":"good_fit","reasoning":"In UK (Oxford, England), within UK and not London/remote; Senior in title (25); ML/ML infra experience (10); salary £93k-£100k (midpoint £96.5k → ≥£99k? No, but ≥£75k → 15? Wait: £93k-£100k → midpoint
+[101/101] ✗  19.2s  Snr. Software Developer (c# / React / FX O  maybe→good_fit         15%
+                    loc  25→ 25 ✓ │ role  25→ 25 ✓ │ tech   5→ 15 ✗ │ comp   0→ 25 ✗
+                    London-based role (in UK with London mention), Senior level (Senior in title), C# and TypeScript/Rea
+
+
+════════════════════════════════════════════════════════════
+RESULTS
+════════════════════════════════════════════════════════════
+Total examples:  101
+Parse failures:  10
+Valid outputs:   91
+
+Label accuracy:  15/91 = 16.5%  (baseline: 39.8%)
+
+Field accuracy:
+  loc:   67/91 = 73.6%
+  role:  70/91 = 76.9%
+  tech:  35/91 = 38.5%
+  comp:  75/91 = 82.4%
+
+Per-label breakdown:
+  good_fit  : 3/3 = 100%
+  maybe     : 9/16 = 56%
+  bad_fit   : 3/72 = 4%
+
+Error patterns:
+  Over-scoring:   69  (predicted higher than golden)
+  Under-scoring:  0  (predicted lower than golden)
+  Other:          7  (e.g. good_fit↔maybe)
+  Parse failures: 10

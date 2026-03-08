@@ -1,0 +1,42 @@
+# MLX LoRA config for V5 student model (semantic tokens)
+# Optimized for M1 16GB
+#
+# Student: Qwen2.5-0.5B-Instruct-4bit
+# Task: Semantic token classification (4 fields, 21 total tokens)
+# Training: ~895 examples, from-scratch (no adapter resume)
+
+model: "mlx-community/Qwen2.5-0.5B-Instruct-4bit"
+data: "data/v5/mlx"
+train: true
+fine_tune_type: "lora"
+
+# LoRA hyperparameters
+# rank 16 (up from 8 in v1) — more capacity for 21-class classification
+# alpha = 2x rank for stable scaling
+lora_parameters:
+  rank: 16
+  alpha: 32
+  dropout: 0.1
+  scale: 1.0
+  weight_decay: 0.01
+
+# Training parameters
+batch_size: 2
+grad_accumulation_steps: 8 # Effective batch = 16
+iters: 1000
+learning_rate: 5e-5
+warmup_steps: 50
+
+max_seq_length: 8192
+
+# Validation — eval every 25 iters to catch best checkpoint
+val_batches: 40
+steps_per_eval: 25
+
+# Output
+adapter_path: "finetune/adapters_v5.1"
+save_every: 25
+
+# Memory optimization
+mask_prompt: true # Only train on assistant response (semantic tokens)
+grad_checkpoint: true # Gradient checkpointing for M1 16GB

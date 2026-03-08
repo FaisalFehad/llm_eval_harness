@@ -1,0 +1,207 @@
+Output: eval_results/adapters_v5.1/2026-03-07_eval_150_golden_student_v5_0000025.txt
+Prompt: prompts/student_v5.txt
+Adapter: finetune/adapters_v5.1/0000025_adapters.safetensors → finetune/adapters_v5.1/adapters.safetensors
+Model: mlx-community/Qwen2.5-0.5B-Instruct-4bit
+────────────────────────────────────────────────────────────
+────────────────────────────────────────────────────────────
+Running V5 eval on 150 jobs...
+
+[  1/150] !   0.7s  Senior Software Engineer                    INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[  2/150] !   0.8s  Head Of Engineering                         INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[  3/150] !   0.6s  Distinguished Engineer                      INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[  4/150] !   0.6s  Lead DevOps Architect                       INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[  5/150] !   0.6s  Senior Product Engineer                     INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[  6/150] !   0.7s  Senior Software Engineer, £70,000 To £85,0  INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[  7/150] !   1.0s  Founding Engineer (£240k+ )                 INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[  8/150] !   0.5s  Lead Full Stack Architect                   INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[  9/150] !   1.1s  Lead DevOps Engineer                        INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 10/150] !   0.8s  Snr, Staff & Principal Full Stack Engineer  INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 11/150] !   0.6s  Senior Software Engineer                    INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 12/150] !   0.7s  Senior Backend Software Engineer            INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 13/150] !   0.6s  Mid-Level Backend Engineer                  INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 14/150] !   0.7s  Founding Software Engineer (insurtech - £1  INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 15/150] !   0.8s  Senior Full-Stack Software Engineer         INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 16/150] !   0.7s  Senior Node/TypeScript Developer            PARSE FAIL
+[ 17/150] !   0.7s  Senior Frontend Developer                   INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 18/150] !   2.2s  Senior Software Engineer                    INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 19/150] !   0.7s  Technical Lead                              INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 20/150] !   0.7s  🔥founding Fullstack Developer - SaaS🔥       INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 21/150] !   0.8s  Founding Engineer                           INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 22/150] !   1.1s  Staff Software Engineer - Money Management  INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 23/150] !   0.6s  Staff Data Engineer                         INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 24/150] !   0.6s  Head of Infrastructure                      INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 25/150] !   0.8s  Senior Software Engineer - Frontend         INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 26/150] !   0.6s  Senior Full Stack Engineer                  INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 27/150] !   0.7s  Software Engineer                           PARSE FAIL
+[ 28/150] !   0.6s  Snr. Software Developer (c# / React / Type  INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 29/150] !   0.5s  Senior Fullstack Typescript Engineer at $1  INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 30/150] !   2.5s  Senior Software Engineer                    PARSE FAIL
+[ 31/150] !   0.6s  Senior Software Engineer at FORT            INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 32/150] !   0.6s  Senior Software Engineer (backend, Node.JS  INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 33/150] !   0.7s  Front-End Engineer (React) : Trading : £12  INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 34/150] !   6.0s  Senior Software Engineer                    PARSE FAIL
+[ 35/150] !   2.0s  Software Team Lead                          INVALID TOKEN: ['Invalid loc token: "London, England, United Kingdom"', 'Invalid role token: "Software Team Lead"', 'Invalid tech token: "Python, AWS, React/Typescript, Node.js, Node.js"']
+[ 36/150] !   1.4s  Senior Full Stack Developer                 INVALID TOKEN: ['Invalid loc token: "London, England"', 'Invalid role token: "Senior Full Stack Developer"', 'Invalid tech token: "Node.js and TypeScript/JavaScript"', 'Invalid comp token: "Technology company"']
+[ 37/150] !   5.8s  Senior Node.js Developer                    PARSE FAIL
+[ 38/150] !   1.3s  Senior Frontend Developer                   INVALID TOKEN: ['Invalid role token: "Senior Frontend Developer"']
+[ 39/150] !   1.4s  Senior Full Stack Developer                 INVALID TOKEN: ['Invalid role token: "Senior Full Stack Developer"']
+[ 40/150] !   0.8s  Senior Full-Stack Developer - AI/ML Focus   INVALID TOKEN: ['Invalid loc token: "UK"', 'Invalid role token: "Senior"', 'Invalid tech token: "Node.js, TypeScript"', 'Invalid comp token: "UK"']
+[ 41/150] !   1.1s  Senior Software Engineer - London           INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 42/150] !   1.5s  Senior Frontend Engineer with AI/ML Expert  INVALID TOKEN: ['Invalid loc token: "Remote UK"', 'Invalid role token: "Senior Frontend Engineer with AI/ML Expertise"']
+[ 43/150] !   0.5s  Senior Software Engineer - AI/ML            INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 44/150] !   1.2s  Senior Full Stack Developer                 INVALID TOKEN: ['Invalid role token: "Senior Full Stack Developer"']
+[ 45/150] !   1.3s  Lead Backend Engineer                       INVALID TOKEN: ['Invalid loc token: "Remote UK"', 'Invalid role token: "Lead Backend Engineer"']
+[ 46/150] !   0.5s  Lead Node.js Developer with AI Focus        INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 47/150] !   1.4s  Lead AI Developer                           INVALID TOKEN: ['Invalid loc token: "LONDON_OR_REMOTE | UK_OTHER | OUTSIDE_UK | MISSING"', 'Invalid comp token: "NO_GBP | UP_TO_ONLY | BELOW_45K | RANGE_55_74K | RANGE_75_99K | ABOVE_100K"']
+[ 48/150] ✗   0.7s  Lead AI Engineer                            good_fit→bad_fit        0%
+                    loc UK_OTHER→UK_OTHER ✓ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NODE_JS_TS→JS_TS ✗ │ comp ABOVE_100K→NO_GBP ✗
+                    Neural Networks Ltd. values inclusivity and equal opportunity for all candidates.
+
+[ 49/150] !   1.1s  Senior / Lead Software Engineer             INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 50/150] !   1.1s  Senior Software Engineer                    INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 51/150] !   1.0s  Senior Software Engineer - Full-Stack       INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 52/150] !   0.5s  Senior Backend Engineer                     INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 53/150] !   2.4s  Staff Engineer (full Stack)                 INVALID TOKEN: ['Missing field: comp']
+[ 54/150] !   1.1s  Senior / Lead Software Engineer             INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 55/150] !   0.9s  Senior Back End Software Engineer           INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 56/150] !   1.2s  Lead Infrastructure Engineer (cloud & Comp  INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 57/150] !   0.7s  Front-End Engineer (React) : Trading : £12  INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 58/150] !   0.6s  Senior Product Engineer                     INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 59/150] !   0.6s  Principal Security Engineer                 INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 60/150] !   1.3s  Senior Data Scientist - INTERNAL ONLY       INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 61/150] !   0.7s  Lead Software Engineer                      INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 62/150] !   0.6s  Senior Software Engineer                    INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 63/150] !   0.8s  Engineering Manager                         INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 64/150] !   0.9s  Senior Software Engineer                    INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 65/150] !   0.6s  Staff Software Engineer                     INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 66/150] !   1.1s  Senior Data Engineer (data Management)      INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 67/150] !   0.7s  Senior Software Engineer                    INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 68/150] !   1.0s  Senior Regional Account Executive | NYC     INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 69/150] !   0.6s  Senior Cloud Architect                      INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 70/150] !   0.9s  Head Of AI Engineering (strategy And Innov  INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 71/150] !   0.9s  Senior Software Engineer                    INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "Senior Software Engineer - £85k + bonus | FinTech/ Banking | Java, Kotlin, AWS | Leeds/hybrid"', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 72/150] !   0.9s  Senior Frontend Engineer (mobile And Web)   INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 73/150] !   0.6s  Senior Software Engineer                    INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 74/150] !   5.9s  Senior Software Engineer                    PARSE FAIL
+[ 75/150] !   1.1s  Lead Backend (Node.JS) Engineer             INVALID TOKEN: ['Missing field: comp']
+[ 76/150] !   0.5s  Senior Software Engineer                    INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 77/150] !   0.8s  Senior Full-Stack Software Engineer         INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 78/150] !   0.6s  Senior Electrical Design Engineer           INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 79/150] !   0.5s  Principal Security Engineer                 INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 80/150] !   0.6s  Staff Software Engineer                     INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 81/150] !   0.8s  Lead Full Stack Engineer (perm) - TypeScri  INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 82/150] !   0.8s  Senior Software Engineer                    INVALID TOKEN: ['Invalid loc token: "Birmingham"', 'Invalid role token: "Senior Software Engineer"', 'Invalid tech token: "JavaScript, TypeScript, React / React Native, PostgreSQL, and Cloud"', 'Invalid comp token: "Permanent"']
+[ 83/150] !   0.8s  Senior Software Engineer - .Net/Angular     INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 84/150] !   0.7s  Senior Marketing Manager                    INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 85/150] !   0.6s  Senior Software Engineer                    INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 86/150] !   0.6s  Founding Engineer (Series A)                INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 87/150] !   6.1s  Mid-level Software Engineer                 PARSE FAIL
+[ 88/150] !   0.8s  Contract Principal Full Stack Developer     INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 89/150] !   0.6s  Mid-Senior Data Engineer - Investment Firm  INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 90/150] !   0.7s  Data Engineer - £150k-£200k TC              INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 91/150] !   1.1s  Full Stack Engineer                         INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 92/150] !   0.6s  Principal Security Engineer                 INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 93/150] !   0.6s  Senior Software Engineer                    INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 94/150] !   0.6s  Software Engineering Manager                INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 95/150] !   0.9s  Senior/Principal Civil Engineer             INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 96/150] !   0.6s  Software Developer (remote)                 INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[ 97/150] !   0.7s  Senior Data Engineer                        INVALID TOKEN: ['Invalid loc token: "London Area, United Kingdom"', 'Invalid role token: "Senior Data Engineer"']
+[ 98/150] !   0.7s  Senior Full-Stack Engineer (Activation)     INVALID TOKEN: ['Invalid role token: "Senior"']
+[ 99/150] !   0.5s  Lead DevOps Architect                       INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[100/150] !   1.0s  Senior Software Engineer                    INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[101/150] !   0.9s  Senior Product Manager, Home Loans          INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[102/150] !   0.7s  Technical Product Manager                   INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[103/150] !   1.1s  Software Engineering Intern                 INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[104/150] !   0.8s  Quality Assurance Engineer - Software Qual  INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[105/150] !   0.6s  Javascript Developer                        INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[106/150] !   0.8s  Senior Product Manager                      INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[107/150] !   0.6s  Engineering Team Leader                     INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[108/150] !   0.8s  Engineering Manager - FMCG                  INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[109/150] !   0.7s  Junior Web Developer - Training Course      INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[110/150] !   0.7s  Customer Solutions Engineer                 INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[111/150] !   0.9s  Human Resources Team Leader                 INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[112/150] !   1.0s  Software Engineer - Python - Ubuntu Pro Cl  INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[113/150] !   1.0s  Senior DevOps Engineer                      INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[114/150] !   0.5s  Senior Full Stack PHP Developer             INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[115/150] !   0.9s  Human Resources Manager                     INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[116/150] !   0.6s  DevOps Engineer                             INVALID TOKEN: ['Invalid loc token: "Germany"', 'Invalid role token: "DevOps Engineer"', 'Invalid tech token: "devops"', 'Invalid comp token: "devops"']
+[117/150] !   0.8s  DevOps Engineer I (690918)                  INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[118/150] !   0.9s  Senior Full-Stack Software Engineer, Live   INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[119/150] !   1.0s  Senior Product Manager                      INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[120/150] !   0.9s  Software Engineer - Tools                   INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[121/150] !   0.5s  Jr. Machine Learning Engineer               INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[122/150] !   1.1s  Backend Engineer                            INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[123/150] !   1.9s  Solutions Engineer                          INVALID TOKEN: ['Invalid loc token: "LONDON_OR_REMOTE | UK_OTHER | OUTSIDE_UK | MISSING"', 'Invalid role token: "Solutions Architect"', 'Invalid tech token: "JavaScript, React, Swift, Objective-C, or Java"', 'Invalid comp token: "NO_GBP | UP_TO_ONLY | BELOW_45K | RANGE_55_74K | RANGE_75_99K | ABOVE_100K"']
+[124/150] !   1.0s  Junior DevOps Engineer                      INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[125/150] !   1.0s  Lead Software Developer                     INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[126/150] !   1.2s  Web Developer                               INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[127/150] !   1.0s  Key Account Manager-Pharmacy Channel        INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[128/150] ✓   1.1s  Talent Development Manager                  bad_fit                 1%
+[129/150] !   0.7s  Software Developer                          INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[130/150] !   2.0s  Junior System Software Engineer             INVALID TOKEN: ['Invalid loc token: "LONDON_OR_REMOTE | UK_OTHER | OUTSIDE_UK | MISSING"', 'Invalid role token: "Senior System Software Engineer"']
+[131/150] !   0.9s  Public Cloud Assistant Infrastructure Engi  INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[132/150] ✓   0.8s  Marketing Manager                           bad_fit                 2%
+[133/150] !   0.6s  Cloud Platform Engineer                     INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[134/150] !   1.5s  Software Engineer Intern                    INVALID TOKEN: ['Missing field: comp']
+[135/150] !   1.1s  Associate Engineer I - AI Platform          INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[136/150] !   0.5s  Second Line Support Engineer                INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[137/150] !   1.3s  Senior Software Engineer                    INVALID TOKEN: ['Invalid loc token: "LONDON_OR_REMOTE | UK_OTHER | OUTSIDE_UK | MISSING"', 'Invalid role token: "Senior Software Engineer"', 'Invalid comp token: "NO_GBP | UP_TO_ONLY | BELOW_45K | RANGE_55_74K | RANGE_75_99K | ABOVE_100K"']
+[138/150] !   0.8s  Senior Lead Software Engineer               INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[139/150] !   0.9s  Full-Stack Software Engineer                INVALID TOKEN: ['Invalid loc token: "Location"', 'Invalid role token: "Role"', 'Invalid tech token: "Tech"', 'Invalid comp token: "Comp"']
+[140/150] !   0.6s  Security Systems Engineer                   INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[141/150] !   1.1s  Sr Software Engineer - Fullstack            INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[142/150] !   0.9s  Software Engineer I                         INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[143/150] !   1.5s  Security Analyst                            INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[144/150] !   1.9s  Full Stack Developer                        PARSE FAIL
+[145/150] !   0.8s  Solutions Engineer                          INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[146/150] ✗   1.1s  Australia AI Delivery Lead                  bad_fit→maybe           1%
+                    loc OUTSIDE_UK→LONDON_OR_REMOTE ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech AI_ML→JS_TS ✗ │ comp NO_GBP→NO_GBP ✓
+                    ...
+
+[147/150] !   0.9s  Data Engineer                               INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[148/150] !   0.6s  Senior Product Manager                      INVALID TOKEN: ['Invalid loc token: "Australia"', 'Invalid role token: "Senior Product Manager"', 'Invalid comp token: "No"']
+[149/150] !   1.0s  Junior DevOps Engineer                      INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+[150/150] !   0.7s  Site Engineer                               INVALID TOKEN: ['Invalid loc token: "..."', 'Invalid role token: "..."', 'Invalid tech token: "..."', 'Invalid comp token: "..."']
+
+════════════════════════════════════════════════════════════════════
+  EVAL  adapters_v5.1  iter 0000025
+  eval set: eval_150_golden  │  prompt: student_v5  │  n=150
+════════════════════════════════════════════════════════════════════
+  Parse failures: 8   Invalid tokens: 138   Fuzzy corrections: 4   Valid: 4/150
+
+  Label accuracy:  2/4 = 50.0%   ❌ NOT MET  (target ≥90%)
+  Score accuracy:  0/4 = 0.0%
+
+  Fit accuracy (macro):  22.2%  ❌   gf=0%  maybe=0%  bad=67%
+
+  Field token accuracy:
+    loc   ██████████░░░░░░░░░░    2/4  50.0%
+    role  ██████████░░░░░░░░░░    2/4  50.0%
+    tech  █████░░░░░░░░░░░░░░░    1/4  25.0%
+    comp  ██████████░░░░░░░░░░    2/4  50.0%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ──────────  ────────  ──────  ──────
+    good_fit           0       1      0%  ⚠
+    bad_fit            2       3     67%
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [0]         0         1
+    maybe                0       [0]         0
+    bad_fit              0         1       [2]
+
+  Field error transitions (top per field):
+    loc: OUTSIDE_UK→UK_OTHER:1  OUTSIDE_UK→LONDON_OR_REMOTE:1
+    role: NO_SENIORITY→SENIOR_PLUS:2
+    tech: NODE_JS_TS→JS_TS:1  NONE→JS_TS:1  AI_ML→JS_TS:1
+    comp: ABOVE_100K→NO_GBP:1  UP_TO_ONLY→NO_GBP:1
+
+  Error direction:  over-scoring 1  │  under-scoring 1
+
+────────────────────────────────────────────────────────────────────
+  adapters_v5.1/0000025  label=50.0%  loc=50.0%  role=50.0%  tech=25.0%  comp=50.0%  gf=0%  maybe=0%  bad=67%
+════════════════════════════════════════════════════════════════════
+
+Predictions: eval_results/adapters_v5.1/2026-03-07_eval_150_golden_student_v5_0000025.predictions.jsonl

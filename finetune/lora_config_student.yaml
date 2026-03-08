@@ -1,0 +1,41 @@
+# MLX LoRA config for student model (knowledge distillation)
+# Optimized for M1 16GB - Overnight run, 400 examples
+#
+# Student: Qwen2.5-0.5B-Instruct-4bit
+# Task: Mechanical Job-Fit Scoring (Strict Rules)
+
+model: "mlx-community/Qwen2.5-0.5B-Instruct-4bit"
+data: "data/Student Training Data/mlx"
+train: true
+fine_tune_type: "lora"
+
+# LoRA hyperparameters
+# rank 8 is appropriate for a 0.5B model on a structured task
+# Previous rank 32 was causing rapid overfitting
+lora_parameters:
+  rank: 8
+  alpha: 16 # 2x rank
+  dropout: 0.1 # Increased from 0.05 to slow memorisation
+  scale: 1.0
+  weight_decay: 0.01
+
+# Training parameters
+batch_size: 2 # Can afford this with everything closed
+grad_accumulation_steps: 8 # Effective batch size 16 — stable gradients
+iters: 2000 # ~5 passes through 400 examples, early stopping via val loss
+learning_rate: 5e-5 # Halved — previous LR was too aggressive for this loss surface
+warmup_steps: 100 # Longer warmup with more iters
+
+max_seq_length: 8192
+
+# Validation — critical for catching the best checkpoint
+val_batches: 40 # Use ~10% of data for validation each eval
+steps_per_eval: 50 # Evaluate every 50 iters so you can catch the turning point
+
+# Output
+adapter_path: "finetune/adapters_student"
+save_every: 50 # Save frequently so you can roll back to best checkpoint
+
+# Memory
+mask_prompt: true # Only train on JSON answers, not JD text
+grad_checkpoint: true

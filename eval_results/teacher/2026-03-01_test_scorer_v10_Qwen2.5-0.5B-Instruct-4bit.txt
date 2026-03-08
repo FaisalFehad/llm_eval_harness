@@ -1,0 +1,99 @@
+Output: eval_results/2026-03-01_test_scorer_v10_Qwen2.5-0.5B-Instruct-4bit.txt
+Prompt: prompts/scorer_v10.txt
+Loading baseline model (no adapter)
+Model: mlx-community/Qwen2.5-0.5B-Instruct-4bit
+────────────────────────────────────────────────────────────
+Running eval on 33 test examples...
+
+[ 1/33] ✓ Lead DevOps Architect                    golden=good_fit   pred=good_fit   loc=25 role=25 tech=15 comp=25  (100%)
+      reasoning: job_location is London, UK; JD mentions Node.js, TypeScript, and £100k midpoint salary.
+[ 2/33] ✗ VP of Engineering                        golden=bad_fit    pred=good_fit   loc=25 role=25 tech=15 comp=25  (50%)
+      reasoning: job_location is London, UK; JD mentions React, Node.js, TypeScript, competitive salary.
+[ 3/33] PARSE FAIL — Full Stack Engineer
+      Raw output: {"loc":25,"role":25,"tech":15,"comp":25,"score":25,"label":"good_fit","reasoning":"25 years of exper
+[ 4/33] ✗ Product Developer                        golden=bad_fit    pred=good_fit   loc=25 role=25 tech=15 comp=25  (25%)
+      reasoning: job_location is London, UK; JD mentions React, Node.js, TypeScript, competitive salary.
+[ 5/33] ✓ Graphic Packaging Designer               golden=bad_fit    pred=bad_fit    loc=25 role=25 tech=15 comp=25  (40%)
+      reasoning: job_location is London, UK; company being US-headquartered does not affect location score.
+[ 6/33] ✗ Principal Backend Engineer               golden=bad_fit    pred=good_fit   loc=25 role=25 tech=15 comp=25  (33%)
+      reasoning: job_location is London, UK; JD mentions Node.js, TypeScript, and £100k midpoint salary.
+[ 7/33] ✗ Senior Full-Stack Engineer               golden=bad_fit    pred=good_fit   loc=25 role=25 tech=15 comp=25  (29%)
+      reasoning: Senior role in London with Node.js/TS and £100k midpoint salary.
+[ 8/33] ✓ Senior Product Engineer                  golden=good_fit   pred=good_fit   loc=25 role=25 tech=15 comp=25  (38%)
+      reasoning: job_location is London, UK; company being US-headquartered does not affect location score.
+[ 9/33] ✗ Principal Security Engineer              golden=maybe      pred=good_fit   loc=25 role=25 tech=15 comp=25  (33%)
+      reasoning: job_location is London, UK; JD mentions Node.js, TypeScript, and £100k midpoint salary.
+[10/33] ✗ Senior Backend Engineer                  golden=maybe      pred=good_fit   loc=25 role=25 tech=15 comp=25  (30%)
+      reasoning: Senior role in London with Node.js/TS and £100k midpoint salary.
+[11/33] ✗ Staff Software Engineer                  golden=maybe      pred=good_fit   loc=25 role=25 tech=15 comp=25  (27%)
+      reasoning: job_location is London, UK; JD mentions Node.js, TypeScript, and £100k midpoint salary.
+[12/33] ✗ Founding Engineer                        golden=maybe      pred=bad_fit    loc=25 role=25 tech=15 comp=25  (25%)
+      reasoning: job_location is London, UK; company being US-headquartered does not affect location score.
+[13/33] ✓ Lead Full-Stack Developer                golden=good_fit   pred=good_fit   loc=25 role=25 tech=15 comp=25  (31%)
+      reasoning: job_location is London, UK; JD mentions Node.js, TypeScript, and £100k midpoint salary.
+[14/33] ✗ Distinguished Engineer                   golden=bad_fit    pred=good_fit   loc=25 role=25 tech=15 comp=25  (29%)
+      reasoning: job_location is London, UK; company being US-headquartered does not affect location score.
+[15/33] ✗ Staff Software Engineer                  golden=maybe      pred=good_fit   loc=25 role=25 tech=15 comp=25  (27%)
+      reasoning: job_location is London, UK; company being US-headquartered does not affect location score.
+[16/33] ✓ Senior Software Engineer                 golden=good_fit   pred=good_fit   loc=25 role=25 tech=15 comp=25  (31%)
+      reasoning: Senior software engineer role in London with Node.js/TS and £100k midpoint salary.
+[17/33] ✗ Senior Systems Architect                 golden=maybe      pred=good_fit   loc=25 role=25 tech=15 comp=25  (29%)
+      reasoning: Senior Systems Architect with a strong track record of solving complex technical hurdles and building world-class produc
+[18/33] ✗ Senior Software Engineer                 golden=maybe      pred=bad_fit    loc=0 role=0 tech=0 comp=0  (28%)
+      reasoning: job_location is missing or unclear
+[19/33] ✗ Mid Level Backend Engineer (Node.js)     golden=bad_fit    pred=good_fit   loc=25 role=25 tech=15 comp=25  (26%)
+      reasoning: Mid Level Backend Engineer (Node.js) role at Emma.
+[20/33] ✗ Lead DevOps Architect                    golden=maybe      pred=good_fit   loc=25 role=25 tech=15 comp=25  (25%)
+      reasoning: job_location is London, UK; JD mentions Node.js, TypeScript, and £100k midpoint salary.
+[21/33] ✗ Fintech & Tech for Good | Profitable & H golden=maybe      pred=good_fit   loc=25 role=25 tech=15 comp=25  (24%)
+      reasoning: Senior role in London with Node.js/TS and £100k midpoint salary.
+[22/33] ✗ Head of Infrastructure                   golden=bad_fit    pred=good_fit   loc=25 role=25 tech=15 comp=25  (23%)
+      reasoning: job_location is London, UK; company being US-headquartered does not affect location score.
+[23/33] ✗ Staff Software Engineer                  golden=maybe      pred=good_fit   loc=25 role=25 tech=15 comp=25  (22%)
+      reasoning: job_location is London, UK; JD mentions Node.js, TypeScript, and £100k midpoint salary.
+[24/33] ✗ Lead Frontend Engineer                   golden=maybe      pred=bad_fit    loc=25 role=25 tech=15 comp=25  (21%)
+      reasoning: job_location is London UK; company being US-headquartered does not affect location score.
+[25/33] ✓ Software Engineer | React & Python (full golden=bad_fit    pred=bad_fit    loc=25 role=25 tech=0 comp=0  (24%)
+      reasoning: job_location is London UK; company being US-headquartered does not affect location score.
+[26/33] ✗ Lead Full Stack Architect                golden=maybe      pred=good_fit   loc=25 role=25 tech=15 comp=25  (23%)
+      reasoning: job_location is London, UK; JD mentions Node.js, TypeScript, and £100k midpoint salary.
+[27/33] ✗ Senior Frontend Engineer                 golden=maybe      pred=bad_fit    loc=25 role=25 tech=0 comp=0  (22%)
+      reasoning: job_location is London UK; company being US-headquartered does not affect location score.
+[28/33] ✗ Lead Software Engineer                   golden=maybe      pred=good_fit   loc=25 role=25 tech=15 comp=25  (21%)
+      reasoning: job_location is London, UK; company being US-headquartered does not affect location score.
+[29/33] ✗ Senior Software Engineer                 golden=maybe      pred=good_fit   loc=25 role=25 tech=15 comp=25  (21%)
+      reasoning: Senior Software Engineer with a strong team and a well-defined role.
+[30/33] ✗ Senior Software Engineer                 golden=maybe      pred=good_fit   loc=25 role=25 tech=15 comp=25  (20%)
+      reasoning: Senior software engineer in London with Node.js/TS and £100k midpoint salary.
+[31/33] ✓ Frontend Developer                       golden=bad_fit    pred=bad_fit    loc=25 role=25 tech=0 comp=0  (23%)
+      reasoning: job_location is London UK; company being US-headquartered does not affect location score.
+[32/33] ✗ Senior Software Engineer                 golden=maybe      pred=good_fit   loc=25 role=25 tech=15 comp=25  (22%)
+      reasoning: Senior Software Engineer at Syntasso with a good fit for the role.
+[33/33] ✗ Senior Node React Engineer               golden=bad_fit    pred=good_fit   loc=25 role=25 tech=15 comp=25  (21%)
+      reasoning: Senior role in London with Node.js/TS and £100k midpoint salary.
+
+════════════════════════════════════════════════════════════
+RESULTS
+════════════════════════════════════════════════════════════
+Total examples:  33
+Parse failures:  1
+Valid outputs:   32
+
+Label accuracy:  7/32 = 21.9%  (baseline: 39.8%)
+
+Field accuracy:
+  loc:   16/32 = 50.0%
+  role:  26/32 = 81.2%
+  tech:  8/32 = 25.0%
+  comp:  9/32 = 28.1%
+
+Per-label breakdown:
+  good_fit  : 4/4 = 100%
+  maybe     : 0/17 = 0%
+  bad_fit   : 3/11 = 27%
+
+Error patterns:
+  Over-scoring:   8  (predicted higher than golden)
+  Under-scoring:  4  (predicted lower than golden)
+  Other:          13  (e.g. good_fit↔maybe)
+  Parse failures: 1

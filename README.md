@@ -8,18 +8,21 @@ The technique is **LLM knowledge distillation**: use a large model to generate h
 
 ## Progress
 
-```text
-1. Ground truth dataset          ✅  103 hand-scored jobs with 4-category rubric
-2. Tournament model selection    ✅  20 models tested across 3 runtimes, narrowed to 1
-3. llama.cpp migration           ✅  5.8× faster than Ollama, 0% parse failures
-4. Prompt engineering            ✅  5 models tested, Qwen3-4B best (80%)
-5. Data correction               ✅  Fixed 20 golden jobs (loc/comp scoring errors)
-6. Fine-tune best 4B model       ✅  LoRA fine-tuned Qwen3-4B: 39.8% → 90.9% on held-out test set
-7. Real-world eval + prompt fix  ✅  81.9% → 95.8% on 72 real UK LinkedIn jobs (prompt change only)
-8. OOD testing + domain gate     ✅  88.9% on 72 random non-software UK jobs; domain gate added (v11)
-9. Generate distillation data    ⬜  Run teacher on large batch of real jobs
-10. Train student (Granite:350M) ⬜  On teacher outputs, measure distillation gap
-```
+| # | Step | Status | Notes |
+|---|------|--------|-------|
+| 1 | [Ground truth dataset](#phase-1--ground-truth-dataset) | ✅ | 103 hand-scored jobs with 4-category rubric |
+| 2 | [Tournament model selection](#phase-2--model-selection) | ✅ | 20 models tested across 3 runtimes, narrowed to 1 |
+| 3 | [llama.cpp migration](#the-latency-problem--llamacpp) | ✅ | 5.8× faster than Ollama, 0% parse failures |
+| 4 | [Prompt engineering](#phase-4--prompt-engineering) | ✅ | 5 models tested, Qwen3-4B best (80%) |
+| 5 | [Data correction](#golden-data-quality-problem) | ✅ | Fixed 20 golden jobs (loc/comp scoring errors) |
+| 6 | [Fine-tune best 4B model](#phase-5--fine-tuning-in-progress) | ✅ | LoRA fine-tuned Qwen3-4B: 39.8% → 90.9% on held-out test set |
+| 7 | [Real-world eval + prompt fix](#generalisation-eval-real-unseen-uk-jobs-819) | ✅ | 81.9% → 95.8% on 72 real UK LinkedIn jobs (prompt change only) |
+| 8 | [OOD testing + domain gate](#out-of-distribution-ood-testing) | ✅ | 88.9% on 72 random non-software UK jobs; domain gate added (v11) |
+| 9 | [Knowledge distillation](#phase-9--knowledge-distillation) | ✅ | Student bake-off done; teacher audit found training data gaps |
+| 10 | [Retrain teacher (v2b)](#phase-10--retrain-teacher-v2b-adapter) | ✅ | Fixed location bias + comp gaps; 94.4% on UK LinkedIn |
+| 11 | [Prompt tuning (v9.2–v9.8)](#phase-11--prompt-tuning-v92v98) | ✅ | 9 prompt iterations; 96.5% combined (173 jobs), best teacher prompt |
+| 12 | [Student training v1 (OpenAI)](#phase-12--student-training-why-openai-not-our-teacher) | ✅ | Pivoted to OpenAI labels; 76.6% accuracy, gap analysis done |
+| 13 | [Student V5 — semantic tokens](#phase-13--student-v5-semantic-token-architecture) | 🔄 | Architectural pivot: predict tokens not scores; 83.9% at iter 875. [Data pipeline](#training-data-pipeline-v5): 10-recipe synthesis, 16 edge cases, 3-level contamination check |
 
 ### Accuracy over time — Qwen3-4B
 
@@ -28,10 +31,10 @@ Each bar is a different measurement stage. The dataset changes between stages, s
 ```mermaid
 xychart-beta
     title "Qwen3-4B Label Accuracy by Stage"
-    x-axis ["1. Baseline", "2. Fine-tuned", "3. Real-world", "4. Prompt fix", "5. OOD test", "6. OOD + gate"]
+    x-axis ["1. Baseline", "2. Fine-tuned", "3. Real-world", "4. Prompt fix", "5. OOD+gate", "6. Retrain", "7. v9.8"]
     y-axis "Label Accuracy %" 0 --> 100
-    bar [39.8, 90.9, 81.9, 95.8, 88.9, 98.6]
-    line [39.8, 90.9, 81.9, 95.8, 88.9, 98.6]
+    bar [39.8, 90.9, 81.9, 95.8, 98.6, 94.4, 96.5]
+    line [39.8, 90.9, 81.9, 95.8, 98.6, 94.4, 96.5]
 ```
 
 | # | Stage | Dataset | Accuracy | What changed |
@@ -40,10 +43,41 @@ xychart-beta
 | 2 | LoRA fine-tune | 33 held-out test jobs | 90.9% | Trained on 70 jobs (93 oversampled), iter 200 |
 | 3 | Real-world test | 72 real UK LinkedIn jobs | 81.9% | Same fine-tuned model, different data distribution |
 | 4 | Prompt fix | 72 real UK LinkedIn jobs | 95.8% | v10 prompt — clearer location rules + worked example |
-| 5 | OOD test | 72 random non-software UK jobs | 88.9% | v10 prompt on completely unseen domain |
-| 6 | OOD + domain gate | 72 random non-software UK jobs | 98.6%* | v11 prompt — Step 0 domain check added |
+| 5 | OOD + domain gate | 72 random non-software UK jobs | 98.6%* | v11 prompt — Step 0 domain check added |
+| 6 | Teacher retrain (v2b) | 72 real UK LinkedIn jobs | 94.4% | Corrective LoRA retrain — fixed location bias |
+| 7 | Prompt v9.8 | 173 combined (HC+UK) | **96.5%** | 9 prompt iterations — tech recovery + comp fail-fast |
 
 _\* 69/70 valid outputs — v11 introduced 2 parse failures not present in v10_
+
+### Student model — Qwen2.5-0.5B (knowledge distillation)
+
+```mermaid
+xychart-beta
+    title "Student (0.5B) Accuracy Over Training Iterations — V5 Semantic Tokens"
+    x-axis ["v1 (numeric)", "V5 iter 825", "V5 iter 850", "V5 iter 875"]
+    y-axis "Label Accuracy %" 0 --> 100
+    bar [76.6, 74.5, 76.7, 83.9]
+    line [76.6, 74.5, 76.7, 83.9]
+```
+
+| # | Stage | Dataset | Accuracy | What changed |
+|---|-------|---------|----------|-------------|
+| 12 | Student v1 (numeric) | 141 OpenAI-labeled eval jobs | 76.6% | 0.5B model, LoRA on ~450 teacher-labeled + augmented jobs |
+| 13 | Student V5 iter 825 | 150 locked eval jobs | 74.5% | Semantic tokens, 895 training jobs, fresh LoRA |
+| 13 | Student V5 iter 850 | 150 locked eval jobs | 76.7% | Same run, later checkpoint |
+| 13 | Student V5 iter 875 | 150 locked eval jobs | **83.9%** | Same run, **best checkpoint** — training crashed at iter 890 (OOM) |
+
+### Student bake-off — baseline accuracy (no training)
+
+```mermaid
+xychart-beta
+    title "Student Bake-Off: Label Accuracy (no training)"
+    x-axis ["Qwen 0.5B (33 jobs)", "LFM 1.2B (33 jobs)", "LFM 1.2B (72 jobs)"]
+    y-axis "%" 0 --> 100
+    bar [21.9, 38.1, 56.9]
+```
+
+Both models below the teacher's 95.8% — expected. The question was which one could even follow the format. Qwen had 3% parse failures vs LFM's 36%. Details in [Phase 9](#phase-9--knowledge-distillation). The teacher has since improved to 96.5% combined accuracy via prompt tuning (see [Phase 11](#phase-11--prompt-tuning-v92v98)).
 
 ---
 
@@ -878,6 +912,462 @@ The same principle applied here as with the location fix: **prompt before retrai
 
 ---
 
+## Phase 9 — Knowledge Distillation
+
+The fine-tuned Qwen3-4B is good — 95.8% on real jobs. But it's 4 billion parameters, takes 14 seconds per job, and needs a GPU to run. The whole point of this project is a model that runs fast and cheap. Enter **knowledge distillation**: train a tiny student model (500M params) to copy the teacher's judgement. 8× smaller, 10× faster, same answers.
+
+The idea is simple. The teacher scores a large batch of jobs. The student trains on those scores as if they were ground truth. The student doesn't need to understand the rubric — it just needs to learn "when I see input like this, output like that."
+
+### Step 1: choosing a student model (bake-off)
+
+Before training, I needed to know: which tiny model can even follow the prompt? If a model can't output valid JSON or follow a scoring rubric at all, no amount of training will fix that.
+
+Two candidates, both available as MLX 4-bit models:
+
+| Model | Params | Why consider it |
+|---|---|---|
+| Qwen2.5-0.5B-Instruct | 500M | Same family as teacher (Qwen), safest bet for distillation |
+| LFM2.5-1.2B-Instruct | 1.2B | Liquid Foundation Model — hybrid architecture, fastest on Apple Silicon |
+
+Ran both on the same two test sets the teacher was evaluated on, using the v10 prompt.
+
+### Bake-off results
+
+```mermaid
+xychart-beta
+    title "Student Bake-Off: Label Accuracy (no training)"
+    x-axis ["Qwen 0.5B (33)", "LFM 1.2B (33)", "LFM 1.2B (72)"]
+    y-axis "Label Accuracy %" 0 --> 100
+    bar [21.9, 38.1, 56.9]
+```
+
+The headline numbers looked like LFM was winning. But the details told a completely different story.
+
+#### The "copy the example" failure mode
+
+Both models did the same thing: **latch onto a worked example in the prompt and repeat it for every job**.
+
+The v10 prompt includes two worked examples — Example A (good_fit, score=90) and Example B (bad_fit, score=0). Each model picked one and repeated it verbatim:
+
+| Model | Copied example | What it output for every job | Result |
+|---|---|---|---|
+| Qwen 0.5B | Example A (good_fit) | `loc=25 role=25 tech=15 comp=25 → 90 → good_fit` | Over-scored everything |
+| LFM 1.2B | Example B (bad_fit) | `loc=25 role=25 tech=0 comp=0 → 50 → bad_fit` | Under-scored everything |
+
+Neither model ever predicted `maybe` — 0% on both, across all test sets.
+
+LFM's seemingly higher accuracy (56.9% vs 21.9%) was an artifact. The 72-job UK dataset is 57% `bad_fit`. LFM always predicts `bad_fit`. 57% of the time, it's "right" by accident. Correcting for parse failures and random chance, both models performed at ~21-24%. Effectively identical.
+
+#### Why LFM's parse failures killed it
+
+| Model | Parse failures | Valid outputs |
+|---|---|---|
+| Qwen 0.5B | 1/33 = **3%** | 32/33 |
+| LFM 1.2B | 12/33 = **36%** | 21/33 |
+
+LFM's output was frequently truncated — it would generate valid-looking JSON that got cut off mid-reasoning. The model couldn't consistently fit its response within the token budget. 36% parse failures means over a third of predictions are just lost.
+
+#### The architecture argument — why Qwen wins for training
+
+This was the deciding factor. LFM2.5 has a **hybrid architecture**: 75% gated convolutions + 25% attention layers. LoRA fine-tuning inserts trainable adapters into attention layers only. That means:
+
+```
+Qwen 0.5B:  100% attention → LoRA adapts 100% of the computation
+LFM 1.2B:   25% attention  → LoRA adapts 25% of the computation
+```
+
+With LFM, 75% of the model's processing is frozen convolution layers that LoRA can't touch. We'd be training with one hand tied behind our back. On top of that, LFM's hybrid architecture may not even be in mlx_lm's supported model list for LoRA — no point finding out after investing hours.
+
+Qwen2.5-0.5B also benefits from **same-family transfer**: the teacher is Qwen3-4B, the student is Qwen2.5-0.5B. Same tokenizer, shared vocabulary, similar internal representations. The student is pre-wired to process tokens the same way the teacher does.
+
+**Decision: Qwen2.5-0.5B.**
+
+### Step 2: generating teacher labels
+
+With the student chosen, the next step was creating its training data. The teacher scores a batch of jobs, and those scores become the student's ground truth.
+
+Built `finetune/generate_teacher_labels.py` — loads the fine-tuned teacher (Qwen3-4B + adapter), runs inference on each job, parses the JSON output, and writes scored JSONL compatible with the existing training pipeline.
+
+Two data sources:
+
+| Source | Jobs | Purpose |
+|---|---|---|
+| `data/finetune/train.jsonl` | 70 | Original training jobs — teacher re-scores them |
+| `data/new_uk_jobs_golden.jsonl` | 72 | Real UK LinkedIn jobs — fresh teacher scores |
+
+Both runs completed with **0 parse failures, 142 jobs labeled**. The teacher is rock solid on format compliance.
+
+### Step 3: the audit that changed everything
+
+Before feeding the teacher's labels into the student training pipeline, I did something that turned out to be critical: **compared the teacher's labels to the original deterministic scores**.
+
+The reasoning: the original `train.jsonl` labels were hand-verified and deterministically scored. If the teacher agrees with them — great, the teacher is reliable. If it disagrees, either the teacher learned something better, or it's wrong. Let me check.
+
+The teacher changed labels on **27 out of 70** training jobs. 39% disagreement. That's a lot.
+
+#### Discovery 1: the teacher thinks every UK city is London
+
+Dug into the location changes and found a systematic bug:
+
+```
+Cambridge  → teacher says loc=25 (should be 10)
+Oxford ×3  → teacher says loc=25 (should be 10)
+Bristol ×2 → teacher says loc=25 (should be 10)
+Belfast ×2 → teacher says loc=25 (should be 10)
+Sheffield  → teacher says loc=25 (should be 10)
+Edinburgh  → teacher says loc=25 (should be 10)
+Birmingham → teacher says loc=25 (should be 10)
+Amsterdam  → teacher says loc=25 (should be -50!)
+```
+
+**15 out of 15 location changes were wrong.** Every single one. The teacher had learned "UK = London = 25" because 67% of its training data was London jobs. It never properly learned the distinction between `loc=25` (London) and `loc=10` (UK outside London).
+
+The location field literally says "On-site - Oxford, UK" and the teacher scores it as London. That's not a judgment call — it's a training data gap.
+
+#### Discovery 2: compensation hallucination
+
+The teacher also over-scored compensation in 15 out of 70 jobs:
+
+| Pattern | Count | Example |
+|---|---|---|
+| No salary → comp=25 | 5 | Staff Backend Engineer: no £ in JD, teacher says "salary ≥£100k" |
+| £95k midpoint → comp=25 | 5 | Should be comp=15 (£75-99k bracket), teacher rounds up |
+| "Up to £X" → comp=25 | 2 | Rubric says "Up to" with no lower bound = 0 |
+| Other | 3 | Various bracket errors |
+
+The "Up to £X" = 0 rule has been a stubborn weakness across every phase of this project. The teacher only had 3 training examples of this pattern.
+
+#### Discovery 3: arithmetic errors
+
+In 4 jobs, the teacher's score didn't match its own field breakdowns:
+
+```
+Software Engineering Manager:  25+0+0+0 = 25, but teacher wrote score=50
+Front-End Engineer (Trading):  25+0+5+25 = 55, but teacher wrote score=75
+Solutions Architect:           25+0+10+15 = 50, but teacher wrote score=55
+```
+
+The teacher was pattern-matching scores from memory rather than computing them from fields. It "felt" like a certain score rather than doing the arithmetic.
+
+### The full error picture
+
+```mermaid
+xychart-beta
+    title "Teacher Field Error Rates (142 jobs audited)"
+    x-axis ["Location", "Tech", "Comp", "Role", "Math"]
+    y-axis "Error %" 0 --> 25
+    bar [10.6, 14.1, 12.7, 3.5, 2.8]
+```
+
+| Error type | Count (142 total) | Root cause |
+|---|---|---|
+| Location | 15 (10.6%) | Training data 67% London → learned "UK = London" |
+| Tech | 20 (14.1%) | "Required vs mentioned" — genuinely ambiguous |
+| Comp | 18 (12.7%) | Over-scoring: hallucination, rounding, "Up to" rule |
+| Role | 5 (3.5%) | Gives points to "Manager", "Architect" (not in keyword list) |
+| Math | 4 (2.8%) | Score ≠ sum of fields |
+
+### The decision: fix the teacher first
+
+At this point I had a choice:
+
+**Option A: Push forward.** Use original labels for `train.jsonl` (deterministically scored, more accurate) and teacher labels for `uk_jobs` (where the location bug doesn't matter because they're all London). Work around the teacher's limitations.
+
+**Option B: Step back and retrain the teacher.** Fix the training data gaps, retrain, then generate better labels for the student.
+
+I chose B. The reasoning:
+
+1. **Garbage in, garbage out.** The whole point of distillation is that the teacher's judgment is better than the deterministic scorer. If I have to fall back to the deterministic scorer for one dataset, what was the point?
+
+2. **The fix is cheap and targeted.** We're not retraining from scratch. We're adding a handful of examples that specifically teach the missing concepts. The teacher already knows 90% of the rubric — it just needs a few more patterns.
+
+3. **Nothing is wasted.** The distillation pipeline (`generate_teacher_labels.py`, format script, student LoRA config) stays exactly the same. We just re-run the same commands with a better teacher.
+
+### Training data gap analysis
+
+The teacher's training data had clear blind spots:
+
+```
+Location distribution (before fix):
+  loc=25 (London):      47 (67%)  ← dominating
+  loc=10 (UK other):    14 (20%)  ← underrepresented
+  loc=-50 (outside UK):  9 (13%)  ← thin
+
+Comp distribution:
+  comp=0  (no salary):  43 (61%)  ← teacher knows this
+  comp=5  (£55-74k):     7 (10%)
+  comp=15 (£75-99k):    10 (14%)
+  comp=25 (≥£100k):     10 (14%)
+  comp=-30 (<£45k):      0 (0%)   ← ZERO examples!
+  "Up to £X" = 0:        3 only   ← known stubborn weakness
+```
+
+### Fixing it: targeted data augmentation
+
+The OOD dataset (`random_uk_jobs_scored.jsonl`) — those 100 random UK LinkedIn jobs with nurses, chefs, and drivers — turned out to be perfect for location diversity. 75 non-London UK cities, 17 outside-UK locations, across places like Cardiff, York, Bicester, Burnley, Fort William.
+
+But there's a catch I almost missed: those are all non-tech jobs. Adding 20 non-tech jobs where non-London UK **always** correlates with role=0, tech=0, comp=0, bad_fit could teach the wrong lesson. The model might learn "non-London = bad_fit" instead of "non-London = loc=10 (then compute the rest independently)."
+
+The fix: use a **small** supplement of non-tech jobs for city coverage (8 jobs), and **also scrape tech jobs in non-London UK cities** where the other fields vary. That way the model sees:
+- "Senior Node.js Dev, Bristol" → loc=10, role=25, tech=15 → `maybe`
+- "Class 2 Driver, Bristol" → loc=10, role=0, tech=0 → `bad_fit`
+
+Same city, different outcomes. The location score is independent of the rest.
+
+**Updated training data plan:**
+
+| Source | Jobs | What it teaches |
+|---|---|---|
+| Original `train.jsonl` | 70 | Core rubric (balanced labels, varied scores) |
+| Non-tech location supplement | 8 | City diversity for loc=10 |
+| Tech jobs in non-London UK | 10 | loc=10 with varied role/tech/comp |
+| "Up to £X" salary jobs | 5-8 | comp=0 for ceiling-only salaries |
+| Low salary UK jobs | 5 | comp=-30 (zero examples currently) |
+| Borderline salary midpoints | 5 | comp=15 vs comp=25 boundary |
+| Architect/Manager titles | 2-3 | role=0 for non-qualifying keywords |
+| good_fit jobs (if found) | 3-5 | Only 9 in training currently |
+| **Total** | **~120-130** | |
+
+```
+Location distribution (after fix):
+  loc=25 (London):      47 (40%)  ← no longer dominating
+  loc=10 (UK other):    42 (36%)  ← properly represented
+  loc=-50 (outside UK): 25 (21%)  ← reinforced
+  loc=0 (unclear):       3 (3%)   ← edge case coverage
+```
+
+### What I learned
+
+**Trust but verify.** The teacher has 95.8% accuracy on real jobs. That sounds great until you discover it can't tell Oxford from London. High accuracy on one distribution doesn't mean reliability on another. Always audit before using model outputs as training data.
+
+**Training data composition matters more than training data size.** 70 carefully chosen examples got the teacher to 90.9%. The teacher's failures weren't from too little data — they were from the wrong distribution. 67% London meant it never learned the London vs non-London distinction. Adding 30 targeted examples fixes specific blind spots better than adding 300 random ones.
+
+**The "copy the example" failure mode is real.** Both 0.5B and 1.2B models, given a prompt with worked examples, just repeat one of the examples for every input. They're too small to follow a rubric — they pattern-match the most salient thing in the prompt. This is exactly what fine-tuning is for: replace "follow these rules" with "here are 300 examples of correct behaviour."
+
+**LoRA and architecture matter for distillation.** Choosing a student model isn't just about parameter count. LFM2.5 at 1.2B has more parameters than Qwen2.5 at 0.5B, but its hybrid architecture (75% convolutions) means LoRA can only modify 25% of the computation. Same-family models (Qwen teacher → Qwen student) share tokenizers and representations, making distillation smoother.
+
+### Status
+
+- [x] Student model bake-off (Qwen 0.5B selected)
+- [x] Teacher labeling pipeline built
+- [x] Teacher audit — found location bias, comp over-scoring, arithmetic errors
+- [x] Location supplement created from OOD dataset
+- [x] Teacher retrained on augmented data (126 examples) — see Phase 10
+- [x] Prompt tuned through 9 iterations (v9–v9.8) — see Phase 11
+- [ ] Label 500 new jobs with v9.8 teacher
+- [ ] Train student via LoRA on teacher-labeled data
+- [ ] Evaluate student — measure distillation gap vs teacher
+
+---
+
+## Phase 10 — Retrain Teacher (v2b adapter)
+
+The teacher audit in Phase 9 found systematic blind spots: location bias (UK=London), comp over-scoring, and zero examples of comp=-30. Rather than pushing forward with flawed teacher labels, the LoRA adapter was retrained from the v1 checkpoint with targeted corrective data.
+
+### Training data augmentation
+
+| Source | Jobs | What it teaches |
+|---|---|---|
+| Original `train.jsonl` | 70 | Core rubric (balanced labels, varied scores) |
+| Non-tech location supplement | 8 | City diversity for loc=10 (Bristol, Edinburgh, etc.) |
+| Tech jobs in non-London UK | 10 | loc=10 with varied role/tech/comp (not just bad_fit) |
+| "Up to £X" salary jobs | 5 | comp=0 for ceiling-only salaries |
+| Low salary UK jobs | 5 | comp=-30 (zero examples previously) |
+| Borderline salary midpoints | 5 | comp=15 vs comp=25 boundary |
+| **Total** | **~126** | |
+
+Location distribution shifted from 67% London to 40% London, with non-London UK properly represented at 36%.
+
+### Results
+
+| Prompt | Eval Set | N | Label % | loc % | role % | tech % | comp % |
+|--------|----------|---|---------|-------|--------|--------|--------|
+| v9 (v1 adapter) | Held-out test (33) | 33 | 90.9% | 97.0% | 93.9% | 75.8% | 87.9% |
+| v9 (v1 adapter) | Real UK LinkedIn (72) | 72 | 81.9% | 65.3% | 86.1% | 88.9% | 97.2% |
+| **v9 (v2b adapter)** | **Held-out test (33)** | **33** | **93.9%** | **100%** | **97.0%** | 72.7% | 84.8% |
+| **v9 (v2b adapter)** | **Real UK LinkedIn (72)** | **72** | **94.4%** | **93.1%** | **94.4%** | 95.8% | 100% |
+
+Location accuracy on UK LinkedIn jumped from 65.3% to 93.1% — the corrective training data worked. The v2b adapter is the production adapter used for all subsequent evaluation.
+
+### Contamination audit
+
+A cross-check of all eval sets against all training data (v1/v2/v2b) found significant overlap:
+
+| Dataset | Total | Clean | Contaminated |
+|---------|-------|-------|-------------|
+| Held-out test | 33 | 11 | 22 (67%) |
+| Real UK LinkedIn | 72 | 61 | 11 (15%) |
+| Teacher v2 eval (human corrected) | 101 | 73 | 28 (28%) |
+
+A combined clean eval set was generated: `data/clean_eval.jsonl` (145 jobs, 0 contamination). Going forward, eval accuracy numbers include contaminated jobs but the clean set exists for rigorous measurement.
+
+---
+
+## Phase 11 — Prompt Tuning (v9.2–v9.8)
+
+With the v2b adapter fixed, the remaining errors were prompt-addressable. What followed was a three-day marathon of prompt iteration, scorer debugging, and one of the project's most important discoveries: **prompt overfitting is just as real as model overfitting**.
+
+### Fixing the ground truth first
+
+Before prompt tuning could begin, the eval data itself needed fixing. Going through errors job-by-job revealed that some "model errors" were actually **scorer bugs** — the model was right and the ground truth was wrong.
+
+**Bug 1: AI regex spanning across bullet points.** The deterministic scorer's `aiInExpertise` regex used `[^.]*?` to stay within one sentence (stopping at periods). But LinkedIn JDs are concatenated without periods or newlines — one long string. The regex leapt ~130 characters from "Strong proficiency in PHP, Laravel" to "Exposure to machine learning" several bullets later, awarding tech=15 for a nice-to-have. Fix: cap the regex at 100 characters.
+
+**Bug 2: "Considered a plus" false positive.** A JD listing Node.js as "considered a plus" — not a requirement — got tech=15. The scorer did raw string matching without reading context.
+
+**Bug 3: Single-pound-sign salary format.** "£65,000-80,000" (pound sign only on the first number) scored comp=0. The regex required `£` before both numbers. Fix: make the second `£` optional.
+
+**Bug 4: Bare "Node" without ".js".** A JD requiring "React, Express, Node, Typescript" got no Node.js credit because the scorer only matched `node.js`, `nodejs`, or camelCase `(?<=[a-z])Node`. Additionally, "TypescriptExperience" was concatenated by the LinkedIn scraper, breaking the `\b` word boundary.
+
+**Bug 5: Implicit k notation.** "£50-100k" was parsed as lo=50, hi=100,000 (midpoint £50,025 — dead zone). The intended meaning was £50k-£100k. Fix: propagate the `k` multiplier to both sides when only the second number has it.
+
+These fixes went into `deterministic-scorer-human-corrected.ts` and the human-corrected eval set — original files were never touched. This two-file discipline (original frozen from git, corrections only in clearly labeled copies) was established as a hard rule after the assistant accidentally edited the wrong file and had to restore from git.
+
+**The lesson: always verify your ground truth before blaming the model.** Several of the "improvements" from v9.4 came from fixing the eval data, not the prompt. The model was being penalized for correct answers.
+
+### v9.2: never trust model arithmetic
+
+The first real improvement came from a simple insight: **don't let the model do math**. The model sometimes computed loc=25 + role=25 + tech=15 + comp=0 = 80 (wrong — should be 65). The eval script now recomputes `score = loc + role + tech + comp` and derives the label from thresholds, ignoring the model's score and label entirely. The model's arithmetic can never cause a label error again.
+
+Result: **94.1%** on 101 human-corrected jobs, 0 parse failures.
+
+### v9.3: the too-complex prompt disaster
+
+The natural instinct was to add more detail to the prompt — more examples, more rules, more edge cases. v9.3 added ~600 tokens (+28%) over v9.2: per-section tech examples, comp scoring examples, an additional worked example, "City Of" prefix handling, and more role examples.
+
+**It broke everything.** Two failure modes appeared:
+
+1. **`<think>` tag activation.** The extra prompt detail pushed the 4B model into chain-of-thought mode, generating reasoning blocks BEFORE the JSON. These ate the 120-token output budget, truncating the JSON = parse failures. v9.2 produced zero `<think>` tags; v9.3 triggered them consistently.
+
+2. **Template echoing.** When the model didn't scratchpad, it output placeholder values literally copied from the output format section: `loc=0, role=0, reasoning="brief"`.
+
+**The lesson: more instructions ≠ better performance on fine-tuned models.** The LoRA adapter learned specific attention patterns from the v9 training prompt (81 lines). v9.3's 28% longer prompt shifted the distribution enough to confuse the adapter.
+
+### v9.4: the overfitting trap (97% on one set, 75.8% on another)
+
+v9.4 was built carefully with targeted additions: a TIER 1/TIER 2 role structure, an "AI SaaS ≠ building ML" clarification, and the fail-fast 4A/4B/4C compensation structure. It achieved **97.0%** on the 101 human-corrected eval set — the best single-dataset result in the project.
+
+Then I tested on the other eval sets.
+
+| Dataset | v9/v9.2 | v9.4 | Change |
+|---|---|---|---|
+| 101 eval (human corrected) | 94.1% | **97.0%** | +2.9pp |
+| 33 held-out test | **93.9%** | 75.8% | **-18.1pp** |
+| 72 UK LinkedIn | **94.4%** | 79.2% | **-15.2pp** |
+
+**Textbook prompt overfitting.** By iteratively fixing errors on the 101-job set, the prompt was tuned to work with that specific data distribution. The changes confused the model on everything else. The held-out test scored _worse_ than the baseline — the "improvements" actually made things worse on data I hadn't been staring at.
+
+This was the most important lesson of the entire project. I hadn't overfitted the _model_ (weights unchanged). I had overfitted the _prompt_ — a concept I didn't even know existed before this.
+
+### The format brittleness discovery
+
+Investigating why v9.4 regressed on UK LinkedIn revealed a deeper pattern: **fine-tuned models are format-brittle.**
+
+The v9 prompt STEP 2 (role scoring) was 5 lines. v9.4 expanded it to ~30 lines with TIER 1/TIER 2 structure and examples. The positive/negative example ratio shifted critically:
+- v9.2: 83% positive examples (5/6) — model learned "matching is the norm"
+- v9.4: 57% positive examples (4/7) — model learned "not matching is common"
+
+It wasn't just role that regressed — every field degraded:
+
+| Field | v9 | v9.4 | Drop |
+|---|---|---|---|
+| loc | 93.1% | 73.6% | -19.5pp |
+| role | 94.4% | 79.2% | -15.2pp |
+| tech | 95.8% | 81.9% | -13.9pp |
+| comp | 100% | 98.6% | -1.4pp |
+
+The entire prompt's verbosity caused the fine-tuned model to lose its learned patterns. The model was trained on 81 lines of v9 prompt text. v9.4 at 151 lines shifted the distribution everywhere.
+
+**Prompt line count tells the story:**
+
+```text
+v9   (training prompt):  81 lines  — baseline (94%)
+v9.4:                   150 lines  — 97% on tuning set, 79% on unseen
+v9.5:                   264 lines  — worst overall (73.6% on UK LinkedIn)
+v9.6:                   232 lines  — 69.4% on UK LinkedIn
+v9.7:                   120 lines  — recovery begins (88.9%)
+v9.8:                   138 lines  — best ever (96.5% combined)
+```
+
+**The golden rule: stay as close to the training prompt format as possible.** Every line added has a cost. Prompt changes should be surgical single-line additions, not structural rewrites.
+
+### The caching side-quest
+
+Before v9.4, I tried to speed up eval iteration. At ~26s/job, 101 jobs takes ~44 minutes. I implemented prompt caching — splitting the prompt into static rules (cached in KV) and per-job variables.
+
+**The speedup worked (~50% faster)** but introduced three compounding problems:
+
+1. **Double quantization.** 8-bit KV cache on top of a 4-bit quantized model degraded attention precision enough to cause sloppy scoring.
+2. **BPE tokenization boundary misalignment.** Tokenizing the prefix separately caused token boundary shifts that dropped the `/no_think` system message.
+3. **Fundamental incompatibility.** The model was trained with job data at the TOP of the prompt and rules at the BOTTOM. Caching requires rules first (only prefixes can be cached). Suffix caching is impossible with causal attention — each token can only attend to tokens before it.
+
+**Decision: remove all caching code.** Added `prefill_step_size=4096` as a free speedup instead. The caching idea would require multi-turn training format for the next retrain — rules in turn 1 (cacheable), job data in turn 2.
+
+### Key innovations by version
+
+| Version | Key Change | HC (101) | UK (72) | Combined |
+|---------|-----------|----------|---------|----------|
+| v9.2 | Code-side label recomputation (never trust model arithmetic) | 94.1% | — | — |
+| v9.4 | Fail-fast comp (4A→4B→4C with STOP), focused tech attention | **97.0%** | 79.2% | 89.6% |
+| v9.7 | Title repeat in STEP 2, simple location format | 90.1% | 95.8% | 92.5% |
+| **v9.8** | **v9.4's tech+comp mechanics + v9.7's structure** | **95.0%** | **98.6%** | **96.5%** |
+
+### What drove v9.8
+
+The breakthrough was **cross-referencing prompt versions against specific failing jobs**. Eight jobs that v9.7 got wrong were tested across v9.2, v9.4, v9.6, and v9.7:
+
+- **v9.4**: 7/8 correct — its focused attention STEP 3 + fail-fast STEP 4 consistently worked
+- **v9.6**: 8/8 correct — keyword checklist approach worked but at 233 lines it crashed UK location
+- **v9.7**: 1-2/8 correct — diffuse scanning + weak comp rules = worst on target failures
+
+v9.8 combined v9.7's proven structure (title repeat, simple location) with v9.4's proven scoring mechanics (focused tech attention, fail-fast comp). Data-driven prompt selection, not guessing.
+
+### Two specific fixes in v9.8
+
+**1. Tech "lost in the middle" fix:**
+
+The 4B model skipped Node.js when it appeared in the middle of tech lists ("React, Azure, Node.js, JavaScript, TypeScript"). v9.7's diffuse instruction "Scan the ENTIRE jd_text" gave the model no focus point. v9.4's focused instruction "Search jd_text for sections describing required skills" tells the model WHERE to look. Result: tech accuracy recovered from 58% to 80-94%.
+
+**2. Comp "Up to £X" fix:**
+
+The model kept scoring "Up to £120,000" as comp=25 instead of comp=0. v9.8 restructured compensation into three sub-steps with explicit STOP commands:
+- 4A: Find £ in jd_text (NOT title) → if none, comp=0 STOP
+- 4B: Check "up to" pattern FIRST → if found with no lower bound, comp=0 STOP
+- 4C: Only then extract range and score
+
+### What I learned about prompt engineering for fine-tuned models
+
+1. **Prompt overfitting is real.** Iterating on one dataset creates a prompt that scores spectacularly on that dataset while regressing on everything else. Always measure on held-out data you haven't been staring at.
+
+2. **Fine-tuned models are format-brittle.** The model develops strong associations with its training prompt template. Changing the template — even to something "objectively clearer" — creates a distribution shift that degrades performance.
+
+3. **Context budget is zero-sum for 4B models.** Adding 3 lines of STEP 3 EXAMPLES dropped tech accuracy by 26pp on UK LinkedIn. The model's attention for JD scanning was diluted by example text.
+
+4. **Positive/negative example ratio matters.** v9.2 had 83% positive examples and scored well. v9.4 had 57% positive examples and the model learned to default to "no match."
+
+5. **Focused > diffuse attention.** "Search for sections describing required skills" outperforms "Scan the ENTIRE jd_text" because it tells the model WHERE to look.
+
+6. **LoRA adapter suppresses `<think>` blocks.** Complex step-by-step instructions are ignored — the adapter learned to output JSON directly. Simple instructions + examples (priming) are more effective.
+
+7. **Cross-referencing beats guessing.** Testing failing jobs across 4 prompt versions revealed which approach worked best for each scoring field.
+
+8. **Always verify ground truth before blaming the model.** Several "model errors" turned out to be scorer bugs. The jump from ~90% to 94.1% came partly from fixing the eval data, not the model.
+
+### Final accuracy
+
+| Metric | v9/v9.2 | v9.4 | v9.7 | **v9.8** |
+|--------|---------|------|------|----------|
+| HC (101) | 94.1% | **97.0%** | 90.1% | 95.0% |
+| UK (72) | 94.4% | 79.2% | 95.8% | **98.6%** |
+| **Combined** | 94.2% | 89.6% | 92.5% | **96.5%** |
+| Worst field | tech 78% | loc 74% | tech 58% | **tech 80%** |
+
+Only 6 errors remain across 173 jobs — 5 are not prompt-fixable (scraping artifacts, model non-determinism, title contamination). Prompt tuning has reached diminishing returns.
+
+v9.8 is the best teacher prompt for knowledge distillation. Full eval results in `eval_results.md`.
+
+---
+
 ## Running It
 
 ```bash
@@ -886,11 +1376,569 @@ npm run golden:sample -- --input data/jobs_export.jsonl --count 100 --seed 42
 npm run golden:validate:strict
 
 # Run eval (node-llama-cpp, auto-downloads models)
-npm run eval:runner
+npm run eval
 
-# Tagged eval run (snapshots config + results)
-npm run eval:tagged -- --tag "prompt-v2"
+# Eval fine-tuned model with v9.8 prompt
+npm run finetune:eval -- --adapter finetune/adapters_v2b \
+    --test-file data/linkedin_teacher_v2_eval_human_corrected.jsonl \
+    --prompt prompts/scorer_v9.8.txt
 
-# Compare runs
-npm run compare:runs
+# Single-job debug
+./eval-job.sh --job 42 --prompt 9.8
+
+# Generate teacher labels for new data
+source .venv/bin/activate
+python finetune/generate_teacher_labels.py \
+    --adapter finetune/adapters_v2b \
+    --input data/real_linkedin_500.jsonl \
+    --output data/distillation/teacher_labeled.jsonl \
+    --prompt prompts/scorer_v9.8.txt
+
+# Student model eval pipeline
+npx tsx src/cli/label-jobs-openai.ts \
+    --input "data/Student Training Data/clean_eval.jsonl" \
+    --output "data/Student Training Data/openai_eval_labels.jsonl" \
+    --prompt prompts/scorer_v9.8.txt --model gpt-4o-mini --concurrency 10
+
+python3 finetune/eval_finetuned.py \
+    --model mlx-community/Qwen2.5-0.5B-Instruct-4bit \
+    --adapter finetune/adapters_student \
+    --test-file "data/Student Training Data/openai_eval_labels.jsonl" \
+    --prompt prompts/scorer_v9.8.txt --save-predictions
+
+npm run student:analyze -- --input eval_results/<predictions>.predictions.jsonl
 ```
+
+---
+
+## Phase 12 — Student Training: Why OpenAI, Not Our Teacher
+
+This was supposed to be simple. The teacher (Qwen3-4B, v2b adapter) scored 96.5% combined accuracy. The student pipeline was built. Just label 500 jobs with the teacher, train the student, ship it. But what should have been a weekend of teacher-labeling turned into a week-long detour through three failed retraining attempts, a fundamental rethinking of the labeling strategy, and a pivot to OpenAI as the label source.
+
+### The original plan: distill from local teacher
+
+The plan from Phase 9 was straightforward knowledge distillation:
+
+```text
+Teacher (Qwen3-4B, fine-tuned) → labels 500 jobs → Student (Qwen2.5-0.5B) trains on those labels
+```
+
+The teacher had been through 11 phases of development. It scored 96.5% on 173 combined eval jobs with the v9.8 prompt. It ran locally, cost nothing, and could label jobs all night unattended. The distillation pipeline was built and tested (`generate_teacher_labels.py`, `format-finetune-training-data-for-mlx.ts`, `lora_config_student.yaml`). Everything was ready.
+
+Then I tried to actually use the teacher to label 500 new jobs — and the problems started.
+
+### Problem 1: the deterministic scorer's bugs propagated everywhere
+
+Every piece of training data in this project flows through the **deterministic scorer** — a rule-based TypeScript function (`deterministic-scorer.ts`) that computes loc/role/tech/comp from job fields. It was the "ground truth" the teacher was trained on.
+
+The deterministic scorer had bugs I'd already identified but hadn't fully appreciated the impact of:
+
+1. **Salary parsing was brittle.** It couldn't handle formats like "£60k–80k" (missing second £), "£60,000 to £80,000 per annum", or "from £80,000". Each missed format meant comp=0 when it should have been 5, 15, or 25.
+
+2. **Tech scoring was mechanical.** It searched for exact string matches — "Node.js", "TypeScript", "React" — without understanding context. "Experience with Node.js preferred but not required" scored the same as "Must have 5+ years of Node.js." A human would score these differently.
+
+3. **Location was oversimplified.** The scorer categorized locations into exactly three buckets: London (25), UK-not-London (10), outside-UK (-50). "Remote UK" was handled inconsistently. "Hybrid — 2 days London" was often missed entirely.
+
+The teacher inherited these bugs through training. When the teacher scored 96.5%, it was 96.5% agreement with the deterministic scorer — including the scorer's mistakes. Training a student to mimic these errors would just compound them.
+
+This is the classic **garbage in, garbage out** problem. But it's subtle because the "garbage" isn't obviously wrong — it's plausible-looking scores that happen to be systematically biased.
+
+### Problem 2: the teacher v2 retraining saga
+
+Before giving up on local labeling, I tried to fix the teacher. Three rounds of corrective retraining, each one fixing one problem while creating another.
+
+#### Teacher v2 (126 jobs, resume from v1)
+
+Goal: fix the location bias (teacher scored all UK cities as London) and add comp=-30 examples.
+
+Added 100 new jobs + 14 cherry-picked + 8 location supplement + 4 oversampled = 126 training jobs. Resumed from v1 adapter at LR=5e-6.
+
+| Eval Set | v1 | v2 |
+|---|---|---|
+| New eval (101) | 83.2% | **92.1%** |
+| Old test (33) | **90.9%** | 84.8% |
+| Old UK (72) | 81.9% | **91.7%** |
+
+Location improved but old test regressed from 90.9% to 84.8%. The corrective data taught new patterns while slightly degrading old ones.
+
+#### Teacher v2.1 / v2b (194 jobs, resume from v1)
+
+Goal: fix v2's regression on old test. Different approach — started from v1 again with a wider dataset.
+
+130 unique jobs, 194 after oversampling. LR=7.5e-6, 100 iterations.
+
+| Eval Set | v1 | v2 | v2.1 |
+|---|---|---|---|
+| New eval (101) | 83.2% | **92.1%** | 90.1% |
+| Old test (33) | 90.9% | 84.8% | **93.9%** |
+| Old UK (72) | 81.9% | 91.7% | **94.4%** |
+| **OVERALL (206)** | 84.0% | 90.8% | **92.2%** |
+
+Best overall model. This became the production adapter (v2b).
+
+#### Teacher v2.2 / v2c (282 jobs — the oversampling disaster)
+
+Goal: push good_fit accuracy higher (was 28.6% in v2, 57.1% in v2.1).
+
+Strategy: oversample good_fit and comp=25 examples by duplicating them 3-4×. Total 282 records from only 130 unique jobs.
+
+**The training loss started at 0.039 and flatlined.** The model had already memorised everything in the dataset during v2.1 training. Adding more copies of the same data did nothing — the model treated them as confirmation of what it already knew, not new signal. A complete waste of compute time.
+
+**The key lesson: data diversity beats data quantity.** 15 unique comp=25 examples teach more than 50 copies of the same 15 examples. The model needs to see different _contexts_ for the same scoring pattern, not the same context repeated.
+
+### Problem 3: prompt over-optimisation
+
+The 96.5% accuracy came from 9 rounds of prompt tuning (v9.2–v9.8). But each prompt iteration was optimised against specific failing jobs. The prompt became increasingly tailored to the evaluation set's distribution:
+
+- v9.4's "focused attention STEP 3" fixed tech recovery on HC eval jobs
+- v9.7's "title repeat in STEP 2" fixed UK LinkedIn location jobs
+- v9.8 merged both — a Frankenstein prompt that worked on both eval sets
+
+The risk: the prompt was optimised to make the 4B teacher model behave correctly on _these specific job patterns_. On new, unseen jobs, the v9.8 prompt might not generalise. And the student would inherit whatever blind spots remained.
+
+### Problem 4: hardware bottleneck
+
+Labeling 500 jobs with the local teacher takes 2-3 hours on M1. That's fine for one batch. But the student training workflow requires iteration — label, train, evaluate, diagnose, adjust training data, re-label. Each cycle is 6-9 hours of GPU time on the M1 (2-3h labeling + 1-2h training + 0.5h eval). You get maybe one iteration per day.
+
+With OpenAI's gpt-4o-mini, the same 500 jobs label in under 5 minutes at ~$0.10. That 30× speed improvement transforms the workflow — you can iterate on training data design within a single session instead of waiting overnight.
+
+### The pivot: distill from OpenAI instead
+
+The decision crystallised when I looked at it from the student's perspective:
+
+| | Local Teacher | OpenAI (gpt-4o-mini) |
+|---|---|---|
+| Labeling quality | 96.5% (but trained on buggy deterministic scorer) | ~95%+ (trained on internet-scale data, no scorer bias) |
+| Labeling speed | 2-3 hours / 500 jobs | 5 minutes / 500 jobs |
+| Iteration cycle | 1/day | Many/day |
+| Cost | Free (local GPU) | ~$0.10 / 500 jobs |
+| Bias inheritance | Deterministic scorer bugs → teacher → student | Fresh perspective, may catch errors scorer missed |
+| Salary parsing | Limited to formats scorer could handle | Understands natural language salary descriptions |
+
+The counterintuitive insight: **a cloud model that costs pennies per batch can produce better training data than a locally fine-tuned model that cost nothing but inherited systematic biases.** The teacher's 96.5% accuracy was measured against the deterministic scorer — it was good at agreeing with the scorer, including the scorer's mistakes.
+
+OpenAI doesn't have that bias. It reads "Up to £80,000" and understands it's a ceiling. It reads "competitive salary" and scores comp=0. It reads "Node.js and TypeScript" in context and distinguishes "required" from "nice to have." These are judgements the deterministic scorer encoded incorrectly.
+
+The goal was never to have the student mimic the teacher — it was to have the student score jobs the way a human would. OpenAI gets closer to that human judgement than a model trained on a flawed scorer.
+
+### What we kept from the teacher work
+
+Nothing was wasted. The 11 phases of teacher development produced:
+
+1. **The scoring rubric** — 4 categories, clear rules, tested on 200+ jobs. OpenAI uses the exact same v9.8 prompt.
+2. **The eval pipeline** — `eval_finetuned.py`, `analyze-student-eval.ts`, clean eval set (145 jobs). Works with any label source.
+3. **Training infrastructure** — MLX LoRA config, format scripts, augmentation pipeline. Model-agnostic.
+4. **Hard-won data insights** — which label distributions cause problems, why oversampling duplicates fails, how to stratify by label AND comp.
+5. **The v9.8 prompt** — battle-tested through 9 iterations. Used as-is with OpenAI.
+
+### The eval design: teacher-as-judge
+
+With the OpenAI pivot, a natural question arose: how should the student be evaluated? Three options:
+
+1. **Three-rater framework** — compare student vs OpenAI vs deterministic scorer on every job, categorise disagreements (teacher error, student gap, inherited bias)
+2. **OpenAI-as-judge** — use OpenAI's labels as the reference, ignore the deterministic scorer entirely
+3. **Hybrid** — OpenAI as primary, deterministic scorer as sanity check
+
+I went with option 2. The reasoning: **in knowledge distillation, the teacher IS the ground truth.** The student's job is to mimic its teacher. If the teacher says comp=15 and the student says comp=25, that's a student error — regardless of what the deterministic scorer thinks. The three-rater framework was over-engineered for this stage. I already tested the teacher (OpenAI); I trust it enough to use as the reference.
+
+### Student training: first attempt (76.6%)
+
+With the OpenAI pivot decided, the student training proceeded in three steps.
+
+#### Step 1: Prepare training data
+
+The student training set was assembled from multiple sources using the `assemble-student-training.ts` pipeline:
+
+| Source | Count | Notes |
+|---|---|---|
+| LinkedIn teacher v2 (labeled pool) | 144 | Teacher-labeled, human-corrected subset |
+| Golden jobs scored | 92 | Deterministic scorer labels |
+| UK LinkedIn jobs | 11 | Deterministic scorer labels |
+| Location diversity supplement | 8 | Non-London UK cities |
+| Salary augmentation | ~200 | Injected GBP salary into real JDs |
+| Contrastive pairs | ~90 | Same job, one field changed |
+| Location variants | ~50 | Same job, different location format |
+| JD truncation | ~100 | Same job at 50% and 25% length |
+| **Curated total** | **~450** | After dedup + stratified sampling |
+
+The augmented data (salary injection, contrastive pairs, location variants, JD truncation) was generated by the `augment-training-data.ts` script and labeled by the local teacher model. A key design detail: augmented data was capped at 30% of the final training set — the majority had to be real, unmodified jobs.
+
+#### Step 2: Train with MLX LoRA
+
+The student needed different hyperparameters than the teacher. At 0.5B parameters (8× smaller), it has less capacity to learn from implicit patterns — it needs more explicit signal, more training iterations, and stronger regularisation.
+
+Training config (`finetune/lora_config_student.yaml`):
+
+| Parameter | Value | Rationale |
+|---|---|---|
+| Model | Qwen2.5-0.5B-Instruct-4bit | Smallest viable model, same family as teacher |
+| rank | 8 | Higher than teacher's rank=4 — 0.5B needs more capacity for the same task |
+| alpha | 16 | 2× rank (standard scaling) |
+| dropout | 0.1 | Higher than teacher's 0.05 — more regularisation for smaller model |
+| lr | 5e-5 | 5× teacher's 1e-5 — 0.5B model needs larger updates |
+| batch_size | 2 | M1 can handle this with 0.5B model (smaller model = more headroom) |
+| grad_accumulation | 8 | Effective batch 16 — stable gradients |
+| iters | 2000 | ~5 passes through 400 examples |
+| max_seq_length | 8192 | Generous — student JDs can be long |
+| mask_prompt | true | Only train on assistant JSON, not the ~470-token prompt |
+| val_batches | 40 | Use ~10% of data for validation each eval |
+| steps_per_eval | 50 | Evaluate every 50 iters to catch the turning point |
+| save_every | 50 | Save frequently for checkpoint selection |
+
+The training ran for the full 2000 iterations (29 checkpoints saved). The best checkpoint by validation loss was at **iteration 1250** (loss 0.041). Training beyond 1250 showed the val loss slowly climbing — the model was beginning to memorise.
+
+#### Step 3: Evaluate against OpenAI labels
+
+This was the moment of truth. The student needed to be evaluated against a label source it had never trained on — OpenAI's gpt-4o-mini, using the same v9.8 prompt. If the student agreed with OpenAI on unseen jobs, the distillation worked regardless of whether the training data came from the local teacher or deterministic scorer.
+
+Built a three-step eval pipeline:
+1. **OpenAI labels the eval set**: `label-jobs-openai.ts` scored 141/145 clean eval jobs (4 parse failures, ~$0.03, ~1 minute)
+2. **Student predicts on same eval set**: `eval_finetuned.py --save-predictions` (new flag, writes per-job JSONL alongside the `.txt` report)
+3. **Automated analysis**: `analyze-student-eval.ts` generates confusion matrix, field transitions, and priority-ranked training suggestions
+
+#### Results: 76.6% — decent but not good enough
+
+| Metric | Student (v1) | Target | Stretch |
+|---|---|---|---|
+| **Label accuracy** | **76.6%** (108/141) | >88% | >92% |
+| loc | 90.1% | >90% | >95% |
+| role | 90.1% | — | — |
+| **tech** | **57.4%** | >80% | — |
+| comp | 81.6% | >80% | >88% |
+| good_fit | 57% (4/7) | >70% | >80% |
+| maybe | 64% (34/53) | >80% | >88% |
+| bad_fit | 86% (70/81) | >92% | >95% |
+| Parse failures | 0% | <3% | <1% |
+
+The confusion matrix tells the story:
+
+```text
+Golden \ Predicted  | good_fit | maybe | bad_fit
+--------------------|----------|-------|--------
+good_fit (7)        |    4     |   2   |    1
+maybe    (53)       |    8     |  34   |   11
+bad_fit  (81)       |    2     |   9   |   70
+```
+
+The student isn't catastrophically wrong — it has the right general shape. But 33 errors across 141 jobs, with "maybe" as the weakest class (64%), means it hasn't learned the scoring boundaries well enough.
+
+### Gap analysis: what went wrong and why
+
+The automated analysis (`analyze-student-eval.ts`) identified five specific training data gaps. All five were addressed in the [Phase 13 data pipeline redesign](#training-data-pipeline-v5).
+
+#### Gap 1: tech scoring is broken (57.4% accuracy)
+
+The biggest problem. The student consistently under-scores tech — `tech 15→5` is the most common error (20 cases), followed by `tech 10→0` (11 cases).
+
+**Root cause — chain-of-thought distillation failure:** The training data's reasoning strings are too vague. The format script (`format-finetune-training-data-for-mlx.ts`) generates simplified reasoning like `"tech stack (15)"` without explaining WHY it's 15. The student sees the number but never learns which keywords map to which scores. It needs to see `"Node.js +10, TypeScript +5 = 15"` to learn the actual mapping.
+
+This is essentially a **chain-of-thought distillation** problem. At 4B parameters, the teacher could infer the rules from the prompt + a few examples. At 0.5B parameters, the student needs explicit reasoning chains — "I found Node.js in the requirements section, that's +10" — because it lacks the capacity to figure out the rules on its own. The training data teaches the final answer but not the reasoning process that produces it.
+
+#### Gap 2: loc=-50 missing from training (0 examples)
+
+The student scored loc=-50 correctly in zero cases — it mapped US and European locations to loc=10 or loc=25 instead. The training pool had zero non-UK jobs (all were filtered to UK during data assembly). The student literally never saw what a loc=-50 job looks like.
+
+| Transition | Count | What it means |
+|---|---|---|
+| loc -50→25 | 2 | US/EU job scored as London |
+| loc -50→10 | 2 | US/EU job scored as UK-not-London |
+| loc 25→10 | 9 | London scored as UK-not-London |
+
+#### Gap 3: comp hallucination (0→25)
+
+Seven cases where the student invented comp=25 for jobs with no GBP salary. The reasoning says `"salary ≥£100k (+25)"` on jobs that don't mention any salary at all.
+
+**Root cause:** Training data has 79% comp=0 — the student saw so many comp=0 jobs that it over-corrected by hallucinating salary to avoid the dominant class. A classic imbalanced-data failure.
+
+Additionally, zero "Up to £X" examples existed in training. The student never learned that ceiling-only salary formats score comp=0.
+
+#### Gap 4: role edge cases
+
+The student missed "Engineer III" as role=25 (only 2 training examples of numbered seniority levels). It also over-scored "Architect" and "Solutions Architect" as senior.
+
+#### Gap 5: maybe label fragility
+
+Maybe is the hardest label — it requires exactly the right combination of field scores to land in the 50-69 range. 9 of 11 maybe→bad_fit errors were caused by tech under-scoring. 6 of 8 maybe→good_fit errors were caused by comp hallucination. Fix tech and comp, and maybe accuracy improves automatically.
+
+### What's available for the fix
+
+Before scraping new data, I audited what was already sitting unused. The augmentation pipeline had generated 463 jobs that weren't included in the curated training set:
+
+| Source | Total | loc=-50 | tech≥10 | Comp variety |
+|---|---|---|---|---|
+| contrastive_pairs | 68 | 30 | 63 | Good |
+| location_variants | 50 | 7 | 15 | Poor |
+| salary_augmented | 245 | 0 | 52 | Excellent (50 each of -30, 0, 5, 15, 25) |
+| truncated_jds | 100 | 59 | 9 | Poor |
+
+The existing data pool has exactly the signal the student needs — it just wasn't assembled into the training set. No new scraping required for the first fix.
+
+Additionally, 640 fresh LinkedIn jobs were preprocessed with location extraction from URL subdomains (`--extract-location` flag added to `preprocess-raw-jobs.ts`). These provide geographic diversity: 292 non-UK jobs (from au, ca, in, nl, de subdomains), 319 UK jobs, 89 with GBP salary mentions.
+
+### What's next: second training round
+
+> **Note:** This plan was superseded by a deeper architectural change — see [Phase 13: Student V5](#phase-13--student-v5-semantic-token-architecture). The root problems (vague chain-of-thought, comp imbalance, loc=-50 gap) were fixed not just with more data but by redesigning what the model predicts.
+
+The gap analysis points to a targeted fix, not a full rebuild. The student already handles 76.6% of jobs correctly — it needs better training data, not a different architecture.
+
+The plan for student v2:
+
+1. **Label 640 new balanced jobs with OpenAI** — preprocessed from a fresh LinkedIn scrape, ~$0.10 and 5 minutes
+2. **Fix reasoning format** — replace vague `"tech stack (15)"` with explicit `"Node.js +10, TypeScript +5 = 15"` in training data (chain-of-thought distillation)
+3. **Add loc=-50 examples** — ensure non-UK jobs appear in training (currently zero; 96 exist in unused augmented data)
+4. **Rebalance comp distribution** — reduce comp=0 from 79% to ~55%, add "Up to £X" examples (245 salary-augmented jobs available)
+5. **Target ~1000 training examples** — combining existing pool + new labeled + gap-filling synthetic jobs
+6. **Iterate fast** — OpenAI labeling enables same-day iteration on training data composition
+
+### What I learned from 12 phases of building this
+
+Looking back across the full journey — from hand-labeling 103 jobs to running a 0.5B student model — some patterns keep recurring:
+
+1. **Data quality beats everything.** More data doesn't help if it has the wrong distribution. The teacher's location bias (67% London) taught it "UK = London." The student's comp imbalance (79% comp=0) taught it to hallucinate salary to escape the dominant class. Every training failure traced back to data composition, not model capacity or hyperparameters. The V5 [training data pipeline](#training-data-pipeline-v5) is the fullest expression of this lesson — explicit per-token targets, 16 hard edge cases, and a 10-recipe generation system rather than hoping random scrapes fill the right gaps.
+
+2. **The deterministic scorer was both essential and limiting.** It provided the ground truth that made everything possible — without it, there's no eval, no training signal, no iteration. But its bugs propagated through every layer: scorer → golden data → teacher training → teacher labels → student training. Each link in the chain compounds the errors. Breaking free of the scorer (by pivoting to OpenAI) was the single biggest unlock for the student model.
+
+3. **Prompt engineering before fine-tuning, always.** The v10 location fix gave a 14-point improvement in 5 minutes. The v11 domain gate gave 10 points. Fine-tuning takes hours and can break things that already work. Prompt changes are instant and reversible. This ordering saved dozens of hours of wasted training.
+
+4. **Eval on unseen data is the only number that matters.** The v9.4 prompt scored 97% on the tuning set and 75.8% on held-out data. The teacher scored 96.5% against the deterministic scorer and 76.6% when evaluated by OpenAI on different jobs. Any accuracy number measured on data you've been staring at is optimistic.
+
+5. **Small models need explicit chain-of-thought.** The 4B teacher could infer rules from the prompt. The 0.5B student needs the reasoning spelled out — "Node.js +10, TypeScript +5 = 15" — because it lacks capacity to figure out the mapping on its own.
+
+6. **Hardware constraints are design constraints.** The M1's 16GB RAM eliminated all models above 4B. The 6-9 hour iteration cycle on local inference drove the OpenAI pivot. Thermal throttling on 30+ minute runs meant eval accuracy was non-deterministic. Every decision was shaped by what the hardware could actually do.
+
+---
+
+## Phase 13 — Student V5: Semantic Token Architecture
+
+### Why the first student failed
+
+Student v1 ([Phase 12](#phase-12--student-training-why-openai-not-our-teacher)) reached 76.6%. The [gap analysis](#gap-analysis-what-went-wrong-and-why) pointed clearly at one root cause: **the model was being asked to do too much at once.** It had to read a job description, apply classification rules, compute four independent numeric scores, and output a single label — all in one forward pass, with 0.5B parameters. The chain-of-thought reasoning in training data was too vague ("tech stack (15)") to teach the underlying rules. The model learned the statistical distribution of outputs but not the decision logic that produced them.
+
+### The architectural pivot: predict tokens, not scores
+
+The key insight: the student doesn't need to predict numbers. Numbers are an intermediate representation. What the model actually needs to do is **categorise each field** — and a deterministic code layer can compute scores and labels from those categories.
+
+Instead of predicting `loc=25, role=25, tech=15, comp=0` (numeric), the V5 student predicts:
+
+```json
+{
+  "reasoning": "loc: 'London' → LONDON_OR_REMOTE. role: 'Senior' in title → SENIOR_PLUS. tech: node.js found, typescript found → NODE_JS_TS. comp: no GBP salary → NO_GBP.",
+  "loc": "LONDON_OR_REMOTE",
+  "role": "SENIOR_PLUS",
+  "tech": "NODE_JS_TS",
+  "comp": "NO_GBP"
+}
+```
+
+The code layer then maps tokens → scores → label deterministically:
+
+| Field | Token | Score |
+|-------|-------|-------|
+| loc | `LONDON_OR_REMOTE` | +25 |
+| loc | `UK_OTHER` | +10 |
+| loc | `OUTSIDE_UK` | −50 |
+| loc | `MISSING` | 0 |
+| role | `SENIOR_PLUS` | +25 |
+| role | `MID_LEVEL` | +15 |
+| role | `NO_SENIORITY` | 0 |
+| tech | `NODE_JS_TS_AI_ML` | +25 |
+| tech | `NODE_JS_TS` | +15 |
+| tech | `AI_ML` / `NODE` | +10 |
+| tech | `JS_TS` | +5 |
+| tech | `NONE` | 0 |
+| comp | `ABOVE_100K` | +25 |
+| comp | `RANGE_75_99K` | +15 |
+| comp | `RANGE_55_74K` | +5 |
+| comp | `NO_GBP` / `UP_TO_ONLY` | 0 |
+| comp | `BELOW_45K` | −30 |
+
+Total score: `max(0, min(100, loc + role + tech + comp))`. Label: ≥70 = `good_fit`, ≥50 = `maybe`, <50 = `bad_fit`.
+
+This approach has three advantages for a small model:
+
+1. **Smaller output space.** Instead of predicting any integer 0–100, the model picks from 4+3+8+6 = 21 labelled categories. Classification is fundamentally easier than regression.
+2. **Named categories are self-documenting.** `OUTSIDE_UK` makes it explicit what the loc field means. The model's reasoning can reference the category name, making chain-of-thought training much cleaner.
+3. **Errors are diagnostic.** When the model predicts `NODE` instead of `NODE_JS_TS`, you know exactly what signal it missed. Numeric regression errors (predicted 10, golden 15) are opaque.
+
+### Teacher prompt
+
+The teacher prompt (`teacher_v5.txt`) uses the same classification logic but written out fully as rules — location rules, role rules, tech rules, comp rules — with multiple worked examples showing the reasoning format. GPT-4o-mini labels training data with the teacher prompt. The student learns to mimic the teacher's token predictions.
+
+The student prompt (`student_v5.txt`) is intentionally lean — just the valid token vocabulary and the job fields. The student has been trained on enough examples to apply the rules without needing them spelled out in the prompt at inference time.
+
+### Training data pipeline (V5)
+
+Getting the data right was the majority of the work — substantially more than writing the model code. This section documents what was actually built: the distribution targets, the edge cases encoded into training data, the contamination bugs found and fixed, and why every data decision was made deliberately.
+
+**In this section:** [Distribution targets](#explicit-per-token-distribution-targets) · [16 edge cases](#16-hard-edge-cases-encoded-in-training-data) · [Contamination pipeline](#three-level-contamination-pipeline) · [Dedup bug](#dedup-bug-that-destroyed-419-training-examples) · [Eval design](#eval-set-design-locked-and-coverage-verified) · [10-recipe synthesis](#10-recipe-synthetic-generation-system-good_fit--outside_uk) · [Smart truncation](#smart-truncation-protecting-salary-windows) · [Fuzzy matching](#fuzzy-token-matching-in-the-code-layer) · [Reproducibility](#seeded-rng-for-reproducibility-seed42) · [Final numbers](#final-composition)
+
+#### Explicit per-token distribution targets
+
+Before writing a single training example, a complete specification was written for what the data must contain — broken down not just by token but by variant. The requirements:
+
+**loc targets:**
+- `OUTSIDE_UK`: 100+ jobs, covering ≥30 unique countries/cities — including United States, Germany, France, Canada, Australia, India, Singapore, Netherlands, Ireland (Republic), Czech Republic, Poland, Sweden, Switzerland, Japan, Brazil, South Africa, UAE, "Remote US", "Remote India", New York, San Francisco, Berlin, Paris, Toronto, Sydney, Mumbai, Amsterdam, Tokyo, Dubai
+- `UK_OTHER`: 80+ jobs, covering ≥15 unique UK locations — Manchester, Bristol, Edinburgh, Glasgow, Cardiff, Birmingham, Leeds, Belfast, Nottingham, Cambridge, Oxford, Liverpool, Brighton, Reading, and bare "United Kingdom"
+- `LONDON_OR_REMOTE`: 250+ jobs, covering 11 format variants — "London", "London, England", "London, England, United Kingdom", "Remote", "remote", "UK Remote", "United Kingdom (Remote)", "London (Remote)", "Fully Remote", "Remote - UK", "London, England, United Kingdom (Hybrid)"
+- `MISSING`: 15+ jobs (empty string, "Not specified", "See description", "Various locations", "Global", etc.)
+
+**comp targets (sub-classified, not just token):**
+- `NO_GBP` with USD visible: 40 examples (model must not grab the dollar amount)
+- `NO_GBP` with EUR/AUD/other visible: 20 examples
+- `NO_GBP` with daily rate visible (£X/day, £X per day, £X p/d): 15 examples
+- `NO_GBP` with no salary at all: 120 examples
+- `NO_GBP` with midpoint £45k-£54,999: 10 examples (this midpoint maps to NO_GBP)
+- `UP_TO_ONLY`: 40 examples covering formats "Up to £90k", "up to £120,000", "to £80k", "To £95,000 per annum"
+
+**Specific RANGE_75_99K > ABOVE_100K ordering enforced.** In student v1, `ABOVE_100K` dominated training data and the model learned it as a near-default. V5 flips the ordering: 115 RANGE_75_99K vs 94 ABOVE_100K. The model must learn to distinguish ranges, not just output the highest.
+
+#### 16 hard edge cases encoded in training data
+
+Classification is ambiguous at the edges. These edge cases were explicitly listed, and training examples were built to cover them:
+
+| Edge case | Rule |
+|-----------|------|
+| "Dublin, Ireland" | `OUTSIDE_UK` — Republic of Ireland is not UK |
+| "Belfast, Northern Ireland" | `UK_OTHER` — Northern Ireland is UK |
+| "Cork, Ireland" | `OUTSIDE_UK` |
+| "Derry, Northern Ireland" | `UK_OTHER` |
+| Location says "Remote" but JD says "Remote US only" | `LONDON_OR_REMOTE` — use location field only, ignore JD body |
+| Location says "London" but JD says "based in our Berlin office" | `LONDON_OR_REMOTE` — location field wins |
+| Node.js listed as "nice to have" not required | counts for tech (scan entire JD, not just requirements) |
+| "AI-powered company" in company description, no AI/ML in requirements | no AI/ML credit |
+| Salary in title "Up to £90k" but different salary in JD body | use JD body if it has a proper range, otherwise `UP_TO_ONLY` |
+| "£500/day" or "£600 per day" or "£550 p/d" | `NO_GBP` (daily rates ignored) |
+| Midpoint £45,000–£54,999 | `NO_GBP` (midpoint falls in gap between bands) |
+| "React Native" and "React.js" with no Node.js | `NONE` (React scores 0) |
+| Job with no description, just a title | `tech=NONE`, `comp=NO_GBP` |
+| "Senior" in company name but not in job title | check title first, then first hiring sentence of JD |
+| "Engineer III" or "SWE III" | `SENIOR_PLUS` |
+| AI/ML "nice to have" or "bonus" | does NOT count as AI_ML tech requirement |
+
+#### Three-level contamination pipeline
+
+Contamination means eval jobs appearing in training — which makes eval scores meaninglessly optimistic. The pipeline checks three levels before any job is admitted to training:
+
+1. **Direct `job_id` match** — simplest case, caught by an index lookup
+2. **Family ID match** — augmented jobs share a base `job_id` with their source job, connected by suffixes (`_dup_N`, `_con_HASH`, `_sal_N`, `_locvar_N`, `_trunc_N`). A family ID function strips these suffixes. If the family ID appears in the eval set, the whole family is excluded from training.
+3. **JD text fingerprint** — SHA-256 of the first 500 characters of the JD. This catches real jobs that were scraped twice under different company names, different job IDs, or from different sources.
+
+The JD fingerprint check was the critical addition. Family ID checks alone missed **92 overlaps** — real jobs scraped from two different LinkedIn searches, with different `job_id`s and different company names, but identical JD text. Without fingerprinting, these would have contaminated the training set silently.
+
+If any contamination check fails, the pipeline calls `process.exit(1)`. No soft warnings — the build halts until the contamination is resolved.
+
+#### Dedup bug that destroyed 419 training examples
+
+An early version of the pipeline deduped augmented jobs by `sha256(title + company + location)`. Augmented jobs (duplicates, salary variants, location variants, truncated versions) intentionally have different titles, locations, and companies from their source — that's the point of augmentation. The content hash treated them as unique and passed them through. But when the *source* job appeared, its hash matched the augmented version and the source was silently dropped.
+
+Result: 419 augmented jobs passed through while their source jobs were destroyed. The dedup was working backwards.
+
+Fix: dedup by `job_id` only. Source jobs have unique `job_id`s. Augmented jobs are identified by suffix pattern. The fix is a one-line change but required understanding why the data had the structure it had.
+
+#### Eval set design: locked and coverage-verified
+
+The eval set is not just a random 150-job sample. It was assembled with explicit coverage requirements:
+
+- 50 good_fit / 50 maybe / 50 bad_fit (label-balanced, not accuracy-weighted)
+- ≥15 `OUTSIDE_UK` jobs (model must have seen enough non-UK to not over-predict UK)
+- ≥10 comp hard negatives (`UP_TO_ONLY`, daily rates, USD salaries — easy to confuse with GBP ranges)
+- ≥10 tech `NODE` or `NODE_JS_TS` (the hardest tech tokens — combinations are easy to miss)
+- ≥20 borderline scores (computed score 45–75) — the middle band where most wrong label predictions fall
+- No duplicate companies — company repetition biases eval toward whatever that company's JDs look like
+- Preference for real over synthetic — synthetic jobs fill gaps only; real jobs are preferred
+
+After assembly, the 150 jobs were SHA-256 fingerprinted. The fingerprint is checked before any training run begins. If it fails, training stops — the eval set cannot drift.
+
+#### 10-recipe synthetic generation system (good_fit + OUTSIDE_UK)
+
+The model's biggest failure in student v1 was `good_fit`: the rarest class, learned least well. The training pool had a natural surplus of `bad_fit` (plenty of US jobs, jobs without salaries) and `maybe`, but `good_fit` — jobs with London/Remote location, senior title, Node.js + TypeScript, and £75k+ salary — are genuinely rare in real data because all four conditions must be true simultaneously.
+
+Ten targeted recipes were written, each specifying exact token combinations to produce:
+
+| Recipe | Count | loc | role | tech | comp |
+|--------|-------|-----|------|------|------|
+| P1 | 8 | LONDON_OR_REMOTE | SENIOR_PLUS | NODE_JS_TS | ABOVE_100K |
+| P2 | 7 | LONDON_OR_REMOTE (Remote) | SENIOR_PLUS | NODE_AI_ML | RANGE_75_99K |
+| P3 | 5 | LONDON_OR_REMOTE | SENIOR_PLUS | NODE_AI_ML | ABOVE_100K |
+| P4 | 5 | LONDON_OR_REMOTE | SENIOR_PLUS | NODE_JS_TS_AI_ML | RANGE_75_99K |
+| P5 | 4 | LONDON_OR_REMOTE | MID_LEVEL | NODE_JS_TS | RANGE_75_99K |
+| P6 | 4 | LONDON_OR_REMOTE | SENIOR_PLUS | JS_TS (no Node) | RANGE_75_99K |
+| P7 | 4 | UK_OTHER (non-London) | SENIOR_PLUS | NODE_JS_TS | ABOVE_100K |
+| P8 | 3 | LONDON_OR_REMOTE | SENIOR_PLUS | NODE_JS_TS_AI_ML | ABOVE_100K |
+| P9 | 3 | LONDON_OR_REMOTE | SENIOR_PLUS | NODE_JS_TS | RANGE_55_74K (borderline) |
+| P10 | 2 | LONDON_OR_REMOTE | SENIOR_PLUS | AI_ML (no Node/TS) | ABOVE_100K |
+
+Each recipe is a GPT-4o-mini prompt specifying exact salary midpoint ranges, required tech keywords, location format variants to rotate through, and at least one deliberate misleading detail (e.g., mention a USD salary alongside the GBP one, list React as required while Node is "nice to have"). Misleading details test the model's rule application under noise — real job postings contain noise.
+
+A separate recipe (BF1, 10 jobs) generated `bad_fit` jobs at `OUTSIDE_UK` locations the model had rarely seen: São Paulo, Tokyo, Cape Town, Dubai, Stockholm, Kraków, Seoul, Mexico City, Bangalore, Jakarta. Each uses its local currency (BRL, JPY, ZAR, AED, SEK, PLN, KRW, MXN, INR, IDR) — never GBP.
+
+**Dynamic city injection.** Rather than writing a fixed location into the BF1 prompt template, `{{CITY}}` is replaced per API call. This prevents GPT-4o-mini from generating the same geographic context repeatedly (it tends to default to a few cities if given free choice) and ensures the JD text itself references the right local context.
+
+#### Smart truncation protecting salary windows
+
+Many JDs are longer than the model's max sequence length (8192 tokens). Naïve truncation at a token boundary can silently remove the salary information — the `comp` field is then unanswerable and the model has to guess.
+
+The truncation algorithm protects salary context:
+1. Scan the JD for all occurrences of `£`, `$`, `€`, and keywords (`salary`, `compensation`, `pay`, `per annum`, `p.a.`)
+2. For each occurrence, mark a 100-word window around it as protected
+3. Always preserve the first 300 words and last 200 words
+4. Truncate only from the middle, preserving all protected salary windows
+5. Add a `[JD TRUNCATED]` marker so the model knows the text is not complete
+
+This means a JD that starts with a company description and ends with a salary table always arrives at the model with both intact.
+
+#### Fuzzy token matching in the code layer
+
+The deterministic scorer maps model output tokens to scores. But models sometimes produce `"LONDON_OR_REMOTE "` (trailing space), `"NODE_JS_TS"` (correct) vs `"node_js_ts"` (lowercase), or minor spelling variants like `"ABOV_100K"` (one character off).
+
+The code layer uses edit distance ≤2 to auto-correct token predictions before scoring. If the model outputs a string within edit distance 2 of a valid token, it is silently corrected. If it is further away, the prediction is flagged as invalid and the field scores 0. This prevents single-character model errors from causing parse failures while still catching genuinely wrong outputs.
+
+#### Seeded RNG for reproducibility (seed=42)
+
+All shuffles and stratified splits use `seed=42`. This means:
+- The same 150 jobs are always selected for eval
+- The same 806 jobs are always in training
+- The same 89 are in validation
+
+Reproducibility matters for debugging. When a checkpoint produces unexpected results, being able to re-run with identical data composition removes one source of variance. Without a fixed seed, each run would produce a different train/eval split and score comparisons across runs would be meaningless.
+
+#### Final composition
+
+| Metric | Value |
+|--------|-------|
+| Total pool | ~1,500+ jobs |
+| Eval set | 150 (locked, SHA-256 verified) |
+| Training set | 895 (806 train / 89 validation, 90/10 split) |
+| Synthetic in training | ~3% (well under 25% cap) |
+| Contamination leaks | 0 (verified at build time) |
+| OUTSIDE_UK in training | 206 (23%) |
+| Unique non-UK locations | 30+ countries/cities |
+| good_fit in training | 113 (includes 44 targeted synthetic) |
+
+### LoRA config
+
+- Model: `mlx-community/Qwen2.5-0.5B-Instruct-4bit`
+- LoRA: rank 16, alpha 32, dropout 0.1
+- LR: 5e-5, warmup 50 steps
+- Iters: 1000, save every 25
+- `mask_prompt: true` — only trains on the assistant response (the tokens), not the long job description prompt
+- `grad_checkpoint: true` — required to fit in 16GB M1
+
+### Results so far (evaluation in progress)
+
+Training crashed at iter 890 (OOM on M1 16GB). Final checkpoint is iter 875. Results (iter 25–875 evaluated):
+
+| Iter | Label acc | Macro fit | loc | role | tech | comp | gf | maybe | bad |
+|------|-----------|-----------|-----|------|------|------|----|-------|-----|
+| 875 | **83.9%** | **84.0%** | 92.6% | 92.6% | 72.5% | 78.5% | 78% | 78% | 96% |
+| 850 | 76.7% | 76.7% | 93.3% | 87.3% | 71.3% | 76.7% | 68% | 66% | 96% |
+| 825 | 74.5% | 74.3% | 92.6% | 87.9% | 70.5% | 78.5% | 57% | 68% | 98% |
+
+_Iter 875 is the confirmed best checkpoint. V5 adapter used as the starting point for V6 training (resumed via `--resume-adapter-file`)._
+
+### What to watch for
+
+- **tech is the hardest field** — consistently the lowest of the four. The 0.5B model struggles to scan a full JD and correctly identify all relevant tech keywords. Improvement here drives most of the label accuracy gain, since tech errors cascade into maybe↔good_fit misclassifications.
+- **good_fit accuracy** — the rarest class (50 in eval, 113 in training). Any checkpoint below 70% on good_fit is concerning regardless of overall accuracy.
+- **Iteration sweet spot** — last time (teacher v2), the model degraded in the final 150 iterations. Evaluating all checkpoints rather than just the final one is essential for catching this.
+- **Target: ≥90% label accuracy, ≥80% on every label class.**

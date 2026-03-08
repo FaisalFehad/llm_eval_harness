@@ -134,7 +134,7 @@ providers:
       hf_model: "hf:unsloth/Qwen3-4B-Instruct-2507-GGUF"
       temperature: 0
       no_think: true
-      context_size: 4096
+      context_size: 2048 #4096
 
   - id: "node-llama-cpp:qwen2.5-7b-instruct"
     config:

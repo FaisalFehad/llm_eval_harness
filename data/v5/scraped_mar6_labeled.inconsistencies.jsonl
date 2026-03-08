@@ -1,0 +1,3 @@
+{"job_id":"scrape_mar6_0023","title":"Principal Software Engineer","issues":["tech=NONE but reasoning says JS/TS was found"]}
+{"job_id":"scrape_mar6_0027","title":"Senior Software Engineer","issues":["tech=NONE but reasoning says JS/TS was found"]}
+{"job_id":"scrape_mar6_0033","title":"Senior Software Engineer","issues":["comp=ABOVE_100K but reasoning mentions 'Up to' / 'no lower bound' → should be UP_TO_ONLY"]}

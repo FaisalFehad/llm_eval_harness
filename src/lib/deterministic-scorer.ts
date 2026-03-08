@@ -19,7 +19,6 @@ export type ScoreBreakdown = {
  */
 export function scoreLoc(location: string | undefined): number {
   if (!location || location.trim().length === 0) return 0;
-  const loc = location.toLowerCase();
 
   const hasRemote = /\bremote\b/i.test(location);
   const hasHybrid = /\bhybrid\b/i.test(location);

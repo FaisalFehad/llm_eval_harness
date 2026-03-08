@@ -2,13 +2,28 @@ node_modules
 dist
 .promptfoo
 .env
-results/**/*.json
-results/**/*.html
 .DS_Store
 .claude
+
+# Large model files (download separately)
 models/
+
+# Results — JSON/HTML artifacts from eval runs (reports tracked as .md)
+results/**/*.json
+results/**/*.html
+
+# Python
+.venv
+finetune/__pycache__
+
+# LoRA adapter weights (too large for git, ~50-200MB each)
+finetune/adapters*/*.safetensors
+
+# Intermediate/generated data
 data/promptfoo_tests_eval.yaml
-finetune/adapters/*.safetensors
-eval_qwen3.log
 data/new_uk_jobs_scored.jsonl
 data/software_engineer_salaries_scored.jsonl
+
+# Log files
+eval_qwen3.log
+*.partial

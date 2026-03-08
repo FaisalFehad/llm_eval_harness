@@ -1,0 +1,385 @@
+Output: eval_results/adapters_v5.1/2026-03-07_eval_150_golden_student_v5_0000100.txt
+Prompt: prompts/student_v5.txt
+Adapter: finetune/adapters_v5.1/0000100_adapters.safetensors → finetune/adapters_v5.1/adapters.safetensors
+Model: mlx-community/Qwen2.5-0.5B-Instruct-4bit
+────────────────────────────────────────────────────────────
+────────────────────────────────────────────────────────────
+Running V5 eval on 150 jobs...
+
+[  1/150] ✗   1.5s  Senior Software Engineer                    good_fit→bad_fit        0%
+                    loc LONDON_OR_REMOTE→OUTSIDE_UK ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech JS_TS_AI_ML→NONE ✗ │ comp ABOVE_100K→NO_GBP ✗
+                    loc: 'London' → UK found → OUTSIDE_UK. role: 'Senior' in title → SENIOR_PLUS. tech: no node, no js/ts, no AI/ML found → 
+
+[  2/150] ✗   1.4s  Head Of Engineering                         good_fit→bad_fit        0%
+                    loc LONDON_OR_REMOTE→UK_OTHER ✗ │ role SENIOR_PLUS→NO_SENIORITY ✗ │ tech NONE→NONE ✓ │ comp ABOVE_100K→NO_GBP ✗
+                    loc: 'London, England, United Kingdom' → London → UK. role: 'Head' in title → no. tech: no node found → AI/ML ignored → 
+
+[  3/150] !   1.3s  Distinguished Engineer                      INVALID TOKEN: ['Invalid role token: "JD"']
+[  4/150] !   5.9s  Lead DevOps Architect                       PARSE FAIL
+[  5/150] ✗   1.4s  Senior Product Engineer                     good_fit→maybe          0%
+                    loc LONDON_OR_REMOTE→UK_OTHER ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NONE→NONE ✓ │ comp ABOVE_100K→RANGE_75_99K ✗
+                    loc: 'Remote' → UK found → UK_OTHER. role: 'Senior' in title → SENIOR_PLUS. tech: no node, js/ts, AI/ML found → NONE. co
+
+[  6/150] !   1.5s  Senior Software Engineer, £70,000 To £85,0  INVALID TOKEN: ['Invalid role token: "NO_SENIOR_PLUS"']
+[  7/150] ✗   2.0s  Founding Engineer (£240k+ )                 good_fit→bad_fit        0%
+                    loc LONDON_OR_REMOTE→OUTSIDE_UK ✗ │ role SENIOR_PLUS→NO_SENIORITY ✗ │ tech JS_TS→NONE ✗ │ comp ABOVE_100K→NO_GBP ✗
+                    loc: 'London, England, United Kingdom' → not UK → OUTSIDE_UK. role: 'Founding Engineer' in title → checked JD → no senio
+
+[  8/150] ✗   1.4s  Lead Full Stack Architect                   good_fit→maybe          0%
+                    loc LONDON_OR_REMOTE→UK_OTHER ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NODE_JS_TS→NONE ✗ │ comp RANGE_55_74K→RANGE_75_99K ✗
+                    loc: 'Remote' → London/UK → UK_OTHER. role: 'Lead' in title → SENIOR_PLUS. tech: no TypeScript, no Node.js found, no AI/
+
+[  9/150] !   6.7s  Lead DevOps Engineer                        PARSE FAIL
+[ 10/150] ✗   1.7s  Snr, Staff & Principal Full Stack Engineer  good_fit→maybe          0%
+                    loc LONDON_OR_REMOTE→LONDON_OR_REMOTE ✓ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NODE_JS_TS→NONE ✗ │ comp ABOVE_100K→NO_GBP ✗
+                    loc: 'London Area, United Kingdom' → London found → LONDON_OR_REMOTE. role: 'Snr, Staff & Principal' → SENIOR_PLUS. tech
+
+[ 11/150] ✗   1.4s  Senior Software Engineer                    good_fit→maybe          0%
+                    loc LONDON_OR_REMOTE→LONDON_OR_REMOTE ✓ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NODE_JS_TS→NONE ✗ │ comp RANGE_75_99K→NO_GBP ✗
+                    loc: 'London' → London found → LONDON_OR_REMOTE. role: 'Senior' in title → SENIOR_PLUS. tech: TypeScript found → NONE. n
+
+[ 12/150] ✗   1.3s  Senior Backend Software Engineer            good_fit→bad_fit        0%
+                    loc LONDON_OR_REMOTE→UK_OTHER ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech JS_TS→NONE ✗ │ comp RANGE_75_99K→NO_GBP ✗
+                    loc: 'London, England, United Kingdom' → UK found → UK_OTHER. role: 'Senior' in title → SENIOR_PLUS. tech: no JavaScript
+
+[ 13/150] ✗   1.6s  Mid-Level Backend Engineer                  good_fit→maybe          0%
+                    loc LONDON_OR_REMOTE→LONDON_OR_REMOTE ✓ │ role MID_LEVEL→MID_LEVEL ✓ │ tech NODE_JS_TS→NONE ✗ │ comp ABOVE_100K→RANGE_75_99K ✗
+                    loc: 'On-site - London, UK' → London found → LONDON_OR_REMOTE. role: 'Mid-Level' in title → MID_LEVEL. tech: Node.js, Ex
+
+[ 14/150] ✗   1.5s  Founding Software Engineer (insurtech - £1  good_fit→bad_fit        0%
+                    loc LONDON_OR_REMOTE→OUTSIDE_UK ✗ │ role SENIOR_PLUS→NO_SENIORITY ✗ │ tech NODE_JS_TS→NONE ✗ │ comp ABOVE_100K→RANGE_75_99K ✗
+                    loc: 'London' → not UK → OUTSIDE_UK. role: 'founding' → no senior keyword → NO_SENIORITY. tech: no JavaScript found → NO
+
+[ 15/150] ✗   1.4s  Senior Full-Stack Software Engineer         good_fit→bad_fit        0%
+                    loc LONDON_OR_REMOTE→UK_OTHER ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NONE→NONE ✓ │ comp ABOVE_100K→NO_GBP ✗
+                    loc: 'London, England, United Kingdom' → London → UK. role: 'Senior' in title → SENIOR_PLUS. tech: no JavaScript found →
+
+[ 16/150] ✓   1.5s  Senior Node/TypeScript Developer            good_fit                6%
+[ 17/150] ✗   1.7s  Senior Frontend Developer                   good_fit→maybe          6%
+                    loc LONDON_OR_REMOTE→LONDON_OR_REMOTE ✓ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech JS_TS→NONE ✗ │ comp RANGE_75_99K→RANGE_75_99K ✓
+                    loc: 'London' → London found → LONDON_OR_REMOTE. role: 'Senior' in title → SENIOR_PLUS. tech: React, Vue.js/3, TypeScrip
+
+[ 18/150] !   8.2s  Senior Software Engineer                    PARSE FAIL
+[ 19/150] ✗   1.7s  Technical Lead                              good_fit→bad_fit        5%
+                    loc LONDON_OR_REMOTE→OUTSIDE_UK ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NODE_JS_TS→NONE ✗ │ comp ABOVE_100K→NO_GBP ✗
+                    loc: 'London' → not UK → OUTSIDE_UK. role: 'SENIOR_PLUS' in title → no keyword → ignored. tech: no node, no js/ts, no AI
+
+[ 20/150] !   6.1s  🔥founding Fullstack Developer - SaaS🔥       PARSE FAIL
+[ 21/150] !   6.2s  Founding Engineer                           PARSE FAIL
+[ 22/150] ✗   1.8s  Staff Software Engineer - Money Management  good_fit→maybe          5%
+                    loc LONDON_OR_REMOTE→LONDON_OR_REMOTE ✓ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NODE_JS_TS→NONE ✗ │ comp ABOVE_100K→NO_GBP ✗
+                    loc: 'London, England, United Kingdom' → London found → LONDON_OR_REMOTE. role: 'Staff Software Engineer' in title → SEN
+
+[ 23/150] !   5.9s  Staff Data Engineer                         PARSE FAIL
+[ 24/150] ✗   1.6s  Head of Infrastructure                      good_fit→bad_fit        4%
+                    loc UK_OTHER→OUTSIDE_UK ✗ │ role SENIOR_PLUS→NO_SENIORITY ✗ │ tech NODE_JS_TS→NONE ✗ │ comp ABOVE_100K→RANGE_75_99K ✗
+                    loc: 'Oxford, UK' → not London/Remote → OUTSIDE_UK. role: 'Head of Infrastructure' → no senior keyword → NO_SENIORITY. t
+
+[ 25/150] !   1.8s  Senior Software Engineer - Frontend         INVALID TOKEN: ['Invalid role token: "JD"', 'Invalid tech token: "no JS/Node"']
+[ 26/150] ✗   1.5s  Senior Full Stack Engineer                  good_fit→maybe          4%
+                    loc LONDON_OR_REMOTE→LONDON_OR_REMOTE ✓ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NODE_JS_TS→NONE ✗ │ comp ABOVE_100K→RANGE_75_99K ✗
+                    loc: 'London Area, United Kingdom' → London found → LONDON_OR_REMOTE. role: 'Senior' in title → SENIOR_PLUS. tech: no Ty
+
+[ 27/150] ✗   1.8s  Software Engineer                           good_fit→maybe          4%
+                    loc LONDON_OR_REMOTE→UK_OTHER ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NODE_JS_TS→NONE ✗ │ comp RANGE_75_99K→RANGE_75_99K ✓
+                    loc: 'Greater London, England, United Kingdom' → London → UK → UK_OTHER. role: 'Software Engineer' in title → SENIOR_PLU
+
+[ 28/150] !   6.7s  Snr. Software Developer (c# / React / Type  PARSE FAIL
+[ 29/150] ✗   1.2s  Senior Fullstack Typescript Engineer at $1  good_fit→maybe          3%
+                    loc LONDON_OR_REMOTE→LONDON_OR_REMOTE ✓ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech JS_TS→NONE ✗ │ comp ABOVE_100K→NO_GBP ✗
+                    loc: 'London Area, United Kingdom' → London found → LONDON_OR_REMOTE. role: 'Senior' in title → SENIOR_PLUS. tech: TypeS
+
+[ 30/150] !   1.4s  Senior Software Engineer                    INVALID TOKEN: ['Invalid tech token: "NODE_TS"']
+[ 31/150] ✓   1.8s  Senior Software Engineer at FORT            good_fit                6%
+[ 32/150] ✗   1.4s  Senior Software Engineer (backend, Node.JS  good_fit→maybe          6%
+                    loc LONDON_OR_REMOTE→LONDON_OR_REMOTE ✓ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NODE_JS_TS→NONE ✗ │ comp RANGE_75_99K→NO_GBP ✗
+                    loc: 'City of London, England, United Kingdom' → London found → LONDON_OR_REMOTE. role: 'Senior' in title → SENIOR_PLUS.
+
+[ 33/150] !   6.8s  Front-End Engineer (React) : Trading : £12  PARSE FAIL
+[ 34/150] !   2.1s  Senior Software Engineer                    INVALID TOKEN: ['Invalid tech token: "JD"']
+[ 35/150] !   6.3s  Software Team Lead                          PARSE FAIL
+[ 36/150] ✗   1.7s  Senior Full Stack Developer                 good_fit→bad_fit        6%
+                    loc LONDON_OR_REMOTE→OUTSIDE_UK ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NODE_JS_TS→AI_ML ✗ │ comp RANGE_55_74K→RANGE_75_99K ✗
+                    loc: 'London, England' → not UK → OUTSIDE_UK. role: 'Senior' in title → SENIOR_PLUS. tech: Node.js and TypeScript/JavaSc
+
+[ 37/150] ✗   1.8s  Senior Node.js Developer                    good_fit→maybe          5%
+                    loc LONDON_OR_REMOTE→LONDON_OR_REMOTE ✓ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NODE_JS_TS→NONE ✗ │ comp RANGE_75_99K→RANGE_75_99K ✓
+                    loc: 'London' → London found → LONDON_OR_REMOTE. role: 'Senior' in title → SENIOR_PLUS. tech: node.js found, ignored, ig
+
+[ 38/150] ✗   1.1s  Senior Frontend Developer                   good_fit→bad_fit        5%
+                    loc LONDON_OR_REMOTE→UK_OTHER ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech JS_TS→NONE ✗ │ comp RANGE_75_99K→NO_GBP ✗
+                    loc: 'Remote' → UK found → UK_OTHER. role: 'Senior' in title → SENIOR_PLUS. tech: no JavaScript found → NONE. comp: no G
+
+[ 39/150] ✗   1.2s  Senior Full Stack Developer                 good_fit→bad_fit        5%
+                    loc LONDON_OR_REMOTE→UK_OTHER ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NODE_JS_TS→NONE ✗ │ comp RANGE_75_99K→NO_GBP ✗
+                    loc: 'Remote' → UK found → UK_OTHER. role: 'Senior' in title → SENIOR_PLUS. tech: no Node, TypeScript, React found → NON
+
+[ 40/150] ✗   1.2s  Senior Full-Stack Developer - AI/ML Focus   good_fit→bad_fit        5%
+                    loc LONDON_OR_REMOTE→UK_OTHER ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NODE_JS_TS_AI_ML→NONE ✗ │ comp RANGE_75_99K→NO_GBP ✗
+                    loc: 'Remote - UK' → UK found → UK_OTHER. role: 'Senior' in title → SENIOR_PLUS. tech: no AI/ML found → NONE. comp: no G
+
+[ 41/150] ✗   1.9s  Senior Software Engineer - London           good_fit→maybe          5%
+                    loc LONDON_OR_REMOTE→LONDON_OR_REMOTE ✓ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NONE→NONE ✓ │ comp ABOVE_100K→NO_GBP ✗
+                    loc: 'London' → London found → LONDON_OR_REMOTE. role: 'Senior' in title → SENIOR_PLUS. tech: Python/Django found, React
+
+[ 42/150] ✗   1.3s  Senior Frontend Engineer with AI/ML Expert  good_fit→bad_fit        5%
+                    loc LONDON_OR_REMOTE→UK_OTHER ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech JS_TS_AI_ML→AI_ML ✗ │ comp RANGE_55_74K→NO_GBP ✗
+                    loc: 'Remote' → UK found → UK_OTHER. role: 'Senior' in title → SENIOR_PLUS. tech: AI/ML found, no JavaScript → AI_ML. co
+
+[ 43/150] ✗   1.6s  Senior Software Engineer - AI/ML            good_fit→maybe          5%
+                    loc UK_OTHER→UK_OTHER ✓ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NODE_AI_ML→AI_ML ✗ │ comp RANGE_75_99K→RANGE_75_99K ✓
+                    loc: 'Birmingham' → not London → UK_OTHER. role: 'Senior' in title → SENIOR_PLUS. tech: Node.js found but ignored, AI/ML
+
+[ 44/150] ✗   1.2s  Senior Full Stack Developer                 good_fit→bad_fit        5%
+                    loc LONDON_OR_REMOTE→UK_OTHER ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NODE_JS_TS→NONE ✗ │ comp RANGE_75_99K→NO_GBP ✗
+                    loc: 'Remote' → UK found → UK_OTHER. role: 'Senior' in title → SENIOR_PLUS. tech: no node/ts/React found → NONE. comp: n
+
+[ 45/150] ✗   1.2s  Lead Backend Engineer                       good_fit→bad_fit        4%
+                    loc LONDON_OR_REMOTE→UK_OTHER ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NODE→NONE ✗ │ comp RANGE_75_99K→NO_GBP ✗
+                    loc: 'Remote UK' → UK found → UK_OTHER. role: 'Lead' in title → SENIOR_PLUS. tech: no node.js found → NONE. comp: no GBP
+
+[ 46/150] ✗   1.3s  Lead Node.js Developer with AI Focus        good_fit→bad_fit        4%
+                    loc UK_OTHER→OUTSIDE_UK ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NODE_AI_ML→AI_ML ✗ │ comp RANGE_75_99K→NO_GBP ✗
+                    loc: 'Liverpool, UK' → UK found → OUTSIDE_UK. role: 'Lead' in title → SENIOR_PLUS. tech: AI/ML found but ignored, no JS/
+
+[ 47/150] ✗   1.6s  Lead AI Developer                           good_fit→bad_fit        4%
+                    loc UK_OTHER→OUTSIDE_UK ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NODE_JS_TS_AI_ML→AI_ML ✗ │ comp ABOVE_100K→RANGE_75_99K ✗
+                    loc: 'Sheffield, UK' → not London/Remote → OUTSIDE_UK. role: 'Lead' in title → SENIOR_PLUS. tech: NodeJS, Typescript fou
+
+[ 48/150] ✗   1.3s  Lead AI Engineer                            good_fit→bad_fit        4%
+                    loc UK_OTHER→UK_OTHER ✓ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NODE_JS_TS→AI_ML ✗ │ comp ABOVE_100K→NO_GBP ✗
+                    loc: 'Leeds, UK' → UK found → UK_OTHER. role: 'Lead AI Engineer' in title → SENIOR_PLUS. tech: NodeJS found, TypeScript 
+
+[ 49/150] ✗   1.9s  Senior / Lead Software Engineer             good_fit→bad_fit        4%
+                    loc LONDON_OR_REMOTE→UK_OTHER ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NONE→NONE ✓ │ comp ABOVE_100K→NO_GBP ✗
+                    loc: 'London, England, United Kingdom' → London → UK found → UK_OTHER. role: 'Senior / Lead' in title → SENIOR_PLUS. tec
+
+[ 50/150] ✓   2.1s  Senior Software Engineer                    good_fit                6%
+[ 51/150] ✓   1.7s  Senior Software Engineer - Full-Stack       maybe                   8%
+[ 52/150] ✗   1.1s  Senior Backend Engineer                     maybe→bad_fit           8%
+                    loc LONDON_OR_REMOTE→UK_OTHER ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NONE→NONE ✓ │ comp NO_GBP→NO_GBP ✓
+                    loc: 'London, England, United Kingdom' → UK found → UK_OTHER. role: 'Senior' in title → SENIOR_PLUS. tech: no node, no j
+
+[ 53/150] ✓   2.8s  Staff Engineer (full Stack)                 maybe                   9%
+[ 54/150] ✓   1.9s  Senior / Lead Software Engineer             maybe                  11%
+[ 55/150] ✗   1.7s  Senior Back End Software Engineer           maybe→bad_fit          11%
+                    loc LONDON_OR_REMOTE→UK_OTHER ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech JS_TS→NONE ✗ │ comp NO_GBP→NO_GBP ✓
+                    loc: 'London, England, United Kingdom' → UK found → UK_OTHER. role: 'Senior' in title → SENIOR_PLUS. tech: Python found,
+
+[ 56/150] !   6.9s  Lead Infrastructure Engineer (cloud & Comp  PARSE FAIL
+[ 57/150] !   6.1s  Front-End Engineer (React) : Trading : £12  PARSE FAIL
+[ 58/150] ✗   1.5s  Senior Product Engineer                     maybe→bad_fit          10%
+                    loc UK_OTHER→OUTSIDE_UK ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech JS_TS→NONE ✗ │ comp ABOVE_100K→RANGE_75_99K ✗
+                    loc: 'Belfast, UK' → not London/Remote → OUTSIDE_UK. role: 'Senior' in title → SENIOR_PLUS. tech: no Node, TypeScript, o
+
+[ 59/150] ✗   1.5s  Principal Security Engineer                 maybe→bad_fit          10%
+                    loc UK_OTHER→OUTSIDE_UK ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NONE→NONE ✓ │ comp ABOVE_100K→RANGE_75_99K ✗
+                    loc: 'Oxford, UK' → not London/Remote → OUTSIDE_UK. role: 'Principal' in title → SENIOR_PLUS. tech: no node, js/ts, AI/M
+
+[ 60/150] ✗   2.0s  Senior Data Scientist - INTERNAL ONLY       maybe→bad_fit          10%
+                    loc UK_OTHER→OUTSIDE_UK ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech AI_ML→NONE ✗ │ comp RANGE_55_74K→NO_GBP ✗
+                    loc: 'Bocam Park, Pencoed' → not UK → OUTSIDE_UK. role: 'Senior' in title → SENIOR_PLUS. tech: no node found → NONE. com
+
+[ 61/150] ✗   1.4s  Lead Software Engineer                      maybe→bad_fit          10%
+                    loc UK_OTHER→OUTSIDE_UK ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NODE_JS_TS→NONE ✗ │ comp RANGE_75_99K→NO_GBP ✗
+                    loc: 'Greater Bristol Area, United Kingdom' → not UK → OUTSIDE_UK. role: 'Lead' in title → SENIOR_PLUS. tech: React, Nod
+
+[ 62/150] ✓   1.4s  Senior Software Engineer                    maybe                  11%
+[ 63/150] ✓   1.6s  Engineering Manager                         maybe                  13%
+[ 64/150] ✓   1.6s  Senior Software Engineer                    maybe                  14%
+[ 65/150] !   1.1s  Staff Software Engineer                     INVALID TOKEN: ['Invalid role token: "NO_SENIOR"']
+[ 66/150] ✓   2.1s  Senior Data Engineer (data Management)      maybe                  15%
+[ 67/150] ✓   1.5s  Senior Software Engineer                    maybe                  16%
+[ 68/150] !   6.6s  Senior Regional Account Executive | NYC     PARSE FAIL
+[ 69/150] ✓   1.5s  Senior Cloud Architect                      maybe                  17%
+[ 70/150] ✗   1.5s  Head Of AI Engineering (strategy And Innov  maybe→bad_fit          17%
+                    loc MISSING→OUTSIDE_UK ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech AI_ML→NONE ✗ │ comp ABOVE_100K→NO_GBP ✗
+                    loc: 'London' → OUTSIDE_UK. role: 'Head' in title → SENIOR_PLUS. tech: no AI found → NONE. comp: no GBP salary found → N
+
+[ 71/150] ✗   1.4s  Senior Software Engineer                    maybe→bad_fit          17%
+                    loc UK_OTHER→UK_OTHER ✓ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NONE→NONE ✓ │ comp RANGE_75_99K→NO_GBP ✗
+                    loc: 'Leeds, England, United Kingdom' → UK found → UK_OTHER. role: 'Senior' in title → SENIOR_PLUS. tech: no node, no js
+
+[ 72/150] ✗   1.6s  Senior Frontend Engineer (mobile And Web)   maybe→bad_fit          17%
+                    loc LONDON_OR_REMOTE→UK_OTHER ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NODE_JS_TS→NONE ✗ │ comp NO_GBP→NO_GBP ✓
+                    loc: 'London, England, United Kingdom' → UK found → UK_OTHER. role: 'Senior' in title → SENIOR_PLUS. tech: no node, no j
+
+[ 73/150] ✗   1.2s  Senior Software Engineer                    maybe→bad_fit          16%
+                    loc LONDON_OR_REMOTE→UK_OTHER ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech JS_TS→NONE ✗ │ comp NO_GBP→NO_GBP ✓
+                    loc: 'London, England, United Kingdom' → London → UK. role: 'Senior' in title → SENIOR_PLUS. tech: no node found → NONE.
+
+[ 74/150] !   1.9s  Senior Software Engineer                    INVALID TOKEN: ['Invalid tech token: "JD"']
+[ 75/150] ✓   1.5s  Lead Backend (Node.JS) Engineer             maybe                  17%
+[ 76/150] ✗   1.0s  Senior Software Engineer                    maybe→bad_fit          17%
+                    loc LONDON_OR_REMOTE→UK_OTHER ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NONE→NONE ✓ │ comp NO_GBP→NO_GBP ✓
+                    loc: 'United Kingdom' → UK found → UK_OTHER. role: 'Senior' in title → SENIOR_PLUS. tech: no JavaScript found → NONE. co
+
+[ 77/150] ✗   1.5s  Senior Full-Stack Software Engineer         maybe→bad_fit          17%
+                    loc LONDON_OR_REMOTE→OUTSIDE_UK ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NODE_JS_TS→NONE ✗ │ comp NO_GBP→NO_GBP ✓
+                    loc: 'Greater London, England, United Kingdom' → not UK → OUTSIDE_UK. role: 'Senior' in title → SENIOR_PLUS. tech: no no
+
+[ 78/150] !   1.2s  Senior Electrical Design Engineer           INVALID TOKEN: ['Invalid loc token: "UK"']
+[ 79/150] ✗   1.7s  Principal Security Engineer                 maybe→bad_fit          16%
+                    loc UK_OTHER→OUTSIDE_UK ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NONE→NONE ✓ │ comp ABOVE_100K→RANGE_75_99K ✗
+                    loc: 'Oxford, UK' → not London/remote → OUTSIDE_UK. role: 'Principal' in title → SENIOR_PLUS. tech: Python, FastAPI, and
+
+[ 80/150] ✗   1.3s  Staff Software Engineer                     maybe→bad_fit          16%
+                    loc LONDON_OR_REMOTE→OUTSIDE_UK ✗ │ role SENIOR_PLUS→NO_SENIORITY ✗ │ tech NODE_JS_TS→NONE ✗ │ comp NO_GBP→NO_GBP ✓
+                    loc: 'England' → UK found → OUTSIDE_UK. role: 'Staff Software Engineer' in title → checked JD → no senior keyword → no A
+
+[ 81/150] !   6.2s  Lead Full Stack Engineer (perm) - TypeScri  PARSE FAIL
+[ 82/150] ✗   1.3s  Senior Software Engineer                    maybe→bad_fit          16%
+                    loc UK_OTHER→UK_OTHER ✓ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech JS_TS_AI_ML→NONE ✗ │ comp UP_TO_ONLY→NO_GBP ✗
+                    loc: 'Birmingham, England, United Kingdom' → UK found → UK_OTHER. role: 'Senior' in title → SENIOR_PLUS. tech: no node, 
+
+[ 83/150] ✗   1.5s  Senior Software Engineer - .Net/Angular     maybe→bad_fit          16%
+                    loc LONDON_OR_REMOTE→UK_OTHER ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NONE→NONE ✓ │ comp NO_GBP→NO_GBP ✓
+                    loc: 'London, England, United Kingdom' → London → UK. role: 'Senior' in title → SENIOR_PLUS. tech: Angular found but ign
+
+[ 84/150] ✓   1.4s  Senior Marketing Manager                    maybe                  17%
+[ 85/150] ✓   1.3s  Senior Software Engineer                    maybe                  18%
+[ 86/150] !   5.9s  Founding Engineer (Series A)                PARSE FAIL
+[ 87/150] ✗   1.6s  Mid-level Software Engineer                 maybe→bad_fit          17%
+                    loc LONDON_OR_REMOTE→OUTSIDE_UK ✗ │ role MID_LEVEL→NO_SENIORITY ✗ │ tech NODE_JS_TS→NONE ✗ │ comp RANGE_55_74K→RANGE_75_99K ✗
+                    loc: 'London' → not UK → OUTSIDE_UK. role: 'Mid-level' in title → checked. tech: no node, js/ts found → NONE. comp: £50-
+
+[ 88/150] !   6.3s  Contract Principal Full Stack Developer     PARSE FAIL
+[ 89/150] !   1.8s  Mid-Senior Data Engineer - Investment Firm  INVALID TOKEN: ['Invalid role token: "Mid-Senior"', 'Invalid tech token: "AI/LLM"']
+[ 90/150] ✗   1.7s  Data Engineer - £150k-£200k TC              maybe→good_fit         17%
+                    loc LONDON_OR_REMOTE→LONDON_OR_REMOTE ✓ │ role NO_SENIORITY→SENIOR_PLUS ✗ │ tech NONE→NODE_JS_TS ✗ │ comp ABOVE_100K→RANGE_75_99K ✗
+                    loc: 'Greater London, England, United Kingdom' → London found → LONDON_OR_REMOTE. role: 'Data Engineer' in title → SENIO
+
+[ 91/150] ✗   2.1s  Full Stack Engineer                         maybe→bad_fit          16%
+                    loc LONDON_OR_REMOTE→OUTSIDE_UK ✗ │ role MID_LEVEL→NO_SENIORITY ✗ │ tech NODE_JS_TS→NONE ✗ │ comp RANGE_55_74K→NO_GBP ✗
+                    loc: 'London, England, United Kingdom' → not UK → OUTSIDE_UK. role: 'Full Stack Engineer' in title → checked JD → no sen
+
+[ 92/150] ✓   1.5s  Principal Security Engineer                 maybe                  17%
+[ 93/150] !   1.6s  Senior Software Engineer                    INVALID TOKEN: ['Invalid loc token: "London/Manchester/South London"']
+[ 94/150] !   1.2s  Software Engineering Manager                INVALID TOKEN: ['Invalid role token: "JD"']
+[ 95/150] ✓   1.9s  Senior/Principal Civil Engineer             maybe                  18%
+[ 96/150] ✗   1.4s  Software Developer (remote)                 maybe→bad_fit          18%
+                    loc UK_OTHER→UK_OTHER ✓ │ role MID_LEVEL→SENIOR_PLUS ✗ │ tech NODE_JS_TS_AI_ML→NONE ✗ │ comp NO_GBP→NO_GBP ✓
+                    loc: 'Leeds, England, United Kingdom' → UK found → UK_OTHER. role: 'software developer' in title → SENIOR_PLUS. tech: No
+
+[ 97/150] ✗   1.1s  Senior Data Engineer                        maybe→bad_fit          18%
+                    loc LONDON_OR_REMOTE→UK_OTHER ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NONE→NONE ✓ │ comp NO_GBP→NO_GBP ✓
+                    loc: 'London' → UK found → UK_OTHER. role: 'Senior' in title → SENIOR_PLUS. tech: no Python found → NONE. comp: no GBP s
+
+[ 98/150] ✗   1.1s  Senior Full-Stack Engineer (Activation)     maybe→bad_fit          17%
+                    loc LONDON_OR_REMOTE→UK_OTHER ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NONE→NONE ✓ │ comp NO_GBP→NO_GBP ✓
+                    loc: 'Greater London, England, United Kingdom (Hybrid)' → London/UK → UK_OTHER. role: 'Senior' in title → SENIOR_PLUS. t
+
+[ 99/150] !   5.9s  Lead DevOps Architect                       PARSE FAIL
+[100/150] ✗   1.8s  Senior Software Engineer                    maybe→bad_fit          17%
+                    loc LONDON_OR_REMOTE→OUTSIDE_UK ✗ │ role SENIOR_PLUS→SENIOR_PLUS ✓ │ tech NONE→NONE ✓ │ comp RANGE_55_74K→NO_GBP ✗
+                    loc: 'Greater London, England, United Kingdom' → not UK → OUTSIDE_UK. role: 'Senior' in title → SENIOR_PLUS. tech: no no
+
+[101/150] ✓   1.6s  Senior Product Manager, Home Loans          bad_fit                18%
+[102/150] ✓   1.5s  Technical Product Manager                   bad_fit                19%
+[103/150] ✗   1.7s  Software Engineering Intern                 bad_fit→maybe          18%
+                    loc UK_OTHER→LONDON_OR_REMOTE ✗ │ role NO_SENIORITY→SENIOR_PLUS ✗ │ tech NONE→NONE ✓ │ comp NO_GBP→NO_GBP ✓
+                    loc: 'United Kingdom' → London found → LONDON_OR_REMOTE. role: 'software engineer' in title → SENIOR_PLUS. tech: C found
+
+[104/150] !   2.0s  Quality Assurance Engineer - Software Qual  INVALID TOKEN: ['Invalid role token: "QA"', 'Invalid comp token: "£50,000 GBP"']
+[105/150] !   1.5s  Javascript Developer                        INVALID TOKEN: ['Invalid role token: "YES"']
+[106/150] ✓   1.4s  Senior Product Manager                      bad_fit                19%
+[107/150] ✓   1.3s  Engineering Team Leader                     bad_fit                20%
+[108/150] !   6.2s  Engineering Manager - FMCG                  PARSE FAIL
+[109/150] ✗   1.3s  Junior Web Developer - Training Course      bad_fit→maybe          19%
+                    loc MISSING→LONDON_OR_REMOTE ✗ │ role NO_SENIORITY→SENIOR_PLUS ✗ │ tech NONE→NONE ✓ │ comp NO_GBP→NO_GBP ✓
+                    loc: 'United Kingdom' → London found → LONDON_OR_REMOTE. role: 'Junior' in title → SENIOR_PLUS. tech: no JavaScript foun
+
+[110/150] ✓   1.7s  Customer Solutions Engineer                 bad_fit                20%
+[111/150] !   6.4s  Human Resources Team Leader                 PARSE FAIL
+[112/150] ✗   1.6s  Software Engineer - Python - Ubuntu Pro Cl  bad_fit→maybe          20%
+                    loc UK_OTHER→UK_OTHER ✓ │ role NO_SENIORITY→SENIOR_PLUS ✗ │ tech NONE→NODE_JS_TS ✗ │ comp NO_GBP→NO_GBP ✓
+                    loc: 'Glasgow, Scotland, United Kingdom' → UK found → UK_OTHER. role: 'Software Engineer' in title → SENIOR_PLUS. tech: 
+
+[113/150] ✓   1.8s  Senior DevOps Engineer                      bad_fit                20%
+[114/150] ✓   1.3s  Senior Full Stack PHP Developer             bad_fit                21%
+[115/150] ✓   1.8s  Human Resources Manager                     bad_fit                22%
+[116/150] !   1.5s  DevOps Engineer                             INVALID TOKEN: ['Invalid role token: "JD"']
+[117/150] !   1.7s  DevOps Engineer I (690918)                  INVALID TOKEN: ['Invalid role token: "JD"']
+[118/150] ✓   1.4s  Senior Full-Stack Software Engineer, Live   bad_fit                22%
+[119/150] ✓   1.7s  Senior Product Manager                      bad_fit                23%
+[120/150] !   6.3s  Software Engineer - Tools                   PARSE FAIL
+[121/150] ✓   1.4s  Jr. Machine Learning Engineer               bad_fit                23%
+[122/150] !   6.6s  Backend Engineer                            PARSE FAIL
+[123/150] ✓   1.9s  Solutions Engineer                          bad_fit                24%
+[124/150] ✓   1.7s  Junior DevOps Engineer                      bad_fit                24%
+[125/150] !   6.3s  Lead Software Developer                     PARSE FAIL
+[126/150] !   6.6s  Web Developer                               PARSE FAIL
+[127/150] !   1.6s  Key Account Manager-Pharmacy Channel        INVALID TOKEN: ['Invalid role token: "KEY_ACCOUNT_MANAGER"']
+[128/150] !   6.0s  Talent Development Manager                  PARSE FAIL
+[129/150] !   6.0s  Software Developer                          PARSE FAIL
+[130/150] ✓   1.3s  Junior System Software Engineer             bad_fit                24%
+[131/150] !   6.1s  Public Cloud Assistant Infrastructure Engi  PARSE FAIL
+[132/150] ✓   1.2s  Marketing Manager                           bad_fit                24%
+[133/150] ✓   1.2s  Cloud Platform Engineer                     bad_fit                25%
+[134/150] !   5.9s  Software Engineer Intern                    PARSE FAIL
+[135/150] !   6.4s  Associate Engineer I - AI Platform          PARSE FAIL
+[136/150] !   1.2s  Second Line Support Engineer                INVALID TOKEN: ['Invalid role token: "NO_SENIOR_PLUS"']
+[137/150] ✓   1.4s  Senior Software Engineer                    bad_fit                25%
+[138/150] ✓   1.5s  Senior Lead Software Engineer               bad_fit                25%
+[139/150] ✓   1.4s  Full-Stack Software Engineer                bad_fit                26%
+[140/150] ✗   1.4s  Security Systems Engineer                   bad_fit→maybe          26%
+                    loc UK_OTHER→LONDON_OR_REMOTE ✗ │ role NO_SENIORITY→SENIOR_PLUS ✗ │ tech NONE→NONE ✓ │ comp BELOW_45K→RANGE_75_99K ✗
+                    loc: 'United Kingdom' → London found → LONDON_OR_REMOTE. role: 'Security Systems Engineer' in title → SENIOR_PLUS. tech:
+
+[141/150] ✓   1.8s  Sr Software Engineer - Fullstack            bad_fit                26%
+[142/150] ✓   1.6s  Software Engineer I                         bad_fit                27%
+[143/150] !   6.8s  Security Analyst                            PARSE FAIL
+[144/150] ✗   1.5s  Full Stack Developer                        bad_fit→maybe          26%
+                    loc UK_OTHER→UK_OTHER ✓ │ role MID_LEVEL→SENIOR_PLUS ✗ │ tech NONE→AI_ML ✗ │ comp RANGE_55_74K→RANGE_55_74K ✓
+                    loc: 'Bath, England, United Kingdom' → UK found → UK_OTHER. role: 'Full Stack Developer' in title → checked JD → tech: n
+
+[145/150] ✓   1.3s  Solutions Engineer                          bad_fit                27%
+[146/150] ✓   1.6s  Australia AI Delivery Lead                  bad_fit                27%
+[147/150] !   6.2s  Data Engineer                               PARSE FAIL
+[148/150] ✓   1.1s  Senior Product Manager                      bad_fit                28%
+[149/150] ✓   1.6s  Junior DevOps Engineer                      bad_fit                28%
+[150/150] !   5.8s  Site Engineer                               PARSE FAIL
+
+════════════════════════════════════════════════════════════════════
+  EVAL  adapters_v5.1  iter 0000100
+  eval set: eval_150_golden  │  prompt: student_v5  │  n=150
+════════════════════════════════════════════════════════════════════
+  Parse failures: 30   Invalid tokens: 17   Fuzzy corrections: 4   Valid: 103/150
+
+  Label accuracy:  42/103 = 40.8%   ❌ NOT MET  (target ≥90%)
+  Score accuracy:  22/103 = 21.4%
+
+  Fit accuracy (macro):  43.2%  ❌   gf=8%  maybe=38%  bad=83%
+
+  Field token accuracy:
+    loc   █████████░░░░░░░░░░░   50/103  48.5%
+    role  ████████████████░░░░   84/103  81.6%
+    tech  ███████░░░░░░░░░░░░░   39/103  37.9%
+    comp  █████████░░░░░░░░░░░   50/103  48.5%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ──────────  ────────  ──────  ──────
+    good_fit           3      36      8%  ⚠
+    maybe             14      37     38%  ⚠
+    bad_fit           25      30     83%
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [3]        14        19
+    maybe                1      [14]        22
+    bad_fit              0         5      [25]
+
+  Field error transitions (top per field):
+    loc: LONDON_OR_REMOTE→UK_OTHER:21  LONDON_OR_REMOTE→OUTSIDE_UK:11  UK_OTHER→OUTSIDE_UK:8  MISSING→OUTSIDE_UK:7
+    role: NO_SENIORITY→SENIOR_PLUS:9  SENIOR_PLUS→NO_SENIORITY:6  MID_LEVEL→NO_SENIORITY:2  MID_LEVEL→SENIOR_PLUS:2
+    tech: NODE_JS_TS→NONE:28  JS_TS→NONE:11  AI_ML→NONE:6  NONE→NODE_JS_TS:3
+    comp: ABOVE_100K→RANGE_75_99K:14  RANGE_75_99K→NO_GBP:13  ABOVE_100K→NO_GBP:12  RANGE_55_74K→NO_GBP:5
+
+  Error direction:  over-scoring 5  │  under-scoring 41
+
+────────────────────────────────────────────────────────────────────
+  adapters_v5.1/0000100  label=40.8%  loc=48.5%  role=81.6%  tech=37.9%  comp=48.5%  gf=8%  maybe=38%  bad=83%
+════════════════════════════════════════════════════════════════════
+
+Predictions: eval_results/adapters_v5.1/2026-03-07_eval_150_golden_student_v5_0000100.predictions.jsonl

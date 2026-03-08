@@ -1,0 +1,27 @@
+Output: eval_results/2026-03-03_new_uk_jobs_golden_scorer_v9.3_Qwen3-4B-Instruct-2507-4bit.txt
+Prompt: prompts/scorer_v9.3.txt
+Loading model with adapter: finetune/adapters_v2b
+Model: mlx-community/Qwen3-4B-Instruct-2507-4bit
+────────────────────────────────────────────────────────────
+Running eval on 72 test examples...
+
+[  1/72] !  29.1s  Snr Full Stack Engineer | Hyper-Growth Fin  PARSE FAIL
+           Raw (335 chars): <working>
+COMP_SEARCH: "NONE FOUND"
+COMP_UP_TO: NO
+COMP_MIDPOINT: N/A
+COMP_SCORE: 0
+
+TECH_SEARCH: "Typescript, React.js, Node.js, Next.js"
+TECH_OPTIONAL: NO
+TECH_SCORE: 10
+
+Verify addition: loc + role + tech + comp = 0+0+10+0 = 10
+</working>
+{"loc":0,"role":0,"tech":0,"comp":0,"label":"bad_fit","reasoning":"UK location not matching (
+[  2/72] ✗  27.3s  Lead Software Engineer - 12 month FTC       maybe→bad_fit           0%
+                   loc  25→  0 ✗ │ role  25→  0 ✗ │ tech   0→  0 ✓ │ comp   0→  0 ✓
+                   brief
+
+[  3/72] ✓  27.0s  Software Engineer, Early Career             bad_fit                33%
+[  4/72] ✓  27.4s  Software Engineer, Machine Learning         bad_fit                50%

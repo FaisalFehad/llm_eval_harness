@@ -123,7 +123,7 @@ function getModelConfig(provider: string | ProviderConfig): {
     hfModel,
     temperature: typeof cfg.temperature === "number" ? cfg.temperature : 0,
     noThink: cfg.no_think === true,
-    contextSize: typeof cfg.context_size === "number" ? cfg.context_size : 4096,
+    contextSize: typeof cfg.context_size === "number" ? cfg.context_size : 2048,
   };
 }
 
@@ -184,7 +184,9 @@ async function callModel(
   const start = Date.now();
 
   // Try progressively smaller context sizes if VRAM is insufficient
-  const sizesToTry = [contextSize, 2048, 1024, 512].filter((s) => s <= contextSize);
+  const sizesToTry = [contextSize, 2048, 1024, 512].filter(
+    (s) => s <= contextSize,
+  );
   let context: Awaited<ReturnType<typeof model.createContext>> | undefined;
   let lastErr: unknown;
 
@@ -195,8 +197,13 @@ async function callModel(
     } catch (err) {
       lastErr = err;
       const msg = err instanceof Error ? err.message : String(err);
-      if (msg.includes("too large for the available VRAM") || msg.includes("VRAM")) {
-        console.log(`    Context size ${size} too large for VRAM, trying smaller...`);
+      if (
+        msg.includes("too large for the available VRAM") ||
+        msg.includes("VRAM")
+      ) {
+        console.log(
+          `    Context size ${size} too large for VRAM, trying smaller...`,
+        );
         continue;
       }
       throw err; // non-VRAM error, don't retry
@@ -573,7 +580,8 @@ export async function runEval(options: EvalOptions): Promise<EvalResults> {
     const provider = providers[i]!;
     const modelId = getProviderId(provider);
     const displayName = getDisplayName(provider);
-    const { hfModel, temperature, noThink, contextSize } = getModelConfig(provider);
+    const { hfModel, temperature, noThink, contextSize } =
+      getModelConfig(provider);
 
     console.log(`\n[${i + 1}/${providers.length}] Evaluating: ${displayName}`);
     console.log("-".repeat(40));
@@ -863,7 +871,8 @@ export async function runEval(options: EvalOptions): Promise<EvalResults> {
 
 async function main(): Promise<void> {
   const args = parseArgs();
-  const configPath = getStringArg(args, "config") ?? "configs/promptfooconfig_v9.yaml";
+  const configPath =
+    getStringArg(args, "config") ?? "configs/promptfooconfig_v9.yaml";
   const modelFilter = getStringArg(args, "model");
   const jobCount = getNumberArg(args, "jobs") ?? 103;
   const rawSeed = getNumberArg(args, "seed") ?? 42;

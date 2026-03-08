@@ -1,0 +1,54 @@
+{
+  "total_jobs": 762,
+  "loc": {
+    "OUTSIDE_UK": 180,
+    "LONDON_OR_REMOTE": 261,
+    "UK_OTHER": 271,
+    "MISSING": 50
+  },
+  "role": {
+    "NO_SENIORITY": 342,
+    "SENIOR_PLUS": 360,
+    "MID_LEVEL": 60
+  },
+  "tech": {
+    "NONE": 415,
+    "NODE_JS_TS": 126,
+    "AI_ML": 63,
+    "JS_TS": 74,
+    "NODE": 41,
+    "NODE_JS_TS_AI_ML": 21,
+    "JS_TS_AI_ML": 7,
+    "NODE_AI_ML": 15
+  },
+  "comp": {
+    "NO_GBP": 489,
+    "BELOW_45K": 14,
+    "ABOVE_100K": 89,
+    "UP_TO_ONLY": 30,
+    "RANGE_75_99K": 91,
+    "RANGE_55_74K": 49
+  },
+  "label": {
+    "bad_fit": 456,
+    "maybe": 200,
+    "good_fit": 106
+  },
+  "borderline_count": 259,
+  "total_gaps": 224,
+  "location_diversity": {
+    "outside_uk_unique": 11,
+    "uk_other_unique": 72,
+    "london_formats": 30
+  },
+  "comp_sub": {
+    "no_gbp_with_usd": 77,
+    "no_gbp_with_eur": 14,
+    "no_gbp_daily_rate": 3,
+    "no_gbp_no_salary": 388,
+    "no_gbp_midpoint_45_54": 7
+  },
+  "role_edge": {
+    "senior_plus_edge": 34
+  }
+}

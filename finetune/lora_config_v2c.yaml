@@ -1,0 +1,32 @@
+# MLX LoRA config for v2.2 — good_fit boost
+#
+# Strategy: continue from v2.1, boost good_fit + comp=25 representation
+#
+# Usage:
+#   source .venv/bin/activate
+#   python -m mlx_lm lora --config finetune/lora_config_v2c.yaml
+
+model: "mlx-community/Qwen3-4B-Instruct-2507-4bit"
+data: "data/finetune/mlx_v2c"
+train: true
+fine_tune_type: "lora"
+
+# Resume from v2.1
+resume_adapter_file: "finetune/adapters_v2b/0000100_adapters.safetensors"
+
+lora_parameters:
+  rank: 4
+  scale: 4.0
+  dropout: 0.05
+
+batch_size: 1
+iters: 200
+learning_rate: 5.0e-6
+warmup_steps: 10
+max_seq_length: 3200
+
+adapter_path: "finetune/adapters_v2c"
+save_every: 100
+
+mask_prompt: true
+grad_checkpoint: true

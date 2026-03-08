@@ -1,0 +1,44 @@
+# MLX LoRA config for Qwen3-4B teacher v2 — corrective fine-tuning
+#
+# Strategy: continue from v1 adapter (90.9% accuracy), patch location + comp bugs
+# v1 bugs: non-London UK scored as loc=25 (should be 10), comp over-scoring
+#
+# Changes from v1:
+#   - Resumes from v1 adapter (preserves 90.9% baseline)
+#   - Corrective training data (126 jobs: 100 new + 14 cherry-picked + 8 supplement + 4 oversampled)
+#   - Lower learning rate (5e-6 vs 1e-5) — gentle corrections, don't destroy v1's strengths
+#   - Rank kept at 4 — same adapter structure as v1 for compatibility
+#
+# Usage:
+#   source .venv/bin/activate
+#   mlx_lm.lora --config finetune/lora_config_v2.yaml
+#   (or: python -m mlx_lm lora --config finetune/lora_config_v2.yaml)
+
+model: "mlx-community/Qwen3-4B-Instruct-2507-4bit"
+data: "data/finetune/mlx_v2"
+train: true
+fine_tune_type: "lora"
+
+# Resume from v1's best checkpoint
+resume_adapter_file: "finetune/adapters/0000200_adapters.safetensors"
+
+# LoRA hyperparameters — must match v1 (same rank to resume)
+lora_parameters:
+  rank: 4              # Must match v1 adapter rank
+  scale: 4.0           # alpha/rank = 16/4
+  dropout: 0.05        # Light regularization
+
+# Training parameters
+batch_size: 1          # M1 16GB constraint
+iters: 200             # Conservative — eval then extend if needed
+learning_rate: 5.0e-6  # Half of v1's LR — gentle updates to preserve v1's strengths
+warmup_steps: 20
+max_seq_length: 3200   # Longest example is ~3110 tokens
+
+# Output
+adapter_path: "finetune/adapters_v2"
+save_every: 100        # Checkpoint every 100 iters — pick best via eval
+
+# Memory optimization
+mask_prompt: true      # Only train on assistant responses
+grad_checkpoint: true  # Required on M1 16GB — without it OOMs

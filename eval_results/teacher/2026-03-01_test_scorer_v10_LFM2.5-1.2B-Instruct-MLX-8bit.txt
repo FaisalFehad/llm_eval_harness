@@ -1,0 +1,80 @@
+Output: eval_results/2026-03-01_test_scorer_v10_LFM2.5-1.2B-Instruct-MLX-8bit.txt
+Prompt: prompts/scorer_v10.txt
+Loading baseline model (no adapter)
+Model: LiquidAI/LFM2.5-1.2B-Instruct-MLX-8bit
+────────────────────────────────────────────────────────────
+Running eval on 33 test examples...
+
+[ 1/33] PARSE FAIL — Lead DevOps Architect
+      Raw output: {"loc":25,"role":25,"tech":0,"comp":0,"score":0,"label":"bad_fit","reasoning":"Location is outside U
+[ 2/33] ✓ VP of Engineering                        golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (50%)
+[ 3/33] ✓ Full Stack Engineer                      golden=bad_fit    pred=bad_fit    loc=25 role=25 tech=0 comp=0  (67%)
+[ 4/33] PARSE FAIL — Product Developer
+      Raw output: {"loc":0,"role":0,"tech":0,"comp":0,"score":0,"label":"bad_fit","reasoning":"Location score -50 due 
+[ 5/33] ✓ Graphic Packaging Designer               golden=bad_fit    pred=bad_fit    loc=25 role=25 tech=0 comp=0  (60%)
+[ 6/33] PARSE FAIL — Principal Backend Engineer
+      Raw output: {"loc":0,"role":0,"tech":0,"comp":0,"score":0,"label":"bad_fit","reasoning":"Location score -50 due 
+[ 7/33] ✓ Senior Full-Stack Engineer               golden=bad_fit    pred=bad_fit    loc=25 role=25 tech=0 comp=0  (57%)
+[ 8/33] PARSE FAIL — Senior Product Engineer
+      Raw output: {"loc":25,"role":25,"tech":0,"comp":0,"score":0,"label":"bad_fit","reasoning":"Location is UK but ro
+[ 9/33] ✗ Principal Security Engineer              golden=maybe      pred=bad_fit    loc=25 role=25 tech=0 comp=0  (44%)
+      reasoning: Location score +25, role +25, tech 0, comp 0 → total 50, but label adjusted.
+[10/33] ✗ Senior Backend Engineer                  golden=maybe      pred=bad_fit    loc=25 role=25 tech=0 comp=0  (40%)
+[11/33] PARSE FAIL — Staff Software Engineer
+      Raw output: {"loc":0,"role":0,"tech":0,"comp":0,"score":0,"label":"bad_fit","reasoning":"Location score -50 due 
+[12/33] ✗ Founding Engineer                        golden=maybe      pred=bad_fit    loc=25 role=25 tech=0 comp=0  (33%)
+[13/33] ✗ Lead Full-Stack Developer                golden=good_fit   pred=bad_fit    loc=25 role=25 tech=0 comp=0  (31%)
+[14/33] PARSE FAIL — Distinguished Engineer
+      Raw output: {"loc":0,"role":0,"tech":0,"comp":0,"score":0,"label":"bad_fit","reasoning":"Location score -50 due 
+[15/33] ✗ Staff Software Engineer                  golden=maybe      pred=bad_fit    loc=25 role=25 tech=15 comp=0  (27%)
+[16/33] ✗ Senior Software Engineer                 golden=good_fit   pred=bad_fit    loc=25 role=25 tech=0 comp=0  (25%)
+[17/33] PARSE FAIL — Senior Systems Architect
+      Raw output: {"loc":0,"role":0,"tech":0,"comp":0,"score":0,"label":"bad_fit","reasoning":"Location score -50 due 
+[18/33] ✗ Senior Software Engineer                 golden=maybe      pred=bad_fit    loc=25 role=25 tech=0 comp=0  (22%)
+[19/33] PARSE FAIL — Mid Level Backend Engineer (Node.js)
+      Raw output: {"loc":25,"role":25,"tech":0,"comp":0,"score":0,"label":"bad_fit","reasoning":"Location is UK but ro
+[20/33] PARSE FAIL — Lead DevOps Architect
+      Raw output: {"loc":0,"role":0,"tech":0,"comp":0,"score":0,"label":"bad_fit","reasoning":"Location score -50 due 
+[21/33] ✗ Fintech & Tech for Good | Profitable & H golden=maybe      pred=bad_fit    loc=25 role=25 tech=0 comp=0  (19%)
+[22/33] ✓ Head of Infrastructure                   golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (23%)
+[23/33] PARSE FAIL — Staff Software Engineer
+      Raw output: {"loc":0,"role":0,"tech":0,"comp":0,"score":0,"label":"bad_fit","reasoning":"Location score -50 due 
+[24/33] ✗ Lead Frontend Engineer                   golden=maybe      pred=bad_fit    loc=25 role=25 tech=0 comp=0  (21%)
+[25/33] ✓ Software Engineer | React & Python (full golden=bad_fit    pred=bad_fit    loc=25 role=25 tech=0 comp=0  (24%)
+[26/33] PARSE FAIL — Lead Full Stack Architect
+      Raw output: {"loc":0,"role":0,"tech":0,"comp":0,"score":0,"label":"bad_fit","reasoning":"Location score -50 due 
+[27/33] ✗ Senior Frontend Engineer                 golden=maybe      pred=bad_fit    loc=25 role=25 tech=0 comp=0  (22%)
+      reasoning: Location score -50 due to US headquarters location.
+[28/33] ✗ Lead Software Engineer                   golden=maybe      pred=bad_fit    loc=25 role=25 tech=0 comp=0  (21%)
+[29/33] ✗ Senior Software Engineer                 golden=maybe      pred=bad_fit    loc=25 role=25 tech=0 comp=0  (21%)
+[30/33] PARSE FAIL — Senior Software Engineer
+      Raw output: {"loc":25,"role":25,"tech":0,"comp":0,"score":0,"label":"bad_fit","reasoning":"Location is London bu
+[31/33] ✓ Frontend Developer                       golden=bad_fit    pred=bad_fit    loc=25 role=25 tech=0 comp=0  (23%)
+[32/33] ✗ Senior Software Engineer                 golden=maybe      pred=bad_fit    loc=25 role=25 tech=0 comp=0  (22%)
+[33/33] ✓ Senior Node React Engineer               golden=bad_fit    pred=bad_fit    loc=0 role=0 tech=0 comp=0  (24%)
+
+════════════════════════════════════════════════════════════
+RESULTS
+════════════════════════════════════════════════════════════
+Total examples:  33
+Parse failures:  12
+Valid outputs:   21
+
+Label accuracy:  8/21 = 38.1%  (baseline: 39.8%)
+
+Field accuracy:
+  loc:   15/21 = 71.4%
+  role:  14/21 = 66.7%
+  tech:  9/21 = 42.9%
+  comp:  15/21 = 71.4%
+
+Per-label breakdown:
+  good_fit  : 0/2 = 0%
+  maybe     : 0/11 = 0%
+  bad_fit   : 8/8 = 100%
+
+Error patterns:
+  Over-scoring:   0  (predicted higher than golden)
+  Under-scoring:  13  (predicted lower than golden)
+  Other:          0  (e.g. good_fit↔maybe)
+  Parse failures: 12

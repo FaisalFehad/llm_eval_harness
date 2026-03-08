@@ -6,7 +6,7 @@ Inputs:
 - Job description: {{jd_text}}
 
 ===== STEP 1: LOCATION (score this FIRST) =====
-
+{"loc":10,"role":0,"tech":0,"comp":0,"score":10,"label":"bad_fit","reasoning":"UK outside London/Remote (0), seniority not matched (0), no matching tech (0), no GBP salary (0)."}
 Use ONLY the job_location field. Ignore any locations mentioned inside jd_text.
 
   -50 if job_location is outside the UK (e.g. United States, US, USA, India, Germany, California, Bangalore, Sydney, Remote (US), Seattle, Canada)
@@ -34,7 +34,7 @@ Do NOT award AI points if AI is only in company description, mission, or "nice t
 Do NOT award points for unlisted tech: React, PostgreSQL, Python, Go, Rust, Java = 0 points each.
 
 ===== STEP 4: COMPENSATION (max 25) =====
-
+IF SALARY IS NOT KNOWN OR NOT MENTIONED: comp":0 AND MOVE TO THE NEXT STEP IMMEDIATELY.
 From jd_text ONLY. Count ONLY base salary explicitly in GBP (£).
 Ignore: bonuses, equity, benefits, USD ($), EUR, and all non-GBP amounts.
 

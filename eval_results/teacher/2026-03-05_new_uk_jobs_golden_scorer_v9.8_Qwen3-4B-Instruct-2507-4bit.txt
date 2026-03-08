@@ -1,0 +1,109 @@
+Output: eval_results/2026-03-05_new_uk_jobs_golden_scorer_v9.8_Qwen3-4B-Instruct-2507-4bit.txt
+Prompt: prompts/scorer_v9.8.txt
+Loading model with adapter: finetune/adapters_v2b
+Model: mlx-community/Qwen3-4B-Instruct-2507-4bit
+────────────────────────────────────────────────────────────
+────────────────────────────────────────────────────────────
+Running eval on 72 test examples...
+
+[  1/72] ✓  40.7s  Snr Full Stack Engineer | Hyper-Growth Fin  maybe                 100%
+[  2/72] ✓  44.7s  Lead Software Engineer - 12 month FTC       maybe                 100%
+[  3/72] ✓  39.7s  Software Engineer, Early Career             bad_fit               100%
+[  4/72] ✓  38.5s  Software Engineer, Machine Learning         bad_fit               100%
+[  5/72] ✓  45.4s  Software Engineer (.NET, Azure)             bad_fit               100%
+[  6/72] ✓  41.2s  Senior ML/AI Software Engineer              maybe                 100%
+[  7/72] ✓  41.2s  Software Engineer                           bad_fit               100%
+[  8/72] ✓  39.2s  Junior Developer                            bad_fit               100%
+[  9/72] ✓  41.4s  Senior Enterprise Security Architect (Pre   maybe                 100%
+[ 10/72] ✓  43.4s  Senior Software Engineer                    maybe                 100%
+[ 11/72] ✓  41.5s  Senior Data Engineer                        maybe                 100%
+[ 12/72] ✓  40.2s  Computer Vision Research Engineer           bad_fit               100%
+[ 13/72] ✓  38.0s  Senior Software Engineer                    maybe                 100%
+[ 14/72] ✓  43.4s  DevOps Cloud Engineer                       bad_fit               100%
+[ 15/72] ✓  41.9s  Graduate Software Engineer                  bad_fit               100%
+[ 16/72] ✓  39.0s  Machine Learning Engineer                   bad_fit               100%
+[ 17/72] ✓  40.8s  Software Engineer – Hardware Dataflow       bad_fit               100%
+[ 18/72] ✓  41.3s  Senior Software Engineer                    maybe                 100%
+[ 19/72] ✓  40.1s  System Engineer | $80/hr Remote             bad_fit               100%
+[ 20/72] ✓  39.2s  Software Developer                          bad_fit               100%
+[ 21/72] ✓  40.1s  Data Engineer                               bad_fit               100%
+[ 22/72] ✗  42.2s  Senior Product Engineer - Python / Django   good_fit→maybe         95%
+                   loc  25→ 25 ✓ │ role  25→ 25 ✓ │ tech   5→  0 ✗ │ comp  15→  0 ✗
+                   London/Remote UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+
+[ 23/72] ✓  41.2s  DevOps Engineer                             bad_fit                96%
+[ 24/72] ✓  44.9s  Laravel Back End Developer                  bad_fit                96%
+[ 25/72] ✓  43.1s  Website Engineering                         bad_fit                96%
+[ 26/72] ✓  40.2s  Software Engineer, Integrations             bad_fit                96%
+[ 27/72] ✓  38.9s  Linux Systems Engineer                      bad_fit                96%
+[ 28/72] ✓  39.0s  Visualfiles Developer                       bad_fit                96%
+[ 29/72] ✓  39.1s  Software Engineer                           bad_fit                97%
+[ 30/72] ✓  44.7s  Software Engineer III - AI - Chase UK       bad_fit                97%
+[ 31/72] ✓  41.8s  Junior Android Engineer                     bad_fit                97%
+[ 32/72] ✓  40.1s  Senior Backend Engineer                     maybe                  97%
+[ 33/72] ✓  38.1s  Senior Software Engineer, Strategy Platfor  maybe                  97%
+[ 34/72] ✓  41.1s  Specialist Solution Engineer, Partner Ecos  bad_fit                97%
+[ 35/72] ✓  42.4s  Senior Research Engineer - Design Generati  maybe                  97%
+[ 36/72] ✓  43.0s  Research Engineer (LLM Training and Perfor  bad_fit                97%
+[ 37/72] ✓  42.3s  Professional Service Engineer - Workforce   bad_fit                97%
+[ 38/72] ✓  42.2s  One Identity Manager (1IM) Developer        bad_fit                97%
+[ 39/72] ✓  40.7s  Senior Back-End Engineer                    maybe                  97%
+[ 40/72] ✓  40.9s  Senior Data & Platform Engineer             maybe                  98%
+[ 41/72] ✓  39.7s  Senior Backend Engineer                     maybe                  98%
+[ 42/72] ✓  40.2s  Senior Backend Engineer (Python)            maybe                  98%
+[ 43/72] ✓  39.5s  Forward Deployed Engineer - London Forward  bad_fit                98%
+[ 44/72] ✓  44.2s  Research Engineer, Frontier Safety Risk As  bad_fit                98%
+[ 45/72] ✓  42.5s  Fullstack Software Engineer (Python) Fulls  bad_fit                98%
+[ 46/72] ✓  40.4s  Senior Lead - Staff Software Engineer Seni  maybe                  98%
+[ 47/72] ✓  40.1s  Dotnet Developer Dotnet Developer with ver  bad_fit                98%
+[ 48/72] ✓  40.3s  Senior Software Engineer, Bonsai Senior So  maybe                  98%
+[ 49/72] ✓  39.4s  Senior Software Development Engineer in Te  maybe                  98%
+[ 50/72] ✓  40.7s  Software Engineer, Infrastructure Software  bad_fit                98%
+[ 51/72] ✓  42.0s  Python Developer Python Developer           bad_fit                98%
+[ 52/72] ✓  42.9s  Python Engineer Python Engineer with verif  bad_fit                98%
+[ 53/72] ✓  45.2s  Microsoft Entra ID Security Engineer Micro  bad_fit                98%
+[ 54/72] ✓  42.1s  Python Developer - Data & Analytics Team -  bad_fit                98%
+[ 55/72] ✓  42.2s  Technical Account Manager (Escalation Engi  bad_fit                98%
+[ 56/72] ✓  41.0s  Senior Data Engineer Senior Data Engineer   maybe                  98%
+[ 57/72] ✓  42.0s  Senior Kotlin/JVM Engineer Senior Kotlin/J  maybe                  98%
+[ 58/72] ✓  40.2s  AI Engineer AI Engineer with verification   bad_fit                98%
+[ 59/72] ✓  43.9s  Senior Backend Engineer Senior Backend Eng  maybe                  98%
+[ 60/72] ✓  44.9s  Deployment Strategist (UK Defence) Deploym  bad_fit                98%
+[ 61/72] ✓  45.5s  Infrastructure and Connectivity - Cloud En  bad_fit                98%
+[ 62/72] ✓  50.4s  Senior Linux Engineer Senior Linux Enginee  maybe                  98%
+[ 63/72] ✓  43.4s  Senior Data Analyst / Data Engineer Senior  maybe                  98%
+[ 64/72] ✓  40.9s  Senior Systems Software Engineer Senior Sy  maybe                  98%
+[ 65/72] ✓  46.5s  Quantitative Developer - AI Implementation  bad_fit                98%
+[ 66/72] ✓  42.8s  Senior Power Platform Developer Senior Pow  maybe                  98%
+[ 67/72] ✓  41.6s  Python Developer Python Developer with ver  bad_fit                99%
+[ 68/72] ✓  41.1s  Senior Solutions Engineer Senior Solutions  maybe                  99%
+[ 69/72] ✓  40.8s  Outcome Customer Engineer, Google Cloud Pl  bad_fit                99%
+[ 70/72] ✓  45.2s  Site Reliability Engineer - Trading - £70,  bad_fit                99%
+[ 71/72] ✓  44.0s  Senior Software Engineer - React Native/Re  maybe                  99%
+[ 72/72] ✓  41.7s  Software Engineer - AI Agents | Rust | Typ  bad_fit                99%
+
+════════════════════════════════════════════════════════════
+RESULTS
+════════════════════════════════════════════════════════════
+Total examples:  72
+Parse failures:  0
+Valid outputs:   72
+
+Label accuracy:  71/72 = 98.6%  (baseline: 39.8%)
+
+Field accuracy:
+  loc:   70/72 = 97.2%
+  role:  71/72 = 98.6%
+  tech:  68/72 = 94.4%
+  comp:  70/72 = 97.2%
+
+Per-label breakdown:
+  good_fit  : 0/1 = 0%
+  maybe     : 27/27 = 100%
+  bad_fit   : 44/44 = 100%
+
+Error patterns:
+  Over-scoring:   0  (predicted higher than golden)
+  Under-scoring:  0  (predicted lower than golden)
+  Other:          1  (e.g. good_fit↔maybe)
+  Parse failures: 0

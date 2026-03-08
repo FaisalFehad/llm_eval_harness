@@ -1,0 +1,209 @@
+Output: eval_results/2026-03-04_linkedin_teacher_v2_eval_human_corrected_scorer_v9.2_cached_Qwen3-4B-Instruct-2507-4bit.txt
+Prompt: prompts/scorer_v9.2_cached.txt
+Loading model with adapter: finetune/adapters_v2b
+Model: mlx-community/Qwen3-4B-Instruct-2507-4bit
+────────────────────────────────────────────────────────────
+Prompt cache: 1356 static tokens pre-filled.
+────────────────────────────────────────────────────────────
+Running eval on 101 test examples...
+
+[  1/101] ✓   8.8s  Data Developer                              bad_fit               100%
+[  2/101] ✓  11.8s  Senior Software Engineer (full Stack) - Re  maybe                 100%
+[  3/101] ✓  15.4s  Lead Full Stack Engineer                    maybe                 100%
+[  4/101] ✓  15.2s  Full Stack Software Engineer                bad_fit               100%
+[  5/101] ✗  11.5s  Senior Software Engineer (c++)              bad_fit→maybe          80%
+                    loc  10→ 25 ✗ │ role  25→ 25 ✓ │ tech   0→  0 ✓ │ comp   0→  0 ✓
+                    UK/Remote? No (0). London? No (0). UK/Remote? No (0). Senior-level role (+25). Outside UK? No (-50).
+
+[  6/101] ✓  10.0s  Senior Machine Learning Engineer            good_fit               83%
+[  7/101] ✓  11.7s  Web Frontend Engineer - Js, Css, React, Fl  bad_fit                86%
+[  8/101] ✓  10.6s  Senior Data Engineer                        maybe                  88%
+[  9/101] ✓   5.7s  Senior AI Solutions Engineer - Up To £135k  maybe                  89%
+[ 10/101] ✗  16.5s  Senior Solutions Engineer                   bad_fit→maybe          80%
+                    loc  10→ 10 ✓ │ role  25→ 25 ✓ │ tech   0→ 15 ✗ │ comp   0→  0 ✓
+                    UK location (+10), senior-level role (+25), tech stack (15), no GBP salary (0).
+
+[ 11/101] ✓  11.8s  Lead Software Engineer (full Stack)         good_fit               82%
+[ 12/101] ✓   7.1s  Frontend Developer (angular, Ionic) - NEW   bad_fit                83%
+[ 13/101] ✓  12.3s  Software Engineer - Python - Container Ima  bad_fit                85%
+[ 14/101] ✓  15.8s  Senior Software Developer                   bad_fit                86%
+[ 15/101] ✓   9.5s  Intern - Frontend Developer                 bad_fit                87%
+[ 16/101] ✓   8.5s  Python Developer                            bad_fit                88%
+[ 17/101] ✓   7.4s  Graduate Software Engineer                  bad_fit                88%
+[ 18/101] ✓   8.2s  Full Stack Engineer (contract) - TypeScrip  bad_fit                89%
+[ 19/101] ✗  10.8s  Senior Lead Software Engineer - Python & A  bad_fit→maybe          84%
+                    loc  10→ 25 ✗ │ role  25→ 25 ✓ │ tech   0→ 10 ✗ │ comp   0→  0 ✓
+                    London/Remote? No (0). UK/Remote? UK (25). Senior/Lead role (+25). Tech stack (10). Salary not menti
+
+[ 20/101] ✓  10.5s  Principal Full Stack Developer - 18 Month   maybe                  85%
+[ 21/101] ✓   7.0s  Solutions Architect, Lloyd's Market         bad_fit                86%
+[ 22/101] ✓   6.7s  Full Stack Engineer                         bad_fit                86%
+[ 23/101] ✓  11.1s  Fullstack Senior Software Engineer (cards)  maybe                  87%
+[ 24/101] !  27.3s  Python And Kubernetes Software Engineer -   PARSE FAIL
+           Raw (862 chars): <think>
+
+</think>
+
+{"loc":25,"role":0,"tech":10,"comp":0,"score":25,"label":"bad_fit","reasoning":"UK/Remote London? No (0). UK/Remote London? No (0). UK/Remote London? No (0). UK/Remote London? No (0). UK/Remote London? No (0). UK/Remote London? No (0). UK/Remote London? No (0). UK/Remote London? No (0). UK/Remote London? No (0). UK/Remote London? No (0). UK/Remote London? No (0). UK/Remote London? No (0). UK/Remote London? No (0). UK/Remote London? No (0). UK/Remote London? No (0). UK/Remote L
+[ 25/101] ✓  12.7s  Software Engineer I                         bad_fit                84%
+[ 26/101] ✓  10.5s  Front End Engineer - Serve                  bad_fit                85%
+[ 27/101] ✓   7.7s  (senior) Software Engineer                  bad_fit                85%
+[ 28/101] ✓   6.1s  Senior Front-End Developer, Angular         bad_fit                86%
+[ 29/101] ✓   8.2s  Senior Software Engineer, Full Stack        maybe                  86%
+[ 30/101] ✗   7.0s  Senior Full-Stack Developer                 bad_fit→maybe          83%
+                    loc  10→ 10 ✓ │ role  25→ 25 ✓ │ tech   5→ 15 ✗ │ comp   0→  0 ✓
+                    UK location (+10), senior-level role (+25), tech stack (15), no GBP salary (0).
+
+[ 31/101] ✓   7.9s  Software Engineer (front End, Back End Or   bad_fit                84%
+[ 32/101] ✓  11.8s  Engineering Supervisor - Dayshift           bad_fit                84%
+[ 33/101] ✓   7.5s  Data Engineer                               bad_fit                85%
+[ 34/101] ✓   9.7s  Scientist - Data / Machine Learning         bad_fit                85%
+[ 35/101] ✓   9.7s  Software Engineer III – GenAI, Python, AWS  bad_fit                86%
+[ 36/101] ✓  11.1s  Junior Software Developer - Observability   bad_fit                86%
+[ 37/101] ✗   6.4s  Software Developer (remote)                 bad_fit→maybe          84%
+                    loc  10→ 10 ✓ │ role  15→ 25 ✗ │ tech  15→ 15 ✓ │ comp   0→  0 ✓
+                    UK/Remote (+10), senior-level role (+25), tech stack (15), no GBP salary (0).
+
+[ 38/101] ✓   8.4s  Lead Full Stack Software Developer          maybe                  84%
+[ 39/101] ✓   6.4s  DevOps Engineer                             bad_fit                85%
+[ 40/101] ✓  12.5s  Full Stack Engineer                         bad_fit                85%
+[ 41/101] ✓   5.4s  Software Engineer                           bad_fit                85%
+[ 42/101] ✓   8.3s  Data Scientist                              bad_fit                86%
+[ 43/101] ✓   6.7s  Senior Software Engineer                    bad_fit                86%
+[ 44/101] ✓  10.3s  Software Engineer III- Data Engineer, Java  bad_fit                86%
+[ 45/101] ✓  11.5s  Data Scientist                              bad_fit                87%
+[ 46/101] ✗   9.8s  Senior Full Stack Engineer (perm) - Typesc  maybe→good_fit         85%
+                    loc  10→ 25 ✗ │ role  25→ 25 ✓ │ tech  15→ 25 ✗ │ comp   0→  0 ✓
+                    London/Remote UK (+25), senior-level role (+25), tech stack (25), no GBP salary (0).
+
+[ 47/101] ✓   7.1s  Angular Developer                           bad_fit                85%
+[ 48/101] ✓   5.6s  Frontend Developer                          bad_fit                85%
+[ 49/101] ✓   7.1s  Python Developer                            bad_fit                86%
+[ 50/101] ✓   9.0s  Platform Engineer                           bad_fit                86%
+[ 51/101] ✓   6.1s  Lead Software Engineer                      bad_fit                86%
+[ 52/101] ✓  11.4s  Full Stack Developer                        bad_fit                87%
+[ 53/101] ✓  14.0s  UK Senior Applied AI Solution Engineer      good_fit               87%
+[ 54/101] ✗  14.2s  Senior Software Engineer, Full Stack - Fin  maybe→bad_fit          85%
+                    loc  25→ 25 ✓ │ role  25→  0 ✗ │ tech   0→ 10 ✗ │ comp   0→  0 ✓
+                    London/Remote UK (+25), no seniority keyword (0), tech stack (10), no GBP salary (0).
+
+[ 55/101] ✓  14.8s  Senior Software Engineer, Live              bad_fit                85%
+[ 56/101] ✓   8.7s  Senior Software Engineer                    bad_fit                86%
+[ 57/101] ✓   8.0s  Junior Software Engineer - Up To £50,000 -  bad_fit                86%
+[ 58/101] ✓   9.4s  Mid-Level Java Engineer                     bad_fit                86%
+[ 59/101] ✓   9.8s  DevOps Engineer                             bad_fit                86%
+[ 60/101] ✓  11.0s  Graduate eCommerce Web Developer - Hybrid   bad_fit                87%
+[ 61/101] ✗   6.8s  Full Stack Developer - Fixed Term Contract  bad_fit→maybe          85%
+                    loc  10→ 10 ✓ │ role  15→ 25 ✗ │ tech  15→ 15 ✓ │ comp   0→  0 ✓
+                    UK location (+10), senior-level role (+25), tech stack (15), no GBP salary (0).
+
+[ 62/101] ✗  11.7s  Senior Software Engineer (full Stack Web)   bad_fit→maybe          84%
+                    loc  10→ 25 ✗ │ role  25→ 25 ✓ │ tech   5→  5 ✓ │ comp   0→  0 ✓
+                    London/Remote UK (+25), senior-level role (+25), tech stack (5), no GBP salary (0).
+
+[ 63/101] ✓   6.9s  Senior Software Developer (react) - Up To   maybe                  84%
+[ 64/101] ✓  15.4s  Senior Software Developer                   bad_fit                84%
+[ 65/101] ✓   8.4s  Junior Developer                            bad_fit                85%
+[ 66/101] ✓   9.1s  Senior UI Developer                         bad_fit                85%
+[ 67/101] ✗  10.7s  Director Of Engineering                     bad_fit→maybe          84%
+                    loc  10→ 25 ✗ │ role   0→ 25 ✗ │ tech   0→  0 ✓ │ comp   0→  0 ✓
+                    UK location (+25), senior-level role (+25), outside UK? No (-50), London? No, Remote? No (+10), so +
+
+[ 68/101] ✓   7.4s  Frontend Developer                          bad_fit                84%
+[ 69/101] ✓  15.0s  Software Engineer, Frontend                 bad_fit                84%
+[ 70/101] ✗  10.8s  Senior Software Engineer, Photos UI         bad_fit→maybe          83%
+                    loc  10→ 25 ✗ │ role  25→ 25 ✓ │ tech   0→  0 ✓ │ comp   0→  0 ✓
+                    London/Remote? No (0). UK/Remote? Yes (+25). Senior-level role (+25). Outside UK? No (-50). UK/Remot
+
+[ 71/101] ✓  10.9s  Graduate Software Engineer                  bad_fit                83%
+[ 72/101] ✗  11.3s  Senior Software Engineer - Backend AI Nati  maybe→good_fit         82%
+                    loc  10→ 25 ✗ │ role  25→ 25 ✓ │ tech  15→ 15 ✓ │ comp   5→  5 ✓
+                    London/Remote? No (0). UK/Remote? UK (25). Senior-level role (+25). Tech stack (15). Salary £57.5k (
+
+[ 73/101] !  24.2s  Senior Software Engineer – Builds And Rele  PARSE FAIL
+           Raw (914 chars): <think>
+
+</think>
+
+{"loc":10,"role":25,"tech":0,"comp":0,"score":35,"label":"bad_fit","reasoning":"UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remot
+[ 74/101] ✓   5.8s  Developer – Angular, Ionic, Git - Bristol   bad_fit                81%
+[ 75/101] ✓  12.0s  Lead Software Engineer (full Stack) - Reac  maybe                  81%
+[ 76/101] ✓   9.4s  Software Engineer                           bad_fit                82%
+[ 77/101] ✓   5.8s  Senior Data Engineer                        bad_fit                82%
+[ 78/101] ✓  10.9s  Data Engineer - Palantir                    bad_fit                82%
+[ 79/101] ✓   9.3s  Full Stack Developer                        bad_fit                82%
+[ 80/101] ✓   7.9s  Senior Full Stack Quality Engineer          maybe                  82%
+[ 81/101] ✓  12.4s  Java Full Stack Developer                   bad_fit                83%
+[ 82/101] ✓   5.7s  Senior Full Stack Engineer (python & React  maybe                  83%
+[ 83/101] !  24.2s  Graduate Machine Learning Engineer          PARSE FAIL
+           Raw (914 chars): <think>
+
+</think>
+
+{"loc":10,"role":0,"tech":10,"comp":0,"score":10,"label":"bad_fit","reasoning":"UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remot
+[ 84/101] ✓   6.3s  Machine Learning Engineer                   bad_fit                82%
+[ 85/101] ✓  11.4s  Senior Software Engineer - Full-Stack       maybe                  82%
+[ 86/101] ✓  17.6s  Staff Software Engineer (team Lead) - Engi  bad_fit                83%
+[ 87/101] ✓   7.6s  Solution Architect                          bad_fit                83%
+[ 88/101] ✓  14.2s  Associate Software Engineer - (graduate)    bad_fit                83%
+[ 89/101] !  21.4s  Full Stack Engineer                         PARSE FAIL
+           Raw (914 chars): <think>
+
+</think>
+
+{"loc":10,"role":15,"tech":5,"comp":0,"score":30,"label":"bad_fit","reasoning":"UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remote no), UK/Remote? No (London/Remot
+[ 90/101] ✗   7.1s  Senior Sharepoint Developer                 maybe→good_fit         81%
+                    loc  25→ 25 ✓ │ role  25→ 25 ✓ │ tech   5→  5 ✓ │ comp   0→ 25 ✗
+                    London/UK (+25), senior-level role (+25), tech stack (5), salary ≥£100k (+25).
+
+[ 91/101] ✓  13.0s  Data Engineer                               bad_fit                81%
+[ 92/101] ✓  32.7s  Senior Software Engineer, Product Engineer  bad_fit                82%
+[ 93/101] ✓   8.9s  Full Stack Web Developer                    bad_fit                82%
+[ 94/101] ✓  10.8s  Data Scientist                              bad_fit                82%
+[ 95/101] ✓   9.8s  Python Software Engineer - Ubuntu Hardware  bad_fit                82%
+[ 96/101] ✗   7.7s  Senior Developer                            bad_fit→maybe          81%
+                    loc  10→ 25 ✗ │ role  25→ 25 ✓ │ tech   5→  5 ✓ │ comp   0→  0 ✓
+                    UK/Remote? (25), senior-level role (25), tech stack (5), no GBP salary (0).
+
+[ 97/101] ✓  10.2s  Senior Full Stack Engineer                  maybe                  81%
+[ 98/101] !  18.8s  Backend Developer                           PARSE FAIL
+           Raw (1024 chars): <think>
+
+</think>
+
+{"loc":10,"role":0,"tech":0,"comp":0,"score":10,"label":"bad_fit","reasoning":"UK/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/Remote/
+[ 99/101] ✓   9.9s  Junior Data Scientist                       bad_fit                81%
+[100/101] ✗   8.9s  Machine Learning Engineer, AI Foundations   bad_fit→maybe          80%
+                    loc  10→ 10 ✓ │ role   0→ 25 ✗ │ tech   0→ 10 ✗ │ comp  15→ 15 ✓
+                    UK/England (+10), senior-level role (+25), tech stack (10), salary £93-100k (+15).
+
+[101/101] ✗   7.7s  Snr. Software Developer (c# / React / FX O  maybe→good_fit         79%
+                    loc  25→ 25 ✓ │ role  25→ 25 ✓ │ tech   5→  5 ✓ │ comp   0→ 15 ✗
+                    London/Remote UK (+25), senior-level role (+25), tech stack (5), salary £55-74k (+5), mid-75-99k (+1
+
+
+════════════════════════════════════════════════════════════
+RESULTS
+════════════════════════════════════════════════════════════
+Total examples:  101
+Parse failures:  5
+Valid outputs:   96
+
+Label accuracy:  80/96 = 83.3%  (baseline: 39.8%)
+
+Field accuracy:
+  loc:   79/96 = 82.3%
+  role:  76/96 = 79.2%
+  tech:  59/96 = 61.5%
+  comp:  78/96 = 81.2%
+
+Per-label breakdown:
+  good_fit  : 3/3 = 100%
+  maybe     : 14/19 = 74%
+  bad_fit   : 63/74 = 85%
+
+Error patterns:
+  Over-scoring:   11  (predicted higher than golden)
+  Under-scoring:  1  (predicted lower than golden)
+  Other:          4  (e.g. good_fit↔maybe)
+  Parse failures: 5

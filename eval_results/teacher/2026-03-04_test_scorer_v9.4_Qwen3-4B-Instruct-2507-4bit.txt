@@ -1,0 +1,91 @@
+Output: eval_results/2026-03-04_test_scorer_v9.4_Qwen3-4B-Instruct-2507-4bit.txt
+Prompt: prompts/scorer_v9.4.txt
+Loading model with adapter: finetune/adapters_v2b
+Model: mlx-community/Qwen3-4B-Instruct-2507-4bit
+────────────────────────────────────────────────────────────
+────────────────────────────────────────────────────────────
+Running eval on 33 test examples...
+
+[  1/33] ✗  24.4s  Lead DevOps Architect                       good_fit→bad_fit        0%
+                   loc  10→ 10 ✓ │ role  25→  0 ✗ │ tech  10→  0 ✗ │ comp  25→  0 ✗
+                   UK outside London (+10), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+
+[  2/33] ✓  23.8s  VP of Engineering                           bad_fit                50%
+[  3/33] ✓  24.6s  Full Stack Engineer                         bad_fit                67%
+[  4/33] ✓  23.7s  Product Developer                           bad_fit                75%
+[  5/33] ✓  27.7s  Graphic Packaging Designer                  bad_fit                80%
+[  6/33] ✓  24.1s  Principal Backend Engineer                  bad_fit                83%
+[  7/33] ✓  31.1s  Senior Full-Stack Engineer                  bad_fit                86%
+[  8/33] ✓  24.6s  Senior Product Engineer                     good_fit               88%
+[  9/33] ✓  24.2s  Principal Security Engineer                 maybe                  89%
+[ 10/33] ✗  26.3s  Senior Backend Engineer                     maybe→bad_fit          80%
+                   loc  25→ 25 ✓ │ role  25→  0 ✗ │ tech   0→  0 ✓ │ comp   0→  0 ✓
+                   London/Remote UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+
+[ 11/33] ✗  24.2s  Staff Software Engineer                     maybe→bad_fit          73%
+                   loc  10→ 10 ✓ │ role  25→ 25 ✓ │ tech   0→  0 ✓ │ comp  15→  0 ✗
+                   UK outside London (+10), senior-level role (+25), no matching tech (0), no GBP salary (0).
+
+[ 12/33] ✓  27.3s  Founding Engineer                           maybe                  75%
+[ 13/33] ✓  26.7s  Lead Full-Stack Developer                   good_fit               77%
+[ 14/33] ✓  24.1s  Distinguished Engineer                      bad_fit                79%
+[ 15/33] ✓  25.2s  Staff Software Engineer                     maybe                  80%
+[ 16/33] ✗  24.9s  Senior Software Engineer                    good_fit→maybe         75%
+                   loc  25→ 25 ✓ │ role  25→ 25 ✓ │ tech  15→ 15 ✓ │ comp   0→  0 ✓
+                   London/Remote UK (+25), senior-level role (+25), tech stack (15), no clear salary (0).
+
+[ 17/33] ✓  24.2s  Senior Systems Architect                    maybe                  76%
+[ 18/33] ✗  26.0s  Senior Software Engineer                    maybe→good_fit         72%
+                   loc  25→ 25 ✓ │ role  25→ 25 ✓ │ tech   0→ 10 ✗ │ comp  15→ 25 ✗
+                   London/Remote UK (+25), senior-level role (+25), tech stack (10), salary ≥£100k (+25).
+
+[ 19/33] ✓  22.5s  Mid Level Backend Engineer (Node.js)        bad_fit                74%
+[ 20/33] ✗  24.2s  Lead DevOps Architect                       maybe→bad_fit          70%
+                   loc  10→ 10 ✓ │ role  25→  0 ✗ │ tech   0→  0 ✓ │ comp  15→  0 ✗
+                   UK outside London (+10), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+
+[ 21/33] ✓  26.8s  Fintech & Tech for Good | Profitable & Hyp  maybe                  71%
+[ 22/33] ✓  25.6s  Head of Infrastructure                      bad_fit                73%
+[ 23/33] ✓  26.1s  Staff Software Engineer                     maybe                  74%
+[ 24/33] ✗  30.0s  Lead Frontend Engineer                      maybe→bad_fit          71%
+                   loc  25→ 10 ✗ │ role  25→ 25 ✓ │ tech  15→  5 ✗ │ comp   0→  0 ✓
+                   UK outside London (+10), senior-level role (+25), tech stack (5), no GBP salary (0).
+
+[ 25/33] ✓  28.8s  Software Engineer | React & Python (full s  bad_fit                72%
+[ 26/33] ✗  25.6s  Lead Full Stack Architect                   maybe→bad_fit          69%
+                   loc  10→ 10 ✓ │ role  25→ 25 ✓ │ tech   0→  0 ✓ │ comp  25→  0 ✗
+                   UK outside London (+10), senior-level role (+25), no matching tech (0), no GBP salary (0).
+
+[ 27/33] ✓  29.6s  Senior Frontend Engineer                    maybe                  70%
+[ 28/33] ✓  27.4s  Lead Software Engineer                      maybe                  71%
+[ 29/33] ✓  27.1s  Senior Software Engineer                    maybe                  72%
+[ 30/33] ✓  23.5s  Senior Software Engineer                    maybe                  73%
+[ 31/33] ✓  30.5s  Frontend Developer                          bad_fit                74%
+[ 32/33] ✓  30.5s  Senior Software Engineer                    maybe                  75%
+[ 33/33] ✓  25.8s  Senior Node React Engineer                  bad_fit                76%
+
+════════════════════════════════════════════════════════════
+RESULTS
+════════════════════════════════════════════════════════════
+Total examples:  33
+Parse failures:  0
+Valid outputs:   33
+
+Label accuracy:  25/33 = 75.8%  (baseline: 39.8%)
+
+Field accuracy:
+  loc:   30/33 = 90.9%
+  role:  24/33 = 72.7%
+  tech:  23/33 = 69.7%
+  comp:  22/33 = 66.7%
+
+Per-label breakdown:
+  good_fit  : 2/4 = 50%
+  maybe     : 11/17 = 65%
+  bad_fit   : 12/12 = 100%
+
+Error patterns:
+  Over-scoring:   0  (predicted higher than golden)
+  Under-scoring:  6  (predicted lower than golden)
+  Other:          2  (e.g. good_fit↔maybe)
+  Parse failures: 0

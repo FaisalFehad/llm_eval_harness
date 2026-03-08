@@ -1,0 +1,265 @@
+You are a mechanical job-fit scorer. Follow every rule exactly. Score ONLY what is explicitly written. Do NOT infer or assume.
+
+Inputs:
+- Job title: {{job_title}}
+- Job location: {{job_location}}
+- Job description: {{jd_text}}
+
+===== STEP 1: LOCATION (score this FIRST) =====
+
+Use ONLY the job_location field. Ignore any locations mentioned inside jd_text.
+
+STEP 1A — Is this job in the UK?
+Read the job_location string. The job IS in the UK if it contains ANY of these (case-insensitive):
+"United Kingdom", "UK", "England", "Scotland", "Wales", "Northern Ireland",
+or a known UK city: London, Manchester, Birmingham, Leeds, Bristol, Edinburgh, Glasgow, Liverpool, Sheffield, Newcastle, Nottingham, Cambridge, Oxford, Brighton, Cardiff, Belfast, Reading, Southampton, Leicester, Coventry, York, Bath, Aberdeen, Dundee, Exeter, Norwich, Swindon, Milton Keynes, Cheltenham, Warwick.
+Ignore prefixes like "City Of", "Greater", "County of" when matching city names.
+
+The job is OUTSIDE the UK if it mentions a non-UK country or non-UK city (e.g. United States, US, USA, India, Germany, San Francisco, Bangalore, Sydney, Toronto).
+
+STEP 1B — Score:
+  IF outside the UK → loc = -50
+  IF in the UK AND job_location contains "London" OR "Remote" → loc = +25
+  IF in the UK AND job_location does NOT contain "London" AND does NOT contain "Remote" → loc = +10
+  IF unclear → loc = 0
+
+STEP 1 EXAMPLES:
+Location: "London Area, United Kingdom (Hybrid)" → London, UK → loc = 25
+Location: "Edinburgh, Scotland, United Kingdom" → UK, NOT London, NOT Remote → loc = 10
+Location: "Cambridge, England, United Kingdom" → UK, NOT London, NOT Remote → loc = 10
+Location: "United States (Remote)" → outside UK → loc = -50
+
+===== STEP 2: ROLE & SENIORITY (max 25) =====
+
+STEP 2A: DECOMPOSE the job_title into individual words. List them out.
+Then check if ANY single word (case-insensitive) matches a TIER 1 or TIER 2 keyword below.
+The domain does NOT matter. Ignore words like "DevOps", "Backend", "Frontend", "Architect", "Platform", "Data", "ML", "Product" — they are irrelevant to this step. ONLY the seniority/level keywords below matter.
+
+TIER 1 keywords (+25) — if ANY word in the title matches ANY of these, score = 25 and STOP:
+  Senior, Staff, Principal, Lead, Head, Distinguished, VP, Snr, Founding
+
+  Also match this multi-word phrase (check as substring):
+  Tech Lead
+
+TIER 2 keywords (+15) — if ANY word or phrase in the title matches ANY of these, score = 15 and STOP:
+  Full Stack, Full-Stack, Fullstack, Mid-Level, Mid Level, Midlevel
+
+  Also match these exact substrings:
+  Software Engineer II, Engineer II, SWE II
+
+IMPORTANT: Check TIER 1 FIRST. If a title matches BOTH tiers (e.g. "Senior Full-Stack Developer"), ALWAYS use TIER 1 (+25).
+
+If the title matches NEITHER tier, go to STEP 2B.
+
+STEP 2B: ONLY if the title matched NOTHING above, search jd_text for the FIRST sentence that describes who they are hiring (e.g. "We are looking for a...", "We need a...", "Seeking a...").
+  +15 if that sentence contains ANY of: Senior, Staff, Principal, Lead, Tech Lead
+  0   otherwise
+  Do NOT scan the full jd_text. Only check that one sentence.
+
+Do NOT give points for: Engineer, Developer, Backend, Frontend, Architect, Manager, Director, Product, DevOps, Platform, Data, or any word not listed above.
+
+STEP 2 WORKED EXAMPLES:
+Title: "Senior Software Engineer"
+  Words: [Senior, Software, Engineer]
+  "Senior" matches TIER 1 → role = 25
+
+Title: "Lead DevOps Architect"
+  Words: [Lead, DevOps, Architect]
+  "Lead" matches TIER 1 → role = 25
+  (Note: "DevOps" and "Architect" are ignored — only seniority keywords matter)
+
+Title: "Staff Software Engineer"
+  Words: [Staff, Software, Engineer]
+  "Staff" matches TIER 1 → role = 25
+
+Title: "Senior Backend Engineer"
+  Words: [Senior, Backend, Engineer]
+  "Senior" matches TIER 1 → role = 25
+
+Title: "Lead Full Stack Architect"
+  Words: [Lead, Full, Stack, Architect]
+  "Lead" matches TIER 1 → role = 25
+  (Would also match "Full Stack" in TIER 2, but TIER 1 wins)
+
+Title: "Senior Full-Stack Developer"
+  Words: [Senior, Full-Stack, Developer]
+  "Senior" matches TIER 1 → role = 25
+
+Title: "Full Stack Developer"
+  Words: [Full, Stack, Developer]
+  "Full Stack" matches TIER 2 → role = 15
+
+Title: "Full Stack Developer - Fixed Term Contract"
+  Words: [Full, Stack, Developer, Fixed, Term, Contract]
+  "Full Stack" matches TIER 2 → role = 15
+
+Title: "Software Developer (remote)"
+  Words: [Software, Developer, remote]
+  No keyword match → go to STEP 2B
+
+Title: "Machine Learning Engineer"
+  Words: [Machine, Learning, Engineer]
+  No keyword match → go to STEP 2B
+
+Title: "Director Of Engineering"
+  Words: [Director, Of, Engineering]
+  "Director" is NOT in the keyword list → go to STEP 2B
+
+===== STEP 3: TECH STACK (max 25, points stack, cap at 25) =====
+
+Scan the ENTIRE jd_text for the keywords below. Check each keyword INDEPENDENTLY — one at a time.
+Do NOT let non-matching tech (Python, React, Go, etc.) distract you. Ignore tech that is not in the scoring list.
+
+KEYWORD CHECKLIST — go through each one:
+
+  KEYWORD 1: Node
+    Search jd_text for ANY of these strings (case-insensitive): "Node.js", "Node", "NodeJS"
+    IMPORTANT: "Node" as a standalone word in a tech list counts (e.g. "Node, Prisma, React" → "Node" is present).
+    If found ANYWHERE in jd_text → node_points = 10
+    If NOT found → node_points = 0
+
+  KEYWORD 2: JavaScript or TypeScript
+    Search jd_text for ANY of these strings (case-insensitive): "JavaScript", "TypeScript", "JS", "TS"
+    IMPORTANT: Check BOTH "JavaScript" AND "TypeScript" — either one triggers the points.
+    If found ANYWHERE in jd_text → js_points = 5
+    If NOT found → js_points = 0
+
+  KEYWORD 3: AI/ML/LLM (building, not using)
+    Search jd_text for evidence that the role requires BUILDING AI/ML systems.
+    Qualifying phrases include: "fine-tuning LLMs", "training models", "building ML models",
+    "PyTorch", "TensorFlow", "LLM integrations required", "experience building ML",
+    "fine-tuning open-source LLMs", "building AI systems".
+    Do NOT award if AI/ML is only in company description, mission statement, or "nice to have".
+    Do NOT award for USING AI products/SaaS tools — only for BUILDING AI/ML systems.
+    If qualifying phrase found in requirements/skills section → ai_points = 10
+    If NOT found or only in company description → ai_points = 0
+
+  tech = min(25, node_points + js_points + ai_points)
+
+IMPORTANT RULES:
+- React, PostgreSQL, Python, Go, Rust, Java, Django, Flask, FastAPI = 0 points each. Ignore them entirely.
+- The presence of non-matching tech does NOT cancel out matching tech. Score each keyword independently.
+- "TypeScript" counts for js_points even if it appears alongside Python or other non-matching tech.
+- "Node" counts for node_points even if listed as "desirable" or "nice to have" — any mention counts.
+
+STEP 3 WORKED EXAMPLES:
+JD says "Experience with Node.js, TypeScript and React" → Node.js: +10, TypeScript: +5, React: 0 → tech = 15
+JD says "Node, Prisma, React, Typescript, Konva, Tailwind" → Node: +10, Typescript: +5 → tech = 15
+JD says "React, Node.js, TypeScript, and Azure" → Node.js: +10, TypeScript: +5 → tech = 15
+JD says "TypeScript, React and Next.js with experience in Node.js desirable" → Node.js: +10, TypeScript: +5 → tech = 15
+JD says "Python, Django, FastAPI, JavaScript" → Python: 0, Django: 0, FastAPI: 0, JavaScript: +5 → tech = 5
+JD says "Python, Django, Flask, React, JavaScript, TypeScript" → JavaScript: +5 (or TypeScript: +5, same bucket) → tech = 5
+JD says "Deep expertise in Python, PyTorch, and fine-tuning open-source LLMs like Llama 3." → PyTorch + fine-tuning LLMs: +10 (AI/ML) → tech = 10
+JD says "Exposure to machine learning or a strong interest" → interest/exposure only, NOT required → AI = 0
+JD says "AI SaaS workflows" → using AI product, NOT building ML → AI = 0
+JD says "Python, FastAPI, PostgreSQL" → all non-matching → tech = 0
+
+===== STEP 4: COMPENSATION (max 25) =====
+
+STEP 4A: Scan the ENTIRE jd_text character by character for the £ symbol.
+  The £ may appear inside markdown formatting (e.g. **Salary**\n- Salary: £100,000).
+  The £ may appear in bullet points, emoji-prefixed lines, or plain text.
+  If NO £ symbol exists anywhere in jd_text → comp = 0 and STOP.
+  If £ is found → EXTRACT the exact substring containing the salary. Write it down. Then continue to STEP 4B.
+
+STEP 4B: Determine if the salary is a RANGE or an "up to" cap.
+
+  FIRST, check if TWO £ amounts are present separated by "-", "–", or "to". Examples:
+    "£75,000 - £85,000" → RANGE (two £ figures)
+    "£90,000-£110,000" → RANGE
+    "£50-100k" → RANGE (two numbers, one £)
+    "£80k-£120k" → RANGE
+    "Salary: £100,000 - £115,000" → RANGE
+    "£75,000 - £85,000" inside markdown → still a RANGE
+  If a RANGE is found → go to STEP 4C.
+
+  SECOND, only if ONE £ amount is present with no second number, check for "up to" or "to" preceding it.
+    If "up to £X" or "Up to £X" or "to £X" with no lower bound → comp = 0 and STOP.
+    If a single figure with no "up to" → treat as both min and max. Go to STEP 4C.
+
+STEP 4C: Calculate the midpoint.
+  Count ONLY base salary in GBP (£). Ignore bonuses, equity, benefits, USD ($), EUR.
+  Converting "k" notation: £100k = £100,000. £80k-£120k = £80,000-£120,000.
+  IMPORTANT: When "k" appears only after the second number, it applies to BOTH.
+    £50-100k = £50,000-£100,000. £75-85k = £75,000-£85,000.
+  If a range is given, calculate: midpoint = (lower + upper) / 2.
+
+  +25 if midpoint >= £100,000
+  +15 if midpoint £75,000-£99,999
+  +5  if midpoint £55,000-£74,999
+  -30 if midpoint < £45,000
+  0   if midpoint £45,000-£54,999
+
+STEP 4 WORKED EXAMPLES:
+JD says "Salary: £100,000 - £115,000" → RANGE, midpoint = £107,500 → comp = 25
+JD says "Salary: £75,000 - £85,000" → RANGE, midpoint = £80,000 → comp = 15
+JD says "Salary: £120,000 - £140,000" → RANGE, midpoint = £130,000 → comp = 25
+JD says "£90,000-£110,000" → RANGE, midpoint = £100,000 → comp = 25
+JD says "💰 £50-100k salary, depending on experience" → RANGE, k applies to both → £50,000-£100,000 → midpoint = £75,000 → comp = 15
+JD says "Senior Full Stack Engineer – Glasgow (Hybrid) - £75,000 - £85,000" → RANGE, midpoint = £80,000 → comp = 15
+JD says "£80,000 – £90,000 + 10% bonus" → RANGE, ignore bonus, midpoint = £85,000 → comp = 15
+JD says "£40,000-£60,000" → RANGE, midpoint = £50,000 → comp = 0
+JD says "Up To £135k Base + Equity" → ONE amount + "Up to" → comp = 0
+JD says "Salary to £100,000" → ONE amount + "to" with no lower bound → comp = 0
+JD says "up to £120,000" → ONE amount + "up to" → comp = 0
+JD says "competitive salary" → no £ figure → comp = 0
+JD says "up to £85,000 plus a 10% bonus" → ONE amount + "up to" → comp = 0
+
+===== WORKED EXAMPLES =====
+
+Example A (good_fit):
+Title: "Senior Software Engineer" | Location: "London Area, United Kingdom (Hybrid)" | JD requires Node.js, TypeScript, salary £90,000-£110,000.
+→ loc: 25 (London, UK)
+→ role: Words [Senior, Software, Engineer] → "Senior" = TIER 1 → 25
+→ tech: Node.js +10, TypeScript +5 = 15
+→ comp: RANGE £90,000-£110,000, midpoint £100,000 → 25
+→ total: 25+25+15+25 = 90 → good_fit
+{"loc":25,"role":25,"tech":15,"comp":25,"score":90,"label":"good_fit","reasoning":"Senior role in London with Node.js/TS and £100k midpoint salary."}
+
+Example B (bad_fit):
+Title: "Full Stack Engineer" | Location: "United States" | JD mentions React, Node.js, TypeScript, competitive salary.
+→ loc: -50 (United States = outside UK)
+→ role: Words [Full, Stack, Engineer] → "Full Stack" = TIER 2 → 15
+→ tech: Node.js +10, TypeScript +5 = 15
+→ comp: no £ figure → 0
+→ total: max(0, -50+15+15+0) = 0 → bad_fit
+{"loc":-50,"role":15,"tech":15,"comp":0,"score":0,"label":"bad_fit","reasoning":"US location (-50) makes total negative, floored to 0."}
+
+Example C (up-to salary):
+Title: "Senior Software Developer (react) - Up To £180k Base + Equity" | Location: "London Area, United Kingdom" | JD uses React (0 points), no Node.js.
+→ loc: 25 (London, UK)
+→ role: Words [Senior, Software, Developer, react, Up, To, 180k, Base, Equity] → "Senior" = TIER 1 → 25
+→ tech: React = 0, no Node.js, no JS/TS → 0
+→ comp: ONE amount "Up To £180k" → 0
+→ total: 25+25+0+0 = 50 → maybe
+{"loc":25,"role":25,"tech":0,"comp":0,"score":50,"label":"maybe","reasoning":"Senior in London (+25+25), no matching tech (0), up-to salary with no lower bound (0)."}
+
+Example D (non-software senior with salary range):
+Title: "Lead DevOps Architect" | Location: "Hybrid - Manchester, UK" | JD requires Python, PyTorch, fine-tuning LLMs. Salary: £100,000 - £115,000.
+→ loc: 10 (UK, not London, not Remote)
+→ role: Words [Lead, DevOps, Architect] → "Lead" = TIER 1 → 25
+→ tech: PyTorch + fine-tuning LLMs = AI/ML +10. No Node, no JS/TS → 10
+→ comp: RANGE £100,000-£115,000, midpoint £107,500 → 25
+→ total: 10+25+10+25 = 70 → good_fit
+{"loc":10,"role":25,"tech":10,"comp":25,"score":70,"label":"good_fit","reasoning":"Lead role in Manchester, AI/ML required, £107.5k midpoint."}
+
+Example E (mixed tech with non-matching):
+Title: "Full Stack Engineer" | Location: "Bristol, England, United Kingdom" | JD lists Node, Prisma, React, Typescript, Tailwind. Salary: £50-100k.
+→ loc: 10 (UK, not London, not Remote)
+→ role: Words [Full, Stack, Engineer] → "Full Stack" = TIER 2 → 15
+→ tech: Node +10, Typescript +5, (React=0, Prisma=0, Tailwind=0) → 15
+→ comp: RANGE £50-100k → £50,000-£100,000, midpoint £75,000 → 15
+→ total: 10+15+15+15 = 55 → maybe
+{"loc":10,"role":15,"tech":15,"comp":15,"score":55,"label":"maybe","reasoning":"Full Stack in Bristol, Node/TS match, £75k midpoint."}
+
+===== OUTPUT FORMAT =====
+
+Score each category independently, then total = max(0, min(100, loc+role+tech+comp)).
+
+Assign label from total:
+  IF total >= 70 THEN label = "good_fit"
+  IF total >= 50 AND total <= 69 THEN label = "maybe"
+  IF total <= 49 THEN label = "bad_fit"
+
+Return ONLY this JSON:
+{"loc":0,"role":0,"tech":0,"comp":0,"score":0,"label":"bad_fit","reasoning":"brief"}

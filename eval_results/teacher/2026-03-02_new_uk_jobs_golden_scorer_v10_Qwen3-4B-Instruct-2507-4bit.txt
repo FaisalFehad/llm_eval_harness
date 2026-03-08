@@ -1,0 +1,176 @@
+Output: eval_results/2026-03-02_new_uk_jobs_golden_scorer_v10_Qwen3-4B-Instruct-2507-4bit.txt
+Prompt: prompts/scorer_v10.txt
+Loading model with adapter: finetune/adapters
+Model: mlx-community/Qwen3-4B-Instruct-2507-4bit
+────────────────────────────────────────────────────────────
+Running eval on 72 test examples...
+
+[ 1/72] ✓ Snr Full Stack Engineer | Hyper-Growth F golden=maybe      pred=maybe      loc=25 role=25 tech=15 comp=0  (100%)
+      reasoning: London/Remote UK (+25), senior-level role (+25), tech stack (15), no GBP salary (0).
+[ 2/72] ✓ Lead Software Engineer - 12 month FTC    golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[ 3/72] ✓ Software Engineer, Early Career          golden=bad_fit    pred=bad_fit    loc=25 role=15 tech=15 comp=0  (100%)
+      reasoning: London/UK (+25), mid-level role (+15), tech stack (15), no GBP salary (0).
+[ 4/72] ✓ Software Engineer, Machine Learning      golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[ 5/72] ✓ Software Engineer (.NET, Azure)          golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[ 6/72] ✓ Senior ML/AI Software Engineer           golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[ 7/72] ✓ Software Engineer                        golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[ 8/72] ✓ Junior Developer                         golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[ 9/72] ✓ Senior Enterprise Security Architect (Pr golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (100%)
+      reasoning: London/Remote UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[10/72] ✓ Senior Software Engineer                 golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (100%)
+      reasoning: London/Remote UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[11/72] ✓ Senior Data Engineer                     golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (100%)
+      reasoning: London/Remote UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[12/72] ✓ Computer Vision Research Engineer        golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/Remote UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[13/72] ✓ Senior Software Engineer                 golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (100%)
+      reasoning: London/Remote UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[14/72] ✓ DevOps Cloud Engineer                    golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/Remote UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[15/72] ✓ Graduate Software Engineer               golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: UK/Remote (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[16/72] ✓ Machine Learning Engineer                golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/Remote UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[17/72] ✓ Software Engineer – Hardware Dataflow    golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: UK/Remote (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[18/72] ✓ Senior Software Engineer                 golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (100%)
+      reasoning: London/Remote UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[19/72] ✓ System Engineer | $80/hr Remote          golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: UK/Remote (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[20/72] ✓ Software Developer                       golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: UK/Remote (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[21/72] ✓ Data Engineer                            golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/Remote UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[22/72] ✓ Senior Product Engineer - Python / Djang golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (100%)
+      reasoning: London/Remote UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[23/72] ✓ DevOps Engineer                          golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: UK/Remote (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[24/72] ✓ Laravel Back End Developer               golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: UK/Remote (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[25/72] ✓ Website Engineering                      golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[26/72] ✓ Software Engineer, Integrations          golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/Remote UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[27/72] ✓ Linux Systems Engineer                   golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: UK/Remote (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[28/72] ✓ Visualfiles Developer                    golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/Remote UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[29/72] ✓ Software Engineer                        golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[30/72] ✓ Software Engineer III - AI - Chase UK    golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[31/72] ✓ Junior Android Engineer                  golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[32/72] ✓ Senior Backend Engineer                  golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[33/72] ✓ Senior Software Engineer, Strategy Platf golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[34/72] ✓ Specialist Solution Engineer, Partner Ec golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[35/72] ✓ Senior Research Engineer - Design Genera golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[36/72] ✓ Research Engineer (LLM Training and Perf golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=10 comp=0  (100%)
+      reasoning: London/UK (+25), no seniority keyword (0), tech stack (10), no GBP salary (0).
+[37/72] ✓ Professional Service Engineer - Workforc golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[38/72] ✓ One Identity Manager (1IM) Developer     golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/Remote UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[39/72] ✓ Senior Back-End Engineer                 golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[40/72] ✓ Senior Data & Platform Engineer          golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[41/72] ✓ Senior Backend Engineer                  golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[42/72] ✓ Senior Backend Engineer (Python)         golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[43/72] ✓ Forward Deployed Engineer - London Forwa golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[44/72] ✓ Research Engineer, Frontier Safety Risk  golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[45/72] ✓ Fullstack Software Engineer (Python) Ful golden=bad_fit    pred=bad_fit    loc=25 role=15 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), mid-level role (+15), no matching tech (0), no GBP salary (0).
+[46/72] ✓ Senior Lead - Staff Software Engineer Se golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[47/72] ✓ Dotnet Developer Dotnet Developer with v golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/Remote UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[48/72] ✓ Senior Software Engineer, Bonsai Senior  golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[49/72] ✓ Senior Software Development Engineer in  golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[50/72] ✓ Software Engineer, Infrastructure Softwa golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[51/72] ✓ Python Developer Python Developer        golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[52/72] ✓ Python Engineer Python Engineer with ver golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[53/72] ✓ Microsoft Entra ID Security Engineer Mic golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/Remote UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[54/72] ✓ Python Developer - Data & Analytics Team golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[55/72] ✓ Technical Account Manager (Escalation En golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[56/72] ✓ Senior Data Engineer Senior Data Enginee golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (100%)
+      reasoning: London/Remote UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[57/72] ✓ Senior Kotlin/JVM Engineer Senior Kotlin golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (100%)
+      reasoning: London/UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[58/72] ✗ AI Engineer AI Engineer with verificatio golden=bad_fit    pred=maybe      loc=25 role=0 tech=10 comp=25  (98%)
+      reasoning: London/UK (+25), no seniority keyword (0), tech stack (10), salary ≥£100k (+25).
+[59/72] ✓ Senior Backend Engineer Senior Backend E golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (98%)
+      reasoning: London/Remote UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[60/72] ✓ Deployment Strategist (UK Defence) Deplo golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (98%)
+      reasoning: London/UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[61/72] ✓ Infrastructure and Connectivity - Cloud  golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (98%)
+      reasoning: London/UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[62/72] ✓ Senior Linux Engineer Senior Linux Engin golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (98%)
+      reasoning: London/UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[63/72] ✓ Senior Data Analyst / Data Engineer Seni golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (98%)
+      reasoning: London/UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[64/72] ✓ Senior Systems Software Engineer Senior  golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (98%)
+      reasoning: London/UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[65/72] ✓ Quantitative Developer - AI Implementati golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (98%)
+      reasoning: London/UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[66/72] ✗ Senior Power Platform Developer Senior P golden=maybe      pred=good_fit   loc=25 role=25 tech=0 comp=25  (97%)
+      reasoning: London/UK (+25), senior-level role (+25), no matching tech (0), salary ≥£100k (+25).
+[67/72] ✓ Python Developer Python Developer with v golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (97%)
+      reasoning: London/UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[68/72] ✓ Senior Solutions Engineer Senior Solutio golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (97%)
+      reasoning: London/Remote UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[69/72] ✓ Outcome Customer Engineer, Google Cloud  golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=0 comp=0  (97%)
+      reasoning: London/UK (+25), no seniority keyword (0), no matching tech (0), no GBP salary (0).
+[70/72] ✗ Site Reliability Engineer - Trading - £7 golden=bad_fit    pred=maybe      loc=25 role=0 tech=0 comp=25  (96%)
+      reasoning: London/Remote UK (+25), no seniority keyword (0), no matching tech (0), salary ≥£100k (+25).
+[71/72] ✓ Senior Software Engineer - React Native/ golden=maybe      pred=maybe      loc=25 role=25 tech=0 comp=0  (96%)
+      reasoning: London/Remote UK (+25), senior-level role (+25), no matching tech (0), no GBP salary (0).
+[72/72] ✓ Software Engineer - AI Agents | Rust | T golden=bad_fit    pred=bad_fit    loc=25 role=0 tech=5 comp=0  (96%)
+      reasoning: London/UK (+25), no seniority keyword (0), tech stack (5), no GBP salary (0).
+
+════════════════════════════════════════════════════════════
+RESULTS
+════════════════════════════════════════════════════════════
+Total examples:  72
+Parse failures:  0
+Valid outputs:   72
+
+Label accuracy:  69/72 = 95.8%  (baseline: 39.8%)
+
+Field accuracy:
+  loc:   72/72 = 100.0%
+  role:  71/72 = 98.6%
+  tech:  68/72 = 94.4%
+  comp:  69/72 = 95.8%
+
+Per-label breakdown:
+  maybe     : 27/28 = 96%
+  bad_fit   : 42/44 = 95%
+
+Error patterns:
+  Over-scoring:   2  (predicted higher than golden)
+  Under-scoring:  0  (predicted lower than golden)
+  Other:          1  (e.g. good_fit↔maybe)
+  Parse failures: 0

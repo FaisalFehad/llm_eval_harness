@@ -1,0 +1,19 @@
+{
+  "_note": "STALE — original eval_150_golden.jsonl and train_800.jsonl were lost on 2026-03-07 due to accidental overwrite. This manifest is no longer valid. V6 will build a new eval set from all_labeled_pool.jsonl.",
+  "original_eval": {
+    "path": "data/v5/eval_150_golden.jsonl",
+    "count": 150,
+    "status": "LOST — file zeroed by SIGPIPE during testing"
+  },
+  "original_train": {
+    "path": "data/v5/train_800.jsonl",
+    "count": "unknown (was a subset of train_860.jsonl)",
+    "status": "LOST — file zeroed by SIGPIPE during testing"
+  },
+  "surviving_data": {
+    "train_860.jsonl": "895 jobs — original V5.1 training data, INTACT",
+    "all_labeled_pool.jsonl": "1522 jobs — full pool, INTACT",
+    "mlx/train.jsonl": "806 jobs — MLX chat format, INTACT",
+    "mlx/valid.jsonl": "89 jobs — MLX chat format, INTACT"
+  }
+}

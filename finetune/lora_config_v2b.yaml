@@ -1,0 +1,37 @@
+# MLX LoRA config for v2.1 — comp under-scoring fix
+#
+# Strategy: continue from v2 iter 200, boost comp=25/15 representation
+# v2 bug: comp under-scoring (89% comp=0 in training made model too conservative)
+#
+# Usage:
+#   source .venv/bin/activate
+#   python -m mlx_lm lora --config finetune/lora_config_v2b.yaml
+
+model: "mlx-community/Qwen3-4B-Instruct-2507-4bit"
+data: "data/finetune/mlx_v2b"
+train: true
+fine_tune_type: "lora"
+
+# Resume from v2's best checkpoint
+resume_adapter_file: "finetune/adapters_v2/0000200_adapters.safetensors"
+
+# LoRA hyperparameters — must match v1/v2
+lora_parameters:
+  rank: 4
+  scale: 4.0
+  dropout: 0.05
+
+# Training parameters
+batch_size: 1
+iters: 100             # Short targeted fix
+learning_rate: 5.0e-6
+warmup_steps: 10
+max_seq_length: 3200
+
+# Output
+adapter_path: "finetune/adapters_v2b"
+save_every: 50         # Checkpoint at 50 and 100
+
+# Memory optimization
+mask_prompt: true
+grad_checkpoint: true

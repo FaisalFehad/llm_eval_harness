@@ -21,7 +21,12 @@
     "compare": "Compare eval results across runs. Pass --model <name> to filter, --last <n> to limit runs shown.",
     "prompt-lab": "Quick 10-job eval on a single model with markdown report. Use --config to A/B test prompts. Requires --model.",
     "finetune:split": "Stratified train/test split of scored golden jobs (default 70/33). Writes data/finetune/train.jsonl, test.jsonl, split_manifest.json.",
-    "finetune:format": "Format training jobs as MLX chat JSONL (system+user+assistant messages). Reads data/finetune/train.jsonl, writes data/finetune/mlx/train.jsonl."
+    "finetune:format": "Format training jobs as MLX chat JSONL (system+user+assistant messages). Reads data/finetune/train.jsonl, writes data/finetune/mlx/train.jsonl.",
+    "finetune:eval": "Eval a fine-tuned MLX model. Args passed through: --adapter, --test-file, --prompt, --job, --verbose. Example: npm run finetune:eval -- --adapter finetune/adapters_v2b --test-file data/new_uk_jobs_golden.jsonl --prompt prompts/scorer_v9.txt --job 42",
+    "student:preprocess": "Normalize raw LinkedIn scraper output for teacher labeling. --input, --output, --min-length",
+    "student:augment": "Generate salary injection, contrastive pairs, location variants, JD truncation from teacher-labeled data. --input, --output-dir, --seed",
+    "student:assemble": "Merge all labeled sources, deduplicate, exclude eval set, stratified sample. --eval-set, --output, --target-size, --augmented-cap, --seed",
+    "student:analyze": "Analyze student model predictions vs teacher labels. --input <predictions.jsonl> [--output <report.md>]"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
@@ -40,7 +45,12 @@
     "compare": "tsx src/cli/compare-eval-run-results.ts",
     "prompt-lab": "tsx --expose-gc src/cli/prompt-lab.ts",
     "finetune:split": "tsx src/cli/split-scored-jobs-into-train-and-test.ts",
-    "finetune:format": "tsx src/cli/format-finetune-training-data-for-mlx.ts"
+    "finetune:format": "tsx src/cli/format-finetune-training-data-for-mlx.ts",
+    "finetune:eval": ".venv/bin/python finetune/eval_finetuned.py",
+    "student:preprocess": "tsx src/cli/preprocess-raw-jobs.ts",
+    "student:augment": "tsx src/cli/augment-training-data.ts",
+    "student:assemble": "tsx src/cli/assemble-student-training.ts",
+    "student:analyze": "tsx src/cli/analyze-student-eval.ts"
   },
   "keywords": [
     "typescript",

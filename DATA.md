@@ -18,6 +18,9 @@ CONTAMINATED (model trained on these)     CLEAN (model never seen these)
 data/finetune/train.jsonl (70 jobs)       data/finetune/test.jsonl (33 jobs)
 data/finetune/mlx/train.jsonl (93 ex.)    data/new_uk_jobs_golden.jsonl (72 jobs)
                                           data/software_engineer_salaries_golden.jsonl (868 jobs)
+                                          data/test_location_failures.jsonl (9 jobs)
+                                          data/random_uk_jobs_scored.jsonl (100 jobs)
+                                          data/test_random_uk_jobs.jsonl (72 jobs)
 ```
 
 The 33-job test set and both "golden" datasets were **never touched during training**.
@@ -122,7 +125,9 @@ These files were created **after** fine-tuning and have **zero overlap** with tr
   loc, role, tech, comp, source_url`
 - **Label distribution**: 28 maybe / 44 bad_fit / 0 good_fit (no GBP salaries in JDs)
 - **Contamination**: ✅ **CLEAN** — safe to eval fine-tuned model against this.
-- **Eval result**: Fine-tuned model scored **81.9%** label accuracy on this set.
+- **Eval results**:
+  - v9 prompt: **81.9%** label accuracy
+  - v10 prompt (stronger location rules + Example C): **95.8%** label accuracy
 - **Limitation**: Labels are deterministic-scorer output, not hand-verified. Treat as
   approximate ground truth.
 
@@ -139,6 +144,44 @@ These files were created **after** fine-tuning and have **zero overlap** with tr
   as a sanity check that the model correctly rejects non-UK jobs — not a true accuracy
   test.
 - **Eval result**: Fine-tuned model scored **100%** (expected and uninformative).
+
+#### `data/test_location_failures.jsonl`
+- **What**: 9 jobs extracted from `new_uk_jobs_golden.jsonl` that the fine-tuned model
+  incorrectly scored `loc=-50` (non-UK) despite having clear UK location fields. Used for
+  targeted prompt testing before running the full 72-job eval.
+- **How created**: Manually extracted from `new_uk_jobs_golden.jsonl` at known failing indices.
+- **Fields**: `job_id, title, company, location, jd_text, label, loc, role, tech, comp, score, reasoning`
+- **Label distribution**: 9 bad_fit (all have golden loc=25 — UK jobs misclassified by model)
+- **Contamination**: ✅ **CLEAN**
+- **Eval results**:
+  - v9 prompt: **0/9 = 0%** loc accuracy (all scored loc=-50)
+  - v10 prompt: **9/9 = 100%** loc accuracy (prompt fix worked perfectly)
+- **Root cause**: Model used world knowledge about company names (PlayStation, Zoom, Flexera)
+  to infer non-UK location, overriding the explicit `job_location` field. Fixed in v10 with
+  stronger location rules and a worked example showing the correct behaviour.
+
+#### `data/random_uk_jobs_scored.jsonl`
+- **What**: 100 random UK LinkedIn jobs with no connection to software engineering — the
+  source dataset for OOD (out-of-distribution) testing.
+- **How created**: Manual LinkedIn scrape across diverse UK roles and locations.
+- **Fields**: `title, location, jd_text, label`
+- **Label distribution**: 100 bad_fit (all non-software jobs score 0 under the rubric)
+- **Contamination**: ✅ **CLEAN**
+- **Limitation**: No component scores (`loc/role/tech/comp`) — label-only eval only.
+
+#### `data/test_random_uk_jobs.jsonl`
+- **What**: 72-job random sample (seed=42) from `random_uk_jobs_scored.jsonl`. Sized to
+  match `new_uk_jobs_golden.jsonl` for direct comparison. The primary OOD eval dataset.
+- **How created**: Random sample of `random_uk_jobs_scored.jsonl` with seed=42.
+- **Fields**: `title, location, jd_text, label`
+- **Label distribution**: 72 bad_fit
+- **Contamination**: ✅ **CLEAN**
+- **Eval results**:
+  - v10 prompt: **64/72 = 88.9%** — 8 failures, all `maybe` at score=50
+  - v11 prompt (domain gate): **69/70 = 98.6%** valid outputs (2 parse failures introduced)
+- **OOD design**: Diverse roles (nurses, chefs, planners, event managers), mixed seniority,
+  spread across small UK towns (Fort William, Brecon, Bicester, Golborne) — deliberately
+  avoiding the London/software-heavy distribution of training data.
 
 ---
 
@@ -204,8 +247,12 @@ directly. Required fields: `title`, `location`, `jd_text`, `label`. Component sc
 source .venv/bin/activate
 python finetune/eval_finetuned.py \
   --adapter finetune/adapters/0000200_adapters.safetensors \
-  --test-file data/finetune/test.jsonl   # or any other CLEAN file
+  --test-file data/finetune/test.jsonl \  # or any other CLEAN file
+  --prompt prompts/scorer_v11.txt \       # omit to use built-in prompt
+  --verbose                               # print each prediction + running %
+  --output-dir eval_results/              # auto-saves output (default: eval_results/)
 ```
+Output is auto-named: `eval_results/YYYY-MM-DD_<test-file>_<prompt>.txt`
 
 ---
 
@@ -292,6 +339,35 @@ prints a table of the last N tagged runs with their timestamps and result direct
 
 ---
 
+## Prompts
+
+All prompt versions live in `prompts/`. The fine-tuned model was trained using the v9
+prompt template embedded in `finetune/eval_finetuned.py`. Newer prompt files can be
+passed via `--prompt` to test improvements without retraining.
+
+| File | Key change | Best result |
+|------|-----------|-------------|
+| `scorer_v9.txt` | Baseline prompt used during fine-tuning | 81.9% on UK LinkedIn jobs |
+| `scorer_v10.txt` | Stronger location rules; explicit "use ONLY job_location" list; Example C (PlayStation) | 95.8% on UK LinkedIn jobs |
+| `scorer_v11.txt` | Adds Step 0 domain gate — exits immediately for non-software roles | 98.6% on OOD random UK jobs |
+
+**When to use which prompt:**
+- For evals of the fine-tuned model on software jobs → `scorer_v10.txt`
+- For evals including non-software jobs / OOD testing → `scorer_v11.txt`
+- Never use v9 for new evals — it has known location scoring failures
+
+---
+
+## Eval Results
+
+Saved outputs from eval runs are stored in `eval_results/`, auto-named by date + test file + prompt.
+
+| File | Test set | Prompt | Result |
+|------|----------|--------|--------|
+| `eval_results/2026-03-01_test_random_uk_jobs_scorer_v11.txt` | 72 random UK jobs | v11 | 69/70 = 98.6% |
+
+---
+
 ## Pipeline Diagram
 
 ```
@@ -319,26 +395,35 @@ data/golden_jobs.jsonl  (103 hand-labeled — MASTER)
 
 New unseen data (scraped AFTER fine-tuning):
         │
-        ├─ data/new_uk_jobs.jsonl  (205 raw)
+        ├─ data/new_uk_jobs.jsonl  (205 raw, software jobs)
         │        └─ score-raw-jobs-to-golden-format.ts
         │                 └─▶ data/new_uk_jobs_golden.jsonl  (72)  ✅ CLEAN
+        │                          └─ eval_finetuned.py --prompt scorer_v10.txt → 95.8%
         │
-        └─ data/Software Engineer Salaries.csv
-                 └─ convert-salary-csv-to-golden-jobs.ts
-                          └─▶ data/software_engineer_salaries_golden.jsonl  (868)  ✅ CLEAN
-                                  (all bad_fit — limited eval value, sanity check only)
+        ├─ data/Software Engineer Salaries.csv
+        │        └─ convert-salary-csv-to-golden-jobs.ts
+        │                 └─▶ data/software_engineer_salaries_golden.jsonl  (868)  ✅ CLEAN
+        │                          (all bad_fit — sanity check only)
+        │
+        └─ data/random_uk_jobs_scored.jsonl  (100 raw, random non-software UK jobs)
+                 └─ random sample seed=42
+                          └─▶ data/test_random_uk_jobs.jsonl  (72)  ✅ CLEAN  ← OOD test set
+                                   ├─ eval_finetuned.py --prompt scorer_v10.txt → 88.9%
+                                   └─ eval_finetuned.py --prompt scorer_v11.txt → 98.6%
 ```
 
 ---
 
 ## Quick Reference: Which File to Use for Eval?
 
-| Scenario | File to use |
-|----------|-------------|
-| Eval fine-tuned model (honest) | `data/finetune/test.jsonl` |
-| Eval fine-tuned model (real-world UK jobs) | `data/new_uk_jobs_golden.jsonl` |
-| Sanity check non-UK rejection | `data/software_engineer_salaries_golden.jsonl` |
-| Eval baseline model (no fine-tuning) | `data/promptfoo_tests.yaml` via `npm run eval` |
-| Prompt engineering iteration | `npm run prompt-lab -- --model <name>` (10 jobs) |
-| Adding new unseen UK jobs for future eval | Scrape → `score-raw-jobs-to-golden-format.ts` |
-| Adding new hand-labeled jobs | Scrape → `sample-jobs-from-export-for-labeling.ts` → manual label → append to `golden_jobs.jsonl` |
+| Scenario | File to use | Prompt |
+|----------|-------------|--------|
+| Eval fine-tuned model (honest, software jobs) | `data/finetune/test.jsonl` | `scorer_v10.txt` |
+| Eval fine-tuned model (real-world UK software jobs) | `data/new_uk_jobs_golden.jsonl` | `scorer_v10.txt` |
+| OOD eval (random non-software UK jobs) | `data/test_random_uk_jobs.jsonl` | `scorer_v11.txt` |
+| Targeted location failure testing | `data/test_location_failures.jsonl` | `scorer_v10.txt` |
+| Sanity check non-UK rejection | `data/software_engineer_salaries_golden.jsonl` | either |
+| Eval baseline model (no fine-tuning) | `data/promptfoo_tests.yaml` via `npm run eval` | — |
+| Prompt engineering iteration | `npm run prompt-lab -- --model <name>` (10 jobs) | — |
+| Adding new unseen UK jobs for future eval | Scrape → `score-raw-jobs-to-golden-format.ts` | — |
+| Adding new hand-labeled jobs | Scrape → `sample-jobs-from-export-for-labeling.ts` → manual label → append to `golden_jobs.jsonl` | — |
