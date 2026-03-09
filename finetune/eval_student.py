@@ -64,7 +64,7 @@ from mlx_lm import load, generate
 
 MODEL_ID = "mlx-community/Qwen2.5-0.5B-Instruct-4bit"
 DEFAULT_TEST_FILE = "data/v5/eval_150_golden.jsonl"
-DEFAULT_PROMPT = "prompts/student_v5.txt"
+DEFAULT_PROMPT = "prompts/student_v6.txt"
 MAX_TOKENS = 500
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
@@ -126,8 +126,11 @@ def score_v5_result(predicted: dict, golden: dict) -> dict:
         "golden_label": golden_computed["label"],
         "pred_score": pred_computed["score"],
         "golden_score": golden_computed["score"],
-        # Reasoning (for analysis)
-        "pred_reasoning": pred.get("reasoning", ""),
+        # Reasoning (for analysis — 4 per-field reasons)
+        "pred_loc_reason": pred.get("loc_reason", ""),
+        "pred_role_reason": pred.get("role_reason", ""),
+        "pred_tech_reason": pred.get("tech_reason", ""),
+        "pred_comp_reason": pred.get("comp_reason", ""),
     }
 
 
@@ -301,7 +304,10 @@ def main():
                 "pred_label": scored["pred_label"],
                 "golden_score": scored["golden_score"],
                 "pred_score": scored["pred_score"],
-                "reasoning": scored.get("pred_reasoning", ""),
+                "loc_reason": scored.get("pred_loc_reason", ""),
+                "role_reason": scored.get("pred_role_reason", ""),
+                "tech_reason": scored.get("pred_tech_reason", ""),
+                "comp_reason": scored.get("pred_comp_reason", ""),
             })
 
         status = "✓" if scored["label_match"] else "✗"
@@ -324,9 +330,10 @@ def main():
                 icon = "✓" if scored.get(f"{field}_match") else "✗"
                 parts.append(f"{field} {g}→{p} {icon}")
             print(f"{indent}{' │ '.join(parts)}")
-            reasoning = scored.get("pred_reasoning", "")
-            if reasoning:
-                print(f"{indent}{reasoning[:120]}")
+            reasons = [scored.get(f"pred_{f}_reason", "") for f in ("loc", "role", "tech", "comp")]
+            reason_str = " | ".join(r for r in reasons if r)
+            if reason_str:
+                print(f"{indent}{reason_str[:140]}")
             print()
 
     # ── Summary ───────────────────────────────────────────────────────────────

@@ -382,7 +382,7 @@ Additionally: "Engineering Manager (React Native)" appeared 4 times (duplicate j
 
 **Investigation**: Traced every script in the pipeline — `preprocess-raw-jobs.ts`, `assemble-student-training.ts`, `build-input-pool.ts`, `label-jobs.ts`, `extract-title-salary-description.ts`, `augment-training-data.ts`, `build-datasets.ts`, `format-for-mlx.ts`. **None of them modify the title field.** The most they do is `normalizeText()` which only collapses whitespace. `label-jobs.ts` line 147 passes `job.title` directly into the prompt template — no field swapping, no alternate sources.
 
-**Actual root cause — two factors combining:**
+**Most likely root cause (strong hypothesis, not fully proven — no labeling logs exist from original runs):**
 
 1. **LinkedIn titles ≠ JD body titles**: Companies post with a generic listing title ("Node.JS Engineer") but their JD text describes a different role ("Senior Backend Developer"). This is a real-world data quirk — the LinkedIn scraper picks up the listing title, but the company wrote their JD with their internal title.
 
@@ -549,8 +549,12 @@ The total cost of NOT having this validation: two training runs (~8h GPU time), 
 | 21 | No unified data quality tooling | Built audit-training-data.ts with 13 checks, pipeline gate, clean mode | ✅ Done |
 | 22 | SIGPIPE destroyed eval set + train file | 4-layer safeguards: overwrite protection, auto-chmod, CLAUDE.md rules, file permissions | ✅ Done |
 | 23 | Script version numbers cause confusion | Renamed 8 scripts to drop v5 suffix, updated 9 files | ✅ Done |
-| 24 | Title-mismatch root cause: GPT adherence + LinkedIn quirk | Two-gate validation: pre-label audit + post-label audit + Promptfoo + logging | ✅ Designed, implementation pending |
-| 25 | No data validation between labeling and training in V5/V5.1 | Two-gate system catches all 9 known issue types before training | ✅ Designed, implementation pending |
+| 24 | Title-mismatch root cause: GPT adherence + LinkedIn quirk | Two-gate validation: pre-label audit + post-label audit + Promptfoo + logging. Root cause is strong hypothesis (pipeline traced, plausible), not fully proven (no logs from original runs). | ✅ Implemented (pre-label, post-label, Promptfoo, logging all built) |
+| 25 | No data validation between labeling and training in V5/V5.1 | Two-gate system catches all 9 known issue types before training | ✅ Implemented |
+| 26 | NODE token family severely underrepresented | 2,543 real + 46 tech-swap synthetic jobs. All NODE gaps filled. | ✅ Done |
+| 27 | Structured reasoning format redesign | 8-field interleaved format replaces free-form reasoning. 3-layer defense: teacher prompt, audit check, normalization. | ✅ Implemented |
+| 28 | V7 teacher prompt architecture (4→6 fields) | 6 fields, 28 tokens, richer vocabulary. Backward-compatible scoring via translation layer. All downstream scripts updated. | ✅ Implemented |
+| 29 | V6→V7 distribution gaps (FULLY_REMOTE, NODE, NODE_AI_ML) | 60 FULLY_REMOTE + 45 NODE + 10 NODE_AI_ML synthetic variants from real JDs. V7 minimums added to plan. | ✅ Done |
 
 ---
 
@@ -591,3 +595,197 @@ The total cost of NOT having this validation: two training runs (~8h GPU time), 
 17. **Validate at the earliest possible point**: The most expensive place to discover a data quality issue is after training (~4h). The cheapest is before labeling (~0s). Split validation into two gates: pre-label (catches input data issues before spending API money) and post-label (catches model output issues before spending training hours). Every check that can run on raw input should run before labeling. Never spend money producing data you'll throw away, never spend hours training on data with known problems.
 
 18. **When investigating data issues, check the full pipeline before concluding**: Initial hypothesis for Finding 19 was "GPT doesn't follow instructions." User pushed back: "we have scripts that manipulate data." Investigation of 10 scripts confirmed the pipeline was clean — but we would have been wrong to skip the check. Always trace the full data flow, not just the last step.
+
+19. **For tiny models, reasoning quality matters as much as label quality**: Free-form reasoning teaches stylistic variation that wastes model capacity. Structured reasoning with predictable patterns lets the model focus capacity on classification accuracy. A 0.5B model can't afford to spend parameters learning that "→ UK" and "→ UK_OTHER" mean the same thing.
+
+---
+
+## Finding 26: Distribution Analysis — NODE Token Family Severely Underrepresented
+
+**How found**: Counted actual token distributions in all_labeled_pool.jsonl (1,522 jobs) against V5 plan minimum targets. Then searched ~5,000 real LinkedIn jobs across all available scraping sources.
+
+**Impact**: NODE had 38 examples vs 80 minimum. NODE_AI_ML had 0 examples vs 15 minimum. These are the tokens that produce `good_fit` labels (NODE=10, NODE_AI_ML=20 tech points). V5.1's worst errors were in tech (72.5% accuracy), specifically NODE_JS_TS→JS_TS confusion — the model literally didn't have enough NODE examples to learn the distinction. good_fit labels were also only 91 vs 200 minimum, and maybe only 269 vs 300.
+
+**Data sources searched**:
+- `data/scraped_data/` — 14 JSONL files (1,675 jobs)
+- `job_search_agent_v2/linkedinScraper/` — 43 JSONL files (318 jobs)
+- `job_search_agent_v2/scripts/` — balanced datasets, shopping lists (3,480 jobs)
+- `job_search_agent_v2/linkedinScraper/data/` — additional scraper data
+- Root `linkedin_jobs.jsonl` files
+- `job_search_agent_v2/jobs.db` — SQLite database (92 jobs with descriptions)
+- `shoopinglist_5_march_26_v3/` synthetics — checked but rejected (low quality: mismatched company names, template descriptions, some didn't mention target tech)
+
+**Result**: After deduplication against pool and within scraped, quality filtering (>100 char descriptions, valid titles), and removing 570 missing-location jobs (kept only NODE ones): 2,543 new real jobs.
+
+**Gap filling**: Pure NODE and NODE_AI_ML are structurally rare in real data (most Node.js jobs also require React/TypeScript → NODE_JS_TS). Generated 46 variants using tech-swap from real backend Python/Java/Go donor jobs:
+- 32 NODE variants: swapped Python→Node.js, Django→Express, Flask→Fastify in real backend JDs
+- 14 NODE_AI_ML variants: added Node.js backend references to real AI/ML jobs, kept Python for ML context
+- Method: programmatic regex replacement per Critical Rule #6 (not GPT rephrasing)
+- Quality checks: no frontend leakage, no old tech remnants, capitalisation varied (Node.js/NodeJS/nodejs)
+- Synthetic = 1.8% of total (well under 25% cap)
+
+**Decision**: Use combined pool + scraped + synthetic for V6 labeling. All NODE-family gaps now met or exceeded.
+
+**Edge case coverage**: Verified ≥5 examples for all 6 edge case categories from TRAINING_PLAN_V5.md: Dublin/Ireland=65, Belfast/N.Ireland=36, JD-contradicts-title=152, "node" as network node=60, daily rates=20, mixed currencies (GBP+USD/EUR)=72. No gaps to fill — all edge cases are well represented in the combined pool+scraped dataset.
+
+**Lesson**: Pure NODE is genuinely rare in the job market (~1% of real jobs). Most Node.js roles also require frontend tech. This means the model MUST see targeted examples — natural distribution won't teach NODE vs NONE discrimination. Tech-swap from real donors is higher quality than pure synthetic generation because it preserves realistic JD structure (benefits, EO statements, formatting quirks).
+
+---
+
+## Finding 27: Structured Reasoning Format Redesign
+
+**How found**: Analyzed V5 training data and found 1,048 reasoning-token mismatches where GPT-4o-mini used abbreviated tokens in the reasoning string (e.g., "→ UK" instead of "→ UK_OTHER", "→ LONDON" instead of "→ LONDON_OR_REMOTE"). Since reasoning IS part of training data (included in format-for-mlx.ts assistant response), these abbreviations could confuse the 0.5B student model — it might learn abbreviated tokens from the reasoning and output them as actual tokens.
+
+**Analysis**: For a large model like GPT-4o-mini, these inconsistencies are trivial. But for a 0.5B student, every inconsistency in training data is magnified. The reasoning is generated autoregressively BEFORE the token fields, so abbreviated tokens in reasoning create conflicting attention signals.
+
+**Impact**: HIGH — affects all training data format, student prompt, eval parsing.
+
+**Decision**: Complete format redesign from 5-field to 8-field interleaved structured reasoning:
+- OLD: `{"reasoning":"loc: evidence → token. role: evidence → token. tech: ... comp: ...","loc":"...","role":"...","tech":"...","comp":"..."}`
+- NEW: `{"loc_reason":"evidence -> TOKEN","loc":"TOKEN","role_reason":"evidence -> TOKEN","role":"TOKEN","tech_reason":"evidence -> TOKEN","tech":"TOKEN","comp_reason":"evidence -> TOKEN","comp":"TOKEN"}`
+
+**Key design choices**:
+1. **Interleaved** (reason immediately before its token) — tightest attention anchor for tiny model
+2. **ASCII "->"** instead of unicode "→" — better tokenizer handling
+3. **Each reason ends with "-> FULL_TOKEN_NAME"** — redundancy reinforces correct answer
+4. **Semicolons for ignored items**: "node.js; react ignored -> NODE"
+5. **Teacher output = Student training data = Student inference output** (same 8-field format, no conversion)
+6. **Eval scores only 4 token fields**, ignores _reason fields
+
+**Safeguards built (3-layer defense)**:
+- Layer 1: V6 teacher prompt enforces strict format with 3 worked examples
+- Layer 2: `audit-training-data.ts` new "reasoning_token_mismatch" check catches abbreviated tokens
+- Layer 3: `format-for-mlx.ts` `normalizeReasoning()` auto-fixes any remaining abbreviations
+
+**Files changed**: `prompts/teacher_v6.txt` (updated output format), `prompts/student_v6.txt` (new file), `src/cli/audit-training-data.ts` (new check), `src/cli/format-for-mlx.ts` (normalization)
+
+**Category**: Design decision
+
+**Status**: Implemented, pending downstream file updates
+
+**Lesson**: For tiny models, reasoning quality matters as much as label quality. Free-form reasoning teaches stylistic variation that wastes model capacity. Structured reasoning with predictable patterns lets the model focus capacity on classification accuracy.
+
+---
+
+## Finding 28: V7 Teacher Prompt Architecture — Richer Token Vocabulary for Better Student Training
+
+**How found**: Iterative prompt design session analyzing the V6 teacher prompt against Perplexity research on optimal teacher prompt design for reasoning models (GPT-4o-mini). Identified several structural weaknesses in V6's field design.
+
+**Problems identified in V6**:
+
+1. **LONDON_OR_REMOTE is a blurry token**: Merges two distinct signals (physical London office vs fully remote anywhere). The student model can't learn nuanced location patterns when fundamentally different situations share one label. A London hybrid job and a fully remote job have different patterns in JD text but produce the same token.
+
+2. **ROLE field overloaded**: Combined two independent questions — "is this an engineering role?" (scope) and "what seniority level?" (seniority). When scope=OUT_OF_SCOPE, seniority was forced to NO_SENIORITY regardless of the title (e.g., "Senior Marketing Manager" → NO_SENIORITY). This created conflicting training signals where "Senior" sometimes matters and sometimes doesn't, with no structural explanation.
+
+3. **Keyword matching fights reasoning**: V6 used exhaustive keyword lists ("senior, staff, principal, lead, head, chief, director, VP, CTO, founding, snr, sr, III, distinguished, manager") which GPT-4o-mini pattern-matched instead of reasoning about. This caused failures on novel phrasings.
+
+4. **MISSING location token is vague**: Doesn't distinguish between "location not stated" and "location is unintelligible garbage". UNKNOWN is more semantically honest.
+
+**V7 design (6 fields, 12 JSON keys)**:
+
+| V6 Field | V7 Field(s) | Change |
+|----------|-------------|--------|
+| loc (4 tokens) | location (5 tokens) | LONDON_OR_REMOTE → IN_LONDON + FULLY_REMOTE. MISSING → UNKNOWN |
+| — | work_arrangement (4 tokens) | NEW: REMOTE, HYBRID, IN_OFFICE, UNKNOWN |
+| role (3 tokens) | scope (2 tokens) + seniority (3 tokens) | Split into binary gate + level. SENIOR_PLUS → LEVEL_3, MID_LEVEL → LEVEL_2, NO_SENIORITY → LEVEL_1 |
+| tech (8 tokens) | tech (8 tokens) | Unchanged |
+| comp (6 tokens) | comp (6 tokens) | Unchanged |
+
+**Scoring translation** (backward-compatible — same label formula):
+```python
+V7_SCORES = {
+    'location': {'IN_LONDON': 25, 'FULLY_REMOTE': 25, 'UK_OTHER': 10, 'OUTSIDE_UK': -50, 'UNKNOWN': 0},
+    'work_arrangement': {'REMOTE': 0, 'HYBRID': 0, 'IN_OFFICE': 0, 'UNKNOWN': 0},  # informational only
+    'scope': {'IN_SCOPE': None, 'OUT_OF_SCOPE': 0},  # gate — if OUT_OF_SCOPE, seniority=0
+    'seniority': {'LEVEL_3': 25, 'LEVEL_2': 15, 'LEVEL_1': 0},
+    'tech': {same as V6},
+    'comp': {same as V6},
+}
+# scope=OUT_OF_SCOPE → seniority score = 0 (regardless of seniority token)
+# score = max(0, min(100, location + seniority_score + tech + comp))
+```
+
+**Benefits**:
+1. **Richer training signal**: IN_LONDON vs FULLY_REMOTE teaches student to distinguish office-based vs remote patterns in JD text
+2. **Cleaner scope gate**: OUT_OF_SCOPE jobs always score 0 for role component — no confusing "Senior → NO_SENIORITY" training examples
+3. **Future flexibility**: work_arrangement scores 0 today but could be scored later without re-labeling
+4. **Semantic rules**: "determine the seniority level the title conveys" with examples as guidance (e.g., ...) lets GPT-4o-mini reason about novel phrasings instead of keyword matching
+5. **107 lines** (V6 was 186 lines) — more concise despite more fields
+
+**Implementation impact**:
+- `eval_student.py` needs V7→score translation function (only code change needed)
+- Student prompt updated (just field names + output format template)
+- `label-jobs.ts` passes `--prompt prompts/teacher_v7.txt` (no code change)
+- `format-for-mlx.ts` needs field name mapping (12 fields instead of 8)
+- `audit-training-data.ts` needs V7 token vocabulary
+- Contrastive batch design needs minor updates (new token names)
+
+**Decision**: Adopt V7 architecture. All downstream scripts updated as part of Step 5 prep.
+
+**Category**: Architecture redesign
+
+**Status**: ✅ Implemented — V7 teacher prompt saved (`prompts/teacher_v7.txt`). All 10 downstream scripts updated (Step 5 complete). Gap-filling data created (Step 5b complete).
+
+**Lesson**: For teacher prompts targeting reasoning models, semantic descriptions with example guidance ("e.g., senior, staff, principal") produce more consistent results than exhaustive keyword lists. The model reasons about the concept rather than pattern-matching against a closed set. Splitting overloaded fields into independent concerns (scope vs seniority) eliminates contradictory training signals.
+
+---
+
+## Finding 29: V6→V7 Distribution Gap Analysis — FULLY_REMOTE, NODE, NODE_AI_ML (V6-7 Transition)
+
+**Date**: 2026-03-09
+
+**How found**: After completing V7 script updates (Step 5), analyzed how V7's new token vocabulary affects the V5 plan's distribution minimums. V7 split LONDON_OR_REMOTE into IN_LONDON + FULLY_REMOTE, and split ROLE into scope + seniority. The V5 plan had minimums for V6 tokens but not for V7's new fields. Estimated V7 token distributions using text-signal heuristics on the existing pool (1,522 labeled) + scraped data (2,589 unlabeled).
+
+**Problems identified**:
+
+1. **FULLY_REMOTE critical gap**: V7 splits V6's LONDON_OR_REMOTE (est. ~360 jobs) into IN_LONDON (~328, 91%) and FULLY_REMOTE (~30, 8%). The 60-job minimum for FULLY_REMOTE was not met. Root cause: LinkedIn job scrapes store remote status in a separate `workplaceType` field that was consistently empty in our scraped data. The `job_location` text field almost never says "Remote" — it typically shows the company HQ city. This means **zero real fully-remote jobs existed in any data source**.
+
+2. **NODE persistent gap**: Despite 32 synthetic NODE variants created in Step 4 (V6), text-signal estimates showed only ~37 NODE-only jobs in the pool — well below the 80-job minimum. The problem: real backend jobs overwhelmingly use Python, Java, or Go. Node.js backend-only roles (without TypeScript/JavaScript mentioned) are genuinely rare on LinkedIn.
+
+3. **NODE_AI_ML gap**: Estimated ~15 jobs (14 existing V6 synthetic + ~1 real) vs 20-job minimum. NODE combined with AI/ML is a niche combination in real job postings.
+
+4. **No V5 minimums for new fields**: V5 plan had no distribution targets for work_arrangement or scope (they didn't exist). Needed V7-specific targets.
+
+**External data scan results**:
+Scanned all available external data sources before creating synthetic variants:
+
+| Source | Jobs | New (not in pool) | Notes |
+|--------|------|-------------------|-------|
+| `job_searcher/custom_training_data_2batch` | 150 | 0 | All duplicates of pool data |
+| `job_searcher/balanced_dataset_raw` | 1,330 | 0 | All duplicates of pool data |
+| `job_search_agent_v2/real_linkedin_500_raw` | 980 | 2 | 2 genuinely new jobs |
+| `job_search_agent_v2/linkedinScraper` | 317 | 1 | 1 genuinely new job |
+| **Total** | ~2,777 | **3** | Almost everything was already imported during Step 4 |
+
+**Conclusion**: External sources are exhausted. Gap-filling must use programmatic variants of real JDs.
+
+**Decisions**:
+
+1. **FULLY_REMOTE**: Created 60 location-swap variants from 60 unique real UK engineering JDs. Changed only the `job_location` field to one of 12 remote formats ("Remote", "Remote (UK)", "Fully Remote", "Remote - United Kingdom", "UK Remote", "Remote, United Kingdom", "Fully Remote (UK based)", "Remote within United Kingdom", "United Kingdom (Remote)", "Work from Home - UK", "UK - Remote", "Remote UK"). JD text unchanged — teaches the student that "Remote" appears in the location field, not the JD body. 5 donors per format for diversity. File: `data/v7/remote_variants.jsonl`.
+
+2. **NODE**: Created 45 additional NODE tech-swap variants from different Python/Java/Go backend donors (not overlapping with V6's 32 existing variants). Regex replacement: primary tech → Node.js, framework → Express.js. Verified all have "Node.js" mentioned, none have "JavaScript" or "TypeScript". File: `data/v7/synthetic/node_variants_v7.jsonl`.
+
+3. **NODE_AI_ML**: Created 10 variants by taking NODE tech-swap variants and appending AI/ML requirement snippets. Each has unique AI/ML text (machine learning pipelines, deep learning frameworks, NLP/LLM, computer vision, MLOps, etc.). File: `data/v7/synthetic/node_ai_ml_variants_v7.jsonl`.
+
+4. **V7 distribution minimums**: Added comprehensive V7 minimum table to V6_STUDENT_TRAINING_PLAN.md (Step 5b). New field targets: work_arrangement (REMOTE≥60, HYBRID≥80, IN_OFFICE≥50, UNKNOWN≥100), scope (IN_SCOPE≥400, OUT_OF_SCOPE≥80). Existing field targets adjusted for V7 token names.
+
+**Impact on data pipeline**:
+| Metric | Before | After |
+|--------|--------|-------|
+| Grand total for labeling | 4,111 | 4,226 |
+| Synthetic variants | 46 (1.1%) | 161 (3.8%) |
+| Estimated FULLY_REMOTE | ~30 | ~90 |
+| Estimated NODE | ~37 | ~82 |
+| Estimated NODE_AI_ML | ~15 | ~25 |
+| Synthetic cap (25%) | ✅ | ✅ |
+
+**Alternatives considered**:
+- **GPT-generate remote JDs**: Rejected — programmatic location-swap from real JDs produces more realistic training data and avoids GPT hallucination artifacts.
+- **Scrape remote-specific job boards (e.g., RemoteOK, WeWorkRemotely)**: Rejected — would require new scraping infrastructure and the JD format/style would differ significantly from LinkedIn. Better to teach the model via location field variants of familiar JD structures.
+- **Lower FULLY_REMOTE minimum**: Rejected — if FULLY_REMOTE is too rare in training, the model will never learn to distinguish it from IN_LONDON. The 60-job minimum is the floor for pattern learning in a 0.5B model.
+
+**Category**: Data distribution / V6-7 transition
+
+**Status**: ✅ Fixed — all gap-filling data created and ready for V7 labeling. Distribution minimums updated in training plan.
+
+**Lesson**: When redesigning token vocabulary (V6→V7), always check whether field splits create new distribution gaps. LONDON_OR_REMOTE had 360 jobs but FULLY_REMOTE had ~30 — a 92/8 split that was invisible until the field was decomposed. LinkedIn's location data doesn't capture remote status, so this gap cannot be fixed by scraping more data — only by programmatic variants. External data sources should be checked early but don't assume they contain what you need; in this case, 2,777 external jobs yielded only 3 new entries.

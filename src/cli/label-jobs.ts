@@ -43,12 +43,15 @@ type InputJob = {
 };
 
 type LabeledJob = InputJob & {
-  // Semantic tokens
+  // Per-field reasoning (8-field interleaved format)
+  loc_reason: string;
   loc: string;
+  role_reason: string;
   role: string;
+  tech_reason: string;
   tech: string;
+  comp_reason: string;
   comp: string;
-  reasoning: string;
   // Computed scores (from code layer)
   loc_score: number;
   role_score: number;
@@ -115,6 +118,7 @@ async function main(): Promise<void> {
   const promptPath = getStringArg(args, "prompt") ?? "prompts/teacher_v5.txt";
   const modelId = getStringArg(args, "model") ?? "gpt-4o-mini";
   const concurrency = getNumberArg(args, "concurrency") ?? 10;
+  const maxFailures = getNumberArg(args, "max-failures") ?? 0; // 0 = no limit
 
   if (!process.env.OPENAI_API_KEY) {
     console.error("ERROR: OPENAI_API_KEY environment variable is required");
@@ -128,6 +132,7 @@ async function main(): Promise<void> {
   console.log(`Prompt: ${promptPath} (${Math.round(promptTemplate.length / 4)} est. tokens)`);
   console.log(`Model: ${modelId}`);
   console.log(`Concurrency: ${concurrency}`);
+  if (maxFailures > 0) console.log(`Max failures: ${maxFailures} (will abort early)`);
 
   // Load input jobs
   const jobs = await readJsonlFile<InputJob>(inputPath);
@@ -140,6 +145,7 @@ async function main(): Promise<void> {
   const inconsistencies: Array<{ job_id: string; title: string; issues: string[] }> = [];
   const fuzzyFixes: Array<{ job_id: string; corrections: string[] }> = [];
   let completed = 0;
+  let aborted = false;
 
   const startTime = Date.now();
 
@@ -163,6 +169,9 @@ async function main(): Promise<void> {
   console.log(`Run log: ${logPath}`);
 
   await processWithConcurrency(jobs, concurrency, async (job, index) => {
+    // Check abort flag before processing
+    if (aborted) return;
+
     const promptText = promptTemplate
       .replace(/\{\{job_title\}\}/g, job.title)
       .replace(/\{\{job_location\}\}/g, job.location ?? "")
@@ -261,19 +270,22 @@ async function main(): Promise<void> {
       // Compute scores from tokens
       const computed = computeFromTokens(pred);
 
-      // Build labeled output
+      // Build labeled output (8-field interleaved format)
       const labeledJob: LabeledJob = {
         job_id: job.job_id,
         title: job.title,
         company: job.company,
         location: job.location,
         jd_text: job.jd_text,
-        // Semantic tokens
+        // Per-field reasoning + tokens (interleaved)
+        loc_reason: pred.loc_reason,
         loc: pred.loc,
+        role_reason: pred.role_reason,
         role: pred.role,
+        tech_reason: pred.tech_reason,
         tech: pred.tech,
+        comp_reason: pred.comp_reason,
         comp: pred.comp,
-        reasoning: pred.reasoning,
         // Computed scores
         loc_score: computed.loc_score,
         role_score: computed.role_score,
@@ -300,9 +312,13 @@ async function main(): Promise<void> {
         duration_ms: Date.now() - jobStartMs,
         prompt_tokens: promptTokens,
         completion_tokens: completionTokens,
+        loc_reason: pred.loc_reason,
         loc: pred.loc,
+        role_reason: pred.role_reason,
         role: pred.role,
+        tech_reason: pred.tech_reason,
         tech: pred.tech,
+        comp_reason: pred.comp_reason,
         comp: pred.comp,
         label: computed.label,
         score: computed.score,
@@ -337,6 +353,12 @@ async function main(): Promise<void> {
         `  [${completed}/${jobs.length}] ${labeled.length} labeled, ` +
         `${failures.length} failures (${elapsed}s)`,
       );
+    }
+
+    // Abort early if too many failures
+    if (maxFailures > 0 && failures.length >= maxFailures && !aborted) {
+      aborted = true;
+      console.error(`\n⚠ ABORTING: ${failures.length} failures reached --max-failures ${maxFailures}`);
     }
   });
 

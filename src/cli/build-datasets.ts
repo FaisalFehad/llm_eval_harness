@@ -28,11 +28,14 @@ type LabeledJob = {
   company: string;
   location: string;
   jd_text: string;
+  loc_reason: string;
   loc: string;
+  role_reason: string;
   role: string;
+  tech_reason: string;
   tech: string;
+  comp_reason: string;
   comp: string;
-  reasoning: string;
   loc_score: number;
   role_score: number;
   tech_score: number;
@@ -123,7 +126,11 @@ async function main(): Promise<void> {
     console.log("── PRE-FLIGHT AUDIT ───────────────────────────────────");
     console.log(`Running audit on ${inputPath}...`);
     try {
-      const auditCmd = `npx tsx src/cli/audit-training-data.ts --input "${inputPath}" --eval-set "${evalOutput}" --dry-run`;
+      // Only pass --eval-set if the file exists (it may not yet during initial V6 bootstrap)
+      const evalSetFlag = fs.existsSync(evalOutput) && fs.statSync(evalOutput).size > 0
+        ? ` --eval-set "${evalOutput}"`
+        : "";
+      const auditCmd = `npx tsx src/cli/audit-training-data.ts --input "${inputPath}"${evalSetFlag} --dry-run`;
       execSync(auditCmd, { stdio: "inherit" });
       console.log("Audit passed.\n");
     } catch {
@@ -175,12 +182,13 @@ async function main(): Promise<void> {
     const synth = candidates.filter((j) => isSynthetic(j));
     const ordered = [...real, ...synth];
 
-    // Select 50 with diversity requirements
+    // Select up to 50, but cap at 40% of available to leave enough for training
+    const evalTarget = Math.min(50, Math.floor(candidates.length * 0.4));
     const selected: LabeledJob[] = [];
     const usedCompanies = new Set<string>();
 
     for (const j of ordered) {
-      if (selected.length >= 50) break;
+      if (selected.length >= evalTarget) break;
 
       // Avoid duplicate companies in eval
       const compKey = (j.company ?? "").toLowerCase().trim();
@@ -346,26 +354,19 @@ async function main(): Promise<void> {
   // ── Write outputs ──────────────────────────────────────────────────────
 
   // Write eval set
-  const evalStream = fs.createWriteStream(evalOutput);
-  for (const j of evalJobs) {
-    evalStream.write(JSON.stringify(j) + "\n");
-  }
-  evalStream.end();
+  const evalContent = evalJobs.map((j) => JSON.stringify(j)).join("\n") + "\n";
+  fs.writeFileSync(evalOutput, evalContent);
 
   // Lock eval file as read-only (chmod 444) to prevent accidental overwrites
   fs.chmodSync(evalOutput, 0o444);
   console.log(`  Locked eval file as read-only (chmod 444): ${evalOutput}`);
 
   // Compute SHA-256 of eval set
-  const evalContent = evalJobs.map((j) => JSON.stringify(j)).join("\n") + "\n";
   const evalHash = crypto.createHash("sha256").update(evalContent).digest("hex");
 
   // Write training set
-  const trainStream = fs.createWriteStream(trainOutput);
-  for (const j of shuffle(trainJobs, rng)) { // Shuffle for training
-    trainStream.write(JSON.stringify(j) + "\n");
-  }
-  trainStream.end();
+  const trainContent = shuffle(trainJobs, rng).map((j) => JSON.stringify(j)).join("\n") + "\n";
+  fs.writeFileSync(trainOutput, trainContent);
 
   // Write manifest
   const manifest = {
@@ -393,7 +394,7 @@ async function main(): Promise<void> {
       },
     },
   };
-  const manifestPath = "data/v5/split_manifest.json";
+  const manifestPath = trainOutput.replace(/[^/]+$/, "split_manifest.json");
   fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
 
   console.log("\n" + "═".repeat(60));

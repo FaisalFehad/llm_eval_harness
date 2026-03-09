@@ -1,0 +1,21 @@
+{
+  "created": "2026-03-09",
+  "target": 1500,
+  "pool_total": 1522,
+  "pool_keep": 900,
+  "pool_good_fit": 91,
+  "pool_maybe": 269,
+  "pool_bad_fit": 540,
+  "scraped_total": 2589,
+  "scraped_keep": 600,
+  "combined_total": 1500,
+  "scraped_reasons": {
+    "NODE": 206,
+    "london_senior_eng": 134,
+    "eng_gbp_55k+": 113,
+    "ai_ml_uk_eng": 144,
+    "london_eng": 274,
+    "eng_gbp_below_45k": 253,
+    "uk_js_ts_eng": 237
+  }
+}

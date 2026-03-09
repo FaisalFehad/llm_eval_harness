@@ -1,0 +1,12 @@
+Classify this job. Output JSON only.
+
+loc: LONDON_OR_REMOTE | UK_OTHER | OUTSIDE_UK | MISSING
+role: SENIOR_PLUS | MID_LEVEL | NO_SENIORITY
+tech: NONE | JS_TS | NODE | NODE_JS_TS | AI_ML | JS_TS_AI_ML | NODE_AI_ML | NODE_JS_TS_AI_ML
+comp: NO_GBP | UP_TO_ONLY | BELOW_45K | RANGE_55_74K | RANGE_75_99K | ABOVE_100K
+
+Title: {{job_title}}
+Location: {{job_location}}
+Description: {{jd_text}}
+
+{"loc_reason":"...","loc":"...","role_reason":"...","role":"...","tech_reason":"...","tech":"...","comp_reason":"...","comp":"..."}

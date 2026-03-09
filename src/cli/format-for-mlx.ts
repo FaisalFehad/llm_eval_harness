@@ -27,11 +27,14 @@ type V5Job = {
   company: string;
   location: string;
   jd_text: string;
+  loc_reason: string;
   loc: string;
+  role_reason: string;
   role: string;
+  tech_reason: string;
   tech: string;
+  comp_reason: string;
   comp: string;
-  reasoning: string;
   score: number;
   label: string;
 };
@@ -175,11 +178,15 @@ function buildUserMessage(promptTemplate: string, job: V5Job): string {
 }
 
 function buildAssistantResponse(job: V5Job): string {
+  // 8-field interleaved format — pass through directly from teacher output
   const output = {
-    reasoning: job.reasoning,
+    loc_reason: job.loc_reason,
     loc: job.loc,
+    role_reason: job.role_reason,
     role: job.role,
+    tech_reason: job.tech_reason,
     tech: job.tech,
+    comp_reason: job.comp_reason,
     comp: job.comp,
   };
   return JSON.stringify(output);
@@ -204,9 +211,10 @@ async function main(): Promise<void> {
   const jobs = await readJsonlFile<V5Job>(inputPath);
   console.log(`Loaded ${jobs.length} training jobs from ${inputPath}`);
 
-  // Validate required fields
+  // Validate required fields (8-field format)
   const missing = jobs.filter(
-    (j) => !j.loc || !j.role || !j.tech || !j.comp || !j.reasoning,
+    (j) => !j.loc || !j.role || !j.tech || !j.comp ||
+           !j.loc_reason || !j.role_reason || !j.tech_reason || !j.comp_reason,
   );
   if (missing.length > 0) {
     console.error(`${missing.length} jobs missing semantic token fields.`);
@@ -218,8 +226,9 @@ async function main(): Promise<void> {
   const truncatedJobs: string[] = [];
 
   for (const job of jobs) {
+    const reasons = job.loc_reason + job.role_reason + job.tech_reason + job.comp_reason;
     const totalEstimate = estimateTokens(
-      promptTemplate + job.jd_text + job.reasoning + 100, // overhead
+      promptTemplate + job.jd_text + reasons + 100, // overhead
     );
     if (totalEstimate > maxTokens) {
       const { text, truncated } = smartTruncate(job.jd_text, maxTokens - 500);
@@ -243,7 +252,7 @@ async function main(): Promise<void> {
   const systemMsg = "Respond with JSON only.";
   console.log(`System message: "${systemMsg}"`);
 
-  // Format as MLX chat examples
+  // Format as MLX chat examples (8-field interleaved format — no conversion needed)
   const examples: MLXExample[] = jobs.map((job) => ({
     messages: [
       { role: "system" as const, content: systemMsg },

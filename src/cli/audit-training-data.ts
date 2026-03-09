@@ -101,11 +101,14 @@ type LabeledJob = {
   company: string;
   location: string;
   jd_text: string;
+  loc_reason: string;
   loc: string;
+  role_reason: string;
   role: string;
+  tech_reason: string;
   tech: string;
+  comp_reason: string;
   comp: string;
-  reasoning: string;
   loc_score?: number;
   role_score?: number;
   tech_score?: number;
@@ -200,15 +203,56 @@ function checkSuspiciousTokens(job: LabeledJob): string[] {
   return issues;
 }
 
+// ── Reasoning-token mismatch check ──────────────────────────────────────
+
+/**
+ * Check each _reason field ends with "-> TOKEN" matching the actual token field.
+ * This is the 8-field interleaved format validation.
+ */
+function checkReasoningTokenMismatch(job: LabeledJob): string[] {
+  const issues: string[] = [];
+
+  const fieldPairs: Array<{ reasonField: string; tokenField: string; name: string }> = [
+    { reasonField: "loc_reason", tokenField: "loc", name: "loc" },
+    { reasonField: "role_reason", tokenField: "role", name: "role" },
+    { reasonField: "tech_reason", tokenField: "tech", name: "tech" },
+    { reasonField: "comp_reason", tokenField: "comp", name: "comp" },
+  ];
+
+  for (const { reasonField, tokenField, name } of fieldPairs) {
+    const reason = (job as Record<string, unknown>)[reasonField] as string | undefined;
+    const token = (job as Record<string, unknown>)[tokenField] as string | undefined;
+
+    if (!reason) {
+      issues.push(`Missing ${reasonField} field`);
+      continue;
+    }
+
+    // Check that reason ends with -> TOKEN matching the actual token
+    const arrowMatch = reason.match(/->\s*([A-Z][A-Z0-9_]*)\s*$/);
+    if (arrowMatch) {
+      if (arrowMatch[1] !== token) {
+        issues.push(
+          `${reasonField} ends with "-> ${arrowMatch[1]}" but ${tokenField}="${token}"`,
+        );
+      }
+    } else {
+      issues.push(`${reasonField} doesn't end with "-> TOKEN" pattern: "${reason.slice(-30)}"`);
+    }
+  }
+
+  return issues;
+}
+
 // ── Title-data mismatch check (Finding 19) ──────────────────────────────
 
 function checkTitleMismatch(job: LabeledJob): string | null {
-  if (!job.reasoning) return null;
+  if (!job.role_reason) return null;
 
-  // The reasoning often starts with something like:
-  // "loc: 'London' → LONDON_OR_REMOTE. role: 'Senior Software Engineer' in title..."
+  // With 8-field format, role_reason contains the role evidence directly
+  // e.g., "Senior Software Engineer, engineering role -> SENIOR_PLUS"
   // Try to extract what title the teacher actually saw
-  const roleMatch = job.reasoning.match(/role:\s*['"]?([^'"\n→]+?)['"]?\s*(in title|→|is|found)/i);
+  const roleMatch = job.role_reason.match(/^['"]?([^'",\n->]+?)['"]?\s*(,|->|in title|is|found)/i);
   if (!roleMatch) return null;
 
   const reasoningTitle = roleMatch[1].trim().toLowerCase();
@@ -563,6 +607,21 @@ async function main() {
           detail: s,
         });
         quarantineSuspicious.push({ ...job, _quarantine_reason: s, _line: line });
+        removeIfSuspicious.add(i);
+      }
+    }
+
+    // ── WARNING: Reasoning-token mismatch (post-label only) ────────
+
+    if (!preLabel && (job.loc_reason || job.role_reason || job.tech_reason || job.comp_reason)) {
+      const reasoningIssues = checkReasoningTokenMismatch(job);
+      for (const ri of reasoningIssues) {
+        issues.push({
+          line, job_id: id, title, severity: "WARNING",
+          check: "reasoning_token_mismatch",
+          detail: ri,
+        });
+        quarantineSuspicious.push({ ...job, _quarantine_reason: ri, _line: line });
         removeIfSuspicious.add(i);
       }
     }

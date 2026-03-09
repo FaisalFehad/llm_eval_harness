@@ -5,6 +5,8 @@ Major upgrade from V5.1 (83.9% label accuracy, checkpoint 875) targeting 90-93%.
 
 ## What Changed from V5.1
 - **New teacher prompt (teacher_v6.txt)** — engineering gate for ROLE, comprehensive COMP ignore rules, strict reasoning format
+  - **[2026-03-09 UPDATE]** Reasoning format redesigned: ~~single `reasoning` string~~ → 8-field interleaved structured format (`loc_reason`, `loc`, `role_reason`, `role`, `tech_reason`, `tech`, `comp_reason`, `comp`). See Step 4b below and Finding 27.
+- **[2026-03-09 UPDATE]** V7 teacher prompt architecture: 4 fields → 6 fields (location, work_arrangement, scope, seniority, tech, comp). Richer token vocabulary for better student training signal. Semantic rules replace keyword matching. Backward-compatible via scoring translation layer. See Step 4c below and Finding 28.
 - **Rule Contract Lock (Phase 1.5)** — all ambiguous rules resolved BEFORE re-labeling
 - **Re-label ALL training data** with V6 teacher prompt at temperature=0 for uniform consistency
 - **Deduplicate** training data before re-labeling (4× Engineering Manager duplicates, etc.)
@@ -92,6 +94,7 @@ The V5 teacher prompt used fragile keyword lists that caused conflicting labels.
 2. **Comprehensive COMP Ignore Rules**: Explicit list of salary-like patterns that are NOT valid GBP annual salaries: TC, OTE, daily rates, package amounts, bonus-inclusive, equity, non-salary £ mentions. Each must appear in reasoning with `→ ignored`.
 
 3. **Strict Reasoning Format**: `loc: ... → TOKEN`, `role: ... → TOKEN`, `tech: ... → TOKEN`, `comp: ... → TOKEN`. No narrative. Factual only.
+   - **[2026-03-09 UPDATE]** This single-string format was superseded by 8-field interleaved structured format. See Step 4b in Execution Order. Motivation: 1,048 reasoning abbreviation mismatches found in V5 pool (Finding 27).
 
 **Bugs found and fixed during review**:
 - Removed `architect` from SENIOR_PLUS indicators (kept in engineering gate). Prevents "Associate Solutions Architect" → SENIOR_PLUS.
@@ -301,11 +304,13 @@ These are the ~28 test cases the Promptfoo config should cover. Each tests a spe
 | 27 | "Total package £130,000 including benefits" | NO_GBP | Package ignored |
 | 28 | "We manage £2bn in assets" | NO_GBP | Non-salary £ ignored |
 
-### Step 5.4: Re-label ALL Training Data with V6 Teacher Prompt (⬜ TODO)
+### Step 5.4: Re-label ALL Training Data with V7 Teacher Prompt (⬜ TODO)
 
-**Pre-requisites**: Steps 5.1-5.3b complete. Pre-label audit passes on input data.
+**Pre-requisites**: Steps 5.1-5.3b complete. Pre-label audit passes on input data. **All scripts updated for V7 token vocabulary** (Step 5 in Execution Order).
 
-After Steps 5.1-5.3b, re-label the entire (deduplicated, pre-audited) training set with `prompts/teacher_v6.txt` at temperature=0. This:
+> **[2026-03-09 UPDATE]** Additional pre-requisites: Step 4b (structured reasoning format), Step 4c (V7 architecture), and Step 5 (V7 script updates) must all be complete. Output will use V7's 12-field format (6 _reason + 6 token fields). Also includes new scraped data from Step 4 (distribution analysis): 2,589 jobs in `data/v6/scraped_clean_for_labeling.jsonl`. Student prompt will be `prompts/student_v7.txt`.
+
+After all pre-requisites, re-label the entire (deduplicated, pre-audited) training set with `prompts/teacher_v7.txt` at temperature=0. This:
 - Fixes the 10 conflicting "Engineering Manager" labels
 - Fixes the 14 spec gap labels (manager/director/cto/sr now in V6 keywords)
 - Should fix 5 title-mismatch labels (V6 prompt is more structured, but GPT may still read JD body — verify in Step 5.5D, manually correct if needed)
@@ -519,23 +524,121 @@ The original plan had phases in logical order but not priority order. This is th
 1. ✅ **Lock rules** — Finalise teacher_v6.txt prompt. No rule changes after this point.
 2. ✅ **Classify spec violations vs gaps** — Review 24 unjustified SENIOR_PLUS jobs (was estimated 21). Found 14 spec gaps, 7 title mismatches, 2 spec violations, 1 V6-still-wrong.
 3. ✅ **Build audit tooling + deduplicate training data** — Built `audit-training-data.ts` with 6 critical + 7 warning checks, contrastive pair awareness, clean mode. Found 17 eval contaminations, 107 duplicates, 123 trivially easy bad_fit. Wired as pre-flight gate into `build-datasets.ts`. Also: 4-layer data loss safeguards, script renames, debris cleanup.
+3b. ✅ **Build validation pipeline** — [2026-03-09] Completed: Pre-label audit (`--pre-label` flag), 3 new post-label checks (title-echo, distribution, label consistency), per-run logging in label-jobs.ts, Promptfoo test config (~28 edge case tests). Catches all 9 known V5/V5.1 issue types.
+4. ✅ **Distribution analysis & gap filling** — [2026-03-09] Counted token distributions across all_labeled_pool (1,522 jobs) against V5 plan minimums. Found critical gaps: NODE (38 vs 80 min), NODE_AI_ML (0 vs 15 min), good_fit (91 vs 200 min). Searched ~5,000 scraped jobs across all sources. After dedup+quality filtering: 2,543 real + 46 synthetic variants (32 NODE + 14 NODE_AI_ML via tech-swap). Output: `data/v6/scraped_clean_for_labeling.jsonl` (2,589 jobs). Edge case coverage verified (all ≥5 minimum met).
+4b. ✅ **Structured reasoning format redesign** — [2026-03-09] Replaced 5-field output (single `reasoning` string + 4 tokens) with 8-field interleaved: `{loc_reason, loc, role_reason, role, tech_reason, tech, comp_reason, comp}`. Prompted by 1,048 reasoning abbreviation mismatches in V5 pool (Finding 27). Teacher, student training, and student inference all use same 8-field format. Eval scores only 4 token fields. 3-layer safeguards built. Files: `teacher_v6.txt`, `student_v6.txt` (new), `audit-training-data.ts`, `format-for-mlx.ts`.
+4c. ✅ **V7 teacher prompt architecture** — [2026-03-09] Major redesign of teacher prompt expanding from 4 fields to 6 fields with richer token vocabulary. See Finding 28.
+    - **New fields**: `scope` (IN_SCOPE/OUT_OF_SCOPE) and `work_arrangement` (REMOTE/HYBRID/IN_OFFICE/UNKNOWN)
+    - **Renamed fields**: `loc` → `location` (tokens: IN_LONDON/FULLY_REMOTE/UK_OTHER/OUTSIDE_UK/UNKNOWN), `role` → `seniority` (tokens: LEVEL_1/LEVEL_2/LEVEL_3)
+    - **Split LONDON_OR_REMOTE** into IN_LONDON + FULLY_REMOTE (teaches student finer-grained location patterns)
+    - **Split old ROLE** into scope (binary gate) + seniority (3 levels) — cleaner separation of concerns
+    - **Semantic rules** replace keyword lists — GPT-4o-mini reasons about intent, not pattern matching
+    - **12 JSON keys** in output (6 _reason + 6 token fields)
+    - **Scoring**: backward-compatible via translation layer in eval_student.py (V7 tokens → V6 scores → same label formula)
+    - File: `prompts/teacher_v7.txt` (107 lines, 5 worked examples)
+
+5. ✅ **Create V7 versions of scripts and prompts** — [2026-03-09] All 10 V7 files created alongside V6 (non-destructive, Critical Rule #12). V6 scripts untouched.
+    - `finetune/semantic_tokens_v7.py` ✅ — 6 token tuples, 4 score maps, scope gate, V7→V6 translation. 11 tests passed.
+    - `src/lib/semantic-tokens-v7.ts` ✅ — TypeScript types, computeFromTokens(), crossCheckReasoning(). 7 tests passed.
+    - `prompts/student_v7.txt` ✅ — 14 lines, 6 field token lists, 12-key JSON template. 8 verification checks.
+    - `src/cli/label-jobs-v7.ts` ✅ — V7 labeling with `job_location` collision fix, 6-field distribution reporting. Type-checks clean.
+    - `configs/promptfoo_teacher_v7.yaml` ✅ — 36 tests (V6 had 28). New: SCOPE(15), LOC(4), WA(4) categories.
+    - `finetune/eval_student_v7.py` ✅ — 6-field comparison, scope gate scoring, V6-compatible quick-copy summary. 4 tests passed.
+    - `src/cli/format-for-mlx-v7.ts` ✅ — 12-field V7Job type, `job_location` for raw location. Type-checks clean.
+    - `src/cli/audit-training-data-v7.ts` ✅ — V7 tokens, scope gate scoring, scope+seniority consistency checks. Same tsconfig warnings as V6.
+    - `finetune/lora_config_v7.yaml` ✅ — V7 data/adapter paths, batch_size=1, all assertions passed.
+    - `src/cli/generate-synthetic-hij.ts` — Left as-is (V7 contrastive batches will need V7-aware scripts if needed).
+    - `src/cli/check-distribution.ts` — Left as-is (V7 distribution checks via V7 audit script).
+
+5b. ✅ **V7 distribution gap analysis & supplementary data** — [2026-03-09] Analyzed V7 token distribution against V5 plan minimums. Found 3 critical gaps caused by V7's new token vocabulary. Scanned all external sources (job_searcher, job_search_agent_v2) — almost all data already in pool from Step 4. Created 115 supplementary variants from real JDs. See Finding 29.
+    - **FULLY_REMOTE gap (CRITICAL)**: V7 split LONDON_OR_REMOTE into IN_LONDON + FULLY_REMOTE. Estimated ~30 FULLY_REMOTE in existing pool vs 60 minimum. LinkedIn scrapes don't capture "Remote" in location field. Zero real remote jobs in any external source. **Fix**: Created 60 location-swap variants from real UK engineering JDs (12 remote formats × 5 donors each).
+    - **NODE gap (persistent)**: ~37 NODE-only jobs vs 80 minimum. V6 had 32 synthetic NODE variants but still short. **Fix**: Created 45 additional NODE tech-swap variants from different Python/Java/Go donors.
+    - **NODE_AI_ML gap**: ~15 estimated vs 20 minimum. **Fix**: Created 10 NODE_AI_ML tech-swap variants (NODE + AI/ML requirement text appended).
+    - **External data scan**: job_searcher (150 custom_training + 1330 balanced_dataset = all dups), job_search_agent_v2 (980 real_linkedin + 317 linkedinScraper = 3 new). Only 3 genuinely new real jobs found.
+    - **Files created**: `data/v7/remote_variants.jsonl` (60), `data/v7/synthetic/node_variants_v7.jsonl` (45), `data/v7/synthetic/node_ai_ml_variants_v7.jsonl` (10), `data/v7/gap_fill_real.jsonl` (3)
+    - **Totals**: Grand total for labeling = 4,226 jobs (1,522 pool + 2,589 scraped + 115 V7 supplementary). Synthetic total = 161/4,226 = 3.8% (well under 25% cap).
+
+### V7 Distribution Minimums (Updated from V5 Plan for 6-field Architecture)
+
+> **[2026-03-09 UPDATE]** V5 plan had minimums for 4 fields (loc, role, tech, comp). V7 introduces 2 new fields (work_arrangement, scope) and splits loc/role. These are the V7-adjusted targets for the combined labeling pool (~4,226 jobs). Original V5 minimums preserved where fields are unchanged.
+
+**LOCATION (5 tokens)** — V5's LONDON_OR_REMOTE (250 min) splits into IN_LONDON + FULLY_REMOTE:
+| Token | V7 Minimum | V5 Equivalent | Notes |
+|-------|-----------|---------------|-------|
+| IN_LONDON | 200 | was part of LONDON_OR_REMOTE (250) | ~91% of old LONDON_OR_REMOTE pool |
+| FULLY_REMOTE | 60 | was part of LONDON_OR_REMOTE (250) | Critical gap — 60 synthetic variants created |
+| UK_OTHER | 80 | 80 (unchanged) | |
+| OUTSIDE_UK | 100 | 100 (unchanged) | |
+| UNKNOWN | 15 | was MISSING (15) | Renamed only |
+
+**WORK_ARRANGEMENT (4 tokens)** — NEW field, no V5 baseline:
+| Token | V7 Minimum | Notes |
+|-------|-----------|-------|
+| REMOTE | 60 | Overlaps with FULLY_REMOTE location jobs, plus remote roles in London |
+| HYBRID | 80 | Very common in UK job market, should be well-represented in real data |
+| IN_OFFICE | 50 | Less common post-COVID but still present |
+| UNKNOWN | 100 | Many JDs don't specify, expect this to be the largest bucket |
+
+**SCOPE (2 tokens)** — NEW field, split from V5's ROLE:
+| Token | V7 Minimum | Notes |
+|-------|-----------|-------|
+| IN_SCOPE | 400 | Engineering roles — majority of training data |
+| OUT_OF_SCOPE | 80 | Non-engineering roles (marketing, sales, HR, etc.) |
+
+**SENIORITY (3 tokens)** — Renamed from V5's ROLE:
+| Token | V7 Minimum | V5 Equivalent | Notes |
+|-------|-----------|---------------|-------|
+| LEVEL_3 | 200 | SENIOR_PLUS standard (250) + edge (40) | Combined; V7 semantic rules replace keyword lists |
+| LEVEL_2 | 120 | MID_LEVEL (120) | Unchanged target |
+| LEVEL_1 | 100 | NO_SENIORITY (120) | Slightly reduced — many out-of-scope jobs will have LEVEL_1 |
+
+**TECH (8 tokens)** — Unchanged from V5:
+| Token | V7 Minimum | Notes |
+|-------|-----------|-------|
+| NONE | 150 | |
+| JS_TS | 100 | |
+| NODE | 80 | 45 new synthetic variants created |
+| NODE_JS_TS | 120 | |
+| AI_ML | 20 | |
+| JS_TS_AI_ML | 20 | |
+| NODE_AI_ML | 20 | 10 new synthetic variants created |
+| NODE_JS_TS_AI_ML | 30 | |
+
+**COMP (6 tokens)** — Unchanged from V5:
+| Token | V7 Minimum | Notes |
+|-------|-----------|-------|
+| NO_GBP | 195 | Sum of V5 subcategories (USD:40 + EUR:20 + daily:15 + none:120) |
+| UP_TO_ONLY | 40 | |
+| BELOW_45K | 20 | |
+| RANGE_55_74K | 50 | |
+| RANGE_75_99K | 80 | |
+| ABOVE_100K | 100 | |
+
+**LABEL BALANCE** — Unchanged from V5:
+| Label | V7 Minimum | Notes |
+|-------|-----------|-------|
+| good_fit | 200+ | |
+| maybe | 300+ | |
+| bad_fit | 300+ | |
+| Borderline (score 45-75) | 150+ | |
+
+> **Note**: These minimums are targets for the FULL labeled pool (all ~4,226 jobs), not the final training set. The training set will be a subset after eval set extraction and pruning. Work_arrangement and scope minimums are estimates — first V7 labeling run will reveal actual distributions and may require adjustment.
 
 ─── YOU ARE HERE ───────────────────────────────────────────
 
-3b. ⬜ **Build validation pipeline** — Pre-label audit (`--pre-label` flag), 3 new post-label checks (title-echo, distribution, label consistency), per-run logging in label-jobs.ts, Promptfoo test config (~25-30 edge case tests). Designed to catch all 9 known V5/V5.1 issue types. (~65 lines across 2 files + 1 YAML config)
-4. ⬜ **Re-label all training data** — With V6 teacher prompt at temperature=0. Pre-label audit runs first. ~$0.80, ~12 min. Log file saved.
-5. ⬜ **Build new eval set** — V5 eval_150_golden.jsonl was **lost** (see Incident section). Must build a fresh V6 eval set from all_labeled_pool.jsonl. Label with V6 teacher prompt. Same approach: 50/50/50 by label, locked after creation (chmod 444).
-6. ⬜ **Verify re-labeling** — Post-label audit runs automatically. Also: compare old vs new labels, check "Engineering Manager" is uniform, spot-check 10 random changes. If > 30 labels change, investigate before proceeding.
-7. ⬜ **Prune trivially easy bad_fit** — The audit clean mode already handles this (`--remove-trivial`). Found 123 qualifying jobs. Must happen AFTER re-labeling because V6 rules may change some labels.
-8. ⬜ **Generate contrastive data** — 140 jobs across 9 batches (A-H, J). Programmatic variants only. Label with V6 teacher at temperature=0.
-9. ⬜ **Verify contrastive variants** — For each variant: changed field must have different token, unchanged fields must have same tokens. Fix and re-label if not.
-10. ⬜ **Run pre-train gates** — Now automated via audit script + build-datasets.ts pipeline. Hard gates: no duplicates, no train/eval overlap, uniform "Engineering Manager" labels, class balance thresholds, source-weight cap, contrastive variant correctness. If ANY fail → STOP and fix.
-11. ⬜ **Format and train** — Fresh LoRA from base. 1000 iters. Eval at 600, 700, 800, 900, 1000.
-12. ⬜ **Evaluate and decide** — Pick best checkpoint by label accuracy (not val loss). Watch for comp degradation.
+6. ⬜ **Re-label all training data** — With V7 teacher prompt (`teacher_v7.txt`) at temperature=0. Pre-label audit runs first. Log file saved.
+7. ⬜ **Build new eval set** — V5 eval_150_golden.jsonl was **lost** (see Incident section). Must build a fresh eval set from all_labeled_pool.jsonl. Label with V7 teacher prompt. Same approach: 50/50/50 by label, locked after creation (chmod 444).
+8. ⬜ **Verify re-labeling** — Post-label audit runs automatically. Also: compare old vs new labels, spot-check 10 random changes. If > 30 labels change, investigate before proceeding. See Step 5.5 checklist.
+9. ⬜ **Prune trivially easy bad_fit** — The audit clean mode handles this (`--remove-trivial`). Criteria updated for V7: location=OUTSIDE_UK/UNKNOWN + scope=OUT_OF_SCOPE or seniority=LEVEL_1 + tech=NONE + comp=NO_GBP. Must happen AFTER re-labeling because V7 rules may change some labels.
+10. ⬜ **Generate contrastive data** — 140 jobs across 9 batches (A-H, J). Programmatic variants only. Label with V7 teacher at temperature=0. Batch descriptions need V7 token names.
+11. ⬜ **Verify contrastive variants** — For each variant: changed field must have different token, unchanged fields must have same tokens. Fix and re-label if not.
+12. ⬜ **Run pre-train gates** — Now automated via audit script + build-datasets.ts pipeline. Hard gates: no duplicates, no train/eval overlap, class balance thresholds, source-weight cap, contrastive variant correctness. If ANY fail → STOP and fix.
+13. ⬜ **Format and train** — Fresh LoRA from base. 1000 iters. Eval at 600, 700, 800, 900, 1000.
+14. ⬜ **Evaluate and decide** — Pick best checkpoint by label accuracy (not val loss). Watch for comp degradation. Compare to V5.1 baseline using score-level mapping (see CLAUDE.md Evaluation Rules).
 
-**Why this order matters**: In V5, labeling happened with incomplete rules, then contrastive data was designed around those incomplete rules. If we'd generated contrastive data first and THEN changed the teacher prompt, we'd have to re-generate and re-label everything. Rules must be locked before any data touches the pipeline.
+**Why this order matters**: In V5, labeling happened with incomplete rules, then contrastive data was designed around those incomplete rules. If we'd generated contrastive data first and THEN changed the teacher prompt, we'd have to re-generate and re-label everything. Rules must be locked before any data touches the pipeline. Step 5 (script updates) must happen before Step 6 (re-labeling) because the scripts need to understand V7's 6-field output format.
 
-**Note**: Step 5 changed from "Re-label eval set" to "Build new eval set" due to the data loss incident (see below).
+**Note**: Step 7 changed from "Re-label eval set" to "Build new eval set" due to the data loss incident (see below).
 
 ---
 

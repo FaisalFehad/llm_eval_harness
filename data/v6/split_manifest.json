@@ -1,0 +1,25 @@
+{
+  "seed": 42,
+  "timestamp": "2026-03-09T09:10:06.744Z",
+  "eval": {
+    "path": "data/v6/eval_150.jsonl",
+    "count": 133,
+    "sha256": "2f56ce59960ddd8a308391a65529bcf4b47dd8d4f5fe7cfe3a2cc5ddc1efa19b",
+    "by_label": {
+      "good_fit": 33,
+      "maybe": 50,
+      "bad_fit": 50
+    }
+  },
+  "train": {
+    "path": "data/v6/train.jsonl",
+    "count": 703,
+    "synthetic_count": 0,
+    "synthetic_pct": 0,
+    "by_label": {
+      "good_fit": 47,
+      "maybe": 200,
+      "bad_fit": 456
+    }
+  }
+}

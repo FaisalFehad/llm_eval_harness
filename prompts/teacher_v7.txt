@@ -1,0 +1,106 @@
+Classify this job posting into 6 fields. Return a single valid JSON object — no markdown, no code blocks, no extra text.
+
+All classification is in the context of software engineering job fit. Interpret all signals accordingly.
+
+INPUT
+Title: {{job_title}}
+Location: {{job_location}}
+Description: {{jd_text}}
+
+OUTPUT FORMAT
+Single JSON object with exactly 12 fields in this order:
+{"location_reason":"","location":"","work_arrangement_reason":"","work_arrangement":"","scope_reason":"","scope":"","seniority_reason":"","seniority":"","tech_reason":"","tech":"","comp_reason":"","comp":""}
+
+Reason fields: one short phrase ending with -> TOKEN.
+Token fields: must exactly match the token in its paired reason.
+
+---
+
+LOCATION (Location field only — ignore Title and Description)
+
+Determine the intended work location for this role. "Greater London", "City of London", and any London variant are London. Ignore mentions of other locations unless they clearly indicate where this role is based (e.g., ignore HQ address, other office locations, client sites).
+
+IN_LONDON — work location is in London.
+FULLY_REMOTE — role is stated as fully remote with no fixed office location.
+UK_OTHER — office location in the UK (including Northern Ireland) but not London.
+OUTSIDE_UK — outside the UK. Republic of Ireland is OUTSIDE_UK.
+UNKNOWN — missing, empty, not a real place, or cannot determine.
+
+---
+
+WORK ARRANGEMENT (Description only)
+
+Classify required workplace attendance:
+REMOTE — fully remote, no office attendance expected.
+HYBRID — some office attendance expected (e.g., "2-3 days per week", "hybrid").
+IN_OFFICE — full-time office attendance required.
+UNKNOWN — not clearly stated.
+
+---
+
+SCOPE (Title primarily — use Description to disambiguate if title is ambiguous)
+
+Is this a software, data, or platform engineering role?
+The title must describe a role that builds, designs, or maintains software, data, or platform systems.
+
+IN_SCOPE — clearly an engineering role (e.g., Software Engineer, Backend Developer, Data Scientist, ML Engineer, DevOps Engineer, SRE, Platform Architect, CTO).
+OUT_OF_SCOPE — not engineering, or a non-software use of "engineer" (e.g., Product Manager, Sales Engineer, Support Engineer, Field Engineer, Fire Engineer, Marketing Manager).
+
+If the title is ambiguous (e.g., bare "Engineer", "Architect"), check the Description to confirm a software/tech context. If not confirmed, OUT_OF_SCOPE.
+
+---
+
+SENIORITY (Title primarily — fallback uses Description)
+
+If scope is OUT_OF_SCOPE, seniority is always LEVEL_1.
+
+For IN_SCOPE roles, determine the seniority level the title conveys:
+LEVEL_3 — senior, leadership, or staff-level (e.g., senior, staff, principal, lead, head, director, VP, CTO, founding, snr, sr, III, distinguished, engineering manager).
+LEVEL_2 — mid-career, some experience expected (e.g., full stack, mid-level, software engineer ii, swe ii).
+LEVEL_1 — junior, entry-level, or no seniority signal (e.g., junior, jr, graduate, intern, trainee, apprentice).
+
+If the title gives no clear seniority signal, scan the first 50 words of the Description. If those words describe a senior-level hire -> LEVEL_2. Otherwise -> LEVEL_1.
+
+---
+
+TECH (Description only)
+
+Three signal groups only. Everything else is ignored — mention up to 2 prominent ignored technologies in tech_reason.
+
+NODE: "node.js", "nodejs", or "node" when clearly referring to the Node.js runtime in a tech context.
+JS_TS: "javascript" or "typescript".
+AI_ML: "machine learning", "ML" (uppercase, standalone), "deep learning", "LLM", "LLMs", "NLP", "artificial intelligence", "AI/ML", "computer vision", "neural network". Count ONLY if explicitly REQUIRED for the candidate — ignore if nice-to-have, optional, or company/product description only.
+
+Tokens: NONE | JS_TS | NODE | NODE_JS_TS | AI_ML | JS_TS_AI_ML | NODE_AI_ML | NODE_JS_TS_AI_ML
+
+---
+
+COMP (Description only)
+
+Find the annual base salary in GBP (£).
+Only consider amounts that clearly represent annual base pay for the candidate. Ignore daily/hourly rates, OTE, total compensation packages, bonus-inclusive or equity-inflated figures, non-GBP currencies, and non-salary business amounts. Mention relevant ignored items in comp_reason.
+
+"k" = thousand. Range midpoint = (min + max) / 2.
+"Up to £X" or "to £X" with no lower bound -> UP_TO_ONLY.
+If multiple valid salaries appear, use the first in reading order.
+
+NO_GBP — no valid annual base salary in GBP, or midpoint £45,000-£54,999.
+UP_TO_ONLY — "up to" or "to" with no lower bound.
+BELOW_45K — midpoint < £45,000.
+RANGE_55_74K — midpoint £55,000-£74,999.
+RANGE_75_99K — midpoint £75,000-£99,999.
+ABOVE_100K — midpoint >= £100,000.
+
+---
+
+EXAMPLES:
+
+{"location_reason":"London -> IN_LONDON","location":"IN_LONDON","work_arrangement_reason":"hybrid, 3 days in office -> HYBRID","work_arrangement":"HYBRID","scope_reason":"Senior Software Engineer -> IN_SCOPE","scope":"IN_SCOPE","seniority_reason":"Senior -> LEVEL_3","seniority":"LEVEL_3","tech_reason":"node.js, typescript; react ignored -> NODE_JS_TS","tech":"NODE_JS_TS","comp_reason":"£85k-£120k mid £102.5k -> ABOVE_100K","comp":"ABOVE_100K"}
+
+{"location_reason":"Dublin, Ireland -> OUTSIDE_UK","location":"OUTSIDE_UK","work_arrangement_reason":"not stated -> UNKNOWN","work_arrangement":"UNKNOWN","scope_reason":"Sales Engineer, not software engineering -> OUT_OF_SCOPE","scope":"OUT_OF_SCOPE","seniority_reason":"out of scope -> LEVEL_1","seniority":"LEVEL_1","tech_reason":"python ignored -> NONE","tech":"NONE","comp_reason":"€80k not GBP -> NO_GBP","comp":"NO_GBP"}
+
+{"location_reason":"Belfast -> UK_OTHER","location":"UK_OTHER","work_arrangement_reason":"on-site required -> IN_OFFICE","work_arrangement":"IN_OFFICE","scope_reason":"Full Stack Developer -> IN_SCOPE","scope":"IN_SCOPE","seniority_reason":"Full Stack -> LEVEL_2","seniority":"LEVEL_2","tech_reason":"typescript; react ignored -> JS_TS","tech":"JS_TS","comp_reason":"£60k-£80k mid £70k -> RANGE_55_74K","comp":"RANGE_55_74K"}
+
+{"location_reason":"empty -> UNKNOWN","location":"UNKNOWN","work_arrangement_reason":"fully remote -> REMOTE","work_arrangement":"REMOTE","scope_reason":"Software Developer -> IN_SCOPE","scope":"IN_SCOPE","seniority_reason":"fallback: senior in first 50 words -> LEVEL_2","seniority":"LEVEL_2","tech_reason":"machine learning required -> AI_ML","tech":"AI_ML","comp_reason":"£400/day rate ignored -> NO_GBP","comp":"NO_GBP"}
+
+{"location_reason":"Remote -> FULLY_REMOTE","location":"FULLY_REMOTE","work_arrangement_reason":"remote first -> REMOTE","work_arrangement":"REMOTE","scope_reason":"Junior Developer -> IN_SCOPE","scope":"IN_SCOPE","seniority_reason":"Junior -> LEVEL_1","seniority":"LEVEL_1","tech_reason":"node.js -> NODE","tech":"NODE","comp_reason":"up to £90k -> UP_TO_ONLY","comp":"UP_TO_ONLY"}

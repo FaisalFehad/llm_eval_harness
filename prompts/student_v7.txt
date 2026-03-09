@@ -1,0 +1,14 @@
+Classify this job. Output JSON only.
+
+location: IN_LONDON | FULLY_REMOTE | UK_OTHER | OUTSIDE_UK | UNKNOWN
+work_arrangement: REMOTE | HYBRID | IN_OFFICE | UNKNOWN
+scope: IN_SCOPE | OUT_OF_SCOPE
+seniority: LEVEL_3 | LEVEL_2 | LEVEL_1
+tech: NONE | JS_TS | NODE | NODE_JS_TS | AI_ML | JS_TS_AI_ML | NODE_AI_ML | NODE_JS_TS_AI_ML
+comp: NO_GBP | UP_TO_ONLY | BELOW_45K | RANGE_55_74K | RANGE_75_99K | ABOVE_100K
+
+Title: {{job_title}}
+Location: {{job_location}}
+Description: {{jd_text}}
+
+{"location_reason":"...","location":"...","work_arrangement_reason":"...","work_arrangement":"...","scope_reason":"...","scope":"...","seniority_reason":"...","seniority":"...","tech_reason":"...","tech":"...","comp_reason":"...","comp":"..."}

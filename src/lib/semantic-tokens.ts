@@ -93,10 +93,13 @@ const COMP_SET = new Set<string>(COMP_TOKENS);
 // ── Types ───────────────────────────────────────────────────────────────────
 
 export type SemanticPrediction = {
-  reasoning: string;
+  loc_reason: string;
   loc: LocToken;
+  role_reason: string;
   role: RoleToken;
+  tech_reason: string;
   tech: TechToken;
+  comp_reason: string;
   comp: CompToken;
 };
 
@@ -177,8 +180,8 @@ export function validateSemanticPrediction(
   const errors: string[] = [];
   const fuzzyCorrections: string[] = [];
 
-  // Check required fields exist
-  for (const field of ["reasoning", "loc", "role", "tech", "comp"]) {
+  // Check required fields exist (8-field interleaved format)
+  for (const field of ["loc_reason", "loc", "role_reason", "role", "tech_reason", "tech", "comp_reason", "comp"]) {
     if (!(field in parsed)) {
       errors.push(`Missing field: ${field}`);
     }
@@ -190,17 +193,21 @@ export function validateSemanticPrediction(
   // Validate each token field (with fuzzy matching)
   const fields: Array<{
     name: string;
+    reasonField: string;
     value: unknown;
     tokens: ReadonlyArray<string>;
   }> = [
-    { name: "loc", value: parsed.loc, tokens: LOC_TOKENS },
-    { name: "role", value: parsed.role, tokens: ROLE_TOKENS },
-    { name: "tech", value: parsed.tech, tokens: TECH_TOKENS },
-    { name: "comp", value: parsed.comp, tokens: COMP_TOKENS },
+    { name: "loc", reasonField: "loc_reason", value: parsed.loc, tokens: LOC_TOKENS },
+    { name: "role", reasonField: "role_reason", value: parsed.role, tokens: ROLE_TOKENS },
+    { name: "tech", reasonField: "tech_reason", value: parsed.tech, tokens: TECH_TOKENS },
+    { name: "comp", reasonField: "comp_reason", value: parsed.comp, tokens: COMP_TOKENS },
   ];
 
   const corrected: Record<string, unknown> = {
-    reasoning: String(parsed.reasoning ?? ""),
+    loc_reason: String(parsed.loc_reason ?? ""),
+    role_reason: String(parsed.role_reason ?? ""),
+    tech_reason: String(parsed.tech_reason ?? ""),
+    comp_reason: String(parsed.comp_reason ?? ""),
   };
   let allValid = true;
 
@@ -290,57 +297,70 @@ function hasUnqualifiedMatch(reasoning: string, phrases: string[]): boolean {
 }
 
 /**
- * Cross-check reasoning text against the semantic tokens.
- * Flags cases where the reasoning contradicts the token.
+ * Cross-check per-field reasoning against the semantic tokens.
+ * With the 8-field format, each _reason field is checked against its own token.
+ * Each _reason should end with "-> TOKEN" matching the actual token field.
  */
 export function crossCheckReasoning(pred: SemanticPrediction): ConsistencyCheck {
   const issues: string[] = [];
-  const r = pred.reasoning.toLowerCase();
 
-  // Location checks
+  // Check each _reason field ends with -> matching token
+  const fieldPairs: Array<{ reason: string; token: string; name: string }> = [
+    { reason: pred.loc_reason, token: pred.loc, name: "loc" },
+    { reason: pred.role_reason, token: pred.role, name: "role" },
+    { reason: pred.tech_reason, token: pred.tech, name: "tech" },
+    { reason: pred.comp_reason, token: pred.comp, name: "comp" },
+  ];
+
+  for (const { reason, token, name } of fieldPairs) {
+    if (!reason) continue;
+
+    // Check that reason ends with -> TOKEN (the key consistency check)
+    const arrowMatch = reason.match(/->\s*([A-Z][A-Z0-9_]*)\s*$/);
+    if (arrowMatch) {
+      if (arrowMatch[1] !== token) {
+        issues.push(`${name}_reason ends with "-> ${arrowMatch[1]}" but ${name}="${token}"`);
+      }
+    } else {
+      issues.push(`${name}_reason doesn't end with "-> TOKEN" pattern`);
+    }
+  }
+
+  // Location-specific checks
+  const lr = pred.loc_reason.toLowerCase();
   if (pred.loc === "LONDON_OR_REMOTE") {
-    if (!r.includes("london") && !r.includes("remote")) {
-      issues.push("loc=LONDON_OR_REMOTE but reasoning doesn't mention London or Remote");
-    }
-  }
-  if (pred.loc === "OUTSIDE_UK") {
-    if (r.includes("→ london") || r.includes("→ uk_other")) {
-      issues.push("loc=OUTSIDE_UK but reasoning suggests UK location");
+    if (!lr.includes("london") && !lr.includes("remote")) {
+      issues.push("loc=LONDON_OR_REMOTE but loc_reason doesn't mention London or Remote");
     }
   }
 
-  // Tech checks — exclude negated ("no X found") and qualified ("X found but ignored")
+  // Tech-specific checks
+  const tr = pred.tech_reason.toLowerCase();
   if (
     (pred.tech === "NONE" || pred.tech === "JS_TS") &&
-    hasUnqualifiedMatch(r, ["node.js found", "nodejs found", "node found"])
+    hasUnqualifiedMatch(tr, ["node.js", "nodejs", "node"])
   ) {
-    issues.push(`tech=${pred.tech} but reasoning says Node was found`);
+    issues.push(`tech=${pred.tech} but tech_reason mentions Node without "ignored"`);
   }
   if (
     (pred.tech === "NONE" || pred.tech === "NODE") &&
-    hasUnqualifiedMatch(r, ["typescript found", "javascript found"])
+    hasUnqualifiedMatch(tr, ["typescript", "javascript"])
   ) {
-    issues.push(`tech=${pred.tech} but reasoning says JS/TS was found`);
+    issues.push(`tech=${pred.tech} but tech_reason mentions JS/TS without "ignored"`);
   }
 
-  // Comp checks
-  if (pred.comp === "NO_GBP" && r.includes("£") && !r.includes("ignored") && !r.includes("daily rate")) {
-    // Might have a GBP salary mentioned but not ignored
-    if (r.includes("midpoint") && !r.includes("£45") && !r.includes("£46") && !r.includes("£47") &&
-        !r.includes("£48") && !r.includes("£49") && !r.includes("£50") && !r.includes("£51") &&
-        !r.includes("£52") && !r.includes("£53") && !r.includes("£54")) {
-      issues.push("comp=NO_GBP but reasoning mentions £ salary without 'ignored' or midpoint in 45-54k range");
+  // Comp-specific checks
+  const cr = pred.comp_reason.toLowerCase();
+  if (pred.comp === "NO_GBP" && cr.includes("£") && !cr.includes("ignored") && !cr.includes("not gbp")) {
+    if (cr.includes("mid") && !cr.includes("£45") && !cr.includes("£46") && !cr.includes("£47") &&
+        !cr.includes("£48") && !cr.includes("£49") && !cr.includes("£50") && !cr.includes("£51") &&
+        !cr.includes("£52") && !cr.includes("£53") && !cr.includes("£54")) {
+      issues.push("comp=NO_GBP but comp_reason mentions £ salary without 'ignored' or midpoint in 45-54k range");
     }
   }
 
-  // Comp: "Up to" pattern should map to UP_TO_ONLY
-  if (pred.comp !== "UP_TO_ONLY" && (r.includes("up to £") || r.includes("no lower bound"))) {
-    issues.push(`comp=${pred.comp} but reasoning mentions 'Up to' / 'no lower bound' → should be UP_TO_ONLY`);
-  }
-
-  // Role: title keyword mismatch
-  if (pred.role === "NO_SENIORITY" && (r.includes("'senior'") || r.includes("senior in title") || r.includes("'lead'") || r.includes("lead in title"))) {
-    issues.push("role=NO_SENIORITY but reasoning says senior/lead found in title");
+  if (pred.comp !== "UP_TO_ONLY" && (cr.includes("up to £") || cr.includes("no lower bound"))) {
+    issues.push(`comp=${pred.comp} but comp_reason mentions 'Up to' / 'no lower bound' -> should be UP_TO_ONLY`);
   }
 
   return { consistent: issues.length === 0, issues };

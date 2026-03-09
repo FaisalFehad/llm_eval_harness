@@ -122,14 +122,19 @@ def validate_prediction(parsed: dict) -> dict:
     errors = []
     fuzzy_corrections = []
 
-    for field in ("reasoning", "loc", "role", "tech", "comp"):
+    for field in ("loc_reason", "loc", "role_reason", "role", "tech_reason", "tech", "comp_reason", "comp"):
         if field not in parsed:
             errors.append(f"Missing field: {field}")
 
     if errors:
         return {"valid": False, "errors": errors, "fuzzy_corrections": []}
 
-    corrected = {"reasoning": str(parsed.get("reasoning", ""))}
+    corrected = {
+        "loc_reason": str(parsed.get("loc_reason", "")),
+        "role_reason": str(parsed.get("role_reason", "")),
+        "tech_reason": str(parsed.get("tech_reason", "")),
+        "comp_reason": str(parsed.get("comp_reason", "")),
+    }
 
     for field_name, tokens in FIELD_TOKENS.items():
         value = str(parsed.get(field_name, ""))
