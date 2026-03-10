@@ -993,3 +993,40 @@ ABOVE_100K    → 25 pts   (midpoint ≥ £100k)
 **Status**: ✅ Fixed — all guards in place.
 
 **Lesson**: Validate locally first (free, instant), then remotely with 1 job (1 API call), then run bulk. Non-retryable HTTP errors (401/403/404) should never be retried — they're configuration problems that won't self-heal.
+
+---
+
+## Finding 35: GPT-4.1-mini Model Switch
+
+**Date**: 2026-03-10
+
+**How found**: GPT-4o-mini produced fuzzy corrections on 25/239 test jobs during V7 labeling: 22 empty tech arrays, 3 OOS-mixed-with-real-tokens, and 3 invented comp tokens (RANGE_25_44K, RANGE_35_44K). Tested gpt-4.1-mini on the same 239 test jobs — 0 fuzzy corrections, 0 validation failures.
+
+**Investigation**:
+
+| Model | Fuzzy corrections | Validation failures | Parse failures | Notes |
+|-------|-------------------|---------------------|----------------|-------|
+| gpt-4o-mini | 25/239 | Multiple | 0 | 22 empty tech, 3 OOS mixing, 3 invented comp tokens |
+| gpt-4.1-mini | 0/239 | 0 | 1 | Parse failure from max_tokens=500 too low (fixed at 1200) |
+| gpt-5-mini | — | — | — | Doesn't support temperature=0 or max_tokens (uses max_completion_tokens). Not used. |
+
+**Token disagreements** (4.1-mini vs 4o-mini on same 239 jobs):
+- **tech**: 23% disagreement — 4.1-mini more aggressively tags AI_ML
+- **comp**: 18.8% disagreement — 4.1-mini more precise midpoint calculation
+- **label**: 33/239 label disagreements (13.8%)
+
+**Decision**: Switch to gpt-4.1-mini for all labeling. Re-labeled val set for consistency. All 1,200 jobs (test + val + train) labeled with the same model to ensure uniform labeling behavior.
+
+**Result**: 1,200/1,200 labeled, 0 failures, only 7 fuzzy corrections total (5 OOS mixing, 2 invented comp tokens).
+
+**Script improvements made**:
+- `max_tokens` renamed to `max_completion_tokens` (newer API parameter name)
+- Token limit bumped from 500 to 1,200 (prevents truncation parse failures)
+- Preflight validation added (from Finding 34)
+- Non-retryable fast-fail on 401/403/404 errors
+
+**Category**: Model selection / pipeline reliability
+
+**Status**: ✅ Fixed — all 1,200 jobs labeled with gpt-4.1-mini, 0 failures.
+
+**Lesson**: Newer models follow structured output instructions better. Always test new models on existing data before committing — run the same jobs through both models and compare token-level disagreements to understand behavioral differences, not just pass/fail rates.

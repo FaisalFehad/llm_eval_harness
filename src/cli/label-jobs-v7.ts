@@ -208,6 +208,7 @@ async function main(): Promise<void> {
     console.warn(`WARNING: Generated job_id for ${autoIdCount} job(s) with empty IDs`);
   }
 
+
   console.log(`Loaded ${jobs.length} jobs from ${inputPath}`);
   console.log("\u2500".repeat(60));
 
@@ -255,7 +256,7 @@ async function main(): Promise<void> {
           { role: "system", content: "Respond with JSON only." },
           { role: "user", content: testPrompt },
         ],
-        max_tokens: 500,
+        max_completion_tokens: 1200,
         temperature: 0,
       });
       const testContent = testResp.choices[0]?.message?.content ?? "";
@@ -306,7 +307,7 @@ async function main(): Promise<void> {
               { role: "system", content: "Respond with JSON only." },
               { role: "user", content: promptText },
             ],
-            max_tokens: 500,
+            max_completion_tokens: 1200,
             temperature: 0,
           });
           const choice = response.choices[0];

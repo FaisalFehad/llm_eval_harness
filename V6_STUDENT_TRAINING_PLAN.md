@@ -626,12 +626,21 @@ The original plan had phases in logical order but not priority order. This is th
 
 6. ✅ **V7 prompt validation** — Labeled val_unlabeled.jsonl (239 jobs) 3 times, fixing prompt issues each iteration. Run 1: 2 failures (combo ordering). Run 2: 5 failures (untracked tech in array). Run 3: 0 token failures (1 timeout). Prompt locked. Added preflight + input validation + fast-fail guards to label-jobs-v7.ts (Finding 33, 34). All 8 downstream scripts updated for new field names (_raw, short fields, tech arrays).
 
+7. ✅ **Label test/eval set** — Labeled test_unlabeled.jsonl (239 jobs) and val_unlabeled.jsonl (239 jobs) with V7 teacher prompt. Will be locked with chmod 444 after verification.
+    - **[2026-03-10 UPDATE]** Model switched from gpt-4o-mini to **gpt-4.1-mini** — better instruction following, 0 fuzzy corrections on test/val sets.
+    - `max_completion_tokens` bumped from 500 to 1200 (fixed truncation on long JDs).
+    - 0 parse failures across both sets.
+    - Script guards added: preflight API check, non-retryable fast-fail (401/403/404), auto-ID for empty job_ids, tech dedup + OOS cleanup.
+8. ✅ **Label training data** — Labeled train_unlabeled.jsonl (722 jobs) with V7 teacher prompt (gpt-4.1-mini, temperature=0).
+    - **[2026-03-10 UPDATE]** All 1,200 jobs labeled: test=239, val=239, train=722 (3 batches: 300+300+122).
+    - 0 parse failures across all data.
+    - 7 total fuzzy corrections across all data (5 OOS-mixed-with-real tech tokens, 2 invented comp tokens).
+    - Script guards: preflight API check, non-retryable fast-fail (401/403/404), auto-ID for empty job_ids, tech dedup + OOS cleanup.
+
 ─── YOU ARE HERE ───────────────────────────────────────────
 
-7. 🔄 **Label eval set** — Labeling test_unlabeled.jsonl (239 jobs) with V7 teacher prompt. Will be locked with chmod 444 after verification.
-8. ⬜ **Label training data** — train_unlabeled.jsonl (722 jobs) with V7 teacher prompt.
-9. ⬜ **Verify labeling** — Post-label audit. Compare distributions. Spot-check.
-8. ⬜ **Verify re-labeling** — Post-label audit runs automatically. Also: compare old vs new labels, spot-check 10 random changes. If > 30 labels change, investigate before proceeding. See Step 5.5 checklist.
+9. ⬜ **Verify labeling** — Post-label audit. Compare distributions. Spot-check. Combine train batches.
+9b. ⬜ **Verify re-labeling** — Post-label audit runs automatically. Also: compare old vs new labels, spot-check 10 random changes. If > 30 labels change, investigate before proceeding. See Step 5.5 checklist.
 9. ⬜ **Prune trivially easy bad_fit** — The audit clean mode handles this (`--remove-trivial`). Criteria updated for V7: location=OUTSIDE_UK/UNKNOWN + scope=OUT_OF_SCOPE or seniority=LEVEL_1 + tech=NONE + comp=NO_GBP. Must happen AFTER re-labeling because V7 rules may change some labels.
 10. ⬜ **Generate contrastive data** — 140 jobs across 9 batches (A-H, J). Programmatic variants only. Label with V7 teacher at temperature=0. Batch descriptions need V7 token names.
 11. ⬜ **Verify contrastive variants** — For each variant: changed field must have different token, unchanged fields must have same tokens. Fix and re-label if not.

@@ -2,8 +2,8 @@
 # Optimized for M1 16GB
 #
 # Student: Qwen2.5-0.5B-Instruct-4bit
-# Task: Semantic token classification (6 fields, 28 total tokens)
-#   location (5) + work_arrangement (4) + scope (2) + seniority (3) + tech (8) + comp (6)
+# Task: Semantic token classification (5 fields, 10 JSON keys)
+#   loc (5) + arr (4) + sen (3) + tech (5 individual, arrays) + comp (7)
 # Training: fresh LoRA from base (NEVER resume from existing adapter)
 
 model: "mlx-community/Qwen2.5-0.5B-Instruct-4bit"

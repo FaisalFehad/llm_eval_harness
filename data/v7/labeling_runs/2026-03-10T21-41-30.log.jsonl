@@ -1,0 +1,1 @@
+{"_type":"run_start","timestamp":"2026-03-10T21:41:30.609Z","input":"data/v7/test_unlabeled.jsonl","output":"data/v7/test_labeled.jsonl","prompt":"prompts/teacher_v7.txt","model":"gpt-5-mini","concurrency":5,"total_jobs":239,"version":"v7"}
