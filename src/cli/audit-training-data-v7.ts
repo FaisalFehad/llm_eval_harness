@@ -1,8 +1,8 @@
 /**
  * Audit V7 training data for quality issues.
  *
- * V7 version: uses 6 fields (location, work_arrangement, scope, seniority,
- * tech, comp) with 12-field interleaved output format.
+ * V7 version: uses 5 fields (location, work_arrangement, seniority,
+ * tech, comp) with 10-field interleaved output format.
  *
  * Runs all checks in one pass and produces:
  *   - quarantine/duplicates.jsonl   (moved duplicates)
@@ -70,21 +70,24 @@ import { readJsonlFile, writeJsonlFile } from "../lib/jsonl.js";
 
 const VALID_TOKENS: Record<string, Set<string>> = {
   location: new Set(["IN_LONDON", "FULLY_REMOTE", "UK_OTHER", "OUTSIDE_UK", "UNKNOWN"]),
-  work_arrangement: new Set(["REMOTE", "HYBRID", "IN_OFFICE", "UNKNOWN"]),
-  scope: new Set(["IN_SCOPE", "OUT_OF_SCOPE"]),
+  work_arrangement: new Set(["REMOTE", "HYBRID", "IN_OFFICE", "UNKNOWN_ARRANGEMENT"]),
   seniority: new Set(["LEVEL_3", "LEVEL_2", "LEVEL_1"]),
   tech: new Set([
-    "NONE", "JS_TS", "NODE", "NODE_JS_TS",
-    "AI_ML", "JS_TS_AI_ML", "NODE_AI_ML", "NODE_JS_TS_AI_ML",
+    "OUT_OF_SCOPE",
+    "NODE", "REACT", "JS_TS", "AI_ML",
+    "NODE_REACT", "NODE_JS_TS", "NODE_AI_ML",
+    "REACT_JS_TS", "REACT_AI_ML", "JS_TS_AI_ML",
+    "NODE_REACT_JS_TS", "NODE_REACT_AI_ML", "NODE_JS_TS_AI_ML", "REACT_JS_TS_AI_ML",
+    "NODE_REACT_JS_TS_AI_ML",
   ]),
   comp: new Set([
-    "NO_GBP", "UP_TO_ONLY", "BELOW_45K",
+    "NO_GBP", "UP_TO_ONLY", "BELOW_45K", "RANGE_45_54K",
     "RANGE_55_74K", "RANGE_75_99K", "ABOVE_100K",
   ]),
 };
 
-// V7 token fields (the 6 main token fields)
-const V7_TOKEN_FIELDS = ["location", "work_arrangement", "scope", "seniority", "tech", "comp"] as const;
+// V7 token fields (the 5 main token fields)
+const V7_TOKEN_FIELDS = ["location", "work_arrangement", "seniority", "tech", "comp"] as const;
 
 // V7 reason fields (paired with each token field)
 const V7_REASON_FIELDS = V7_TOKEN_FIELDS.map((f) => `${f}_reason` as const);
@@ -95,11 +98,15 @@ const TOKEN_SCORES: Record<string, Record<string, number>> = {
   location: { IN_LONDON: 25, FULLY_REMOTE: 25, UK_OTHER: 10, OUTSIDE_UK: -50, UNKNOWN: 0 },
   seniority: { LEVEL_3: 25, LEVEL_2: 15, LEVEL_1: 0 },
   tech: {
-    NONE: 0, JS_TS: 5, NODE: 10, NODE_JS_TS: 15,
-    AI_ML: 10, JS_TS_AI_ML: 15, NODE_AI_ML: 20, NODE_JS_TS_AI_ML: 25,
+    OUT_OF_SCOPE: 0,
+    NODE: 10, REACT: 5, JS_TS: 5, AI_ML: 10,
+    NODE_REACT: 15, NODE_JS_TS: 15, NODE_AI_ML: 20,
+    REACT_JS_TS: 10, REACT_AI_ML: 15, JS_TS_AI_ML: 15,
+    NODE_REACT_JS_TS: 20, NODE_REACT_AI_ML: 25, NODE_JS_TS_AI_ML: 25, REACT_JS_TS_AI_ML: 20,
+    NODE_REACT_JS_TS_AI_ML: 30,
   },
   comp: {
-    NO_GBP: 0, UP_TO_ONLY: 0, BELOW_45K: -30,
+    NO_GBP: 0, UP_TO_ONLY: 0, BELOW_45K: -30, RANGE_45_54K: 0,
     RANGE_55_74K: 5, RANGE_75_99K: 15, ABOVE_100K: 25,
   },
 };
@@ -112,13 +119,11 @@ type LabeledJob = {
   company: string;
   job_location: string; // raw location (renamed from "location" to avoid V7 token collision)
   jd_text: string;
-  // V7 12-field interleaved output
+  // V7 10-field interleaved output
   location_reason: string;
   location: string;
   work_arrangement_reason: string;
   work_arrangement: string;
-  scope_reason: string;
-  scope: string;
   seniority_reason: string;
   seniority: string;
   tech_reason: string;
@@ -172,7 +177,7 @@ function dedupKey(title: string, company: string): string {
 /**
  * Compute V7 score with scope gate:
  *   - loc_score from location tokens (IN_LONDON/FULLY_REMOTE both = 25)
- *   - role_score from seniority tokens, BUT zeroed if scope=OUT_OF_SCOPE
+ *   - role_score from seniority tokens, BUT zeroed if tech=OUT_OF_SCOPE
  *   - tech_score from tech tokens
  *   - comp_score from comp tokens
  */
@@ -182,8 +187,8 @@ function computeScore(job: LabeledJob): { score: number; label: string } {
   const techScore = TOKEN_SCORES.tech[job.tech] ?? 0;
   const compScore = TOKEN_SCORES.comp[job.comp] ?? 0;
 
-  // Scope gate: OUT_OF_SCOPE zeroes seniority contribution
-  if (job.scope === "OUT_OF_SCOPE") {
+  // Scope gate: tech=OUT_OF_SCOPE zeroes seniority contribution
+  if (job.tech === "OUT_OF_SCOPE") {
     roleScore = 0;
   }
 
@@ -231,15 +236,9 @@ function checkSuspiciousTokens(job: LabeledJob): string[] {
     issues.push(`Raw location contains "Remote" but location=${job.location}`);
   }
 
-  // Scope-seniority consistency: OUT_OF_SCOPE should typically have LEVEL_1
-  // (because score gates seniority to 0 anyway, teacher should use LEVEL_1)
-  if (job.scope === "OUT_OF_SCOPE" && job.seniority !== "LEVEL_1") {
-    issues.push(`scope=OUT_OF_SCOPE but seniority=${job.seniority} (expected LEVEL_1 when out of scope)`);
-  }
-
-  // IN_SCOPE engineering job — title should have engineering keywords
-  if (job.scope === "IN_SCOPE" && !ENGINEERING_KEYWORDS.test(title) && !/\bengineering\b/i.test(title)) {
-    issues.push(`scope=IN_SCOPE but title "${title}" has no engineering keywords`);
+  // In-scope engineering job — tech != OUT_OF_SCOPE but title has no engineering keywords
+  if (job.tech !== "OUT_OF_SCOPE" && !ENGINEERING_KEYWORDS.test(title) && !/\bengineering\b/i.test(title)) {
+    issues.push(`tech=${job.tech} (in scope) but title "${title}" has no engineering keywords`);
   }
 
   return issues;
@@ -249,7 +248,7 @@ function checkSuspiciousTokens(job: LabeledJob): string[] {
 
 /**
  * Check each _reason field ends with "-> TOKEN" matching the actual token field.
- * V7 version: 6 reason→token pairs (12-field interleaved format).
+ * V7 version: 5 reason→token pairs (10-field interleaved format).
  */
 function checkReasoningTokenMismatch(job: LabeledJob): string[] {
   const issues: string[] = [];
@@ -257,7 +256,6 @@ function checkReasoningTokenMismatch(job: LabeledJob): string[] {
   const fieldPairs: Array<{ reasonField: string; tokenField: string; name: string }> = [
     { reasonField: "location_reason", tokenField: "location", name: "location" },
     { reasonField: "work_arrangement_reason", tokenField: "work_arrangement", name: "work_arrangement" },
-    { reasonField: "scope_reason", tokenField: "scope", name: "scope" },
     { reasonField: "seniority_reason", tokenField: "seniority", name: "seniority" },
     { reasonField: "tech_reason", tokenField: "tech", name: "tech" },
     { reasonField: "comp_reason", tokenField: "comp", name: "comp" },
@@ -294,7 +292,7 @@ function checkTitleMismatch(job: LabeledJob): string | null {
   // V7 uses seniority_reason instead of V6's role_reason
   if (!job.seniority_reason) return null;
 
-  // With 12-field format, seniority_reason contains the seniority evidence directly
+  // With 10-field format, seniority_reason contains the seniority evidence directly
   // e.g., "Senior Software Engineer, engineering role -> LEVEL_3"
   // Try to extract what title the teacher actually saw
   const roleMatch = job.seniority_reason.match(/^['"]?([^'",\n->]+?)['"]?\s*(,|->|in title|is|found)/i);
@@ -677,18 +675,17 @@ async function main() {
     // ── WARNING: Trivially easy bad_fit (post-label only) ──────────
 
     if (!preLabel) {
-      // V7 trivial bad_fit: outside UK or unknown location + out of scope + no tech + no GBP comp
+      // V7 trivial bad_fit: outside UK or unknown location + out of scope tech + no GBP comp
       const isTrivialBadFit =
         (job.location === "OUTSIDE_UK" || job.location === "UNKNOWN") &&
-        job.scope === "OUT_OF_SCOPE" &&
-        job.tech === "NONE" &&
+        job.tech === "OUT_OF_SCOPE" &&
         job.comp === "NO_GBP";
 
       if (isTrivialBadFit) {
         issues.push({
           line, job_id: id, title, severity: "WARNING",
           check: "trivial_bad_fit",
-          detail: `All tokens at baseline (${job.location} + OUT_OF_SCOPE + NONE + NO_GBP) — teaches model nothing new`,
+          detail: `All tokens at baseline (${job.location} + OUT_OF_SCOPE + NO_GBP) — teaches model nothing new`,
         });
         removeIfTrivial.add(i); removedAsTrivial.add(i);
       }
@@ -772,19 +769,20 @@ async function main() {
       }
     }
 
-    // V7-specific: check scope consistency by title
-    const titleToScope = new Map<string, Set<string>>();
+    // V7-specific: check tech scope consistency by title
+    // (same title should consistently be OUT_OF_SCOPE or not)
+    const titleToScope = new Map<string, Set<boolean>>();
     for (const job of jobs) {
       const normTitle = job.title.toLowerCase().trim();
       if (!titleToScope.has(normTitle)) titleToScope.set(normTitle, new Set());
-      if (job.scope) titleToScope.get(normTitle)!.add(job.scope);
+      if (job.tech) titleToScope.get(normTitle)!.add(job.tech === "OUT_OF_SCOPE");
     }
-    for (const [normTitle, scopes] of titleToScope) {
-      if (scopes.size > 1) {
+    for (const [normTitle, scopeStates] of titleToScope) {
+      if (scopeStates.size > 1) {
         issues.push({
           line: 0, job_id: "-", title: normTitle, severity: "WARNING",
           check: "label_inconsistency",
-          detail: `Title "${normTitle}" has ${scopes.size} different scope tokens: ${[...scopes].join(", ")}`,
+          detail: `Title "${normTitle}" is sometimes OUT_OF_SCOPE and sometimes in-scope`,
         });
       }
     }

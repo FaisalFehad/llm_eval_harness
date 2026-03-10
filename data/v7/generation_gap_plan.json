@@ -1,0 +1,31 @@
+{
+  "location": {
+    "IN_LONDON": 37,
+    "FULLY_REMOTE": 259,
+    "OUTSIDE_UK": 14,
+    "UNKNOWN": 82
+  },
+  "work_arrangement": {
+    "HYBRID": 222,
+    "REMOTE": 224,
+    "IN_OFFICE": 178
+  },
+  "scope": {
+    "IN_SCOPE": 207,
+    "OUT_OF_SCOPE": 207
+  },
+  "tech": {
+    "NODE_JS_TS": 76,
+    "NODE": 122,
+    "JS_TS_AI_ML": 1,
+    "NODE_JS_TS_AI_ML": 44,
+    "NODE_AI_ML": 93
+  },
+  "comp": {
+    "RANGE_75_99K": 173,
+    "RANGE_55_74K": 112,
+    "UP_TO_ONLY": 11,
+    "ABOVE_100K": 38,
+    "BELOW_45K": 10
+  }
+}

@@ -624,10 +624,13 @@ The original plan had phases in logical order but not priority order. This is th
 
 > **Note**: These minimums are targets for the FULL labeled pool (all ~4,226 jobs), not the final training set. The training set will be a subset after eval set extraction and pruning. Work_arrangement and scope minimums are estimates — first V7 labeling run will reveal actual distributions and may require adjustment.
 
+6. ✅ **V7 prompt validation** — Labeled val_unlabeled.jsonl (239 jobs) 3 times, fixing prompt issues each iteration. Run 1: 2 failures (combo ordering). Run 2: 5 failures (untracked tech in array). Run 3: 0 token failures (1 timeout). Prompt locked. Added preflight + input validation + fast-fail guards to label-jobs-v7.ts (Finding 33, 34). All 8 downstream scripts updated for new field names (_raw, short fields, tech arrays).
+
 ─── YOU ARE HERE ───────────────────────────────────────────
 
-6. ⬜ **Re-label all training data** — With V7 teacher prompt (`teacher_v7.txt`) at temperature=0. Pre-label audit runs first. Log file saved.
-7. ⬜ **Build new eval set** — V5 eval_150_golden.jsonl was **lost** (see Incident section). Must build a fresh eval set from all_labeled_pool.jsonl. Label with V7 teacher prompt. Same approach: 50/50/50 by label, locked after creation (chmod 444).
+7. 🔄 **Label eval set** — Labeling test_unlabeled.jsonl (239 jobs) with V7 teacher prompt. Will be locked with chmod 444 after verification.
+8. ⬜ **Label training data** — train_unlabeled.jsonl (722 jobs) with V7 teacher prompt.
+9. ⬜ **Verify labeling** — Post-label audit. Compare distributions. Spot-check.
 8. ⬜ **Verify re-labeling** — Post-label audit runs automatically. Also: compare old vs new labels, spot-check 10 random changes. If > 30 labels change, investigate before proceeding. See Step 5.5 checklist.
 9. ⬜ **Prune trivially easy bad_fit** — The audit clean mode handles this (`--remove-trivial`). Criteria updated for V7: location=OUTSIDE_UK/UNKNOWN + scope=OUT_OF_SCOPE or seniority=LEVEL_1 + tech=NONE + comp=NO_GBP. Must happen AFTER re-labeling because V7 rules may change some labels.
 10. ⬜ **Generate contrastive data** — 140 jobs across 9 batches (A-H, J). Programmatic variants only. Label with V7 teacher at temperature=0. Batch descriptions need V7 token names.

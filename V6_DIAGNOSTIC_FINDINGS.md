@@ -789,3 +789,207 @@ Scanned all available external data sources before creating synthetic variants:
 **Status**: ✅ Fixed — all gap-filling data created and ready for V7 labeling. Distribution minimums updated in training plan.
 
 **Lesson**: When redesigning token vocabulary (V6→V7), always check whether field splits create new distribution gaps. LONDON_OR_REMOTE had 360 jobs but FULLY_REMOTE had ~30 — a 92/8 split that was invisible until the field was decomposed. LinkedIn's location data doesn't capture remote status, so this gap cannot be fixed by scraping more data — only by programmatic variants. External data sources should be checked early but don't assume they contain what you need; in this case, 2,777 external jobs yielded only 3 new entries.
+
+---
+
+## Finding 30: V7 Architecture Simplification — Scope Removed, REACT Added, Seniority Gate Fixed
+
+**Date**: 2026-03-09
+
+**How found**: Deep review of V7 teacher prompt during critique session. Three related design issues discovered and resolved together.
+
+**Problems identified**:
+
+1. **SCOPE field carried zero information**: IN_SCOPE was the complement of OUT_OF_SCOPE — every job that isn't OUT_OF_SCOPE is implicitly in scope. A binary field where one token is the absence of the other wastes a field and 2 JSON keys (scope_reason, scope) in every output.
+
+2. **REACT not tracked as separate signal**: V6/V7 initially had 8 tech tokens (same as V5). REACT was lumped into JS_TS or ignored. Real jobs frequently mention React alongside Node.js and TypeScript, and distinguishing "React only" from "Node + React + TypeScript" gives better scoring granularity.
+
+3. **Seniority gate couldn't work in the prompt**: The prompt said "If tech is OUT_OF_SCOPE, seniority is always LEVEL_1." But in the JSON output order, seniority_reason/seniority appear BEFORE tech_reason/tech. GPT-4o-mini writes JSON left-to-right — when it writes seniority, it hasn't determined tech yet. This caused 44 "inconsistencies" where GPT correctly labeled seniority from the title (e.g., Senior → LEVEL_3) but tech was later OUT_OF_SCOPE.
+
+**Decisions**:
+
+1. **Removed SCOPE field entirely**: OUT_OF_SCOPE moved into the TECH token list (replaces old NONE token). Covers both "not an engineering role" AND "engineering role with no tracked tech." Output reduced from 6 fields (12 JSON keys) to 5 fields (10 JSON keys).
+
+2. **Added REACT as 4th binary signal**: Tech tokens now use 4 binary signals (NODE=10, REACT=5, JS_TS=5, AI_ML=10) creating 16 combo tokens via additive scoring. Examples: REACT (5 pts), NODE_REACT (15 pts), NODE_REACT_JS_TS (20 pts), NODE_REACT_JS_TS_AI_ML (30 pts).
+
+3. **Seniority gate moved to code-only**: Removed gate instruction from prompt. GPT now labels seniority honestly from the title regardless of tech. The gate is applied in `computeFromTokens()`: `role_score = pred.tech === "OUT_OF_SCOPE" ? 0 : SENIORITY_MAP[pred.seniority]`. Removed scope gate check from `crossCheckReasoning()`.
+
+**Files changed**:
+- `prompts/teacher_v7.txt` — removed scope/scope_reason from output format and all 8 examples, merged SCOPE into TECH section, added REACT examples, removed seniority gate instruction
+- `src/lib/semantic-tokens-v7.ts` — removed SCOPE_TOKENS/ScopeToken, added 16 REACT combo tokens to TECH_TOKENS/TECH_MAP, scope gate uses `pred.tech === "OUT_OF_SCOPE"`, updated V6 compat mapping for all 16 tokens, removed scope gate from crossCheckReasoning()
+- `src/cli/label-jobs-v7.ts` — removed scope_reason/scope from LabeledJob type and output
+
+**Impact**: Simpler model output (10 keys vs 12), richer tech signal (16 tokens vs 8), no prompt-vs-output-order conflict on seniority. Scoring unchanged for existing tokens — REACT combos are additive on top.
+
+**Category**: Architecture / prompt design
+
+**Status**: ✅ Fixed — all code compiles, prompt updated, examples consistent.
+
+**Lesson**: JSON output order matters for chain-of-thought prompts. If field A depends on field B, field B must appear first in the output. When that's impractical (seniority before tech), move the dependency to code. Also: if one token in a binary field is just "not the other one," the field carries zero information and should be removed.
+
+---
+
+## Finding 31: COMP Dead Zone Bug — £45k-£55k Mapped to NO_GBP
+
+**Date**: 2026-03-09
+
+**How found**: User noticed during prompt review that a £50k salary would be classified as NO_GBP, which is misleading — NO_GBP implies no GBP salary was found, but £50k clearly IS a GBP salary.
+
+**Problem**: The COMP token design had a "dead zone" where salaries with midpoint £45,000-£54,999 were lumped into NO_GBP (which also covers "no salary found"). This meant:
+- comp_reason: "£48k-£52k mid £50k -> NO_GBP" — looks wrong because there IS a salary
+- The token name is dishonest — it says "no GBP" when GBP was found
+- The student model would learn that £50k = "no salary" which is confusing
+
+**Root cause**: Original design treated £45k-£55k as uninteresting (score 0) and rather than adding a token that scores 0, it was merged into NO_GBP which also scores 0. This prioritised fewer tokens over honest naming.
+
+**Decision**: Added new `RANGE_45_54K` token that scores 0. NO_GBP now purely means "no valid annual base salary in GBP found."
+
+**Files changed**:
+- `prompts/teacher_v7.txt` — split NO_GBP definition, added RANGE_45_54K (midpoint £45,000-£54,999)
+- `src/lib/semantic-tokens-v7.ts` — added RANGE_45_54K to COMP_TOKENS and COMP_MAP (score: 0)
+
+**Updated COMP token scale**:
+```
+NO_GBP        →  0 pts   (no salary found)
+UP_TO_ONLY    →  0 pts   ("up to £X" with no lower bound)
+BELOW_45K     → -30 pts  (midpoint < £45k)
+RANGE_45_54K  →  0 pts   (midpoint £45k-£54.9k)  ← NEW
+RANGE_55_74K  →  5 pts   (midpoint £55k-£74.9k)
+RANGE_75_99K  → 15 pts   (midpoint £75k-£99.9k)
+ABOVE_100K    → 25 pts   (midpoint ≥ £100k)
+```
+
+**Impact**: Scoring unchanged (still 0 pts for £45k-£55k range). Token naming is now honest. 7 comp tokens instead of 6. Student model gets clearer signal — "no salary" vs "low salary found."
+
+**Category**: Token design / correctness
+
+**Status**: ✅ Fixed — prompt and scoring code updated.
+
+**Lesson**: Token names should honestly describe what they mean. Merging semantically different cases into one token (because they happen to score the same) creates confusing training signal and dishonest reason fields. An extra token is cheap; confusing the student model is expensive.
+
+---
+
+## Finding 32: V7 Prompt Quality Pass — Typos, Clarity, Structure
+
+**Date**: 2026-03-09
+
+**How found**: Systematic deep review of teacher_v7.txt after initial draft. Found multiple categories of issues.
+
+**Problems fixed**:
+
+1. **Typos** (7 instances):
+   - "regress job classier" → "regression job classifier"
+   - "skp a section" → "skip"
+   - "in anywhere" → "anywhere"
+   - Plus earlier session: "follow and rules and carefully", "job job description", "none tech"→"non-tech", "Achiest"→"Architect", "verges of ways"→"various ways", "reffed to"→"referred to", "abreactions"→"abbreviations", "AI/LM"→"AI/ML", "fine tunning"→"fine tuning", "Tech of insert"→"Tech of interest"
+
+2. **Circular/confusing language** (2 instances):
+   - "Node = Node or Node.js, nodejs etc" → "All spelling variants map to the token name (e.g., Node.js, nodejs, node all map to NODE)"
+   - "is the job location mentioned in the location?" → "If location is not provided, label as UNKNOWN"
+
+3. **Self-referencing section numbers** (2 instances):
+   - COMP early exit said "move to section 2" but COMP WAS section 2 → fixed to "move to section 4"
+   - LOCATION said "move to section 2" when LOCATION was section 2 → fixed to "move to section 3"
+
+4. **Redundant instructions** (1 instance):
+   - WORK ARRANGEMENT: "Move to the next section Instruction: label as UNKNOWN and skip to the next section" → "Label as UNKNOWN and move to section 5"
+
+5. **"Instruction X" phrasing** → replaced throughout with "label as X"
+
+6. **Missing explicit rule**: No instruction for "engineering role + no tracked tech → OUT_OF_SCOPE." Added: "If no tech of interest is found after checking, label as OUT_OF_SCOPE."
+
+7. **n8n removed from AI_ML keywords**: n8n is a workflow automation tool, not AI/ML. Including it would over-score non-AI automation roles.
+
+8. **"Strictly" vs "various ways" tension resolved**: Two conflicting instructions (line 59 said "various ways including but not limited to" while line 66 said "strictly"). Unified to: "explicitly named in the text — do not infer from context. Accept any spelling or formatting variant."
+
+9. **Structural improvements** (user-driven):
+   - Examples moved to top of prompt ("VALID OUTPUT EXAMPLES")
+   - TECH as section 1 (gateway) with early-exit for non-engineering roles
+   - Sections numbered 1-5 with correct cross-references
+   - `_reason` inline example added at each section header to reinforce the `{evidence} -> {TOKEN}` pattern
+
+**Impact**: Every typo and ambiguity is a potential GPT-4o-mini misinterpretation. Self-referencing section numbers could cause infinite loops. Missing rules cause inconsistent labeling. The structural changes (examples first, early-exit, inline reason examples) should improve labeling consistency.
+
+**Category**: Prompt quality / correctness
+
+**Status**: ✅ Fixed — all issues corrected in teacher_v7.txt.
+
+**Lesson**: Teacher prompts need the same quality bar as production code — every typo, ambiguity, or contradiction can produce labeling errors that cascade into student model confusion. Review prompts as carefully as you'd review a spec. Self-referencing cross-references are particularly dangerous — always verify "move to section N" actually points to the right section.
+
+---
+
+## Finding 33: V7 Prompt Redesign — Short Field Names, Tech Arrays, _raw Fields
+
+**Date**: 2026-03-10
+
+**How found**: After initial V7 labeling run (239 val jobs) revealed 37 real GPT errors across 4 root causes: comp midpoint bias (14), comp invented ranges (7), JS/TS missed in mixed tech lists (8), USD/up-to rules skipped (6), plus 2 invalid combo tokens (NODE_JS, REACT_NODE).
+
+**Problems and fixes**:
+
+1. **Tech combo token ordering errors**: GPT invented tokens like NODE_JS and REACT_NODE by combining individual tokens in wrong order. **Fix**: Changed tech from single combo string to array of individual tokens: `["NODE","REACT","JS_TS"]` instead of `"NODE_REACT_JS_TS"`. Eliminates all combination ordering errors.
+
+2. **Comp midpoint bias (14 errors)**: GPT used upper bound instead of midpoint for ranges (e.g., £80k-£100k → ABOVE_100K instead of RANGE_75_99K). **Fix**: Added explicit step-by-step comp flow (steps 1-5) with worked example: "£80k-£100k midpoint = £90k = RANGE_75_99K (not ABOVE_100K)".
+
+3. **Comp invented range labels (7 errors)**: GPT created plausible tokens like RANGE_25_34K, RANGE_35_44K. **Fix**: Added "do not invent new range labels" instruction. Still 3 fuzzy-matched cases in latest run — prompt not 100% effective but code catches them.
+
+4. **JS/TS missed in mixed tech lists (8 errors)**: When JD had "Python, React, TypeScript, Go", GPT missed tracked tech among untracked. **Fix**: Added "Evaluate each technology independently" rule.
+
+5. **Field name shortening**: `location` → `loc`, `work_arrangement` → `arr`, `seniority` → `sen`. Reduces output tokens per job.
+
+6. **Reason → Raw fields**: `_reason` suffix → `_raw` suffix. Raw fields now contain verbatim text from JD (not reasoning). More useful for auditing and more honest naming.
+
+7. **Token renames**: `FULLY_REMOTE` → `REMOTE`, `UNKNOWN` → `UNK`, `UNKNOWN_ARRANGEMENT` → `UNK`, `OUT_OF_SCOPE` → `OOS`. Shorter, consistent.
+
+**Labeling run results** (239 val jobs, 3 runs):
+
+| Run | Failures | Root cause |
+|-----|----------|------------|
+| Run 1 (old prompt) | 2 | Combo ordering (NODE_JS, REACT_NODE) |
+| Run 2 (tech array, but weak instruction) | 5 | GPT put untracked tech (PYTHON) in array |
+| Run 3 (explicit "only 5 valid strings") | 1 | Network timeout (not prompt) |
+
+**Files changed**: All 8 downstream V7 files updated (semantic-tokens-v7.ts, semantic_tokens_v7.py, label-jobs-v7.ts, eval_student_v7.py, student_v7.txt, format-for-mlx-v7.ts, promptfoo_teacher_v7.yaml, verify_v7_labels.py).
+
+**Category**: Prompt redesign / architecture
+
+**Status**: ✅ Fixed — 0 token validation failures on latest run.
+
+**Lesson**: Array-of-tokens eliminates combo ordering errors but introduces a new risk: GPT listing untracked tech as tokens. Must explicitly enumerate the valid set AND give examples of invalid values. "Only use tokens from this list" is not enough — "PYTHON, POSTGRESQL, REDIS are invalid" is what GPT needs.
+
+---
+
+## Finding 34: Labeling Script Guards — Preflight, Input Validation, Fast-Fail
+
+**Date**: 2026-03-10
+
+**How found**: User ran labeling with typo in model name (`gpto-mini` instead of `gpt-4o-mini`). All 239 jobs failed with 404 errors. No tokens wasted but the full run completed before showing the error. Also found: empty `job_id` in test dataset blocked the run.
+
+**Problems**:
+
+1. **No model validation**: Wrong model name caused 239 sequential 404 failures instead of immediate abort.
+2. **Non-retryable errors retried**: 401/403/404 errors went through 8-retry exponential backoff.
+3. **No input validation**: Empty files, missing placeholders in prompts, malformed input jobs all discovered mid-run.
+4. **Empty job_id hard-blocked**: One job with empty `job_id` prevented labeling the other 238 valid jobs.
+
+**Fixes added to `label-jobs-v7.ts`**:
+
+| Guard | What it catches |
+|-------|----------------|
+| Input file exists & non-empty | Missing/zeroed input file |
+| Prompt has all 3 placeholders | Wrong prompt file |
+| Output file overwrite warning | Accidental data loss |
+| Jobs array non-empty | JSONL parse produced 0 jobs |
+| Required fields check | Missing title or empty JD (<20 chars) |
+| Auto-generate empty job_ids | Empty IDs get hash-based ID + warning |
+| Preflight API call (1 job) | Wrong model, bad API key, broken prompt |
+| Non-retryable fast-fail (401/403/404) | Config errors during bulk run |
+
+**Also added to validation libraries** (both TS and Python):
+- Tech array deduplication (auto-fix + log)
+- OOS mixed with real tokens auto-fix (remove OOS, keep real tokens + log)
+
+**Category**: Pipeline robustness
+
+**Status**: ✅ Fixed — all guards in place.
+
+**Lesson**: Validate locally first (free, instant), then remotely with 1 job (1 API call), then run bulk. Non-retryable HTTP errors (401/403/404) should never be retried — they're configuration problems that won't self-heal.

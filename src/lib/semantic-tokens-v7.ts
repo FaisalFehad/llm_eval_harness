@@ -1,18 +1,22 @@
 /**
  * Semantic Token Vocabulary and Score Conversion for V7 Student Model.
  *
- * V7 splits V6's 4 fields (loc, role, tech, comp) into 6 fields:
- *   - location          (was loc)  — where the job is based
- *   - work_arrangement  (NEW)      — remote/hybrid/in-office (informational, no score)
- *   - scope             (NEW)      — engineering or not (gate: OUT_OF_SCOPE -> seniority=0)
- *   - seniority         (was role) — experience level
- *   - tech              (unchanged)
- *   - comp              (unchanged)
+ * V7 has 5 fields (10 JSON keys):
+ *   - loc   — where the job is based
+ *   - arr   — remote/hybrid/in-office (informational, no score)
+ *   - sen   — experience level
+ *   - tech  — tracked technology array + scope gate (OOS -> seniority=0)
+ *   - comp  — salary range
  *
- * Scores are backward-compatible with V6:
- *   loc_score  = LOCATION_MAP[location]
- *   role_score = SENIORITY_MAP[seniority] if scope == IN_SCOPE else 0
- *   tech_score = TECH_MAP[tech]
+ * Tech field:
+ *   - Array of individual tokens: ["NODE", "REACT", "JS_TS", "AI_ML"]
+ *   - ["OOS"] = not an engineering role OR no tracked tech -> seniority forced to 0
+ *   - Score = sum of individual token scores
+ *
+ * Scores:
+ *   loc_score  = LOCATION_MAP[loc]
+ *   role_score = SENIORITY_MAP[sen] if tech != ["OOS"] else 0
+ *   tech_score = sum(TECH_INDIVIDUAL_MAP[t] for t in tech)
  *   comp_score = COMP_MAP[comp]
  *
  * No arithmetic is performed by the model — all computation is here.
@@ -22,38 +26,35 @@
 
 export const LOCATION_TOKENS = [
   "IN_LONDON",
-  "FULLY_REMOTE",
+  "REMOTE",
   "UK_OTHER",
   "OUTSIDE_UK",
-  "UNKNOWN",
+  "UNK",
 ] as const;
 
 export const WORK_ARRANGEMENT_TOKENS = [
   "REMOTE",
   "HYBRID",
   "IN_OFFICE",
-  "UNKNOWN",
+  "UNK",
 ] as const;
-
-export const SCOPE_TOKENS = ["IN_SCOPE", "OUT_OF_SCOPE"] as const;
 
 export const SENIORITY_TOKENS = ["LEVEL_3", "LEVEL_2", "LEVEL_1"] as const;
 
-export const TECH_TOKENS = [
-  "NONE",
-  "JS_TS",
+// Individual tech tokens (V7 uses arrays, not combo strings)
+export const TECH_INDIVIDUAL_TOKENS = [
+  "OOS",
   "NODE",
-  "NODE_JS_TS",
+  "REACT",
+  "JS_TS",
   "AI_ML",
-  "JS_TS_AI_ML",
-  "NODE_AI_ML",
-  "NODE_JS_TS_AI_ML",
 ] as const;
 
 export const COMP_TOKENS = [
   "NO_GBP",
   "UP_TO_ONLY",
   "BELOW_45K",
+  "RANGE_45_54K",
   "RANGE_55_74K",
   "RANGE_75_99K",
   "ABOVE_100K",
@@ -61,22 +62,21 @@ export const COMP_TOKENS = [
 
 export type LocationToken = (typeof LOCATION_TOKENS)[number];
 export type WorkArrangementToken = (typeof WORK_ARRANGEMENT_TOKENS)[number];
-export type ScopeToken = (typeof SCOPE_TOKENS)[number];
 export type SeniorityToken = (typeof SENIORITY_TOKENS)[number];
-export type TechToken = (typeof TECH_TOKENS)[number];
+export type TechIndividualToken = (typeof TECH_INDIVIDUAL_TOKENS)[number];
 export type CompToken = (typeof COMP_TOKENS)[number];
 
 // ── Score Maps ──────────────────────────────────────────────────────────────
 // Only fields that contribute to the numeric score have maps.
-// work_arrangement is informational (no score).
-// scope is a gate (OUT_OF_SCOPE -> seniority forced to 0).
+// arr is informational (no score).
+// tech=["OOS"] forces seniority to 0 (scope gate).
 
 export const LOCATION_MAP: Record<LocationToken, number> = {
   IN_LONDON: 25,
-  FULLY_REMOTE: 25,
+  REMOTE: 25,
   UK_OTHER: 10,
   OUTSIDE_UK: -50,
-  UNKNOWN: 0,
+  UNK: 0,
 };
 
 export const SENIORITY_MAP: Record<SeniorityToken, number> = {
@@ -85,21 +85,20 @@ export const SENIORITY_MAP: Record<SeniorityToken, number> = {
   LEVEL_1: 0,
 };
 
-export const TECH_MAP: Record<TechToken, number> = {
-  NONE: 0,
-  JS_TS: 5,
+// Individual tech token scores (summed for arrays)
+export const TECH_INDIVIDUAL_MAP: Record<TechIndividualToken, number> = {
+  OOS: 0,
   NODE: 10,
-  NODE_JS_TS: 15,
+  REACT: 5,
+  JS_TS: 5,
   AI_ML: 10,
-  JS_TS_AI_ML: 15,
-  NODE_AI_ML: 20,
-  NODE_JS_TS_AI_ML: 25,
 };
 
 export const COMP_MAP: Record<CompToken, number> = {
   NO_GBP: 0,
   UP_TO_ONLY: 0,
   BELOW_45K: -30,
+  RANGE_45_54K: 0,
   RANGE_55_74K: 5,
   RANGE_75_99K: 15,
   ABOVE_100K: 25,
@@ -109,35 +108,30 @@ export const COMP_MAP: Record<CompToken, number> = {
 
 const LOCATION_SET = new Set<string>(LOCATION_TOKENS);
 const WORK_ARRANGEMENT_SET = new Set<string>(WORK_ARRANGEMENT_TOKENS);
-const SCOPE_SET = new Set<string>(SCOPE_TOKENS);
 const SENIORITY_SET = new Set<string>(SENIORITY_TOKENS);
-const TECH_SET = new Set<string>(TECH_TOKENS);
+const TECH_INDIVIDUAL_SET = new Set<string>(TECH_INDIVIDUAL_TOKENS);
 const COMP_SET = new Set<string>(COMP_TOKENS);
 
-// All token fields and their valid sets (for iteration)
-const FIELD_TOKEN_SETS: Record<string, { tokens: ReadonlyArray<string>; set: Set<string> }> = {
-  location: { tokens: LOCATION_TOKENS, set: LOCATION_SET },
-  work_arrangement: { tokens: WORK_ARRANGEMENT_TOKENS, set: WORK_ARRANGEMENT_SET },
-  scope: { tokens: SCOPE_TOKENS, set: SCOPE_SET },
-  seniority: { tokens: SENIORITY_TOKENS, set: SENIORITY_SET },
-  tech: { tokens: TECH_TOKENS, set: TECH_SET },
+// Scalar token fields and their valid sets (tech handled separately as array)
+const SCALAR_FIELD_TOKEN_SETS: Record<string, { tokens: ReadonlyArray<string>; set: Set<string> }> = {
+  loc: { tokens: LOCATION_TOKENS, set: LOCATION_SET },
+  arr: { tokens: WORK_ARRANGEMENT_TOKENS, set: WORK_ARRANGEMENT_SET },
+  sen: { tokens: SENIORITY_TOKENS, set: SENIORITY_SET },
   comp: { tokens: COMP_TOKENS, set: COMP_SET },
 };
 
 // ── Types ───────────────────────────────────────────────────────────────────
 
 export type V7SemanticPrediction = {
-  location_reason: string;
-  location: LocationToken;
-  work_arrangement_reason: string;
-  work_arrangement: WorkArrangementToken;
-  scope_reason: string;
-  scope: ScopeToken;
-  seniority_reason: string;
-  seniority: SeniorityToken;
-  tech_reason: string;
-  tech: TechToken;
-  comp_reason: string;
+  loc_raw: string | null;
+  loc: LocationToken;
+  arr_raw: string | null;
+  arr: WorkArrangementToken;
+  sen_raw: string | null;
+  sen: SeniorityToken;
+  tech_raw: string | null;
+  tech: TechIndividualToken[];
+  comp_raw: string | null;
   comp: CompToken;
 };
 
@@ -150,37 +144,33 @@ export type ComputedResult = {
   label: "good_fit" | "maybe" | "bad_fit";
 };
 
-// ── The 12 expected fields in V7 output ─────────────────────────────────────
+// ── The 10 expected fields in V7 output ─────────────────────────────────────
 
 export const V7_EXPECTED_FIELDS = [
-  "location_reason",
-  "location",
-  "work_arrangement_reason",
-  "work_arrangement",
-  "scope_reason",
-  "scope",
-  "seniority_reason",
-  "seniority",
-  "tech_reason",
+  "loc_raw",
+  "loc",
+  "arr_raw",
+  "arr",
+  "sen_raw",
+  "sen",
+  "tech_raw",
   "tech",
-  "comp_reason",
+  "comp_raw",
   "comp",
 ] as const;
 
-export const V7_REASON_FIELDS = [
-  "location_reason",
-  "work_arrangement_reason",
-  "scope_reason",
-  "seniority_reason",
-  "tech_reason",
-  "comp_reason",
+export const V7_RAW_FIELDS = [
+  "loc_raw",
+  "arr_raw",
+  "sen_raw",
+  "tech_raw",
+  "comp_raw",
 ] as const;
 
 export const V7_TOKEN_FIELDS = [
-  "location",
-  "work_arrangement",
-  "scope",
-  "seniority",
+  "loc",
+  "arr",
+  "sen",
   "tech",
   "comp",
 ] as const;
@@ -246,6 +236,7 @@ export type ValidationResult = {
 /**
  * Validate a parsed JSON object as a V7 semantic prediction.
  * Applies fuzzy matching for minor misspellings.
+ * Tech field is validated as an array of individual tokens.
  */
 export function validateSemanticPrediction(
   parsed: Record<string, unknown>,
@@ -253,7 +244,7 @@ export function validateSemanticPrediction(
   const errors: string[] = [];
   const fuzzyCorrections: string[] = [];
 
-  // Check all 12 fields are present
+  // Check all 10 fields are present
   for (const field of V7_EXPECTED_FIELDS) {
     if (!(field in parsed)) {
       errors.push(`Missing field: ${field}`);
@@ -263,16 +254,18 @@ export function validateSemanticPrediction(
     return { valid: false, errors, fuzzyCorrections };
   }
 
-  // Copy reason fields as-is
   const corrected: Record<string, unknown> = {};
-  for (const f of V7_REASON_FIELDS) {
-    corrected[f] = String(parsed[f] ?? "");
+
+  // Copy reason fields (string or null)
+  for (const f of V7_RAW_FIELDS) {
+    const val = parsed[f];
+    corrected[f] = val === null || val === undefined ? null : String(val);
   }
 
-  // Validate and fuzzy-match each token field
+  // Validate scalar token fields (loc, arr, sen, comp)
   let allValid = true;
-  for (const fieldName of V7_TOKEN_FIELDS) {
-    const { tokens } = FIELD_TOKEN_SETS[fieldName]!;
+  for (const fieldName of ["loc", "arr", "sen", "comp"] as const) {
+    const { tokens } = SCALAR_FIELD_TOKEN_SETS[fieldName]!;
     const strValue = String(parsed[fieldName] ?? "");
     const matched = fuzzyMatch(strValue, tokens);
     if (matched) {
@@ -283,6 +276,59 @@ export function validateSemanticPrediction(
     } else {
       errors.push(`Invalid ${fieldName} token: "${strValue}"`);
       allValid = false;
+    }
+  }
+
+  // Validate tech as array of individual tokens
+  const rawTech = parsed.tech;
+  if (!Array.isArray(rawTech)) {
+    // If it's a string, try to handle gracefully
+    if (typeof rawTech === "string") {
+      // Single token as string — wrap in array
+      const matched = fuzzyMatch(rawTech, TECH_INDIVIDUAL_TOKENS);
+      if (matched) {
+        corrected.tech = [matched];
+        fuzzyCorrections.push(`tech: wrapped string "${rawTech}" in array`);
+      } else {
+        errors.push(`Invalid tech token: "${rawTech}" (expected array)`);
+        allValid = false;
+      }
+    } else {
+      errors.push(`tech must be an array, got ${typeof rawTech}`);
+      allValid = false;
+    }
+  } else {
+    const validatedTech: string[] = [];
+    for (const item of rawTech) {
+      const strItem = String(item);
+      const matched = fuzzyMatch(strItem, TECH_INDIVIDUAL_TOKENS);
+      if (matched) {
+        validatedTech.push(matched);
+        if (matched !== strItem) {
+          fuzzyCorrections.push(`tech element: "${strItem}" -> "${matched}"`);
+        }
+      } else {
+        errors.push(`Invalid tech token: "${strItem}"`);
+        allValid = false;
+      }
+    }
+    if (validatedTech.length === 0 && allValid) {
+      // Empty array defaults to OOS
+      validatedTech.push("OOS");
+      fuzzyCorrections.push(`tech: empty array defaulted to ["OOS"]`);
+    }
+    // Deduplicate
+    const deduped = [...new Set(validatedTech)];
+    if (deduped.length < validatedTech.length) {
+      fuzzyCorrections.push(`tech: removed ${validatedTech.length - deduped.length} duplicate(s)`);
+    }
+    // OOS must not mix with real tokens
+    if (deduped.includes("OOS") && deduped.length > 1) {
+      const withoutOOS = deduped.filter(t => t !== "OOS");
+      fuzzyCorrections.push(`tech: removed OOS (mixed with ${withoutOOS.join(",")})`);
+      corrected.tech = withoutOOS;
+    } else {
+      corrected.tech = deduped;
     }
   }
 
@@ -304,19 +350,24 @@ export function validateSemanticPrediction(
  * Compute numeric score and label from V7 semantic tokens.
  * This is the ONLY place where tokens become numbers.
  *
- * Scope gate: if scope == OUT_OF_SCOPE, role_score is forced to 0.
+ * Scope gate: if tech includes "OOS", role_score is forced to 0.
  *
  * Output keys are backward-compatible with V6:
  *   loc_score, role_score, tech_score, comp_score, score, label
  */
 export function computeFromTokens(pred: V7SemanticPrediction): ComputedResult {
-  const loc_score = LOCATION_MAP[pred.location];
-  const tech_score = TECH_MAP[pred.tech];
+  const loc_score = LOCATION_MAP[pred.loc];
   const comp_score = COMP_MAP[pred.comp];
 
-  // Scope gate: OUT_OF_SCOPE -> seniority contributes 0
-  const role_score =
-    pred.scope === "OUT_OF_SCOPE" ? 0 : SENIORITY_MAP[pred.seniority];
+  // Tech score = sum of individual token scores
+  const techArray = pred.tech;
+  const isOOS = techArray.length === 0 || techArray.includes("OOS");
+  const tech_score = isOOS
+    ? 0
+    : techArray.reduce((sum, t) => sum + (TECH_INDIVIDUAL_MAP[t as TechIndividualToken] ?? 0), 0);
+
+  // Scope gate: OOS -> seniority contributes 0
+  const role_score = isOOS ? 0 : SENIORITY_MAP[pred.sen];
 
   const raw = loc_score + role_score + tech_score + comp_score;
   const score = Math.max(0, Math.min(100, raw));
@@ -329,25 +380,61 @@ export function computeFromTokens(pred: V7SemanticPrediction): ComputedResult {
   return { loc_score, role_score, tech_score, comp_score, score, label };
 }
 
+// ── Tech Array Utilities ────────────────────────────────────────────────────
+
+/**
+ * Convert tech array to a canonical combo string for backward compat.
+ * Follows the fixed order: NODE_REACT_JS_TS_AI_ML
+ * e.g., ["JS_TS", "NODE"] -> "NODE_JS_TS"
+ */
+const TECH_ORDER = ["NODE", "REACT", "JS_TS", "AI_ML"] as const;
+
+export function techArrayToComboString(tech: string[]): string {
+  if (tech.includes("OOS") || tech.length === 0) return "OOS";
+  const sorted = TECH_ORDER.filter(t => tech.includes(t));
+  return sorted.length > 0 ? sorted.join("_") : "OOS";
+}
+
 // ── V6-Compatible Token Mapping ─────────────────────────────────────────────
 // Useful for comparing V7 predictions against V6 ground truth.
 
-import type { LocToken, RoleToken } from "./semantic-tokens.js";
+import type { LocToken, RoleToken, TechToken as V6TechToken } from "./semantic-tokens.js";
 
-/** V7 location -> V6 loc token */
+/** V7 loc -> V6 loc token */
 export const V7_LOC_TO_V6: Record<LocationToken, LocToken> = {
   IN_LONDON: "LONDON_OR_REMOTE",
-  FULLY_REMOTE: "LONDON_OR_REMOTE",
+  REMOTE: "LONDON_OR_REMOTE",
   UK_OTHER: "UK_OTHER",
   OUTSIDE_UK: "OUTSIDE_UK",
-  UNKNOWN: "MISSING",
+  UNK: "MISSING",
 };
 
-/** V7 seniority -> V6 role token (when scope == IN_SCOPE) */
+/** V7 seniority -> V6 role token */
 export const V7_SENIORITY_TO_V6: Record<SeniorityToken, RoleToken> = {
   LEVEL_3: "SENIOR_PLUS",
   LEVEL_2: "MID_LEVEL",
   LEVEL_1: "NO_SENIORITY",
+};
+
+/** Map V7 tech combo string to V6 tech token */
+const V7_COMBO_TO_V6: Record<string, V6TechToken> = {
+  OOS: "NONE",
+  NODE: "NODE",
+  JS_TS: "JS_TS",
+  AI_ML: "AI_ML",
+  NODE_JS_TS: "NODE_JS_TS",
+  JS_TS_AI_ML: "JS_TS_AI_ML",
+  NODE_AI_ML: "NODE_AI_ML",
+  NODE_JS_TS_AI_ML: "NODE_JS_TS_AI_ML",
+  // REACT combos -> nearest V6 equivalent
+  REACT: "JS_TS",
+  NODE_REACT: "NODE_JS_TS",
+  REACT_JS_TS: "JS_TS",
+  REACT_AI_ML: "JS_TS_AI_ML",
+  NODE_REACT_JS_TS: "NODE_JS_TS",
+  NODE_REACT_AI_ML: "NODE_JS_TS_AI_ML",
+  REACT_JS_TS_AI_ML: "JS_TS_AI_ML",
+  NODE_REACT_JS_TS_AI_ML: "NODE_JS_TS_AI_ML",
 };
 
 /**
@@ -357,77 +444,28 @@ export const V7_SENIORITY_TO_V6: Record<SeniorityToken, RoleToken> = {
 export function v7ToV6Tokens(pred: V7SemanticPrediction): {
   loc: LocToken;
   role: RoleToken;
-  tech: TechToken;
+  tech: V6TechToken;
   comp: CompToken;
 } {
-  const loc = V7_LOC_TO_V6[pred.location];
-  const role: RoleToken =
-    pred.scope === "OUT_OF_SCOPE"
-      ? "NO_SENIORITY"
-      : V7_SENIORITY_TO_V6[pred.seniority];
+  const loc = V7_LOC_TO_V6[pred.loc];
+  const isOOS = pred.tech.includes("OOS") || pred.tech.length === 0;
+  const role: RoleToken = isOOS
+    ? "NO_SENIORITY"
+    : V7_SENIORITY_TO_V6[pred.sen];
+  const combo = techArrayToComboString(pred.tech);
+  const tech = V7_COMBO_TO_V6[combo] ?? "NONE";
 
-  return { loc, role, tech: pred.tech, comp: pred.comp };
+  return { loc, role, tech, comp: pred.comp };
 }
 
 /**
  * Check if a string is a valid token for a given V7 field.
+ * For tech, checks individual tokens.
  */
 export function isValidToken(
-  field: "location" | "work_arrangement" | "scope" | "seniority" | "tech" | "comp",
+  field: "loc" | "arr" | "sen" | "tech" | "comp",
   value: string,
 ): boolean {
-  return FIELD_TOKEN_SETS[field]!.set.has(value);
-}
-
-// ── Reasoning Cross-Check ───────────────────────────────────────────────────
-
-export type ConsistencyCheck = {
-  consistent: boolean;
-  issues: string[];
-};
-
-/**
- * Cross-check V7 reason fields against their paired token fields.
- *
- * V7 reasons follow the pattern "...phrase -> TOKEN". We check:
- * 1. Each reason's arrow-token matches the actual token field
- * 2. Scope gate: if scope=OUT_OF_SCOPE, seniority should be LEVEL_1
- */
-export function crossCheckReasoning(pred: V7SemanticPrediction): ConsistencyCheck {
-  const issues: string[] = [];
-
-  // Check each reason field's arrow-token matches the token field
-  const pairs: Array<{ reasonField: keyof V7SemanticPrediction; tokenField: keyof V7SemanticPrediction }> = [
-    { reasonField: "location_reason", tokenField: "location" },
-    { reasonField: "work_arrangement_reason", tokenField: "work_arrangement" },
-    { reasonField: "scope_reason", tokenField: "scope" },
-    { reasonField: "seniority_reason", tokenField: "seniority" },
-    { reasonField: "tech_reason", tokenField: "tech" },
-    { reasonField: "comp_reason", tokenField: "comp" },
-  ];
-
-  for (const { reasonField, tokenField } of pairs) {
-    const reason = String(pred[reasonField]);
-    const token = String(pred[tokenField]);
-
-    // Extract token after last "->" in the reason
-    const arrowIdx = reason.lastIndexOf("->");
-    if (arrowIdx !== -1) {
-      const reasonToken = reason.slice(arrowIdx + 2).trim();
-      if (reasonToken !== token) {
-        issues.push(
-          `${String(tokenField)}: reason says "${reasonToken}" but token is "${token}"`,
-        );
-      }
-    }
-  }
-
-  // Scope gate consistency: OUT_OF_SCOPE should have LEVEL_1 seniority
-  if (pred.scope === "OUT_OF_SCOPE" && pred.seniority !== "LEVEL_1") {
-    issues.push(
-      `scope=OUT_OF_SCOPE but seniority=${pred.seniority} (expected LEVEL_1)`,
-    );
-  }
-
-  return { consistent: issues.length === 0, issues };
+  if (field === "tech") return TECH_INDIVIDUAL_SET.has(value);
+  return SCALAR_FIELD_TOKEN_SETS[field]!.set.has(value);
 }

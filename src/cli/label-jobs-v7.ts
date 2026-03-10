@@ -1,9 +1,9 @@
 /**
  * Label jobs using OpenAI API with V7 semantic token teacher prompt.
  *
- * V7 version: uses 6 fields (location, work_arrangement, scope, seniority,
- * tech, comp) with 12 JSON keys. Scores are backward-compatible with V6
- * (loc_score, role_score, tech_score, comp_score).
+ * V7 version: uses 5 fields (loc, arr, sen, tech, comp) with 10 JSON keys.
+ * Tech is an array of individual tokens. Scores are backward-compatible
+ * with V6 (loc_score, role_score, tech_score, comp_score).
  *
  * Usage:
  *   npx tsx src/cli/label-jobs-v7.ts \
@@ -24,7 +24,6 @@ import { readJsonlFile } from "../lib/jsonl.js";
 import {
   validateSemanticPrediction,
   computeFromTokens,
-  crossCheckReasoning,
   V7_TOKEN_FIELDS,
   type V7SemanticPrediction,
 } from "../lib/semantic-tokens-v7.js";
@@ -43,28 +42,25 @@ type InputJob = {
   source_file?: string;
 };
 
-// Note: V7 output uses "location" as a token field (IN_LONDON etc.), which
-// collides with InputJob.location (raw string like "London, UK"). We store
-// the raw location as "job_location" in V7 labeled output to avoid this.
+// V7 output uses short field names (loc, arr, sen, tech, comp).
+// Raw location string stored as "job_location" to avoid collision with "loc" token.
 type LabeledJob = {
   job_id: string;
   title: string;
   company: string;
-  job_location: string; // raw location string (was "location" in V6 output)
+  job_location: string; // raw location string from input
   jd_text: string;
-  // Per-field reasoning (12-field interleaved format)
-  location_reason: string;
-  location: string; // V7 token: IN_LONDON | FULLY_REMOTE | UK_OTHER | OUTSIDE_UK | UNKNOWN
-  work_arrangement_reason: string;
-  work_arrangement: string;
-  scope_reason: string;
-  scope: string;
-  seniority_reason: string;
-  seniority: string;
-  tech_reason: string;
-  tech: string;
-  comp_reason: string;
-  comp: string;
+  // Per-field raw text + tokens (10-field interleaved format)
+  loc_raw: string | null;
+  loc: string; // V7 token: IN_LONDON | REMOTE | UK_OTHER | OUTSIDE_UK | UNK
+  arr_raw: string | null;
+  arr: string; // V7 token: REMOTE | HYBRID | IN_OFFICE | UNK
+  sen_raw: string | null;
+  sen: string; // V7 token: LEVEL_3 | LEVEL_2 | LEVEL_1
+  tech_raw: string | null;
+  tech: string[]; // V7 token array: ["NODE", "REACT", "JS_TS", "AI_ML"] or ["OOS"]
+  comp_raw: string | null;
+  comp: string; // V7 token: NO_GBP | UP_TO_ONLY | BELOW_45K | ...
   // Computed scores (from code layer, backward-compatible with V6)
   loc_score: number;
   role_score: number;
@@ -143,17 +139,75 @@ async function main(): Promise<void> {
     process.exit(1);
   }
 
+  // ── Pre-run validation ──────────────────────────────────────────────
+  // Catch configuration errors before making any API calls.
+
+  // 1. Input file must exist and be non-empty
+  if (!fs.existsSync(inputPath)) {
+    console.error(`ERROR: Input file not found: ${inputPath}`);
+    process.exit(1);
+  }
+  const inputStat = fs.statSync(inputPath);
+  if (inputStat.size === 0) {
+    console.error(`ERROR: Input file is empty (0 bytes): ${inputPath}`);
+    process.exit(1);
+  }
+
+  // 2. Prompt file must exist and contain expected placeholders
+  if (!fs.existsSync(promptPath)) {
+    console.error(`ERROR: Prompt file not found: ${promptPath}`);
+    process.exit(1);
+  }
+  const promptTemplate = fs.readFileSync(promptPath, "utf-8");
+  const missingPlaceholders = ["{{job_title}}", "{{job_location}}", "{{jd_text}}"]
+    .filter((p) => !promptTemplate.includes(p));
+  if (missingPlaceholders.length > 0) {
+    console.error(`ERROR: Prompt missing placeholders: ${missingPlaceholders.join(", ")}`);
+    console.error(`File: ${promptPath}`);
+    process.exit(1);
+  }
+
+  // 3. Output file — warn if it already has data (will be overwritten)
+  if (fs.existsSync(outputPath)) {
+    const existingStat = fs.statSync(outputPath);
+    if (existingStat.size > 0) {
+      console.warn(`WARNING: Output file already exists (${Math.round(existingStat.size / 1024)}KB) and will be overwritten: ${outputPath}`);
+    }
+  }
+
   const client = new OpenAI();
 
-  // Load prompt template
-  const promptTemplate = fs.readFileSync(promptPath, "utf-8");
   console.log(`Prompt: ${promptPath} (${Math.round(promptTemplate.length / 4)} est. tokens)`);
   console.log(`Model: ${modelId}`);
   console.log(`Concurrency: ${concurrency}`);
   if (maxFailures > 0) console.log(`Max failures: ${maxFailures} (will abort early)`);
 
-  // Load input jobs
+  // 4. Load and validate input jobs
   const jobs = await readJsonlFile<InputJob>(inputPath);
+  if (jobs.length === 0) {
+    console.error(`ERROR: No jobs found in ${inputPath}`);
+    process.exit(1);
+  }
+
+  // 5. Check required fields on every input job
+  const hardBad = jobs.filter((j) => !j.title || !j.jd_text || j.jd_text.length < 20);
+  if (hardBad.length > 0) {
+    console.error(`ERROR: ${hardBad.length} jobs missing title or jd_text (< 20 chars)`);
+    console.error(`First bad job: ${JSON.stringify(hardBad[0]).slice(0, 200)}`);
+    process.exit(1);
+  }
+  // Auto-fix empty job_ids with a hash
+  let autoIdCount = 0;
+  for (const job of jobs) {
+    if (!job.job_id) {
+      job.job_id = `auto_${Buffer.from(job.title + "|" + job.jd_text.slice(0, 200)).toString("base64url").slice(0, 16)}`;
+      autoIdCount++;
+    }
+  }
+  if (autoIdCount > 0) {
+    console.warn(`WARNING: Generated job_id for ${autoIdCount} job(s) with empty IDs`);
+  }
+
   console.log(`Loaded ${jobs.length} jobs from ${inputPath}`);
   console.log("\u2500".repeat(60));
 
@@ -186,6 +240,47 @@ async function main(): Promise<void> {
     version: "v7",
   }) + "\n");
   console.log(`Run log: ${logPath}`);
+
+  // ── Preflight: validate model access with first job ──────────────────
+  {
+    const testJob = jobs[0]!;
+    const testPrompt = promptTemplate
+      .replace(/\{\{job_title\}\}/g, testJob.title)
+      .replace(/\{\{job_location\}\}/g, testJob.location ?? "")
+      .replace(/\{\{jd_text\}\}/g, testJob.jd_text);
+    try {
+      const testResp = await client.chat.completions.create({
+        model: modelId,
+        messages: [
+          { role: "system", content: "Respond with JSON only." },
+          { role: "user", content: testPrompt },
+        ],
+        max_tokens: 500,
+        temperature: 0,
+      });
+      const testContent = testResp.choices[0]?.message?.content ?? "";
+      if (!testContent) {
+        console.error("PREFLIGHT FAIL: First job returned empty response. Aborting.");
+        process.exit(1);
+      }
+      const testParsed = parseJsonOutput(testContent);
+      if (!testParsed) {
+        console.error(`PREFLIGHT FAIL: First job returned unparseable JSON. Aborting.\nRaw: ${testContent.slice(0, 300)}`);
+        process.exit(1);
+      }
+      const testValidation = validateSemanticPrediction(testParsed);
+      if (!testValidation.valid) {
+        console.error(`PREFLIGHT FAIL: First job has invalid tokens: ${testValidation.errors.join(", ")}. Aborting.\nRaw: ${testContent.slice(0, 300)}`);
+        process.exit(1);
+      }
+      console.log(`Preflight OK: model=${modelId}, first job parsed and validated.`);
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : String(err);
+      console.error(`PREFLIGHT FAIL: ${msg}`);
+      console.error("Check --model name and OPENAI_API_KEY. Aborting.");
+      process.exit(1);
+    }
+  }
 
   await processWithConcurrency(jobs, concurrency, async (job, index) => {
     // Check abort flag before processing
@@ -227,6 +322,10 @@ async function main(): Promise<void> {
           break;
         } catch (retryErr) {
           const msg = retryErr instanceof Error ? retryErr.message : String(retryErr);
+          // Non-retryable errors: abort immediately
+          if (msg.includes("401") || msg.includes("403") || msg.includes("404")) {
+            throw retryErr;
+          }
           if (msg.includes("429") && attempt < maxRetries) {
             // Exponential backoff: 2s, 4s, 8s, 16s, 32s...
             const waitMs = 2000 * Math.pow(2, attempt);
@@ -276,38 +375,26 @@ async function main(): Promise<void> {
         });
       }
 
-      // Cross-check reasoning vs tokens
-      const consistency = crossCheckReasoning(pred);
-      if (!consistency.consistent) {
-        inconsistencies.push({
-          job_id: job.job_id,
-          title: job.title,
-          issues: consistency.issues,
-        });
-      }
-
       // Compute scores from tokens (backward-compatible with V6)
       const computed = computeFromTokens(pred);
 
-      // Build labeled output (12-field interleaved format)
+      // Build labeled output
       const labeledJob: LabeledJob = {
         job_id: job.job_id,
         title: job.title,
         company: job.company,
         job_location: job.location, // raw location string stored as job_location
         jd_text: job.jd_text,
-        // Per-field reasoning + tokens (V7 interleaved)
-        location_reason: pred.location_reason,
-        location: pred.location,
-        work_arrangement_reason: pred.work_arrangement_reason,
-        work_arrangement: pred.work_arrangement,
-        scope_reason: pred.scope_reason,
-        scope: pred.scope,
-        seniority_reason: pred.seniority_reason,
-        seniority: pred.seniority,
-        tech_reason: pred.tech_reason,
+        // Per-field raw text + tokens (V7 interleaved)
+        loc_raw: pred.loc_raw,
+        loc: pred.loc,
+        arr_raw: pred.arr_raw,
+        arr: pred.arr,
+        sen_raw: pred.sen_raw,
+        sen: pred.sen,
+        tech_raw: pred.tech_raw,
         tech: pred.tech,
-        comp_reason: pred.comp_reason,
+        comp_raw: pred.comp_raw,
         comp: pred.comp,
         // Computed scores (V6-compatible names)
         loc_score: computed.loc_score,
@@ -335,22 +422,19 @@ async function main(): Promise<void> {
         duration_ms: Date.now() - jobStartMs,
         prompt_tokens: promptTokens,
         completion_tokens: completionTokens,
-        location_reason: pred.location_reason,
-        location: pred.location,
-        work_arrangement_reason: pred.work_arrangement_reason,
-        work_arrangement: pred.work_arrangement,
-        scope_reason: pred.scope_reason,
-        scope: pred.scope,
-        seniority_reason: pred.seniority_reason,
-        seniority: pred.seniority,
-        tech_reason: pred.tech_reason,
+        loc_raw: pred.loc_raw,
+        loc: pred.loc,
+        arr_raw: pred.arr_raw,
+        arr: pred.arr,
+        sen_raw: pred.sen_raw,
+        sen: pred.sen,
+        tech_raw: pred.tech_raw,
         tech: pred.tech,
-        comp_reason: pred.comp_reason,
+        comp_raw: pred.comp_raw,
         comp: pred.comp,
         label: computed.label,
         score: computed.score,
         fuzzy_corrections: validation.fuzzyCorrections.length > 0 ? validation.fuzzyCorrections : undefined,
-        inconsistencies: consistency.consistent ? undefined : consistency.issues,
       }) + "\n");
     } catch (err) {
       const msg = err instanceof Error ? err.message : String(err);
@@ -456,13 +540,20 @@ async function main(): Promise<void> {
     console.log(`  ${lbl.padEnd(10)}: ${labelDist[lbl] ?? 0}`);
   }
 
-  // Semantic token distributions (all 6 V7 fields)
+  // Semantic token distributions (all 5 V7 fields)
   console.log("\nSemantic token distributions:");
   for (const field of V7_TOKEN_FIELDS) {
     const dist: Record<string, number> = {};
     for (const j of labeled) {
-      const token = (j as unknown as Record<string, string>)[field];
-      if (token) dist[token] = (dist[token] ?? 0) + 1;
+      const value = (j as unknown as Record<string, unknown>)[field];
+      if (Array.isArray(value)) {
+        // Tech array: count each individual token
+        for (const t of value) {
+          dist[String(t)] = (dist[String(t)] ?? 0) + 1;
+        }
+      } else if (value) {
+        dist[String(value)] = (dist[String(value)] ?? 0) + 1;
+      }
     }
     console.log(`  ${field}:`);
     for (const [token, count] of Object.entries(dist).sort((a, b) => b[1] - a[1])) {

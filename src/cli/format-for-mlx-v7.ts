@@ -1,11 +1,11 @@
 /**
  * Format V7 training data as MLX chat JSONL for LoRA fine-tuning.
  *
- * V7 version: uses 6 fields (location, work_arrangement, scope, seniority,
- * tech, comp) with 12-field interleaved output format.
+ * V7 version: uses 5 fields (loc, arr, sen, tech, comp) with 10-field
+ * interleaved output format. Tech is an array of individual tokens.
  *
  * Features:
- *   - Uses V7 semantic tokens (IN_LONDON, LEVEL_3, IN_SCOPE, etc.)
+ *   - Uses V7 semantic tokens (IN_LONDON, LEVEL_3, OOS, etc.)
  *   - Uses the minimal V7 student prompt
  *   - Smart truncation: protects salary windows and first/last paragraphs
  *   - Stratified train/valid split by computed label
@@ -30,18 +30,16 @@ type V7Job = {
   company: string;
   job_location: string; // raw location (renamed from "location" to avoid V7 token collision)
   jd_text: string;
-  // V7 token fields (12-field interleaved)
-  location_reason: string;
-  location: string;
-  work_arrangement_reason: string;
-  work_arrangement: string;
-  scope_reason: string;
-  scope: string;
-  seniority_reason: string;
-  seniority: string;
-  tech_reason: string;
-  tech: string;
-  comp_reason: string;
+  // V7 token fields (10-field interleaved)
+  loc_raw: string | null;
+  loc: string;
+  arr_raw: string | null;
+  arr: string;
+  sen_raw: string | null;
+  sen: string;
+  tech_raw: string | null;
+  tech: string[]; // array of individual tokens
+  comp_raw: string | null;
   comp: string;
   // Computed
   score: number;
@@ -175,19 +173,17 @@ function buildUserMessage(promptTemplate: string, job: V7Job): string {
 }
 
 function buildAssistantResponse(job: V7Job): string {
-  // 12-field interleaved format — pass through directly from V7 teacher output
+  // 10-field interleaved format — pass through directly from V7 teacher output
   const output = {
-    location_reason: job.location_reason,
-    location: job.location,
-    work_arrangement_reason: job.work_arrangement_reason,
-    work_arrangement: job.work_arrangement,
-    scope_reason: job.scope_reason,
-    scope: job.scope,
-    seniority_reason: job.seniority_reason,
-    seniority: job.seniority,
-    tech_reason: job.tech_reason,
+    loc_raw: job.loc_raw,
+    loc: job.loc,
+    arr_raw: job.arr_raw,
+    arr: job.arr,
+    sen_raw: job.sen_raw,
+    sen: job.sen,
+    tech_raw: job.tech_raw,
     tech: job.tech,
-    comp_reason: job.comp_reason,
+    comp_raw: job.comp_raw,
     comp: job.comp,
   };
   return JSON.stringify(output);
@@ -211,16 +207,16 @@ async function main(): Promise<void> {
   const jobs = await readJsonlFile<V7Job>(inputPath);
   console.log(`Loaded ${jobs.length} training jobs from ${inputPath}`);
 
-  // Validate required fields (12-field V7 format)
-  const tokenFields = ["location", "work_arrangement", "scope", "seniority", "tech", "comp"] as const;
-  const reasonFields = tokenFields.map((f) => `${f}_reason`);
+  // Validate required fields (10-field V7 format)
+  const tokenFields = ["loc", "arr", "sen", "tech", "comp"] as const;
+  const rawFields = tokenFields.map((f) => `${f}_raw`);
 
   const missing = jobs.filter((j) => {
     for (const f of tokenFields) {
-      if (!(j as Record<string, unknown>)[f]) return true;
+      if ((j as Record<string, unknown>)[f] === undefined) return true;
     }
-    for (const f of reasonFields) {
-      if (!(j as Record<string, unknown>)[f]) return true;
+    for (const f of rawFields) {
+      if (!((f in (j as Record<string, unknown>)))) return true;
     }
     return false;
   });
@@ -235,10 +231,10 @@ async function main(): Promise<void> {
   const truncatedJobs: string[] = [];
 
   for (const job of jobs) {
-    const reasons = job.location_reason + job.work_arrangement_reason +
-      job.scope_reason + job.seniority_reason + job.tech_reason + job.comp_reason;
+    const raws = (job.loc_raw ?? "") + (job.arr_raw ?? "") +
+      (job.sen_raw ?? "") + (job.tech_raw ?? "") + (job.comp_raw ?? "");
     const totalEstimate = estimateTokens(
-      promptTemplate + job.jd_text + reasons + 100,
+      promptTemplate + job.jd_text + raws + "x".repeat(100),
     );
     if (totalEstimate > maxTokens) {
       const { text, truncated } = smartTruncate(job.jd_text, maxTokens - 500);
@@ -262,7 +258,7 @@ async function main(): Promise<void> {
   const systemMsg = "Respond with JSON only.";
   console.log(`System message: "${systemMsg}"`);
 
-  // Format as MLX chat examples (12-field V7 interleaved format)
+  // Format as MLX chat examples (10-field V7 interleaved format)
   const examples: MLXExample[] = jobs.map((job) => ({
     messages: [
       { role: "system" as const, content: systemMsg },

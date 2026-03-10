@@ -4,15 +4,18 @@
 # ──────────────────────────────────────────────────────────────
 # Quick edge-case tests for prompts/teacher_v7.txt before labeling.
 # Run: npx promptfoo eval -c configs/promptfoo_teacher_v7.yaml
-# Takes ~5 seconds with GPT-4o-mini. Catches prompt regressions.
+# Takes ~10 seconds with GPT-4o-mini. Catches prompt regressions.
 #
-# V7 uses 6 fields: location, work_arrangement, scope, seniority, tech, comp
+# V7 uses 5 fields: loc, arr, sen, tech, comp
+# (scope removed — OOS is now a tech token)
+# tech is an array of individual tokens: ["NODE", "REACT", "JS_TS", "AI_ML"] or ["OOS"]
+# comp has 7 tokens (added RANGE_45_54K)
 # ──────────────────────────────────────────────────────────────
 
-description: "V7 teacher prompt — edge-case sanity tests"
+description: "V7 teacher prompt — 40 edge-case sanity tests"
 
 prompts:
-  - file://prompts/teacher_v7.txt
+  - file://../prompts/teacher_v7.txt
 
 providers:
   - id: openai:gpt-4o-mini
@@ -21,233 +24,243 @@ providers:
       max_tokens: 500
 
 defaultTest:
+  options:
+    # GPT-4o-mini sometimes wraps JSON in ```json``` code fences — strip them
+    transform: "output.replace(/```json\\n?/g, '').replace(/```\\n?/g, '').trim()"
   assert:
     # Every test must return valid JSON
     - type: is-json
-    # Every test must have valid V7 tokens across all 6 fields
+    # Every test must have valid V7 tokens across all 5 fields
     - type: javascript
       value: |
         const r = JSON.parse(output);
         const valid = {
-          location: ['IN_LONDON','FULLY_REMOTE','UK_OTHER','OUTSIDE_UK','UNKNOWN'],
-          work_arrangement: ['REMOTE','HYBRID','IN_OFFICE','UNKNOWN'],
-          scope: ['IN_SCOPE','OUT_OF_SCOPE'],
-          seniority: ['LEVEL_3','LEVEL_2','LEVEL_1'],
-          tech: ['NONE','JS_TS','NODE','NODE_JS_TS','AI_ML','JS_TS_AI_ML','NODE_AI_ML','NODE_JS_TS_AI_ML'],
-          comp: ['NO_GBP','UP_TO_ONLY','BELOW_45K','RANGE_55_74K','RANGE_75_99K','ABOVE_100K'],
+          loc: ['IN_LONDON','REMOTE','UK_OTHER','OUTSIDE_UK','UNK'],
+          arr: ['REMOTE','HYBRID','IN_OFFICE','UNK'],
+          sen: ['LEVEL_3','LEVEL_2','LEVEL_1'],
+          comp: ['NO_GBP','UP_TO_ONLY','BELOW_45K','RANGE_45_54K','RANGE_55_74K','RANGE_75_99K','ABOVE_100K'],
         };
+        // Validate scalar fields
         const bad = Object.entries(valid).filter(([k, vs]) => !vs.includes(r[k]));
-        bad.length === 0 || (() => { throw new Error('Invalid tokens: ' + bad.map(([k]) => k + '=' + r[k]).join(', ')); })();
-    # Every test must have all 12 fields present
+        if (bad.length > 0) throw new Error('Invalid tokens: ' + bad.map(([k]) => k + '=' + r[k]).join(', '));
+        // Validate tech is array of valid individual tokens
+        const validTech = ['OOS','NODE','REACT','JS_TS','AI_ML'];
+        if (!Array.isArray(r.tech)) throw new Error('tech must be an array, got: ' + typeof r.tech);
+        const badTech = r.tech.filter(t => !validTech.includes(t));
+        if (badTech.length > 0) throw new Error('Invalid tech tokens: ' + badTech.join(', '));
+        return true;
+    # Every test must have all 10 fields present (5 raw + 5 token)
     - type: javascript
       value: |
         const r = JSON.parse(output);
-        const expected = ['location_reason','location','work_arrangement_reason','work_arrangement','scope_reason','scope','seniority_reason','seniority','tech_reason','tech','comp_reason','comp'];
+        const expected = ['loc_raw','loc','arr_raw','arr','sen_raw','sen','tech_raw','tech','comp_raw','comp'];
         const missing = expected.filter(f => !(f in r));
-        missing.length === 0 || (() => { throw new Error('Missing fields: ' + missing.join(', ')); })();
+        if (missing.length > 0) throw new Error('Missing fields: ' + missing.join(', '));
+        return true;
 
 tests:
   # ═══════════════════════════════════════════════════════════════════
-  # SCOPE + SENIORITY — Engineering gate (was ROLE in V6)
+  # SENIORITY + TECH GATE — Engineering scope
+  # OOS is now a tech token. Non-engineering -> tech=["OOS"].
   # ═══════════════════════════════════════════════════════════════════
 
-  # 1. Engineering Manager -> IN_SCOPE + LEVEL_3
-  - description: "SCOPE-01: Engineering Manager -> IN_SCOPE + LEVEL_3"
+  # 1. Engineering Manager -> LEVEL_3, tech != ["OOS"]
+  - description: "ENG-01: Engineering Manager -> LEVEL_3, in scope"
     vars:
       job_title: "Engineering Manager"
       job_location: "London, United Kingdom"
       jd_text: "We are looking for an Engineering Manager to lead our backend team. You will manage 8 engineers working on our Node.js microservices platform. Requirements: 5+ years engineering experience, 2+ years people management."
     assert:
       - type: javascript
-        value: "JSON.parse(output).scope === 'IN_SCOPE' && JSON.parse(output).seniority === 'LEVEL_3'"
+        value: "JSON.parse(output).sen === 'LEVEL_3' && !JSON.parse(output).tech.includes('OOS')"
 
-  # 2. Director of Engineering -> IN_SCOPE + LEVEL_3
-  - description: "SCOPE-02: Director of Engineering -> IN_SCOPE + LEVEL_3"
+  # 2. Director of Engineering -> LEVEL_3
+  - description: "ENG-02: Director of Engineering -> LEVEL_3"
     vars:
       job_title: "Director of Engineering"
       job_location: "Manchester, United Kingdom"
       jd_text: "Director of Engineering to lead our platform team. 10+ years experience required. You will set technical direction and manage engineering managers."
     assert:
       - type: javascript
-        value: "JSON.parse(output).scope === 'IN_SCOPE' && JSON.parse(output).seniority === 'LEVEL_3'"
+        value: "JSON.parse(output).sen === 'LEVEL_3'"
 
-  # 3. CTO -> IN_SCOPE + LEVEL_3
-  - description: "SCOPE-03: CTO -> IN_SCOPE + LEVEL_3"
+  # 3. CTO -> LEVEL_3
+  - description: "ENG-03: CTO -> LEVEL_3"
     vars:
       job_title: "CTO (Chief Technology Officer)"
       job_location: "London, United Kingdom"
       jd_text: "CTO role at a Series B startup. You will own the technical roadmap and build the engineering team from 5 to 30."
     assert:
       - type: javascript
-        value: "JSON.parse(output).scope === 'IN_SCOPE' && JSON.parse(output).seniority === 'LEVEL_3'"
+        value: "JSON.parse(output).sen === 'LEVEL_3'"
 
-  # 4. Sr. Software Engineer -> IN_SCOPE + LEVEL_3
-  - description: "SCOPE-04: Sr. Software Engineer -> IN_SCOPE + LEVEL_3"
+  # 4. Sr. Software Engineer -> LEVEL_3
+  - description: "ENG-04: Sr. Software Engineer -> LEVEL_3"
     vars:
       job_title: "Sr. Software Engineer"
       job_location: "Bristol, United Kingdom"
       jd_text: "Sr. Software Engineer needed for our payments team. Python, PostgreSQL, microservices. 6+ years experience."
     assert:
       - type: javascript
-        value: "JSON.parse(output).scope === 'IN_SCOPE' && JSON.parse(output).seniority === 'LEVEL_3'"
+        value: "JSON.parse(output).sen === 'LEVEL_3'"
 
-  # 5. Engineering Team Leader -> IN_SCOPE + LEVEL_3
-  - description: "SCOPE-05: Engineering Team Leader -> IN_SCOPE + LEVEL_3"
+  # 5. Engineering Team Leader -> LEVEL_3
+  - description: "ENG-05: Engineering Team Leader -> LEVEL_3"
     vars:
       job_title: "Engineering Team Leader"
       job_location: "Edinburgh, United Kingdom"
       jd_text: "Engineering Team Leader to manage our data platform squad. Java, Kafka, AWS. 7+ years experience with 2+ years leading teams."
     assert:
       - type: javascript
-        value: "JSON.parse(output).scope === 'IN_SCOPE' && JSON.parse(output).seniority === 'LEVEL_3'"
+        value: "JSON.parse(output).sen === 'LEVEL_3'"
 
-  # 6. Chief Architect -> IN_SCOPE + LEVEL_3
-  - description: "SCOPE-06: Chief Architect -> IN_SCOPE + LEVEL_3"
+  # 6. Chief Architect -> LEVEL_3
+  - description: "ENG-06: Chief Architect -> LEVEL_3"
     vars:
       job_title: "Chief Architect"
       job_location: "London, United Kingdom"
       jd_text: "Chief Architect to define system architecture across our platform. Cloud, microservices, event-driven design. 12+ years experience."
     assert:
       - type: javascript
-        value: "JSON.parse(output).scope === 'IN_SCOPE' && JSON.parse(output).seniority === 'LEVEL_3'"
+        value: "JSON.parse(output).sen === 'LEVEL_3'"
 
-  # 7. Founding Engineer -> IN_SCOPE + LEVEL_3
-  - description: "SCOPE-07: Founding Engineer -> IN_SCOPE + LEVEL_3"
+  # 7. Founding Engineer -> LEVEL_3
+  - description: "ENG-07: Founding Engineer -> LEVEL_3"
     vars:
       job_title: "Founding Engineer"
       job_location: "Remote"
       jd_text: "Founding Engineer at a pre-seed startup. You will be engineer #1, building our MVP from scratch. Full autonomy over tech stack."
     assert:
       - type: javascript
-        value: "JSON.parse(output).scope === 'IN_SCOPE' && JSON.parse(output).seniority === 'LEVEL_3'"
+        value: "JSON.parse(output).sen === 'LEVEL_3'"
 
-  # 8. Software Engineer III -> IN_SCOPE + LEVEL_3
-  - description: "SCOPE-08: Software Engineer III -> IN_SCOPE + LEVEL_3"
+  # 8. Software Engineer III -> LEVEL_3 (III = senior level)
+  - description: "ENG-08: Software Engineer III -> LEVEL_3"
     vars:
       job_title: "Software Engineer III"
       job_location: "London, United Kingdom"
       jd_text: "Software Engineer III on our search team. Design and implement distributed systems. Go, gRPC, Kubernetes."
     assert:
       - type: javascript
-        value: "JSON.parse(output).scope === 'IN_SCOPE' && JSON.parse(output).seniority === 'LEVEL_3'"
+        value: "JSON.parse(output).sen === 'LEVEL_3'"
 
-  # 9. Associate Solutions Architect -> IN_SCOPE + not LEVEL_3
-  - description: "SCOPE-09: Associate Solutions Architect -> IN_SCOPE, not LEVEL_3"
+  # 9. Associate Solutions Architect -> not LEVEL_3
+  - description: "ENG-09: Associate Solutions Architect -> not LEVEL_3"
     vars:
       job_title: "Associate Solutions Architect"
       job_location: "London, United Kingdom"
       jd_text: "Associate Solutions Architect to work with enterprise clients. AWS, Azure, cloud migrations. 2-4 years experience."
     assert:
       - type: javascript
-        value: "JSON.parse(output).scope === 'IN_SCOPE' && JSON.parse(output).seniority !== 'LEVEL_3'"
+        value: "JSON.parse(output).sen !== 'LEVEL_3'"
 
-  # 10. Regional Director -> OUT_OF_SCOPE (not engineering)
-  - description: "SCOPE-10: Regional Director -> OUT_OF_SCOPE"
+  # 10. Regional Director -> tech=["OOS"] (not engineering)
+  - description: "ENG-10: Regional Director -> tech=[OOS]"
     vars:
       job_title: "Regional Director"
       job_location: "Birmingham, United Kingdom"
       jd_text: "Regional Director to oversee EMEA sales operations. Manage a team of 15 account executives. 10+ years B2B sales leadership."
     assert:
       - type: javascript
-        value: "JSON.parse(output).scope === 'OUT_OF_SCOPE'"
+        value: "JSON.parse(output).tech.includes('OOS')"
 
-  # 11. Director Fire Engineering -> OUT_OF_SCOPE (not software)
-  - description: "SCOPE-11: Director Fire Engineering -> OUT_OF_SCOPE"
+  # 11. Director Fire Engineering -> tech=["OOS"] (not software)
+  - description: "ENG-11: Director Fire Engineering -> tech=[OOS]"
     vars:
       job_title: "Director Fire Engineering"
       job_location: "Leeds, United Kingdom"
       jd_text: "Director of Fire Engineering for our construction consultancy. BSc in Fire Safety Engineering required. Chartered Engineer status preferred."
     assert:
       - type: javascript
-        value: "JSON.parse(output).scope === 'OUT_OF_SCOPE'"
+        value: "JSON.parse(output).tech.includes('OOS')"
 
-  # 12. Senior Marketing Manager -> OUT_OF_SCOPE
-  - description: "SCOPE-12: Senior Marketing Manager -> OUT_OF_SCOPE"
+  # 12. Senior Marketing Manager -> tech=["OOS"]
+  - description: "ENG-12: Senior Marketing Manager -> tech=[OOS]"
     vars:
       job_title: "Senior Marketing Manager"
       job_location: "London, United Kingdom"
       jd_text: "Senior Marketing Manager to lead our B2B demand generation. HubSpot, Google Ads, content strategy. 5+ years marketing experience."
     assert:
       - type: javascript
-        value: "JSON.parse(output).scope === 'OUT_OF_SCOPE'"
+        value: "JSON.parse(output).tech.includes('OOS')"
 
-  # 13. Senior Sales Engineer -> OUT_OF_SCOPE
-  - description: "SCOPE-13: Senior Sales Engineer -> OUT_OF_SCOPE"
+  # 13. Senior Sales Engineer -> tech=["OOS"]
+  - description: "ENG-13: Senior Sales Engineer -> tech=[OOS]"
     vars:
       job_title: "Senior Sales Engineer"
       job_location: "London, United Kingdom"
       jd_text: "Senior Sales Engineer to support our enterprise sales team with technical demos and POCs. Present our SaaS platform to CTOs and VPs. 5+ years B2B sales experience."
     assert:
       - type: javascript
-        value: "JSON.parse(output).scope === 'OUT_OF_SCOPE'"
+        value: "JSON.parse(output).tech.includes('OOS')"
 
-  # 14. VP of Human Resources -> OUT_OF_SCOPE
-  - description: "SCOPE-14: VP of Human Resources -> OUT_OF_SCOPE"
+  # 14. VP of Human Resources -> tech=["OOS"]
+  - description: "ENG-14: VP of Human Resources -> tech=[OOS]"
     vars:
       job_title: "VP of Human Resources"
       job_location: "London, United Kingdom"
       jd_text: "VP of Human Resources to build our people operations function. CIPD qualified. 10+ years HR leadership in tech companies."
     assert:
       - type: javascript
-        value: "JSON.parse(output).scope === 'OUT_OF_SCOPE'"
+        value: "JSON.parse(output).tech.includes('OOS')"
 
-  # 15. Full Stack Developer -> IN_SCOPE + LEVEL_2
-  - description: "SCOPE-15: Full Stack Developer -> IN_SCOPE + LEVEL_2"
+  # 15. Full Stack Developer -> LEVEL_2
+  - description: "ENG-15: Full Stack Developer -> LEVEL_2"
     vars:
       job_title: "Full Stack Developer"
       job_location: "London, United Kingdom"
       jd_text: "Full Stack Developer for our fintech platform. React, Node.js, TypeScript, PostgreSQL. 3-5 years experience."
     assert:
       - type: javascript
-        value: "JSON.parse(output).scope === 'IN_SCOPE' && JSON.parse(output).seniority === 'LEVEL_2'"
+        value: "JSON.parse(output).sen === 'LEVEL_2'"
 
   # ═══════════════════════════════════════════════════════════════════
   # SENIORITY — Title-mismatch adherence (Finding 19/24)
   # ═══════════════════════════════════════════════════════════════════
 
-  # 16. Title "Node.JS Engineer" but JD says "Senior Backend Developer"
-  - description: "TITLE-16: Node.JS Engineer (JD says Senior) -> not LEVEL_3"
+  # 16. Title "Node.JS Engineer" but JD says "Senior Backend Developer" -> LEVEL_3 via fallback
+  - description: "TITLE-16: Node.JS Engineer (JD says Senior) -> LEVEL_3 via fallback"
     vars:
       job_title: "Node.JS Engineer"
       job_location: "London, United Kingdom"
       jd_text: "Senior Backend Developer needed for our fintech platform. You will design and build scalable APIs using Node.js and TypeScript. 5+ years backend experience. £80,000 - £95,000."
     assert:
       - type: javascript
-        value: "JSON.parse(output).seniority !== 'LEVEL_3'"
+        value: "JSON.parse(output).sen === 'LEVEL_3'"
 
-  # 17. Title "Software Developer" but JD says "Senior Full-Stack Engineer"
-  - description: "TITLE-17: Software Developer (JD says Senior) -> LEVEL_2 via fallback"
+  # 17. Title "Software Developer" but JD says "Senior Full-Stack Engineer" -> LEVEL_3 via fallback
+  - description: "TITLE-17: Software Developer (JD says Senior) -> LEVEL_3 via fallback"
     vars:
       job_title: "Software Developer (remote)"
       job_location: "Remote"
       jd_text: "Senior Full-Stack Engineer for our AI platform. We need someone who can build end-to-end features. React, Python, AWS. 6+ years experience."
     assert:
       - type: javascript
-        value: "JSON.parse(output).seniority === 'LEVEL_2'"
+        value: "JSON.parse(output).sen === 'LEVEL_3'"
 
-  # 18. Title "Data Scientist" but JD says "Data Scientist III"
-  - description: "TITLE-18: Data Scientist (JD says III) -> not LEVEL_3"
+  # 18. Title "Data Scientist" but JD says "Data Scientist III" -> LEVEL_3 (III = senior)
+  - description: "TITLE-18: Data Scientist (JD says III) -> LEVEL_3"
     vars:
       job_title: "Data Scientist"
       job_location: "Cambridge, United Kingdom"
       jd_text: "Data Scientist III position on our recommendations team. Build ML models for personalisation. Python, TensorFlow, Spark. 4+ years experience."
     assert:
       - type: javascript
-        value: "JSON.parse(output).seniority !== 'LEVEL_3'"
+        value: "JSON.parse(output).sen === 'LEVEL_3'"
 
   # ═══════════════════════════════════════════════════════════════════
-  # TECH — AI/ML discrimination (Finding 17)
+  # TECH — AI/ML discrimination and array format
   # ═══════════════════════════════════════════════════════════════════
 
-  # 19. ML experience required -> includes AI_ML
-  - description: "TECH-19: ML required in requirements -> includes AI_ML"
+  # 19. ML experience required -> tech includes AI_ML
+  - description: "TECH-19: ML required in requirements -> tech includes AI_ML"
     vars:
       job_title: "Software Engineer"
       job_location: "London, United Kingdom"
       jd_text: "Software Engineer for our ML platform. Requirements: 3+ years Python, experience building machine learning models, MLOps pipelines. You will train and deploy production ML models."
     assert:
       - type: javascript
-        value: "['AI_ML','JS_TS_AI_ML','NODE_AI_ML','NODE_JS_TS_AI_ML'].includes(JSON.parse(output).tech)"
+        value: "JSON.parse(output).tech.includes('AI_ML')"
 
   # 20. "AI-powered company" in company description -> NOT AI_ML
   - description: "TECH-20: AI in company desc only -> no AI_ML"
@@ -257,24 +270,58 @@ tests:
       jd_text: "We are an AI-powered analytics company transforming how businesses make decisions. Backend Engineer to build our data pipeline. Requirements: Python, PostgreSQL, Redis, Docker. 3+ years experience."
     assert:
       - type: javascript
-        value: "!['AI_ML','JS_TS_AI_ML','NODE_AI_ML','NODE_JS_TS_AI_ML'].includes(JSON.parse(output).tech)"
+        value: "!JSON.parse(output).tech.includes('AI_ML')"
 
-  # 21. ML as nice-to-have -> NOT AI_ML
-  - description: "TECH-21: ML as nice-to-have -> no AI_ML"
+  # 21. ML as nice-to-have -> includes AI_ML (V7: any mention counts)
+  - description: "TECH-21: ML as nice-to-have -> includes AI_ML"
     vars:
       job_title: "Software Engineer"
       job_location: "London, United Kingdom"
       jd_text: "Software Engineer for our data platform. Requirements: Python, SQL, Airflow, dbt. Nice to have: experience with machine learning, Kubernetes. 3+ years experience."
     assert:
       - type: javascript
-        value: "!['AI_ML','JS_TS_AI_ML','NODE_AI_ML','NODE_JS_TS_AI_ML'].includes(JSON.parse(output).tech)"
+        value: "JSON.parse(output).tech.includes('AI_ML')"
+
+  # ═══════════════════════════════════════════════════════════════════
+  # TECH — Individual token arrays (NEW in V7)
+  # ═══════════════════════════════════════════════════════════════════
+
+  # 22. Node.js + React -> tech includes both NODE and REACT
+  - description: "TECH-22: Node.js + React -> [NODE, REACT] (or with JS_TS)"
+    vars:
+      job_title: "Full Stack Developer"
+      job_location: "London, United Kingdom"
+      jd_text: "Full Stack Developer. Requirements: Node.js, React, MongoDB. Build modern web applications. 3+ years experience. £60,000 - £70,000."
+    assert:
+      - type: javascript
+        value: "const t = JSON.parse(output).tech; t.includes('NODE') && t.includes('REACT')"
+
+  # 23. React + TypeScript -> tech includes REACT and JS_TS
+  - description: "TECH-23: React + TypeScript (no Node) -> includes REACT and JS_TS"
+    vars:
+      job_title: "Frontend Developer"
+      job_location: "London, United Kingdom"
+      jd_text: "Frontend Developer. Requirements: React, TypeScript, CSS-in-JS. Build responsive UIs for our SaaS platform. GraphQL API consumption. 2+ years experience. £55,000 - £65,000."
+    assert:
+      - type: javascript
+        value: "const t = JSON.parse(output).tech; t.includes('REACT') && t.includes('JS_TS')"
+
+  # 24. Node + React + TypeScript + AI/ML -> all 4 tokens
+  - description: "TECH-24: Full stack + ML -> [NODE, REACT, JS_TS, AI_ML]"
+    vars:
+      job_title: "Senior Full Stack Engineer"
+      job_location: "London, United Kingdom"
+      jd_text: "Senior Full Stack Engineer. Requirements: Node.js, React, TypeScript for our web platform. You will also build and integrate machine learning models into the product. Experience with ML pipelines required. £90,000 - £110,000."
+    assert:
+      - type: javascript
+        value: "const t = JSON.parse(output).tech; t.includes('NODE') && t.includes('REACT') && t.includes('JS_TS') && t.includes('AI_ML')"
 
   # ═══════════════════════════════════════════════════════════════════
   # COMP — Ignore rules (Batch F/J patterns)
   # ═══════════════════════════════════════════════════════════════════
 
-  # 22. GBP range £85k-£95k -> RANGE_75_99K
-  - description: "COMP-22: £85,000-£95,000 -> RANGE_75_99K"
+  # 25. GBP range £85k-£95k -> RANGE_75_99K
+  - description: "COMP-25: £85,000-£95,000 -> RANGE_75_99K"
     vars:
       job_title: "Senior Software Engineer"
       job_location: "London, United Kingdom"
@@ -283,8 +330,8 @@ tests:
       - type: javascript
         value: "JSON.parse(output).comp === 'RANGE_75_99K'"
 
-  # 23. TC £120,000 -> NO_GBP (total compensation ignored)
-  - description: "COMP-23: TC £120,000 -> NO_GBP (TC ignored)"
+  # 26. TC £120,000 -> NO_GBP (total compensation ignored)
+  - description: "COMP-26: TC £120,000 -> NO_GBP (TC ignored)"
     vars:
       job_title: "Senior Software Engineer"
       job_location: "London, United Kingdom"
@@ -293,8 +340,8 @@ tests:
       - type: javascript
         value: "JSON.parse(output).comp === 'NO_GBP'"
 
-  # 24. OTE £110,000 -> NO_GBP (on-target earnings ignored)
-  - description: "COMP-24: OTE £110,000 -> NO_GBP (OTE ignored)"
+  # 27. OTE £110,000 -> NO_GBP (on-target earnings ignored)
+  - description: "COMP-27: OTE £110,000 -> NO_GBP (OTE ignored)"
     vars:
       job_title: "Senior Software Engineer"
       job_location: "London, United Kingdom"
@@ -303,8 +350,8 @@ tests:
       - type: javascript
         value: "JSON.parse(output).comp === 'NO_GBP'"
 
-  # 25. £500/day -> NO_GBP (daily rate ignored)
-  - description: "COMP-25: £500/day -> NO_GBP (daily rate ignored)"
+  # 28. £500/day -> NO_GBP (daily rate ignored)
+  - description: "COMP-28: £500/day -> NO_GBP (daily rate ignored)"
     vars:
       job_title: "Contract DevOps Engineer"
       job_location: "London, United Kingdom"
@@ -313,8 +360,8 @@ tests:
       - type: javascript
         value: "JSON.parse(output).comp === 'NO_GBP'"
 
-  # 26. $110,000-$125,000 (USD on London job) -> NO_GBP
-  - description: "COMP-26: USD salary on London job -> NO_GBP"
+  # 29. $110,000-$125,000 (USD on London job) -> NO_GBP
+  - description: "COMP-29: USD salary on London job -> NO_GBP"
     vars:
       job_title: "Software Engineer"
       job_location: "London, United Kingdom"
@@ -323,8 +370,8 @@ tests:
       - type: javascript
         value: "JSON.parse(output).comp === 'NO_GBP'"
 
-  # 27. Total package £130,000 including benefits -> NO_GBP
-  - description: "COMP-27: Package £130k including benefits -> NO_GBP"
+  # 30. Total package £130,000 including benefits -> NO_GBP
+  - description: "COMP-30: Package £130k including benefits -> NO_GBP"
     vars:
       job_title: "Senior Engineer"
       job_location: "London, United Kingdom"
@@ -333,8 +380,8 @@ tests:
       - type: javascript
         value: "JSON.parse(output).comp === 'NO_GBP'"
 
-  # 28. "We manage £2bn in assets" -> NO_GBP (non-salary £)
-  - description: "COMP-28: Non-salary £ amount -> NO_GBP"
+  # 31. "We manage £2bn in assets" -> NO_GBP (non-salary £)
+  - description: "COMP-31: Non-salary £ amount -> NO_GBP"
     vars:
       job_title: "Software Engineer"
       job_location: "London, United Kingdom"
@@ -343,90 +390,100 @@ tests:
       - type: javascript
         value: "JSON.parse(output).comp === 'NO_GBP'"
 
+  # 32. £45,000-£55,000 -> RANGE_45_54K (dead zone fix)
+  - description: "COMP-32: £45,000-£55,000 -> RANGE_45_54K (dead zone fix)"
+    vars:
+      job_title: "Junior Developer"
+      job_location: "London, United Kingdom"
+      jd_text: "Junior Developer for our web team. JavaScript, HTML, CSS. Salary: £45,000 - £55,000 per annum. Office-based."
+    assert:
+      - type: javascript
+        value: "JSON.parse(output).comp === 'RANGE_45_54K'"
+
   # ═══════════════════════════════════════════════════════════════════
-  # LOCATION — New V7 split tokens (was loc in V6)
+  # LOCATION — V7 tokens
   # ═══════════════════════════════════════════════════════════════════
 
-  # 29. London -> IN_LONDON (not FULLY_REMOTE)
-  - description: "LOC-29: London, UK -> IN_LONDON"
+  # 33. London -> IN_LONDON
+  - description: "LOC-33: London, UK -> IN_LONDON"
     vars:
       job_title: "Software Engineer"
       job_location: "London, United Kingdom"
       jd_text: "Software Engineer for our London office. Python, Django. 3+ years experience. Hybrid working, 3 days in office."
     assert:
       - type: javascript
-        value: "JSON.parse(output).location === 'IN_LONDON'"
+        value: "JSON.parse(output).loc === 'IN_LONDON'"
 
-  # 30. Fully Remote (no office) -> FULLY_REMOTE
-  - description: "LOC-30: Remote role -> FULLY_REMOTE"
+  # 34. Remote -> REMOTE
+  - description: "LOC-34: Remote role -> REMOTE"
     vars:
       job_title: "Software Engineer"
       job_location: "Remote"
       jd_text: "Fully remote Software Engineer. Work from anywhere in the UK. Python, AWS. No office attendance required."
     assert:
       - type: javascript
-        value: "JSON.parse(output).location === 'FULLY_REMOTE'"
+        value: "JSON.parse(output).loc === 'REMOTE'"
 
-  # 31. Dublin -> OUTSIDE_UK
-  - description: "LOC-31: Dublin, Ireland -> OUTSIDE_UK"
+  # 35. Dublin -> OUTSIDE_UK
+  - description: "LOC-35: Dublin, Ireland -> OUTSIDE_UK"
     vars:
       job_title: "Software Engineer"
       job_location: "Dublin, Ireland"
       jd_text: "Software Engineer for our Dublin engineering hub. Java, Spring Boot. 3+ years experience."
     assert:
       - type: javascript
-        value: "JSON.parse(output).location === 'OUTSIDE_UK'"
+        value: "JSON.parse(output).loc === 'OUTSIDE_UK'"
 
-  # 32. Empty location -> UNKNOWN
-  - description: "LOC-32: Empty location -> UNKNOWN"
+  # 36. Empty location -> UNK
+  - description: "LOC-36: Empty location -> UNK"
     vars:
       job_title: "Software Engineer"
       job_location: ""
       jd_text: "Software Engineer for our platform team. React, Node.js. 3+ years experience."
     assert:
       - type: javascript
-        value: "JSON.parse(output).location === 'UNKNOWN'"
+        value: "JSON.parse(output).loc === 'UNK'"
 
   # ═══════════════════════════════════════════════════════════════════
-  # WORK ARRANGEMENT — New V7 field
+  # WORK ARRANGEMENT — V7 field
   # ═══════════════════════════════════════════════════════════════════
 
-  # 33. Hybrid 3 days -> HYBRID
-  - description: "WA-33: Hybrid 3 days in office -> HYBRID"
+  # 37. Hybrid 3 days -> HYBRID
+  - description: "WA-37: Hybrid 3 days in office -> HYBRID"
     vars:
       job_title: "Software Engineer"
       job_location: "London, United Kingdom"
       jd_text: "Software Engineer. Python, Django. Hybrid working, 3 days per week in our London office. £70,000 - £85,000."
     assert:
       - type: javascript
-        value: "JSON.parse(output).work_arrangement === 'HYBRID'"
+        value: "JSON.parse(output).arr === 'HYBRID'"
 
-  # 34. Fully remote -> REMOTE
-  - description: "WA-34: Fully remote stated -> REMOTE"
+  # 38. Fully remote -> REMOTE
+  - description: "WA-38: Fully remote stated -> REMOTE"
     vars:
       job_title: "Backend Engineer"
       job_location: "Remote"
       jd_text: "Backend Engineer. Fully remote, no office attendance. Node.js, TypeScript, PostgreSQL. We are a remote-first company."
     assert:
       - type: javascript
-        value: "JSON.parse(output).work_arrangement === 'REMOTE'"
+        value: "JSON.parse(output).arr === 'REMOTE'"
 
-  # 35. On-site required -> IN_OFFICE
-  - description: "WA-35: On-site required -> IN_OFFICE"
+  # 39. On-site required -> IN_OFFICE
+  - description: "WA-39: On-site required -> IN_OFFICE"
     vars:
       job_title: "Software Engineer"
       job_location: "Manchester, United Kingdom"
       jd_text: "Software Engineer. This is an on-site role based in our Manchester office. Full-time office attendance required. Python, AWS."
     assert:
       - type: javascript
-        value: "JSON.parse(output).work_arrangement === 'IN_OFFICE'"
+        value: "JSON.parse(output).arr === 'IN_OFFICE'"
 
-  # 36. Not stated -> UNKNOWN
-  - description: "WA-36: Work arrangement not stated -> UNKNOWN"
+  # 40. Not stated -> UNK
+  - description: "WA-40: Work arrangement not stated -> UNK"
     vars:
       job_title: "Software Engineer"
       job_location: "London, United Kingdom"
       jd_text: "Software Engineer. React, TypeScript, Node.js. 3+ years experience. Competitive salary and benefits."
     assert:
       - type: javascript
-        value: "JSON.parse(output).work_arrangement === 'UNKNOWN'"
+        value: "JSON.parse(output).arr === 'UNK'"

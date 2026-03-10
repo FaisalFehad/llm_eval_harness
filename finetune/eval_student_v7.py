@@ -2,14 +2,15 @@
 """
 Eval MLX models against V7 semantic token eval set.
 
-The V7 student model outputs 6 semantic token fields:
-  location, work_arrangement, scope, seniority, tech, comp
+The V7 student model outputs 5 semantic token fields:
+  loc, arr, sen, tech, comp
 This script:
   1. Runs inference with the V7 student prompt
   2. Validates output tokens (with fuzzy matching for typos)
-  3. Computes scores/labels via the code layer (scope gate applied)
+  3. Computes scores/labels via the code layer (tech=["OOS"] gates seniority)
   4. Compares tokens AND computed labels against golden set
 
+Tech is an array of individual tokens: ["NODE", "REACT", "JS_TS", "AI_ML"] or ["OOS"].
 Scores are backward-compatible with V6:
   loc_score, role_score, tech_score, comp_score
 
@@ -40,9 +41,9 @@ from pathlib import Path
 # Import V7 semantic token definitions
 sys.path.insert(0, str(Path(__file__).parent))
 from semantic_tokens_v7 import (
-    FIELD_TOKENS,
+    SCALAR_FIELD_TOKENS,
     validate_prediction, compute_from_tokens, fuzzy_match,
-    V7_TOKEN_FIELDS, V7_REASON_FIELDS,
+    V7_TOKEN_FIELDS, V7_RAW_FIELDS,
 )
 
 
@@ -72,14 +73,14 @@ DEFAULT_TEST_FILE = "data/v7/eval_golden.jsonl"
 DEFAULT_PROMPT = "prompts/student_v7.txt"
 MAX_TOKENS = 500
 
-# V7 token fields (for iteration)
-TOKEN_FIELDS = ("location", "work_arrangement", "scope", "seniority", "tech", "comp")
-# The 4 fields that contribute to scoring (for quick-copy compatibility with V6)
-SCORE_FIELDS = ("location", "seniority", "tech", "comp")
-# V6-compatible score names for backward comparability
+# V7 token fields — 5 fields
+TOKEN_FIELDS = ("loc", "arr", "sen", "tech", "comp")
+# The 4 fields that contribute to scoring
+SCORE_FIELDS = ("loc", "sen", "tech", "comp")
+# V7 field to V6-compatible display name
 V7_FIELD_TO_V6_NAME = {
-    "location": "loc",
-    "seniority": "role",
+    "loc": "loc",
+    "sen": "role",
     "tech": "tech",
     "comp": "comp",
 }
@@ -100,6 +101,15 @@ def parse_json_output(text: str) -> dict | None:
         except json.JSONDecodeError:
             pass
     return None
+
+
+def compare_tech_arrays(pred_tech, golden_tech) -> bool:
+    """Compare tech arrays (order-independent)."""
+    if isinstance(pred_tech, str):
+        pred_tech = [pred_tech]
+    if isinstance(golden_tech, str):
+        golden_tech = [golden_tech]
+    return sorted(pred_tech) == sorted(golden_tech)
 
 
 def score_v7_result(predicted: dict, golden: dict) -> dict:
@@ -124,12 +134,17 @@ def score_v7_result(predicted: dict, golden: dict) -> dict:
     # Compute scores from golden tokens
     golden_computed = compute_from_tokens(golden)
 
-    # Per-field token comparison (all 6 V7 fields)
+    # Per-field token comparison (all 5 V7 fields)
     field_matches = {}
     for field in TOKEN_FIELDS:
-        field_matches[f"{field}_match"] = pred[field] == golden[field]
-        field_matches[f"pred_{field}"] = pred[field]
-        field_matches[f"golden_{field}"] = golden[field]
+        if field == "tech":
+            # Tech is an array — compare order-independently
+            field_matches[f"{field}_match"] = compare_tech_arrays(
+                pred.get(field, []), golden.get(field, []))
+        else:
+            field_matches[f"{field}_match"] = pred.get(field) == golden.get(field)
+        field_matches[f"pred_{field}"] = pred.get(field)
+        field_matches[f"golden_{field}"] = golden.get(field)
 
     return {
         "valid": True,
@@ -148,8 +163,8 @@ def score_v7_result(predicted: dict, golden: dict) -> dict:
         "pred_role_score": pred_computed["role_score"],
         "pred_tech_score": pred_computed["tech_score"],
         "pred_comp_score": pred_computed["comp_score"],
-        # Reasoning (for analysis — 6 per-field reasons)
-        **{f"pred_{f}": pred.get(f, "") for f in V7_REASON_FIELDS},
+        # Raw fields (for analysis)
+        **{f"pred_{f}": pred.get(f, "") for f in V7_RAW_FIELDS},
     }
 
 
@@ -320,7 +335,7 @@ def main():
                 "pred_label": scored["pred_label"],
                 "golden_score": scored["golden_score"],
                 "pred_score": scored["pred_score"],
-                **{f"pred_{f}": scored.get(f"pred_{f}", "") for f in V7_REASON_FIELDS},
+                **{f"pred_{f}": scored.get(f"pred_{f}", "") for f in V7_RAW_FIELDS},
             })
 
         status = "\u2713" if scored["label_match"] else "\u2717"
@@ -341,13 +356,19 @@ def main():
                 g = scored.get(f"golden_{field}", "?")
                 p = scored.get(f"pred_{field}", "?")
                 icon = "\u2713" if scored.get(f"{field}_match") else "\u2717"
-                parts.append(f"{field[:4]} {g}->{p} {icon}")
+                # Format tech arrays for display
+                if field == "tech":
+                    g_str = ",".join(g) if isinstance(g, list) else str(g)
+                    p_str = ",".join(p) if isinstance(p, list) else str(p)
+                    parts.append(f"{field} {g_str}->{p_str} {icon}")
+                else:
+                    parts.append(f"{field} {g}->{p} {icon}")
             print(f"{indent}{' | '.join(parts)}")
-            # Show reason fields
-            reasons = [scored.get(f"pred_{f}", "") for f in V7_REASON_FIELDS]
-            reason_str = " | ".join(r for r in reasons if r)
-            if reason_str:
-                print(f"{indent}{reason_str[:180]}")
+            # Show raw fields
+            raws = [scored.get(f"pred_{f}", "") for f in V7_RAW_FIELDS]
+            raw_str = " | ".join(r for r in raws if r)
+            if raw_str:
+                print(f"{indent}{raw_str[:180]}")
             print()
 
     # ── Summary ───────────────────────────────────────────────────────────────
@@ -394,7 +415,7 @@ def main():
               f"bad={lp_by_label['bad_fit']:.0f}%")
         print()
 
-        # ── Field token accuracy (all 6 V7 fields) ────────────────────────
+        # ── Field token accuracy (all 5 V7 fields) ────────────────────────
         field_pcts = {}
         print("  Field token accuracy:")
         for field in TOKEN_FIELDS:
@@ -405,8 +426,7 @@ def main():
             field_pcts[field] = fp
             bar_filled = int(fp / 5)  # 20-char bar at 100%
             bar = "#" * bar_filled + "." * (20 - bar_filled)
-            label = field[:12]
-            print(f"    {label:<14} {bar}  {correct:>3}/{len(matched)}  {fp:.1f}%")
+            print(f"    {field:<14} {bar}  {correct:>3}/{len(matched)}  {fp:.1f}%")
         print()
 
         # ── Per-label breakdown ──────────────────────────────────────────────
@@ -445,7 +465,7 @@ def main():
             print(row)
         print()
 
-        # ── Field error transitions (all 6 fields) ──────────────────────────
+        # ── Field error transitions (all 5 fields) ──────────────────────────
         any_transitions = False
         transition_lines = []
         for field in TOKEN_FIELDS:
@@ -453,12 +473,19 @@ def main():
             for r in valid:
                 g = r.get(f"golden_{field}")
                 p = r.get(f"pred_{field}")
-                if g and p and g != p:
+                if field == "tech":
+                    # Format tech arrays for comparison
+                    g_str = ",".join(sorted(g)) if isinstance(g, list) else str(g)
+                    p_str = ",".join(sorted(p)) if isinstance(p, list) else str(p)
+                    if g_str != p_str:
+                        key = f"{g_str}->{p_str}"
+                        transitions[key] = transitions.get(key, 0) + 1
+                elif g and p and g != p:
                     transitions[f"{g}->{p}"] = transitions.get(f"{g}->{p}", 0) + 1
             if transitions:
                 any_transitions = True
                 top = sorted(transitions.items(), key=lambda x: -x[1])[:4]
-                transition_lines.append(f"    {field[:14]:<14}: " + "  ".join(f"{k}:{v}" for k, v in top))
+                transition_lines.append(f"    {field:<14}: " + "  ".join(f"{k}:{v}" for k, v in top))
         if any_transitions:
             print("  Field error transitions (top per field):")
             for line in transition_lines:
@@ -474,18 +501,17 @@ def main():
                           r["golden_label"] in ("good_fit", "maybe"))
         print(f"  Error direction:  over-scoring {over_scores}  |  under-scoring {under_scores}")
 
-        # ── Quick-copy summary line (V6-compatible names for comparison) ────
+        # ── Quick-copy summary line ──────────────────────────────────────────
         print()
         print("-" * W)
         print(
             f"  {adapter_folder}/{checkpoint_stem}"
             f"  label={pct:.1f}%"
-            f"  loc={field_pcts['location']:.1f}%"
-            f"  role={field_pcts['seniority']:.1f}%"
+            f"  loc={field_pcts['loc']:.1f}%"
+            f"  role={field_pcts['sen']:.1f}%"
             f"  tech={field_pcts['tech']:.1f}%"
             f"  comp={field_pcts['comp']:.1f}%"
-            f"  scope={field_pcts['scope']:.1f}%"
-            f"  wa={field_pcts['work_arrangement']:.1f}%"
+            f"  wa={field_pcts['arr']:.1f}%"
             f"  gf={lp_by_label['good_fit']:.0f}%"
             f"  maybe={lp_by_label['maybe']:.0f}%"
             f"  bad={lp_by_label['bad_fit']:.0f}%"

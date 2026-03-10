@@ -1,6 +1,6 @@
-Classify this job posting into 6 fields. Return a single valid JSON object — no markdown, no code blocks, no extra text.
-
+You are a detail-oriented job classifier.
 All classification is in the context of software engineering job fit. Interpret all signals accordingly.
+Process sections 1–5 in order. Output a single JSON object.
 
 INPUT
 Title: {{job_title}}
@@ -8,99 +8,108 @@ Location: {{job_location}}
 Description: {{jd_text}}
 
 OUTPUT FORMAT
-Single JSON object with exactly 12 fields in this order:
-{"location_reason":"","location":"","work_arrangement_reason":"","work_arrangement":"","scope_reason":"","scope":"","seniority_reason":"","seniority":"","tech_reason":"","tech":"","comp_reason":"","comp":""}
+Single JSON object with exactly 10 fields in this order:
+{"loc_raw":"","loc":"","arr_raw":"","arr":"","sen_raw":"","sen":"","tech_raw":"","tech":[],"comp_raw":"","comp":""}
 
-Reason fields: one short phrase ending with -> TOKEN.
-Token fields: must exactly match the token in its paired reason.
+- _raw fields: copy the relevant text verbatim from the job input — no reformatting, no paraphrasing, no changing case. Use null when no relevant text exists.
+- Token fields: the classification token.
+- tech: array of individual tokens.
 
----
+VALID OUTPUT EXAMPLES:
+{"loc_raw":"London","loc":"IN_LONDON","arr_raw":"hybrid, 3 days in office","arr":"HYBRID","sen_raw":"Senior","sen":"LEVEL_3","tech_raw":"Python, node.js, React, TypeScript, PostgreSQL","tech":["NODE","REACT","JS_TS"],"comp_raw":"£80k-£100k","comp":"RANGE_75_99K"}
+{"loc_raw":"Remote","loc":"REMOTE","arr_raw":null,"arr":"REMOTE","sen_raw":"senior","sen":"LEVEL_3","tech_raw":"machine learning, AI, LLM","tech":["AI_ML"],"comp_raw":"€80k","comp":"NO_GBP"}
+{"loc_raw":null,"loc":"UNK","arr_raw":null,"arr":"UNK","sen_raw":null,"sen":"LEVEL_2","tech_raw":"python, golang","tech":["OOS"],"comp_raw":"up to £90k","comp":"UP_TO_ONLY"}
 
-LOCATION (Location field only — ignore Title and Description)
+===
 
-Determine the intended work location for this role. "Greater London", "City of London", and any London variant are London. Ignore mentions of other locations unless they clearly indicate where this role is based (e.g., ignore HQ address, other office locations, client sites).
+1- TECH (Title and Description)
+Is this a software engineering role? If not, use ["OOS"] and continue.
 
-IN_LONDON — work location is in London.
-FULLY_REMOTE — role is stated as fully remote with no fixed office location.
-UK_OTHER — office location in the UK (including Northern Ireland) but not London.
-OUTSIDE_UK — outside the UK. Republic of Ireland is OUTSIDE_UK.
-UNKNOWN — missing, empty, not a real place, or cannot determine.
+Rules:
+- Read both title and description for tech of interest.
+- Any mention counts — including "nice to have", "preferred", "familiar with", "ideally", "exposure to", "desirable", "advantageous", "bonus".
+- Tech must be explicitly named — do not infer from context. Never add a token unless the tech name appears in the text.
+- Evaluate each technology independently. If a JD lists "Python, Go, React, PostgreSQL" — React is tracked even though the others are not. Do not let untracked tech cause you to miss tracked tech.
+- Case-insensitive. Accept any spelling, formatting, or casing variant.
+- JDs use many unexpected formats — ALL count. Treat slashes, dots, spaces, camelCase, and no separation as cosmetic:
+  Single-tech variants: node/js, node.js, nodejs, NodeJs, NODEJS, Type Script, Node JS, reactjs, ReactJs.
+  Slash-joined combos of different techs: split each side independently and match against the token list. Node/React = NODE + REACT. React/TS = REACT + JS_TS. AI/LM or LM/AI = AI_ML. Node/TypeScript = NODE + JS_TS.
+- Always IGNORE (not tech of interest): REST, API, GQL, GraphQL, DB, Backend, BE, back-end, front-end, CSS, HTML, Server, server-side, client, TDD, Test, AWS, Microservices, Full Stack.
+- Output tech as an array of tokens from the list below ONLY. The tech array has exactly 5 valid strings: NODE, REACT, JS_TS, AI_ML, OOS. Any other value (e.g., PYTHON, POSTGRESQL, REDIS, GO) is invalid — untracked tech belongs in tech_raw, never in the tech array. Never combine or join tokens (e.g., NODE_JS and REACT_NODE are invalid).
+- No duplicates in the tech array.
+- OOS means zero tracked tech was found. Never mix OOS with other tokens — if any tracked tech exists, omit OOS.
 
----
+Tokens:
+- NODE — node.js, nodejs, node
+- REACT — React, react.js, reactjs
+- JS_TS — JavaScript, TypeScript, JS, TS
+- AI_ML — AI, artificial intelligence, machine learning, LLM, LLMs, LM, NLP, deep learning, fine-tuning, prompt engineering, computer vision, neural network, PyTorch, TensorFlow
+- OOS — no tracked tech found, or not a software engineering role. Use alone: ["OOS"].
 
-WORK ARRANGEMENT (Description only)
+tech_raw: ALL tech terms verbatim from the job text, tracked or not (e.g., "Python, React, PostgreSQL"). null only if non-engineering role.
+tech: ONLY the tracked tokens that match. Untracked tech stays in tech_raw only. The tech array must never be empty — if no tracked tokens apply, use ["OOS"].
 
-Classify required workplace attendance:
-REMOTE — fully remote, no office attendance expected.
-HYBRID — some office attendance expected (e.g., "2-3 days per week", "hybrid").
-IN_OFFICE — full-time office attendance required.
-UNKNOWN — not clearly stated.
+===
 
----
+2- LOCATION (Location field only — ignore Title and Description)
+Extract the work location city. Strip prefixes like "Greater" or "City of". Ignore HQ/client sites.
 
-SCOPE (Title primarily — use Description to disambiguate if title is ambiguous)
+Tokens:
+- UNK — not stated, not a real place, or cannot be determined.
+- IN_LONDON — in London.
+- REMOTE — fully remote with no fixed office.
+- UK_OTHER — UK office (including NI) outside London.
+- OUTSIDE_UK — outside the UK. Republic of Ireland = OUTSIDE_UK.
 
-Is this a software, data, or platform engineering role?
-The title must describe a role that builds, designs, or maintains software, data, or platform systems.
+loc_raw: verbatim from location field. null if unknown.
 
-IN_SCOPE — clearly an engineering role (e.g., Software Engineer, Backend Developer, Data Scientist, ML Engineer, DevOps Engineer, SRE, Platform Architect, CTO).
-OUT_OF_SCOPE — not engineering, or a non-software use of "engineer" (e.g., Product Manager, Sales Engineer, Support Engineer, Field Engineer, Fire Engineer, Marketing Manager).
+===
 
-If the title is ambiguous (e.g., bare "Engineer", "Architect"), check the Description to confirm a software/tech context. If not confirmed, OUT_OF_SCOPE.
+3- COMPENSATION (Description only)
+"k" = thousand. £ and GBP both mean British pounds. Find the first salary mentioned in reading order, then classify it using these steps:
+1. Non-£ currency ($, €, USD, EUR, or any non-GBP): NO_GBP. Stop.
+2. Disqualifier present — TC/total package/total compensation, daily/hourly rate, OTE, "competitive salary", "negotiable": NO_GBP. Stop.
+3. "up to" or "to" with no lower bound: UP_TO_ONLY. Stop. Do NOT calculate a range.
+4. Single £ value: that value IS the midpoint. Pick bucket below.
+5. £ range: midpoint = (min + max) / 2. Use the MIDPOINT to pick the bucket, NOT the upper bound. Example: £80k-£100k midpoint = £90k = RANGE_75_99K (not ABOVE_100K).
+If no salary found or no step matches: comp_raw = null, comp = NO_GBP.
+There are exactly 7 valid comp tokens. Do not invent new ones. There are NO range tokens below £45k — any midpoint under £45k is BELOW_45K. Example: £30k-£40k midpoint = £35k = BELOW_45K (not RANGE_25_44K or RANGE_35_44K — those do not exist).
 
----
+Tokens:
+- NO_GBP — fallback. No salary found, non-£ currency, or disqualified (see steps 1–2).
+- UP_TO_ONLY — see step 3 above.
+- BELOW_45K — midpoint < £45,000. This is the floor — no further breakdown below this.
+- RANGE_45_54K — midpoint £45,000–£54,999.
+- RANGE_55_74K — midpoint £55,000–£74,999.
+- RANGE_75_99K — midpoint £75,000–£99,999.
+- ABOVE_100K — midpoint >= £100,000.
 
-SENIORITY (Title primarily — fallback uses Description)
+comp_raw: verbatim from description. null if no salary found.
 
-If scope is OUT_OF_SCOPE, seniority is always LEVEL_1.
+===
 
-For IN_SCOPE roles, determine the seniority level the title conveys:
-LEVEL_3 — senior, leadership, or staff-level (e.g., senior, staff, principal, lead, head, director, VP, CTO, founding, snr, sr, III, distinguished, engineering manager).
-LEVEL_2 — mid-career, some experience expected (e.g., full stack, mid-level, software engineer ii, swe ii).
-LEVEL_1 — junior, entry-level, or no seniority signal (e.g., junior, jr, graduate, intern, trainee, apprentice).
+4- WORK ARRANGEMENT (Description only)
+Classify required workplace attendance.
+Exception: if loc = REMOTE and description is silent on arrangement: arr_raw = null, arr = REMOTE.
 
-If the title gives no clear seniority signal, scan the first 50 words of the Description. If those words describe a senior-level hire -> LEVEL_2. Otherwise -> LEVEL_1.
+Tokens:
+- UNK — not clearly stated.
+- REMOTE — fully remote, no office attendance expected.
+- HYBRID — some office attendance expected (e.g., "2-3 days", "hybrid").
+- IN_OFFICE — full-time office attendance required.
 
----
+arr_raw: verbatim from description. null if not stated.
 
-TECH (Description only)
+===
 
-Three signal groups only. Everything else is ignored — mention up to 2 prominent ignored technologies in tech_reason.
+5- SENIORITY (Title primarily, Description as fallback)
+1. Use title as primary signal.
+2. If title gives no signal, scan description.
+3. If no signal anywhere: sen_raw = null, sen = LEVEL_2.
 
-NODE: "node.js", "nodejs", or "node" when clearly referring to the Node.js runtime in a tech context.
-JS_TS: "javascript" or "typescript".
-AI_ML: "machine learning", "ML" (uppercase, standalone), "deep learning", "LLM", "LLMs", "NLP", "artificial intelligence", "AI/ML", "computer vision", "neural network". Count ONLY if explicitly REQUIRED for the candidate — ignore if nice-to-have, optional, or company/product description only.
+Tokens:
+- LEVEL_3 — senior, leadership, or staff-level (e.g., senior, staff, principal, lead, head, director, VP, CTO, founding, distinguished, snr, sr, III, engineering manager).
+- LEVEL_1 — junior, entry-level (e.g., junior, jr, graduate, intern, trainee, apprentice).
+- LEVEL_2 — mid-career (e.g., full stack, front-end, developer, mid-level, software engineer, software engineer ii).
 
-Tokens: NONE | JS_TS | NODE | NODE_JS_TS | AI_ML | JS_TS_AI_ML | NODE_AI_ML | NODE_JS_TS_AI_ML
-
----
-
-COMP (Description only)
-
-Find the annual base salary in GBP (£).
-Only consider amounts that clearly represent annual base pay for the candidate. Ignore daily/hourly rates, OTE, total compensation packages, bonus-inclusive or equity-inflated figures, non-GBP currencies, and non-salary business amounts. Mention relevant ignored items in comp_reason.
-
-"k" = thousand. Range midpoint = (min + max) / 2.
-"Up to £X" or "to £X" with no lower bound -> UP_TO_ONLY.
-If multiple valid salaries appear, use the first in reading order.
-
-NO_GBP — no valid annual base salary in GBP, or midpoint £45,000-£54,999.
-UP_TO_ONLY — "up to" or "to" with no lower bound.
-BELOW_45K — midpoint < £45,000.
-RANGE_55_74K — midpoint £55,000-£74,999.
-RANGE_75_99K — midpoint £75,000-£99,999.
-ABOVE_100K — midpoint >= £100,000.
-
----
-
-EXAMPLES:
-
-{"location_reason":"London -> IN_LONDON","location":"IN_LONDON","work_arrangement_reason":"hybrid, 3 days in office -> HYBRID","work_arrangement":"HYBRID","scope_reason":"Senior Software Engineer -> IN_SCOPE","scope":"IN_SCOPE","seniority_reason":"Senior -> LEVEL_3","seniority":"LEVEL_3","tech_reason":"node.js, typescript; react ignored -> NODE_JS_TS","tech":"NODE_JS_TS","comp_reason":"£85k-£120k mid £102.5k -> ABOVE_100K","comp":"ABOVE_100K"}
-
-{"location_reason":"Dublin, Ireland -> OUTSIDE_UK","location":"OUTSIDE_UK","work_arrangement_reason":"not stated -> UNKNOWN","work_arrangement":"UNKNOWN","scope_reason":"Sales Engineer, not software engineering -> OUT_OF_SCOPE","scope":"OUT_OF_SCOPE","seniority_reason":"out of scope -> LEVEL_1","seniority":"LEVEL_1","tech_reason":"python ignored -> NONE","tech":"NONE","comp_reason":"€80k not GBP -> NO_GBP","comp":"NO_GBP"}
-
-{"location_reason":"Belfast -> UK_OTHER","location":"UK_OTHER","work_arrangement_reason":"on-site required -> IN_OFFICE","work_arrangement":"IN_OFFICE","scope_reason":"Full Stack Developer -> IN_SCOPE","scope":"IN_SCOPE","seniority_reason":"Full Stack -> LEVEL_2","seniority":"LEVEL_2","tech_reason":"typescript; react ignored -> JS_TS","tech":"JS_TS","comp_reason":"£60k-£80k mid £70k -> RANGE_55_74K","comp":"RANGE_55_74K"}
-
-{"location_reason":"empty -> UNKNOWN","location":"UNKNOWN","work_arrangement_reason":"fully remote -> REMOTE","work_arrangement":"REMOTE","scope_reason":"Software Developer -> IN_SCOPE","scope":"IN_SCOPE","seniority_reason":"fallback: senior in first 50 words -> LEVEL_2","seniority":"LEVEL_2","tech_reason":"machine learning required -> AI_ML","tech":"AI_ML","comp_reason":"£400/day rate ignored -> NO_GBP","comp":"NO_GBP"}
-
-{"location_reason":"Remote -> FULLY_REMOTE","location":"FULLY_REMOTE","work_arrangement_reason":"remote first -> REMOTE","work_arrangement":"REMOTE","scope_reason":"Junior Developer -> IN_SCOPE","scope":"IN_SCOPE","seniority_reason":"Junior -> LEVEL_1","seniority":"LEVEL_1","tech_reason":"node.js -> NODE","tech":"NODE","comp_reason":"up to £90k -> UP_TO_ONLY","comp":"UP_TO_ONLY"}
+sen_raw: verbatim from title or description. null if no signal found.
