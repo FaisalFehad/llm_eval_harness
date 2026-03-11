@@ -55,6 +55,7 @@ class Tee:
     def write(self, data):
         for s in self.streams:
             s.write(data)
+            s.flush()
 
     def flush(self):
         for s in self.streams:
@@ -66,12 +67,17 @@ import shutil
 import mlx.core as mx
 from mlx_lm import load, generate
 
+
+def greedy_sampler(logits: mx.array) -> mx.array:
+    """Greedy decoding — always pick the highest probability token."""
+    return mx.argmax(logits, axis=-1)
+
 # ── Config ────────────────────────────────────────────────────────────────────
 
 MODEL_ID = "mlx-community/Qwen2.5-0.5B-Instruct-4bit"
 DEFAULT_TEST_FILE = "data/v7/eval_golden.jsonl"
 DEFAULT_PROMPT = "prompts/student_v7.txt"
-MAX_TOKENS = 500
+MAX_TOKENS = 1000
 
 # V7 token fields — 5 fields
 TOKEN_FIELDS = ("loc", "arr", "sen", "tech", "comp")
@@ -88,18 +94,53 @@ V7_FIELD_TO_V6_NAME = {
 # ── Helpers ───────────────────────────────────────────────────────────────────
 
 def parse_json_output(text: str) -> dict | None:
-    """Extract JSON from model output, handling extra text."""
+    """Extract JSON from model output, handling extra text and truncation."""
     text = text.strip()
+
+    # Strip markdown fences
+    text = text.replace("```json", "").replace("```", "").strip()
+
+    # Fix missing opening quote on first key after { prefill
+    # Pattern 1: {loc_raw": -> {"loc_raw":  (missing opening quote only)
+    text = re.sub(r'\{(\s*)(\w+)":', r'{"\2":', text)
+    # Pattern 2: {loc_raw: -> {"loc_raw":  (fully unquoted key)
+    text = re.sub(r'\{(\s*)(\w+):', r'{"\2":', text)
+    # Pattern 3: ,loc_raw: -> ,"loc_raw":  (unquoted keys after comma)
+    text = re.sub(r',(\s*)(\w+):', r',"\2":', text)
+
+    # Attempt 1: Direct load
     try:
         return json.loads(text)
     except json.JSONDecodeError:
         pass
+
+    # Attempt 2: Regex extraction (complete JSON)
     match = re.search(r'\{[\s\S]*\}', text)
     if match:
         try:
             return json.loads(match.group())
         except json.JSONDecodeError:
             pass
+
+    # Attempt 3: Auto-fix truncated JSON (0.5B models stop early)
+    match = re.search(r'\{[\s\S]*', text)
+    if match:
+        truncated = match.group()
+        # Close open strings
+        if truncated.count('"') % 2 != 0:
+            truncated += '"'
+        # Close open tech array
+        if '"tech"' in truncated and '[' in truncated.split('"tech"')[-1]:
+            after_tech = truncated.split('"tech"')[-1]
+            if after_tech.count('[') > after_tech.count(']'):
+                truncated += ']'
+        # Close the object
+        truncated += '}'
+        try:
+            return json.loads(truncated)
+        except json.JSONDecodeError:
+            pass
+
     return None
 
 
@@ -183,8 +224,9 @@ def main():
     parser.add_argument("--save-predictions", action="store_true")
     args = parser.parse_args()
 
-    # Output file setup
-    date_str = datetime.date.today().isoformat()
+    # Output file setup — timestamped for history (never overwrites)
+    now = datetime.datetime.now()
+    timestamp = now.strftime("%Y-%m-%d_%H%M%S")
     test_stem = Path(args.test_file).stem
     prompt_stem = Path(args.prompt).stem
     model_stem = args.model.split("/")[-1]
@@ -195,12 +237,12 @@ def main():
         checkpoint_stem = p.stem if p.is_file() and p.suffix == ".safetensors" else "final"
         checkpoint_stem = checkpoint_stem.replace("_adapters", "")
         output_dir = Path(args.output_dir) / adapter_folder
-        output_file = output_dir / f"{date_str}_{test_stem}_{prompt_stem}_{checkpoint_stem}.txt"
+        output_file = output_dir / f"{timestamp}_{test_stem}_{prompt_stem}_{checkpoint_stem}.txt"
     else:
         adapter_folder = "baseline"
         checkpoint_stem = model_stem
         output_dir = Path(args.output_dir) / "baseline"
-        output_file = output_dir / f"{date_str}_{test_stem}_{prompt_stem}_{model_stem}.txt"
+        output_file = output_dir / f"{timestamp}_{test_stem}_{prompt_stem}_{model_stem}.txt"
 
     output_dir.mkdir(parents=True, exist_ok=True)
     partial_file = output_file.with_suffix(".txt.partial")
@@ -284,6 +326,10 @@ def main():
         formatted = tokenizer.apply_chat_template(
             messages, tokenize=False, add_generation_prompt=True)
 
+        # Force the model to start generating JSON by pre-filling the opening brace.
+        # Without this, the 0.5B model often emits <|im_end|> prematurely mid-JSON.
+        formatted += "{"
+
         t0 = time.time()
         response = generate(
             model, tokenizer,
@@ -291,8 +337,12 @@ def main():
             max_tokens=MAX_TOKENS,
             verbose=False,
             prefill_step_size=4096,
+            sampler=greedy_sampler,
         )
         elapsed = time.time() - t0
+
+        # Add the brace back since the model continues after it
+        response = "{" + response
 
         parsed = parse_json_output(response)
 
@@ -300,10 +350,13 @@ def main():
             parse_failures += 1
             print(f"[{orig_idx:3d}/{len(all_examples)}] !  {elapsed:4.1f}s  "
                   f"{job['title'][:42]:<42}  PARSE FAIL")
-            if args.verbose:
-                print(f"           Raw: {response[:300]}")
+            print(f"           Raw: {response[:300]}")
             results.append({"label_match": False, "parse_fail": True,
                            "golden_label": job.get("label", "?")})
+            predictions.append({
+                "job_index": orig_idx, "title": job["title"],
+                "parse_fail": True, "raw_output": response[:500],
+            })
             continue
 
         # Score with V7 semantic token system
@@ -325,18 +378,20 @@ def main():
         scored["invalid_token"] = False
         results.append(scored)
 
-        if args.save_predictions:
-            predictions.append({
-                "job_index": orig_idx,
-                "title": job["title"],
-                "golden_tokens": {f: job.get(f) for f in TOKEN_FIELDS},
-                "pred_tokens": {f: scored.get(f"pred_{f}") for f in TOKEN_FIELDS},
-                "golden_label": scored["golden_label"],
-                "pred_label": scored["pred_label"],
-                "golden_score": scored["golden_score"],
-                "pred_score": scored["pred_score"],
-                **{f"pred_{f}": scored.get(f"pred_{f}", "") for f in V7_RAW_FIELDS},
-            })
+        predictions.append({
+            "job_index": orig_idx,
+            "title": job["title"],
+            "company": job.get("company", ""),
+            "location": job.get("job_location", job.get("location", "")),
+            "golden_tokens": {f: job.get(f) for f in TOKEN_FIELDS},
+            "pred_tokens": {f: scored.get(f"pred_{f}") for f in TOKEN_FIELDS},
+            "golden_label": scored["golden_label"],
+            "pred_label": scored["pred_label"],
+            "golden_score": scored["golden_score"],
+            "pred_score": scored["pred_score"],
+            "label_match": scored["label_match"],
+            **{f"pred_{f}": scored.get(f"pred_{f}", "") for f in V7_RAW_FIELDS},
+        })
 
         status = "\u2713" if scored["label_match"] else "\u2717"
         correct_so_far = sum(r["label_match"] for r in results)
@@ -518,13 +573,36 @@ def main():
         )
     print("=" * W)
 
-    # Write predictions
-    if args.save_predictions and predictions and not args.job:
+    # Always write predictions alongside the eval report
+    if predictions and not args.job:
         pred_file = output_file.with_suffix(".predictions.jsonl")
         with open(pred_file, "w") as pf:
             for rec in predictions:
                 pf.write(json.dumps(rec) + "\n")
         print(f"\nPredictions: {pred_file}")
+
+        # Also write a summary JSON for programmatic comparison
+        summary_file = output_file.with_suffix(".summary.json")
+        summary = {
+            "timestamp": timestamp,
+            "adapter": args.adapter or "baseline",
+            "checkpoint": checkpoint_stem,
+            "model": args.model,
+            "prompt": args.prompt,
+            "test_file": args.test_file,
+            "n_total": n,
+            "n_valid": len(valid),
+            "parse_failures": parse_failures,
+            "invalid_tokens": invalid_tokens,
+            "fuzzy_corrections": fuzzy_total,
+            "label_accuracy": round(label_correct / len(valid) * 100, 1) if valid else 0,
+            "score_accuracy": round(score_correct / len(valid) * 100, 1) if valid else 0,
+            "field_accuracy": {f: round(field_pcts.get(f, 0), 1) for f in TOKEN_FIELDS} if valid else {},
+            "per_label": {lbl: round(lp_by_label.get(lbl, 0), 1) for lbl in ("good_fit", "maybe", "bad_fit")} if valid else {},
+        }
+        with open(summary_file, "w") as sf:
+            json.dump(summary, sf, indent=2)
+        print(f"Summary: {summary_file}")
 
     # Finalize output
     if log_fh:

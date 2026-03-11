@@ -1,24 +1,24 @@
 {
-    "adapter_path": "finetune/adapters_v7",
+    "adapter_path": "finetune/adapters_v7_1.5B",
     "batch_size": 1,
-    "config": "finetune/lora_config_v7.yaml",
+    "config": "finetune/lora_config_v7_1.5B.yaml",
     "data": "data/v7/mlx",
     "fine_tune_type": "lora",
-    "grad_accumulation_steps": 16,
+    "grad_accumulation_steps": 8,
     "grad_checkpoint": true,
-    "iters": 1500,
-    "learning_rate": 5e-05,
+    "iters": 2000,
+    "learning_rate": 2e-05,
     "lora_parameters": {
         "rank": 16,
         "alpha": 32,
-        "dropout": 0.1,
+        "dropout": 0.05,
         "scale": 1.0,
-        "weight_decay": 0.01
+        "weight_decay": 0.0
     },
     "lr_schedule": null,
     "mask_prompt": true,
-    "max_seq_length": 8192,
-    "model": "mlx-community/Qwen2.5-0.5B-Instruct-4bit",
+    "max_seq_length": 2048,
+    "model": "mlx-community/Qwen2.5-1.5B-Instruct-4bit",
     "num_layers": 16,
     "optimizer": "adam",
     "optimizer_config": {
@@ -38,6 +38,6 @@
     "test": false,
     "test_batches": 500,
     "train": true,
-    "val_batches": 40,
-    "warmup_steps": 50
+    "val_batches": 1,
+    "warmup_steps": 100
 }

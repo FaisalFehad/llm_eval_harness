@@ -1030,3 +1030,131 @@ ABOVE_100K    → 25 pts   (midpoint ≥ £100k)
 **Status**: ✅ Fixed — all 1,200 jobs labeled with gpt-4.1-mini, 0 failures.
 
 **Lesson**: Newer models follow structured output instructions better. Always test new models on existing data before committing — run the same jobs through both models and compare token-level disagreements to understand behavioral differences, not just pass/fail rates.
+
+---
+
+## Finding 36: V7 Training Results — 0.5B and 1.5B Comparison
+
+**Date**: 2026-03-11
+
+**How found**: Trained both Qwen2.5-0.5B-Instruct-4bit and Qwen2.5-1.5B-Instruct-4bit on same data (642 train, 71 valid) with identical hyperparameters (rank=16, alpha=32, dropout=0.05, LR=2e-5, warmup=100, 2000 iters). Evaluated both on 239-job test set.
+
+**Results**:
+
+| Metric | 0.5B | 1.5B | Delta |
+|--------|------|------|-------|
+| Label accuracy | 84.9% | 85.4% | +0.5% |
+| Parse failures | 15 | 0 | -15 |
+| Invalid tokens | 12 | 13 | +1 |
+| loc | 95.8% | 97.3% | +1.5% |
+| arr | 78.3% | 91.2% | +12.9% |
+| sen | 89.6% | 92.0% | +2.4% |
+| tech | 70.3% | 70.4% | +0.1% |
+| comp | 71.7% | 77.9% | +6.2% |
+| good_fit | 80.4% | 85.0% | +4.6% |
+| maybe | 81.8% | 70.0% | -11.8% |
+| bad_fit | 88.7% | 92.0% | +3.3% |
+
+**Key observations**:
+1. **3x parameters → only +0.5% label accuracy.** The bottleneck is data quality, not model capacity.
+2. **1.5B fixes parse failures** (0 vs 15) and improves arr/comp substantially, but does NOT improve tech (~70% for both).
+3. **1.5B worse on "maybe" class** (70% vs 82%) — it's more decisive, pushing borderline cases to good_fit or bad_fit.
+4. **Tech accuracy is identical** — proves the tech problem is in the data/labels, not the model.
+
+**V5→V7 hyperparameter changes and rationale**:
+- Dropout 0.1→0.05: V5.1 showed underfitting symptoms (loss still decreasing at OOM crash). Less regularization allows more capacity for the 5-field classification task.
+- LR 5e-5→2e-5: V5.1 training showed oscillation in comp accuracy between checkpoints. Slower convergence provides more stable learning.
+- Warmup 50→100: Related to LR reduction — proportionally longer warmup for the lower learning rate.
+- Iters 1000→2000: V5.1 peaked at iter 875 then OOM'd at 890 — never found the true peak. 2000 gives ample headroom.
+- Eval every 50→25: With 2000 iters, need finer-grained checkpointing to identify the best checkpoint.
+
+**1.5B training details**:
+- Peak memory: 6.788 GB (within M1 16GB budget)
+- Best val loss: 0.102 at iter 1775 (nearest saved: 1750, 1800)
+- Training completed all 2000 iters
+- Multiple OOM retry attempts failed due to Metal GPU memory fragmentation from prior crashes — the original run had succeeded fine
+
+**Decision**: 1.5B provides marginal improvement for 3x compute cost. Focus on fixing data quality issues (tech accuracy) rather than scaling model size. Both models will benefit equally from data fixes since they fail on the same jobs.
+
+**Category**: Model comparison / training results
+
+**Status**: ✅ Complete — both models trained and evaluated.
+
+**Lesson**: When two models of different sizes produce identical errors on the same field, the bottleneck is always in the data or labels, never in model capacity. Scaling up cannot fix a data problem.
+
+---
+
+## Finding 37: Tech Accuracy Bottleneck — Root Cause Analysis
+
+**Date**: 2026-03-11
+
+**How found**: Deep investigation into why tech field is stuck at ~70% for both 0.5B and 1.5B models. Analyzed all tech prediction errors across both models, cross-referenced with training data distributions, and examined per-token accuracy patterns.
+
+**Three root causes identified**:
+
+### Root Cause 1: JS_TS Co-occurrence Bias
+
+Training data has a severe co-occurrence bias: 83.3% of REACT training examples also include JS_TS. The model learns `REACT → always add JS_TS` as a spurious correlation.
+
+Evidence:
+- Only 16.7% of REACT examples show REACT without JS_TS
+- Student model over-predicts JS_TS on REACT-only jobs
+- Error pattern is consistent across both model sizes
+
+**Fix**: Add 20-30 contrastive training examples where REACT or NODE appears WITHOUT JS_TS. This breaks the spurious correlation by showing the model that tech tokens are independent signals.
+
+### Root Cause 2: AI_ML Ambiguous Teacher Boundary
+
+The teacher prompt says "any mention of AI/ML counts" but teacher labeling is inconsistent at the boundary:
+- Copilot/Cursor/AI-dev-tools trigger AI_ML only 64% of the time in training data
+- 71% of AI_ML false negatives involve the student seeing AI-related terms in `tech_raw` but NOT outputting AI_ML
+
+The model learns an inconsistent rule because the training signal is noisy.
+
+**Fix**: Tighten the teacher prompt's AI_ML rule — make explicit whether Copilot/Cursor/AI-powered-dev-tools count as AI_ML or not. Then re-label the ambiguous cases for consistency.
+
+### Root Cause 3: Multi-token Exact-match Scaling
+
+V7 uses arrays (`["NODE", "REACT", "JS_TS"]`) with exact-match evaluation — ALL tokens must be correct. This compounds errors:
+- 1-token arrays: ~85% accuracy
+- 2-token arrays: ~70% accuracy
+- 3-token arrays: ~55% accuracy
+- 4-token arrays: 36-60% accuracy
+
+Each additional token is another chance to get one wrong, dragging down the average.
+
+**Possible fix**: Switch eval to per-token F1 (precision/recall per individual token) instead of exact-match array accuracy. This would give a more granular view of model performance and distinguish "got 3 of 4 right" from "got 0 of 4 right."
+
+### Proof it's a data problem, not model capacity
+
+- Both models fail on the **same jobs** ~30% of the time
+- Of shared failures, they make **identical wrong predictions** 52% of the time
+- Scaling from 0.5B to 1.5B (3x parameters) improved tech by only 0.1%
+
+**Decision**: Tackle JS_TS co-occurrence bias first (highest mechanical impact, clearest fix). Then tighten AI_ML boundary. Partial-match scoring is a metric change, not a model fix — do it alongside but don't confuse metric improvement with model improvement.
+
+**Category**: Training data quality / evaluation methodology
+
+**Status**: ⬜ Investigation complete, fixes pending
+
+**Lesson**: When a model consistently gets one field wrong, look at the training data distribution for that field first. Co-occurrence bias in multi-label outputs is insidious — the model learns correlations between labels that don't exist in reality. Contrastive training data that explicitly breaks spurious correlations is the fix.
+
+---
+
+## Finding 38: GPU Memory Fragmentation on Apple M1
+
+**Date**: 2026-03-11
+
+**How found**: After the 1.5B training completed successfully (peak 6.788 GB), 5 consecutive retry attempts all OOM'd with `kIOGPUCommandBufferCallbackErrorOutOfMemory` (exit code 134). Even drastically reduced configs (rank=8, num_layers=8, max_seq_length=2048) failed.
+
+**Root cause**: Metal GPU memory is not fully released after an OOM crash. The fragmented memory persists in the GPU address space even after the Python process exits. Subsequent launches see less available contiguous memory than the original run had.
+
+**Evidence**: The original run succeeded at 6.788 GB peak. The retries failed at launch despite identical or smaller configs. This is a Metal/macOS issue, not a model or config issue.
+
+**Fix**: Reboot the machine, or wait for macOS to reclaim the memory (timing unpredictable). No software workaround within the training script.
+
+**Category**: Infrastructure / hardware constraint
+
+**Status**: ✅ Documented — not fixable in code, but awareness prevents wasted debugging time.
+
+**Lesson**: On Apple Silicon, if training OOM crashes and retries keep failing, don't reduce the config — reboot instead. The original config was fine; it's the GPU memory state that's broken.

@@ -637,16 +637,24 @@ The original plan had phases in logical order but not priority order. This is th
     - 7 total fuzzy corrections across all data (5 OOS-mixed-with-real tech tokens, 2 invented comp tokens).
     - Script guards: preflight API check, non-retryable fast-fail (401/403/404), auto-ID for empty job_ids, tech dedup + OOS cleanup.
 
+─── COMPLETED (2026-03-11) ──────────────────────────────────
+
+9. ✅ **Format and train 0.5B** — [2026-03-11] Formatted 642 train + 71 valid into `data/v7/mlx/`. Trained fresh LoRA from base, 2000 iters (lora_config_v7.yaml). Adapters in `finetune/adapters_v7/`.
+9b. ✅ **Train 1.5B** — [2026-03-11] Same data, same hyperparameters, Qwen2.5-1.5B-Instruct-4bit (lora_config_v7_1.5B.yaml). Adapters in `finetune/adapters_v7_1.5B/`. Peak mem 6.788 GB. Best val loss 0.102 at iter 1775.
+10. ✅ **Evaluate both models** — [2026-03-11] Both evaluated on 239-job test set. Results: 0.5B=84.9% label, 1.5B=85.4% label. Full results in Finding 36. Key: 1.5B only +0.5% despite 3x params — bottleneck is data, not capacity.
+11. ✅ **Investigate tech bottleneck** — [2026-03-11] Both models stuck at ~70% tech. Root cause analysis in Finding 37: (1) JS_TS co-occurrence bias (83.3% of REACT examples also have JS_TS), (2) AI_ML inconsistent teacher labeling (Copilot triggers AI_ML only 64%), (3) exact-match array evaluation compounds errors on multi-token arrays.
+
 ─── YOU ARE HERE ───────────────────────────────────────────
 
-9. ⬜ **Verify labeling** — Post-label audit. Compare distributions. Spot-check. Combine train batches.
-9b. ⬜ **Verify re-labeling** — Post-label audit runs automatically. Also: compare old vs new labels, spot-check 10 random changes. If > 30 labels change, investigate before proceeding. See Step 5.5 checklist.
-9. ⬜ **Prune trivially easy bad_fit** — The audit clean mode handles this (`--remove-trivial`). Criteria updated for V7: location=OUTSIDE_UK/UNKNOWN + scope=OUT_OF_SCOPE or seniority=LEVEL_1 + tech=NONE + comp=NO_GBP. Must happen AFTER re-labeling because V7 rules may change some labels.
-10. ⬜ **Generate contrastive data** — 140 jobs across 9 batches (A-H, J). Programmatic variants only. Label with V7 teacher at temperature=0. Batch descriptions need V7 token names.
-11. ⬜ **Verify contrastive variants** — For each variant: changed field must have different token, unchanged fields must have same tokens. Fix and re-label if not.
-12. ⬜ **Run pre-train gates** — Now automated via audit script + build-datasets.ts pipeline. Hard gates: no duplicates, no train/eval overlap, class balance thresholds, source-weight cap, contrastive variant correctness. If ANY fail → STOP and fix.
-13. ⬜ **Format and train** — Fresh LoRA from base. 1000 iters. Eval at 600, 700, 800, 900, 1000.
-14. ⬜ **Evaluate and decide** — Pick best checkpoint by label accuracy (not val loss). Watch for comp degradation. Compare to V5.1 baseline using score-level mapping (see CLAUDE.md Evaluation Rules).
+12. ⬜ **NEXT: Fix tech accuracy** — Three options from Finding 37:
+    - (a) Add 20-30 contrastive examples breaking JS_TS co-occurrence bias (REACT/NODE without JS_TS)
+    - (b) Tighten AI_ML teacher rule for dev-tools (Copilot/Cursor), re-label ambiguous cases
+    - (c) Add per-token F1 scoring alongside exact-match (metric improvement, not model fix)
+13. ⬜ **Generate contrastive data** — 140 jobs across 9 batches (A-H, J). Programmatic variants only. Label with V7 teacher at temperature=0. Batch descriptions need V7 token names.
+14. ⬜ **Prune trivially easy bad_fit** — Criteria for V7: loc=OUTSIDE_UK/UNK + tech=["OOS"] + comp=NO_GBP.
+15. ⬜ **Run pre-train gates** — Automated via audit script. Hard gates: no duplicates, no train/eval overlap, class balance thresholds, contrastive variant correctness.
+16. ⬜ **Retrain with fixes** — Fresh LoRA from base. 2000 iters. Same hyperparameters as V7 round 1.
+17. ⬜ **Evaluate and decide** — Pick best checkpoint by label accuracy (not val loss). Watch for comp degradation. Compare to V7 round 1 baselines (0.5B=84.9%, 1.5B=85.4%).
 
 **Why this order matters**: In V5, labeling happened with incomplete rules, then contrastive data was designed around those incomplete rules. If we'd generated contrastive data first and THEN changed the teacher prompt, we'd have to re-generate and re-label everything. Rules must be locked before any data touches the pipeline. Step 5 (script updates) must happen before Step 6 (re-labeling) because the scripts need to understand V7's 6-field output format.
 
