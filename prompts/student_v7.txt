@@ -10,4 +10,4 @@ Title: {{job_title}}
 Location: {{job_location}}
 Description: {{jd_text}}
 
-{"loc_raw":"...","loc":"...","arr_raw":"...","arr":"...","sen_raw":"...","sen":"...","tech_raw":"...","tech":[],"comp_raw":"...","comp":"..."}
+{"loc":"...","arr":"...","sen":"...","tech":[],"comp":"..."}

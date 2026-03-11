@@ -154,15 +154,15 @@ def validate_prediction(parsed: dict) -> dict:
     errors = []
     fuzzy_corrections = []
 
-    # Check all 10 fields are present
-    for field in V7_EXPECTED_FIELDS:
+    # Check token fields are present (raw fields are optional — student outputs tokens only)
+    for field in V7_TOKEN_FIELDS:
         if field not in parsed:
             errors.append(f"Missing field: {field}")
 
     if errors:
         return {"valid": False, "errors": errors, "fuzzy_corrections": []}
 
-    # Copy raw fields as-is
+    # Copy raw fields as-is (optional — may not be present in student output)
     corrected = {}
     for f in V7_RAW_FIELDS:
         val = parsed.get(f)

@@ -173,17 +173,12 @@ function buildUserMessage(promptTemplate: string, job: V7Job): string {
 }
 
 function buildAssistantResponse(job: V7Job): string {
-  // 10-field interleaved format — pass through directly from V7 teacher output
+  // Token-only format — no _raw fields for student (0.5B can't handle verbatim copying)
   const output = {
-    loc_raw: job.loc_raw,
     loc: job.loc,
-    arr_raw: job.arr_raw,
     arr: job.arr,
-    sen_raw: job.sen_raw,
     sen: job.sen,
-    tech_raw: job.tech_raw,
     tech: job.tech,
-    comp_raw: job.comp_raw,
     comp: job.comp,
   };
   return JSON.stringify(output);
