@@ -1,0 +1,13 @@
+Adapter: finetune/adapters_v11_tokens
+Prompt: prompts/student_v10_tokens.txt
+Hint: False  Postprocess: True  Clean: True
+Jobs: 100
+------------------------------------------------------------
+[50/100] 14.0% acc | elapsed  1.1s
+[100/100] 23.0% acc | elapsed  0.8s
+============================================================
+Label accuracy: 41.8%  (23/55)
+Parse failures: 45  Invalid tokens: 0  Fuzzy: 3
+Field accuracy: {'loc': 65.45454545454545, 'arr': 52.72727272727272, 'sen': 41.81818181818181, 'tech': 14.545454545454545, 'comp': 25.454545454545453}
+============================================================
+Predictions: eval_results_v11/2026-03-12_202916_valid_labeled_preds.jsonl

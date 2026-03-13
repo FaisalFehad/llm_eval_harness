@@ -1,0 +1,79 @@
+{
+  "timestamp": "2026-03-12T14:04:45.822Z",
+  "input": "data/v7/test_labeled.jsonl",
+  "output": "data/v7/test_labeled.preprocessed_soft.jsonl",
+  "n_rows": 239,
+  "changed_jd_rows": 235,
+  "changed_location_rows": 0,
+  "avg_jd_len_before": 2928.33,
+  "avg_jd_len_after": 2003.51,
+  "max_chars": 3200,
+  "min_score": 0,
+  "rewrite_location": false,
+  "samples": [
+    {
+      "job_id": "0635924720",
+      "title": "Staff Software Engineer",
+      "before_len": 1031,
+      "after_len": 1031,
+      "before_preview": "**About Hane - Renner** We are an innovative team building a consumer fintech app revolutionizing micro-investing. We're looking for a Staff...",
+      "after_preview": "**About Hane - Renner** We are an innovative team building a consumer fintech app revolutionizing micro-investing. We're looking for a Staff..."
+    },
+    {
+      "job_id": "4213935739",
+      "title": "Lead DevOps Architect",
+      "before_len": 1076,
+      "after_len": 1076,
+      "before_preview": "**About Nader, Swaniawski and Schneider** We are an innovative team building an ed-tech marketplace for immersive VR learning. We're looking...",
+      "after_preview": "**About Nader, Swaniawski and Schneider** We are an innovative team building an ed-tech marketplace for immersive VR learning. We're looking..."
+    },
+    {
+      "job_id": "4214697219",
+      "title": "Software Engineer - Backend",
+      "before_len": 3764,
+      "after_len": 3109,
+      "before_preview": "Snowflake is about empowering enterprises to achieve their full potential — and people too. With a culture that’s all in on impact, innovati...",
+      "after_preview": "Snowflake is about empowering enterprises to achieve their full potential — and people too. With a culture that’s all in on impact, innovati..."
+    },
+    {
+      "job_id": "4295424041_locvar_0",
+      "title": "Full-Stack Developer",
+      "before_len": 3763,
+      "after_len": 2256,
+      "before_preview": "Licorne Society a été missionné par une startup InsurTech en pleine croissance pour les aider à trouver leur Full-Stack DeveloperDescriptif...",
+      "after_preview": "Licorne Society a été missionné par une startup InsurTech en pleine croissance pour les aider à trouver leur Full-Stack DeveloperDescriptif..."
+    },
+    {
+      "job_id": "4305911549",
+      "title": "Planning Engineer",
+      "before_len": 1671,
+      "after_len": 1361,
+      "before_preview": "A global consultancy is looking for a number of Planning Engineers to join their growing team which works across multiple industries includi...",
+      "after_preview": "A global consultancy is looking for a number of Planning Engineers to join their growing team which works across multiple industries includi..."
+    },
+    {
+      "job_id": "4306275307",
+      "title": "Head Of AI Engineering (strategy And Innovation)",
+      "before_len": 4878,
+      "after_len": 3140,
+      "before_preview": "Have you ever had that green-light feeling? When you hit every green light and the day just feels like magic. CLEAR's mission is to create f...",
+      "after_preview": "Have you ever had that green-light feeling? When you hit every green light and the day just feels like magic. You’ll partner with Engineerin..."
+    },
+    {
+      "job_id": "4307571879",
+      "title": "Software Engineer - Internship",
+      "before_len": 3279,
+      "after_len": 2163,
+      "before_preview": "SeatGeek believes live events are powerful experiences that unite humans. With our technological savvy and fan-first attitude we’re simplify...",
+      "after_preview": "SeatGeek believes live events are powerful experiences that unite humans. With our technological savvy and fan-first attitude we’re simplify..."
+    },
+    {
+      "job_id": "4326366222",
+      "title": "Senior Software Engineer",
+      "before_len": 7692,
+      "after_len": 3195,
+      "before_preview": "At PointClickCare our mission is simple: to help providers deliver exceptional care. And that starts with our people. As a leading health te...",
+      "after_preview": "At PointClickCare our mission is simple: to help providers deliver exceptional care. And that starts with our people. Recognized by Forbes a..."
+    }
+  ]
+}

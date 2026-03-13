@@ -1,0 +1,1 @@
+{"_type":"run_start","timestamp":"2026-03-11T20:22:43.542Z","input":"data/v9/train_unlabeled_batch2.jsonl","output":"data/v9/train_labeled_batch2_v2.jsonl","prompt":"prompts/teacher_v9.txt","model":"gpt-4.1-mini","concurrency":10,"total_jobs":196,"version":"v7"}

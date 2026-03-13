@@ -1,0 +1,19 @@
+Classify this job. Respond with JSON only.
+
+Allowed tokens:
+loc: IN_LONDON | REMOTE | UK_OTHER | OUTSIDE_UK | UNK
+arr: REMOTE | HYBRID | IN_OFFICE | UNK
+sen: LEVEL_3 | LEVEL_2 | LEVEL_1
+tech: JSON array using only NODE, REACT, JS_TS, AI_ML, OOS
+comp: NO_GBP | UP_TO_ONLY | BELOW_45K | RANGE_45_54K | RANGE_55_74K | RANGE_75_99K | ABOVE_100K
+
+Rules:
+- Return exactly one JSON object with keys: loc, arr, sen, tech, comp
+- tech must be an array of uppercase tokens; if no tracked tech use ["OOS"]
+- No extra text or keys
+
+Title: {{job_title}}
+Location: {{job_location}}
+Description: {{jd_text}}
+
+{"loc":"...","arr":"...","sen":"...","tech":[],"comp":"..."}

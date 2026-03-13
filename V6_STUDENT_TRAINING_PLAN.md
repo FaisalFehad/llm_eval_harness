@@ -847,3 +847,43 @@ bad_fit:        96%          96-98%
 ```
 
 The remaining 7-10% errors will be genuine 0.5B-4bit capacity limits. For 93%+ system accuracy without model changes, add the GPT-4o-mini tiebreaker for boundary scores. For 96% model accuracy, upgrade to Qwen2.5-1.5B-Instruct-4bit with the same V6 dataset.
+
+---
+
+## V9 Training Run — Status and Findings (2026-03-12)
+
+### What V9 attempted
+V9 restored all 5 `_raw` fields in the student output (V7 had them uncapped, V8 had dropped them, V9 restored them with 50-char caps). Goal: chain-of-thought scaffolding at lower token cost.
+
+### Pipeline fixes made
+- ✅ Fixed `job.location` → `job_location` bug in `label-jobs-v7.ts` (Finding 39) — affected all 6 batches, required full re-label
+- ✅ Fixed script default model from `gpt-4o-mini` → `gpt-4.1-mini`
+- ✅ Fixed preflight test also using `job.location` (same bug, different line)
+- ✅ Restored `teacher_v9.txt` to full 10-field format with arr_raw/sen_raw improvements
+- ✅ All 6 batches re-labeled with gpt-4.1-mini: 1081/1087 labeled (6 failures, 0.55%)
+
+### V9 eval results (2000 iters, 0.5B)
+
+| Checkpoint | Parse Fails | Label Acc | Tech | Comp | Sen |
+|-----------|-------------|-----------|------|------|-----|
+| V7 0.5B 2000 iters | 15 | **84.9%** | 70.3% | 71.7% | — |
+| V9 iter 1800 (best val loss=0.226) | 48 | 68.3% | 44.4% | 50.6% | 66.7% |
+| V9 iter 2000 (final) | 63 | 62.9% | 51.2% | 60.6% | 70.6% |
+
+**V9 is a significant regression vs V7.**
+
+### Root causes identified (see Findings 39–43)
+
+| # | Problem | Root Cause | Fix |
+|---|---------|-----------|-----|
+| 41 | 48–63 parse failures | 50-char cap truncates `tech_raw` mid-word; model drops opening `"` on `tech` key | Remove 50-char cap on `tech_raw` only in `format-for-mlx-v9.ts` |
+| 42 | Comp errors (RANGE_55_74K under-predicted) | Training has 14.9% RANGE_55_74K vs test's 21.3% | Add 30-40 RANGE_55_74K examples |
+| 42 | Label bias toward bad_fit | Training 64.6% bad_fit vs test 52.3%; good_fit only 14.4% | Downsample bad_fit or add good_fit examples |
+| 37 | AI_ML hallucination | Same as V7 finding — training signal noisy | Tighter AI_ML examples |
+
+### Next steps for V9.1
+
+1. ⬜ Remove 50-char cap on `tech_raw` in `format-for-mlx-v9.ts` (keep caps on loc/arr/sen/comp_raw)
+2. ⬜ Re-format MLX data with updated formatter
+3. ⬜ Retrain from base — 2000 iters (NEVER resume)
+4. ⬜ Eval — expect parse failures to drop to V7 levels (~15)

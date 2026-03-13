@@ -1,0 +1,40 @@
+# MLX LoRA config for V10 student model (quick run)
+# Same V10 data/prompt format, shorter schedule for faster iteration.
+#
+# Student: Qwen2.5-0.5B-Instruct-4bit
+# Task: Semantic token classification (10 JSON keys — 5 token + 5 _raw; tech_raw filtered)
+# Training: fresh LoRA from base (NEVER resume from existing adapter)
+
+model: "mlx-community/Qwen2.5-0.5B-Instruct-4bit"
+data: "data/v10/mlx"
+train: true
+fine_tune_type: "lora"
+
+# LoRA hyperparameters (same as v7/v8)
+lora_parameters:
+  rank: 16
+  alpha: 32
+  dropout: 0.05
+  scale: 1.0
+  weight_decay: 0.0
+
+# Training parameters
+batch_size: 1
+grad_accumulation_steps: 16  # Effective batch = 16
+iters: 600
+learning_rate: 2e-5
+warmup_steps: 100
+
+max_seq_length: 8192
+
+# Validation
+val_batches: 20
+steps_per_eval: 50
+
+# Output
+adapter_path: "finetune/adapters_v10_quick"
+save_every: 50
+
+# Memory optimization
+mask_prompt: true       # Only train on assistant response (10-field JSON, ~200 chars)
+grad_checkpoint: true   # Gradient checkpointing for M1 16GB

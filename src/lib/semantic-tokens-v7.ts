@@ -244,8 +244,8 @@ export function validateSemanticPrediction(
   const errors: string[] = [];
   const fuzzyCorrections: string[] = [];
 
-  // Check all 10 fields are present
-  for (const field of V7_EXPECTED_FIELDS) {
+  // Check token fields are present (raw fields are optional)
+  for (const field of V7_TOKEN_FIELDS) {
     if (!(field in parsed)) {
       errors.push(`Missing field: ${field}`);
     }

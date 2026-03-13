@@ -1,0 +1,244 @@
+{
+  "timestamp": "2026-03-12T11:13:54.203Z",
+  "input": "data/v10/train_labeled.jsonl",
+  "output": "data/v10/train_labeled.clean_raw.jsonl",
+  "n_rows": 1000,
+  "changed_by_field": {
+    "loc_raw": 711,
+    "arr_raw": 701,
+    "sen_raw": 592,
+    "tech_raw": 894,
+    "comp_raw": 585
+  },
+  "lengths_before": {
+    "loc_raw": {
+      "n_present": 952,
+      "avg_len": 23.85,
+      "p50": 27,
+      "p90": 36,
+      "p99": 44,
+      "over_80": 0,
+      "over_140": 0
+    },
+    "arr_raw": {
+      "n_present": 877,
+      "avg_len": 28.12,
+      "p50": 22,
+      "p90": 45,
+      "p99": 234,
+      "over_80": 15,
+      "over_140": 13
+    },
+    "sen_raw": {
+      "n_present": 620,
+      "avg_len": 9.55,
+      "p50": 6,
+      "p90": 18,
+      "p99": 32,
+      "over_80": 0,
+      "over_140": 0
+    },
+    "tech_raw": {
+      "n_present": 966,
+      "avg_len": 46.25,
+      "p50": 42,
+      "p90": 75,
+      "p99": 183,
+      "over_80": 79,
+      "over_140": 27
+    },
+    "comp_raw": {
+      "n_present": 821,
+      "avg_len": 28.39,
+      "p50": 25,
+      "p90": 49,
+      "p99": 56,
+      "over_80": 2,
+      "over_140": 1
+    }
+  },
+  "lengths_after": {
+    "loc_raw": {
+      "n_present": 943,
+      "avg_len": 8.66,
+      "p50": 6,
+      "p90": 14,
+      "p99": 23,
+      "over_80": 0,
+      "over_140": 0
+    },
+    "arr_raw": {
+      "n_present": 864,
+      "avg_len": 7.14,
+      "p50": 6,
+      "p90": 12,
+      "p99": 12,
+      "over_80": 0,
+      "over_140": 0
+    },
+    "sen_raw": {
+      "n_present": 1000,
+      "avg_len": 7.56,
+      "p50": 9,
+      "p90": 9,
+      "p99": 9,
+      "over_80": 0,
+      "over_140": 0
+    },
+    "tech_raw": {
+      "n_present": 799,
+      "avg_len": 17.67,
+      "p50": 17,
+      "p90": 31,
+      "p99": 43,
+      "over_80": 0,
+      "over_140": 0
+    },
+    "comp_raw": {
+      "n_present": 695,
+      "avg_len": 12.86,
+      "p50": 15,
+      "p90": 18,
+      "p99": 19,
+      "over_80": 0,
+      "over_140": 0
+    }
+  },
+  "samples": {
+    "loc_raw": [
+      {
+        "job_id": "gen_v7_0263",
+        "before": "UK Remote",
+        "after": "Remote"
+      },
+      {
+        "job_id": "https://uk.linkedin.com/jobs/view/graduate-software-engineer-at-oliver-bernard-4364789438",
+        "before": "London Area, United Kingdom",
+        "after": "London"
+      },
+      {
+        "job_id": "https://uk.linkedin.com/jobs/view/machine-learning-engineer-ai-foundations-at-waymo-4366540037",
+        "before": "Oxford, England, United Kingdom",
+        "after": "Oxford"
+      },
+      {
+        "job_id": "https://uk.linkedin.com/jobs/view/senior-data-engineer-at-digital-waffle-4377693410",
+        "before": "City Of London, England, United Kingdom",
+        "after": "London"
+      },
+      {
+        "job_id": "gen_v7_0303",
+        "before": "UK Remote",
+        "after": "Remote"
+      }
+    ],
+    "arr_raw": [
+      {
+        "job_id": "gen_v7_0263",
+        "before": "Fully remote work environment",
+        "after": "Fully remote"
+      },
+      {
+        "job_id": "https://uk.linkedin.com/jobs/view/graduate-software-engineer-at-oliver-bernard-4364789438",
+        "before": "Hybrid working | 3 days a week",
+        "after": "Hybrid"
+      },
+      {
+        "job_id": "https://uk.linkedin.com/jobs/view/machine-learning-engineer-ai-foundations-at-waymo-4366540037",
+        "before": "hybrid work schedule",
+        "after": "hybrid"
+      },
+      {
+        "job_id": "https://uk.linkedin.com/jobs/view/senior-data-engineer-at-digital-waffle-4377693410",
+        "before": "Hybrid setup",
+        "after": "Hybrid"
+      },
+      {
+        "job_id": "https://uk.linkedin.com/jobs/view/senior-test-engineer-at-nhs-4376119229",
+        "before": "Full-time, Flexible working, Home or remote",
+        "after": "Hybrid"
+      }
+    ],
+    "sen_raw": [
+      {
+        "job_id": "gen_v7_0263",
+        "before": null,
+        "after": "Mid-level"
+      },
+      {
+        "job_id": "https://uk.linkedin.com/jobs/view/machine-learning-engineer-ai-foundations-at-waymo-4366540037",
+        "before": "Senior Staff Software Engineer",
+        "after": "Senior"
+      },
+      {
+        "job_id": "gen_v7_0303",
+        "before": null,
+        "after": "Mid-level"
+      },
+      {
+        "job_id": "gen_v7_0143",
+        "before": null,
+        "after": "Mid-level"
+      },
+      {
+        "job_id": "4368838893",
+        "before": null,
+        "after": "Mid-level"
+      }
+    ],
+    "tech_raw": [
+      {
+        "job_id": "https://uk.linkedin.com/jobs/view/graduate-software-engineer-at-oliver-bernard-4364789438",
+        "before": "C#, .NET, Azure, React, TypeScript, Material UI, NoSQL",
+        "after": "React, TypeScript"
+      },
+      {
+        "job_id": "https://uk.linkedin.com/jobs/view/machine-learning-engineer-ai-foundations-at-waymo-4366540037",
+        "before": "Python, JAX, TensorFlow/PyTorch",
+        "after": "TensorFlow, PyTorch"
+      },
+      {
+        "job_id": "https://uk.linkedin.com/jobs/view/senior-data-engineer-at-digital-waffle-4377693410",
+        "before": "Python, SQL, dbt, Airflow, Snowflake, BigQuery",
+        "after": null
+      },
+      {
+        "job_id": "gen_v7_0303",
+        "before": "Node.js, JavaScript, TypeScript, AWS, Azure, AI/ML",
+        "after": "Node.js, JavaScript, TypeScript"
+      },
+      {
+        "job_id": "https://uk.linkedin.com/jobs/view/senior-test-engineer-at-nhs-4376119229",
+        "before": "Playwright(typescript), C#, .Net, Java, JavaScript, Node, React, typescript",
+        "after": "typescript, JavaScript, Node, React"
+      }
+    ],
+    "comp_raw": [
+      {
+        "job_id": "https://uk.linkedin.com/jobs/view/graduate-software-engineer-at-oliver-bernard-4364789438",
+        "before": "Paying £40,000-£45,000",
+        "after": "£40,000-£45,000"
+      },
+      {
+        "job_id": "https://uk.linkedin.com/jobs/view/machine-learning-engineer-ai-foundations-at-waymo-4366540037",
+        "before": "£93,000—£100,000 GBP",
+        "after": "£93,000—£100,000"
+      },
+      {
+        "job_id": "https://uk.linkedin.com/jobs/view/senior-data-engineer-at-digital-waffle-4377693410",
+        "before": "£65-85k + 15% bonus",
+        "after": "£65-85k"
+      },
+      {
+        "job_id": "https://uk.linkedin.com/jobs/view/senior-test-engineer-at-nhs-4376119229",
+        "before": "£47,810 to £54,710 a year",
+        "after": "£47,810 to £54,710"
+      },
+      {
+        "job_id": "4368838893",
+        "before": "$105,000 - $125,000 CAD annually",
+        "after": null
+      }
+    ]
+  }
+}

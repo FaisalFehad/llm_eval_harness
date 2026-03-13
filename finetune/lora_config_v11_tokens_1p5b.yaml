@@ -1,0 +1,30 @@
+# MLX LoRA config for V11 token-only variant on Qwen2.5-1.5B-Instruct-4bit
+
+model: "mlx-community/Qwen2.5-1.5B-Instruct-4bit"
+data: "data/v11c/mlx_tokens"
+train: true
+fine_tune_type: "lora"
+
+lora_parameters:
+  rank: 16
+  alpha: 32
+  dropout: 0.05
+  scale: 1.0
+  weight_decay: 0.0
+
+batch_size: 1
+grad_accumulation_steps: 16
+iters: 50
+learning_rate: 2e-5
+warmup_steps: 100
+
+max_seq_length: 8192
+
+val_batches: 40
+steps_per_eval: 100
+
+adapter_path: "finetune/adapters_v11_tokens_1p5b"
+save_every: 100
+
+mask_prompt: true
+grad_checkpoint: true

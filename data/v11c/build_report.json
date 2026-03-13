@@ -1,0 +1,45 @@
+{
+  "total": 1000,
+  "labels": {
+    "bad_fit": 580,
+    "maybe": 229,
+    "good_fit": 191
+  },
+  "comp": {
+    "NO_GBP": 323,
+    "BELOW_45K": 154,
+    "ABOVE_100K": 72,
+    "RANGE_55_74K": 141,
+    "RANGE_75_99K": 180,
+    "UP_TO_ONLY": 63,
+    "RANGE_45_54K": 67
+  },
+  "loc": {
+    "IN_LONDON": 261,
+    "OUTSIDE_UK": 126,
+    "UK_OTHER": 381,
+    "REMOTE": 182,
+    "UNK": 50
+  },
+  "tech_oos": 290,
+  "source": {
+    "it_support_scrape": 112,
+    "node_variants_v7": 26,
+    "v6_scraped": 265,
+    "v5_pool": 176,
+    "patch_scrape": 38,
+    "generated_v7": 212,
+    "generated_v9": 49,
+    "new_jobs_run_low_salary10": 29,
+    "new_jobs_run_low_salary13": 20,
+    "ext_agent_v2": 10,
+    "new_jobs_run_low_salary7": 22,
+    "node_variants_v6": 13,
+    "new_jobs_run_upto2": 12,
+    "v7_remote": 5,
+    "new_jobs_run_low_salary11": 3,
+    "ext_custom": 2,
+    "gpt_labeled": 3,
+    "ext_job_searcher": 3
+  }
+}

@@ -1141,6 +1141,206 @@ Each additional token is another chance to get one wrong, dragging down the aver
 
 ---
 
+## Finding 39: V9 Location Field Bug — `job.location` vs `job_location`
+
+**Date**: 2026-03-12
+
+**How found**: After re-labeling all 6 V9 batches with the restored teacher_v9.txt, label distribution showed 83% UNK in the loc field (expected ~30% IN_LONDON). Traced to `label-jobs-v7.ts`.
+
+**Root cause**: The `InputJob` TypeScript type declared `location: string`, but V9 pool files use the field name `job_location`. Three places in the script used `job.location ?? ""`:
+1. Preflight test (line 252)
+2. Main labeling loop (line 294)
+3. Output assignment (line 389)
+
+The teacher saw an empty `Location:` field for every job → classified everything as UNK.
+
+**Fix**: Changed all three references to `job.job_location`. Also changed the default model from `"gpt-4o-mini"` to `"gpt-4.1-mini"` (default was never updated when the teacher switch was made).
+
+**Impact**: All 6 batches labeled before this fix are contaminated with wrong loc/label values. Discarded and re-labeled.
+
+**Category**: Code bug / data pipeline
+
+**Status**: ✅ Fixed in `src/cli/label-jobs-v7.ts`
+
+**Lesson**: When pool file schema changes (adding `job_` prefix), always check ALL field references in the labeling script — type declarations, prompt substitution, and output assignments. The TypeScript type was the first signal but it didn't catch all three downstream uses.
+
+---
+
+## Finding 40: Tech-Only Prompt Experiment — Inconsistency at Temperature=0
+
+**Date**: 2026-03-12
+
+**Hypothesis tested**: A single-responsibility prompt for tech detection only (`teacher_tech_v9.txt`) would be more accurate than the 5-field teacher that also classifies loc/arr/sen/comp.
+
+**Test**: Ran `test-tech-prompt.ts` on 40 hard jobs (known edge cases) with three different models:
+- gpt-4.1-mini (new tech-only prompt): 3 runs at temp=0
+- o4-mini (reasoning model): 2 runs at temp=0
+
+**Results**:
+
+| Model | Run 1 | Run 2 | Run 3 | Self-agreement |
+|-------|-------|-------|-------|----------------|
+| gpt-4.1-mini (tech-only) | 32.5% vs V8 | 45.0% | 57.5% | **52.5%** |
+| o4-mini | 20% (75% OOS) | 20% (82% OOS) | — | ~consistent |
+
+**gpt-4.1-mini was non-deterministic at temperature=0** — three runs on the same 40 jobs gave different outputs. Only 52.5% self-agreement across all 3 runs. This disqualifies the prompt for training data labeling, where consistency is mandatory.
+
+**o4-mini was deterministic but too conservative** — predicted OOS 75-82% of the time. Only 20% agreement with V8 labels. The reasoning model is applying stricter AI_ML filtering than intended.
+
+**Conclusion**: The original full 10-field teacher prompt (35% on hard cases, stable) outperformed both alternatives. Single-responsibility does not help when the model is already uncertain about the field in question.
+
+**Category**: Prompt engineering experiment
+
+**Status**: ✅ Experiment concluded — tech-only prompt abandoned. Files kept as reference: `prompts/teacher_tech_v9.txt`, `src/cli/test-tech-prompt.ts`, `src/cli/test-tech-prompt-reasoning.ts`.
+
+**Lesson**: Temperature=0 does not guarantee determinism for all models. Always run at least 2-3 consistency checks before using a prompt for training data labeling. A focused single-field prompt is not necessarily more accurate than a multi-field prompt if the signal in the input text is genuinely ambiguous.
+
+---
+
+## Finding 41: V9 Parse Failure Root Cause — 50-char `tech_raw` Truncation
+
+**Date**: 2026-03-12
+
+**How found**: V9 eval at iter 1800 and 2000 showed 48–63 parse failures out of 239 (20–26%), far worse than V7's 15. Inspected raw model outputs and found a consistent pattern.
+
+**Failure pattern**:
+```
+"tech_raw":"TypeScript, Node.js, React, Cloudflare, ClickHous", tech":["NODE","REACT","JS_TS"]
+                                                                 ↑ missing opening "
+```
+
+The model drops the `"` before the `tech` key name — only at this specific transition.
+
+**Root cause**: 444 of 1010 training examples (44%) have `tech_raw` values hard-capped at exactly 50 chars, truncated mid-word (e.g., `ClickHous`, `Ansib`, `Platfo`). During token-by-token generation, the model must:
+1. Generate the truncated `tech_raw` value
+2. Output `","tech":[` immediately after a non-word-boundary character
+
+This `mid-word-char","tech":` sequence is unusual. The model generates `mid-word-char", tech":` (without opening quote) because it learned a slightly wrong boundary from repeated exposure to 444 identical-length truncations.
+
+**V7 did not have this problem**: V7's `tech_raw` had no length cap. The max in training data was 2617 chars. No truncation → no unusual boundaries → only 15 parse failures.
+
+**Fix**: Remove the 50-char cap on `tech_raw` only in the student training format. Keep caps on `loc_raw`, `arr_raw`, `sen_raw`, `comp_raw` (these are short by nature and don't trigger the pattern). Allow `tech_raw` to be the full verbatim tech list as in V7.
+
+**Category**: Training data format / tokenization edge case
+
+**Status**: ⬜ Fix identified, not yet implemented
+
+**Lesson**: Hard length caps on fields that contain comma-separated lists create a systematic mid-word truncation pattern. When the truncated field is immediately followed by a JSON key sharing the same string (`tech_raw` → `tech`), the model learns to drop the opening quote of the next key. Caps on short natural-language fields (loc, sen, comp) are safe. Caps on long comma-list fields are risky.
+
+---
+
+## Finding 42: V9 Training Distribution Mismatch
+
+**Date**: 2026-03-12
+
+**How found**: Compared token distributions between V9 training data (1081 jobs) and V7 test set (239 jobs) after labeling all 6 batches.
+
+**Distribution gaps**:
+
+| Field | Training | Test | Gap | Impact |
+|-------|----------|------|-----|--------|
+| good_fit label | 14.4% | 23.8% | **−9.4pp** | Model defaults to bad_fit when uncertain |
+| bad_fit label | 64.6% | 52.3% | **+12.3pp** | Over-prediction of bad_fit |
+| BELOW_45K comp | 16.2% | 7.1% | **+9.1pp** | Model over-uses BELOW_45K |
+| RANGE_55_74K comp | 14.9% | 21.3% | **−6.5pp** | 26 RANGE_55_74K→RANGE_75_99K errors |
+
+**Why V9 has fewer good_fit**: V9 data includes many UK_OTHER jobs (office outside London, +10pts) rather than IN_LONDON (+25pts). Most UK_OTHER tech jobs don't reach the 70pt good_fit threshold even with good tech/seniority. This is a real property of the data, not a labeling error.
+
+**Why V9 has more BELOW_45K**: V9 includes more junior/trainee roles from batch 6. V7 training data was curated differently.
+
+**Fix**: Before next training run:
+1. Downsample bad_fit to ~55% or oversample good_fit to ~20%+
+2. Add 30-40 examples with RANGE_55_74K comp (£55k–£74k mid-range London jobs)
+
+**Category**: Training data quality
+
+**Status**: ⬜ Fix identified, not yet implemented
+
+**Lesson**: Always compare training vs eval set distributions before training. A 9pp gap in the primary label is a strong predictor of poor performance. The model will learn the training prior, not the real-world prior.
+
+---
+
+## Finding 43: V9 Eval Results — Regression vs V7
+
+**Date**: 2026-03-12
+
+**Results** (V9, Qwen2.5-0.5B-Instruct-4bit, 2000 iters, 1081 train jobs):
+
+| Checkpoint | Parse Fails | Valid | Label Acc | Tech | Comp | Sen |
+|-----------|-------------|-------|-----------|------|------|-----|
+| V7 0.5B iter 2000 | 15 | 224/239 | **84.9%** | 70.3% | 71.7% | — |
+| V9 iter 1800 (best val loss) | 48 | 180/239 | 68.3% | 44.4% | 50.6% | 66.7% |
+| V9 iter 2000 (final) | 63 | 170/239 | 62.9% | 51.2% | 60.6% | 70.6% |
+
+Val loss minimum: **iter 1800 = 0.226**. Val loss rose at 1900–2000, indicating mild overfitting at the end.
+
+**V9 is a significant regression vs V7 on all metrics.**
+
+**Three-way attribution of errors**:
+1. **Parse failures** (Finding 41): 20–26% of predictions fail to parse. Caused by 50-char cap on tech_raw. Accounts for the entire gap vs V7 parse failures.
+2. **Comp errors**: Top error is `RANGE_55_74K→RANGE_75_99K` (26 cases). Caused by RANGE_55_74K being under-represented in training (Finding 42).
+3. **AI_ML hallucination**: Model adds AI_ML to NODE/REACT/JS_TS stacks without justification. Pattern: `JS_TS,REACT→AI_ML,JS_TS,REACT` (8x), `NODE→AI_ML,JS_TS,NODE` (8x). Same root cause as Finding 37 (AI_ML boundary ambiguity), not fixed in V9 data.
+
+**Seniority confusion** is newly significant: `LEVEL_2→LEVEL_3` (33 errors at iter 1800) — model over-promotes seniority. Likely caused by LEVEL_3 being slightly under-represented in training (34.8%) vs test (39.7%).
+
+**What V9 got right**:
+- Location fix resolved: UNK dropped from 83% to 5%, IN_LONDON correctly at 27%
+- Data pipeline (combine → format → train → eval) now fully automated and reproducible
+- gpt-4.1-mini adherence confirmed: only 5 fuzzy corrections in 1081 labeled jobs (vs 100 with gpt-4o-mini)
+
+**Next steps to fix V9**:
+1. Remove 50-char cap on `tech_raw` in `format-for-mlx-v9.ts` (fixes parse failures)
+2. Resample training data to raise good_fit to ~20% and add RANGE_55_74K examples
+3. Retrain from base (NEVER resume)
+
+**Category**: Model evaluation / regression analysis
+
+**Status**: ✅ Documented — fixes identified in Findings 41 and 42
+
+**Lesson**: Validate the full pipeline (label → format → train → eval) on a small sample before committing to a full training run. The location bug and distribution mismatch could both have been caught with a 50-job sanity check. A 30-minute pre-flight saves hours of training time.
+
+---
+
+## Finding 44: V9.1 Iter 1225 — Parse Failure Fix Confirmed, Tech Accuracy TBD
+
+**Date**: 2026-03-12
+
+**Context**: V9.1 is a retrain on the same 1081-job dataset but with `filterTechRaw()` replacing `cap50()` on `tech_raw` in `format-for-mlx-v9.ts`. The filter extracts only verbatim terms corresponding to labeled tech tokens (e.g. "Python, React.js, TypeScript, Redis" + `["REACT","JS_TS"]` → `"React.js, TypeScript"`). OOS jobs get `tech_raw=null`.
+
+**Results at iter 1225** (61% through training):
+
+| Checkpoint | Parse Fails | Label | Tech | Loc | Sen | Comp |
+|-----------|-------------|-------|------|-----|-----|------|
+| V7 0.5B iter 2000 (baseline) | 15 | **84.9%** | 70.3% | 95.8% | — | 71.7% |
+| V9 orig iter 1800 (cap50 bug) | 48 | 68.3% | 44.4% | 88.9% | 66.7% | 50.6% |
+| V9 orig iter 2000 (cap50 bug) | 63 | 62.9% | 51.2% | 85.9% | 70.6% | 60.6% |
+| **V9.1 iter 1225 (filterTechRaw)** | **5** | **52.7%** | **35.7%** | 76.8% | 71.0% | 62.9% |
+
+**Parse failure fix confirmed**: 5 failures vs 48–63 in original V9. The `filterTechRaw` approach eliminates the mid-word truncation that caused the model to output `tech":` missing the opening `"`.
+
+**Tech accuracy concern**: 35.7% at iter 1225 vs 44.4–51.2% in original V9 at 1800–2000. Two possible explanations:
+1. **Not yet converged** — iter 1225 is only 61% of 2000 iters. Original V9 was only evaluated at 1800/2000, not 1225. No apples-to-apples comparison exists.
+2. **Distribution shift** — tech_raw representation changed substantially (from truncated all-tech lists to filtered tracked-only terms). The model may need more iterations to re-learn the shorter, cleaner signal.
+
+**Fields that improved vs original V9**: sen (71.0% vs 66.7%), comp (62.9% vs 50.6%). Both benefited from the cleaner training signal (no truncation noise).
+
+**Fields worse at 1225 vs original V9 at 1800**: loc (76.8% vs 88.9%), tech (35.7% vs 44.4%), label (52.7% vs 68.3%). These may close with more training.
+
+**Per-label at 1225**:
+- good_fit: 38.9% (bad — model under-predicts good_fit)
+- maybe: 40.0% (bad)
+- bad_fit: 65.2% (reasonable — model over-predicts bad_fit)
+
+**Decision**: Continue training to 2000 iters. Eval at 1500, 1750, 2000 to see trajectory. If tech accuracy doesn't improve by iter 1750, investigate whether tech_raw filtering is hurting rather than helping.
+
+**Category**: Model evaluation / in-progress training
+
+**Status**: 🔄 Training in progress — verdict pending iter 1750–2000 checkpoints
+
+**Lesson**: Changing the training data representation (even for the better) constitutes a distribution shift that may require more training time to converge. An early intermediate checkpoint is not a reliable indicator of final performance.
+
+---
+
 ## Finding 38: GPU Memory Fragmentation on Apple M1
 
 **Date**: 2026-03-11

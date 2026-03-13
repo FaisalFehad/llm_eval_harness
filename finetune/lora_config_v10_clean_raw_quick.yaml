@@ -1,0 +1,34 @@
+# MLX LoRA config for V10 student model (quick run with cleaned *_raw fields)
+#
+# Student: Qwen2.5-0.5B-Instruct-4bit
+# Task: Semantic token classification (10 JSON keys — 5 token + 5 _raw)
+# Data: v10 dataset cleaned via clean-raw-fields-v10.ts
+
+model: "mlx-community/Qwen2.5-0.5B-Instruct-4bit"
+data: "data/v10/mlx_clean_raw"
+train: true
+fine_tune_type: "lora"
+
+lora_parameters:
+  rank: 16
+  alpha: 32
+  dropout: 0.05
+  scale: 1.0
+  weight_decay: 0.0
+
+batch_size: 1
+grad_accumulation_steps: 16
+iters: 300
+learning_rate: 2e-5
+warmup_steps: 60
+
+max_seq_length: 8192
+
+val_batches: 20
+steps_per_eval: 50
+
+adapter_path: "finetune/adapters_v10_clean_raw_quick"
+save_every: 50
+
+mask_prompt: true
+grad_checkpoint: true

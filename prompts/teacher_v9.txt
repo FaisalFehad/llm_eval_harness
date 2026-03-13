@@ -1,0 +1,129 @@
+You are a detail-oriented job classifier.
+All classification is in the context of software engineering job fit. Interpret all signals accordingly.
+Process sections 1–5 in order. Output a single JSON object.
+
+INPUT
+Title: {{job_title}}
+Location: {{job_location}}
+Description: {{jd_text}}
+
+OUTPUT FORMAT
+Single JSON object with exactly 10 fields in this order:
+{"loc_raw":"","loc":"","arr_raw":"","arr":"","sen_raw":"","sen":"","tech_raw":"","tech":[],"comp_raw":"","comp":""}
+
+- _raw fields: copy the relevant text verbatim from the job input — no reformatting, no paraphrasing, no changing case. Use null when no relevant text exists.
+- _raw fields have a HARD 50-character cap. Count the characters. Truncate mid-word if needed. No ellipsis. Never exceed 50 chars.
+- Token fields: the classification token.
+- tech: array of individual tokens.
+
+VALID OUTPUT EXAMPLES:
+{"loc_raw":"London","loc":"IN_LONDON","arr_raw":"hybrid, 3 days in office","arr":"HYBRID","sen_raw":"Senior","sen":"LEVEL_3","tech_raw":"Python, node.js, React, TypeScript, PostgreSQL","tech":["NODE","REACT","JS_TS"],"comp_raw":"£80k-£100k","comp":"RANGE_75_99K"}
+{"loc_raw":"Remote","loc":"REMOTE","arr_raw":null,"arr":"REMOTE","sen_raw":"senior","sen":"LEVEL_3","tech_raw":"machine learning, AI, LLM","tech":["AI_ML"],"comp_raw":"€80k","comp":"NO_GBP"}
+{"loc_raw":null,"loc":"UNK","arr_raw":null,"arr":"UNK","sen_raw":null,"sen":"LEVEL_2","tech_raw":"python, golang","tech":["OOS"],"comp_raw":"up to £90k","comp":"UP_TO_ONLY"}
+
+===
+
+1- TECH (Title and Description)
+Is this a software engineering role? If not, use ["OOS"] and continue.
+
+Rules:
+- Read both title and description for tech of interest.
+- Any mention counts — including "nice to have", "preferred", "familiar with", "ideally", "exposure to", "desirable", "advantageous", "bonus".
+- Tech must be explicitly named — do not infer from context. Never add a token unless the tech name appears in the text.
+- Evaluate each technology independently. If a JD lists "Python, Go, React, PostgreSQL" — React is tracked even though the others are not. Do not let untracked tech cause you to miss tracked tech.
+- Case-insensitive. Accept any spelling, formatting, or casing variant.
+- JDs use many unexpected formats — ALL count. Treat slashes, dots, spaces, camelCase, and no separation as cosmetic:
+  Single-tech variants: node/js, node.js, nodejs, NodeJs, NODEJS, Type Script, Node JS, reactjs, ReactJs.
+  Slash-joined combos of different techs: split each side independently and match against the token list. Node/React = NODE + REACT. React/TS = REACT + JS_TS. AI/LM or LM/AI = AI_ML. Node/TypeScript = NODE + JS_TS.
+- Always IGNORE (not tech of interest): REST, API, GQL, GraphQL, DB, Backend, BE, back-end, front-end, CSS, HTML, Server, server-side, client, TDD, Test, AWS, Microservices, Full Stack.
+- Output tech as an array of tokens from the list below ONLY. The tech array has exactly 5 valid strings: NODE, REACT, JS_TS, AI_ML, OOS. Any other value (e.g., PYTHON, POSTGRESQL, REDIS, GO) is invalid — untracked tech belongs in tech_raw, never in the tech array. Never combine or join tokens (e.g., NODE_JS and REACT_NODE are invalid).
+- No duplicates in the tech array.
+- OOS means zero tracked tech was found. Never mix OOS with other tokens — if any tracked tech exists, omit OOS.
+
+AI_ML validation — if you found AI_ML, check BOTH:
+  Q1: Does an AI/ML keyword appear explicitly as a named technology, skill requirement, or product domain?
+  Q2: Is the AI/ML work about the product being built or a core skill for the role (not just developer tooling)?
+If EITHER answer is no → remove AI_ML.
+Things that do NOT trigger AI_ML: GitHub Copilot, Cursor, Codeium, Windsurf, Claude, "AI-assisted development", "we use AI tools", "ChatGPT for code", "automation", "intelligent", "smart", "data-driven".
+Things that DO trigger AI_ML: "build ML models", "LLM-powered product", "machine learning platform", "NLP pipeline", "fine-tune language models", "deep learning infrastructure".
+
+Tokens:
+- NODE — node.js, nodejs, node
+- REACT — React, react.js, reactjs
+- JS_TS — JavaScript, TypeScript, JS, TS
+- AI_ML — AI, artificial intelligence, machine learning, LLM, LLMs, LM, NLP, deep learning, fine-tuning, prompt engineering, computer vision, neural network, PyTorch, TensorFlow
+- OOS — no tracked tech found, or not a software engineering role. Use alone: ["OOS"].
+
+tech_raw: ALL tech terms verbatim from the job text, tracked or not (e.g., "Python, React, PostgreSQL"). null only if non-engineering role. Hard 50-char cap — truncate mid-word if needed.
+tech: ONLY the tracked tokens that match. Untracked tech stays in tech_raw only. The tech array must never be empty — if no tracked tokens apply, use ["OOS"].
+
+===
+
+2- LOCATION (Location field only — ignore Title and Description)
+Extract the work location city. Strip prefixes like "Greater" or "City of". Ignore HQ/client sites.
+
+Tokens:
+- UNK — not stated, not a real place, or cannot be determined.
+- IN_LONDON — in London.
+- REMOTE — fully remote with no fixed office.
+- UK_OTHER — UK office (including NI) outside London.
+- OUTSIDE_UK — outside the UK. Republic of Ireland = OUTSIDE_UK.
+
+loc_raw: verbatim from location field. null if unknown. Hard 50-char cap.
+
+===
+
+3- COMPENSATION (Description only)
+"k" = thousand. £ and GBP both mean British pounds. Find the first salary mentioned in reading order, then classify it using these steps:
+1. Non-£ currency ($, €, USD, EUR, or any non-GBP): NO_GBP. Stop.
+2. Disqualifier present — TC/total package/total compensation, daily/hourly rate, OTE, "competitive salary", "negotiable": NO_GBP. Stop.
+3. "up to" or "to" with no lower bound: UP_TO_ONLY. Stop. Do NOT calculate a range.
+4. Single £ value: that value IS the midpoint. Pick bucket below.
+5. £ range: midpoint = (min + max) / 2. Use the MIDPOINT to pick the bucket, NOT the upper bound. Example: £80k-£100k midpoint = £90k = RANGE_75_99K (not ABOVE_100K).
+If no salary found or no step matches: comp_raw = null, comp = NO_GBP.
+There are exactly 7 valid comp tokens. Do not invent new ones. There are NO range tokens below £45k — any midpoint under £45k is BELOW_45K. Example: £30k-£40k midpoint = £35k = BELOW_45K (not RANGE_25_44K or RANGE_35_44K — those do not exist).
+
+Tokens:
+- NO_GBP — fallback. No salary found, non-£ currency, or disqualified (see steps 1–2).
+- UP_TO_ONLY — see step 3 above.
+- BELOW_45K — midpoint < £45,000. This is the floor — no further breakdown below this.
+- RANGE_45_54K — midpoint £45,000–£54,999.
+- RANGE_55_74K — midpoint £55,000–£74,999.
+- RANGE_75_99K — midpoint £75,000–£99,999.
+- ABOVE_100K — midpoint >= £100,000.
+
+comp_raw: verbatim from description. null if no salary found. Hard 50-char cap — truncate mid-word if needed.
+
+===
+
+4- WORK ARRANGEMENT (Description only)
+Classify required workplace attendance.
+Exception: if loc = REMOTE and description is silent on arrangement: arr_raw = null, arr = REMOTE.
+
+Tokens:
+- UNK — not clearly stated.
+- REMOTE — fully remote, no office attendance expected.
+- HYBRID — some office attendance expected (e.g., "2-3 days", "hybrid").
+- IN_OFFICE — full-time office attendance required.
+
+arr_raw: the SHORTEST verbatim phrase that signals the arrangement. Extract only the key signal — never copy a full sentence or surrounding context. Hard 50-char cap.
+  Good: "hybrid, 3 days in office", "fully remote", "on-site 5 days"
+  Bad: "We offer a hybrid working arrangement with flexibility to work from home 2-3 days per week"
+null if not stated.
+
+===
+
+5- SENIORITY (Title primarily, Description as fallback)
+1. Use title as primary signal.
+2. If title gives no signal, scan description.
+3. If no signal anywhere: sen_raw = null, sen = LEVEL_2.
+
+Tokens:
+- LEVEL_3 — senior, leadership, or staff-level (e.g., senior, staff, principal, lead, head, director, VP, CTO, founding, distinguished, snr, sr, III, engineering manager).
+- LEVEL_1 — junior, entry-level (e.g., junior, jr, graduate, intern, trainee, apprentice).
+- LEVEL_2 — mid-career (e.g., full stack, front-end, developer, mid-level, software engineer, software engineer ii).
+
+sen_raw: extract ONLY the seniority keyword from the title or description — never copy the full job title or a sentence. Hard 50-char cap.
+  Good: "Senior", "Lead", "Junior", "Staff Engineer"
+  Bad: "Senior Software Engineer - Fintech Startup (London, up to £120k)"
+null if no signal found.

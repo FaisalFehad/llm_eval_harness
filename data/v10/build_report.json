@@ -1,0 +1,77 @@
+{
+  "timestamp": "2026-03-12T09:44:52.023Z",
+  "seed": 42,
+  "target_size": 1000,
+  "selected_size": 1000,
+  "target_counts": {
+    "good_fit": 238,
+    "maybe": 238,
+    "bad_fit": 524
+  },
+  "input_counts": {
+    "v9_raw": 1081,
+    "v9_unique": 1081,
+    "v9_deduped": 0,
+    "v7_raw": 713,
+    "v7_overlap_with_v9": 646,
+    "v7_candidates": 67
+  },
+  "bad_source_cap_drops": {
+    "it_support_scrape": 106,
+    "low_salary": 68,
+    "patch_scrape": 26,
+    "node_variants": 22,
+    "other": 0
+  },
+  "label_distribution": {
+    "good_fit": {
+      "count": 238,
+      "pct": 23.8
+    },
+    "maybe": {
+      "count": 244,
+      "pct": 24.4
+    },
+    "bad_fit": {
+      "count": 518,
+      "pct": 51.8
+    }
+  },
+  "top_source_distribution": {
+    "v6_scraped": 292,
+    "generated_v7": 212,
+    "v5_pool": 185,
+    "generated_v9": 65,
+    "it_support_scrape": 52,
+    "generated_v7__v10_oversample_good": 30,
+    "node_variants_v7": 28,
+    "new_jobs_run_upto2": 23,
+    "patch_scrape": 23,
+    "new_jobs_run_low_salary10": 15,
+    "node_variants_v6": 14,
+    "ext_agent_v2": 11
+  },
+  "top_comp_distribution": {
+    "NO_GBP": 305,
+    "RANGE_75_99K": 201,
+    "RANGE_55_74K": 200,
+    "BELOW_45K": 89,
+    "ABOVE_100K": 86,
+    "RANGE_45_54K": 63,
+    "UP_TO_ONLY": 56
+  },
+  "top_tech_distribution": {
+    "NODE": 480,
+    "JS_TS": 473,
+    "AI_ML": 305,
+    "REACT": 260,
+    "OOS": 201
+  },
+  "top_loc_distribution": {
+    "IN_LONDON": 343,
+    "UK_OTHER": 269,
+    "REMOTE": 198,
+    "OUTSIDE_UK": 133,
+    "UNK": 57
+  }
+}

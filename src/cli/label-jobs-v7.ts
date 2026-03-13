@@ -34,7 +34,7 @@ type InputJob = {
   job_id: string;
   title: string;
   company: string;
-  location: string;
+  job_location: string;
   jd_text: string;
   source_url?: string;
   augmentation_type?: string;
@@ -130,7 +130,9 @@ async function main(): Promise<void> {
   const inputPath = getStringArg(args, "input") ?? "data/v6/scraped_clean_for_labeling.jsonl";
   const outputPath = getStringArg(args, "output") ?? "data/v7/labeled.jsonl";
   const promptPath = getStringArg(args, "prompt") ?? "prompts/teacher_v7.txt";
-  const modelId = getStringArg(args, "model") ?? "gpt-4o-mini";
+  const modelId = getStringArg(args, "model") ?? "gpt-4.1-mini";
+  const temperature = getNumberArg(args, "temperature") ?? 0;
+  const maxCompletionTokens = getNumberArg(args, "max-tokens") ?? 1200;
   const concurrency = getNumberArg(args, "concurrency") ?? 10;
   const maxFailures = getNumberArg(args, "max-failures") ?? 0; // 0 = no limit
 
@@ -247,7 +249,7 @@ async function main(): Promise<void> {
     const testJob = jobs[0]!;
     const testPrompt = promptTemplate
       .replace(/\{\{job_title\}\}/g, testJob.title)
-      .replace(/\{\{job_location\}\}/g, testJob.location ?? "")
+      .replace(/\{\{job_location\}\}/g, testJob.job_location ?? "")
       .replace(/\{\{jd_text\}\}/g, testJob.jd_text);
     try {
       const testResp = await client.chat.completions.create({
@@ -256,8 +258,8 @@ async function main(): Promise<void> {
           { role: "system", content: "Respond with JSON only." },
           { role: "user", content: testPrompt },
         ],
-        max_completion_tokens: 1200,
-        temperature: 0,
+        max_completion_tokens: maxCompletionTokens,
+        temperature: temperature,
       });
       const testContent = testResp.choices[0]?.message?.content ?? "";
       if (!testContent) {
@@ -289,7 +291,7 @@ async function main(): Promise<void> {
 
     const promptText = promptTemplate
       .replace(/\{\{job_title\}\}/g, job.title)
-      .replace(/\{\{job_location\}\}/g, job.location ?? "")
+      .replace(/\{\{job_location\}\}/g, job.job_location ?? "")
       .replace(/\{\{jd_text\}\}/g, job.jd_text);
 
     const jobStartMs = Date.now();
@@ -307,8 +309,8 @@ async function main(): Promise<void> {
               { role: "system", content: "Respond with JSON only." },
               { role: "user", content: promptText },
             ],
-            max_completion_tokens: 1200,
-            temperature: 0,
+            max_completion_tokens: maxCompletionTokens,
+            temperature: temperature,
           });
           const choice = response.choices[0];
           content = choice?.message?.content ?? "";
@@ -384,7 +386,7 @@ async function main(): Promise<void> {
         job_id: job.job_id,
         title: job.title,
         company: job.company,
-        job_location: job.location, // raw location string stored as job_location
+        job_location: job.job_location, // raw location string stored as job_location
         jd_text: job.jd_text,
         // Per-field raw text + tokens (V7 interleaved)
         loc_raw: pred.loc_raw,

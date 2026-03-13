@@ -1,0 +1,36 @@
+{
+  "phase": "0A",
+  "description": "V12 baseline: V7 1.5B model + regex hybrid",
+  "test_file": "data/v7/test_labeled.jsonl",
+  "predictions": "eval_results/adapters_v7_1.5B/2026-03-11_085836_test_labeled_student_v7_final.predictions.jsonl",
+  "n_test_jobs": 239,
+  "n_predictions": 226,
+  "n_missing": 13,
+  "hybrid_correct": 213,
+  "hybrid_accuracy_pct": 89.1,
+  "hybrid_errors": 26,
+  "per_label": {
+    "good_fit": {
+      "correct": 48,
+      "total": 57,
+      "accuracy": 84.2
+    },
+    "maybe": {
+      "correct": 46,
+      "total": 57,
+      "accuracy": 80.7
+    },
+    "bad_fit": {
+      "correct": 119,
+      "total": 125,
+      "accuracy": 95.2
+    }
+  },
+  "field_accuracy": {
+    "model_loc": 97.3,
+    "model_arr": 91.2,
+    "model_sen": 92.0,
+    "regex_tech": 81.6,
+    "regex_comp": 90.4
+  }
+}

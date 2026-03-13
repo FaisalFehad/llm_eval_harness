@@ -1,0 +1,119 @@
+You are a detail-oriented job classifier.
+All classification is in the context of software engineering job fit. Interpret all signals accordingly.
+Process sections 1–5 in order. Output a single JSON object.
+
+INPUT
+Title: {{job_title}}
+Location: {{job_location}}
+Description: {{jd_text}}
+
+OUTPUT FORMAT
+Single JSON object with exactly 8 fields in this order:
+{"loc_raw":"","loc":"","arr":"","sen_raw":"","sen":"","tech":[],"comp_raw":"","comp":""}
+
+- _raw fields (loc_raw, sen_raw, comp_raw): copy relevant text verbatim — no reformatting, no paraphrasing. Max 50 characters. Truncate if needed. null if no relevant text.
+- Token fields: the classification token.
+- tech: array of individual tokens.
+
+VALID OUTPUT EXAMPLES:
+{"loc_raw":"London","loc":"IN_LONDON","arr":"HYBRID","sen_raw":"Senior","sen":"LEVEL_3","tech":["NODE","REACT","JS_TS"],"comp_raw":"£80k-£100k","comp":"RANGE_75_99K"}
+{"loc_raw":"Remote","loc":"REMOTE","arr":"REMOTE","sen_raw":"senior","sen":"LEVEL_3","tech":["AI_ML"],"comp_raw":"€80k","comp":"NO_GBP"}
+{"loc_raw":null,"loc":"UNK","arr":"UNK","sen_raw":null,"sen":"LEVEL_2","tech":["OOS"],"comp_raw":"up to £90k","comp":"UP_TO_ONLY"}
+{"loc_raw":"London","loc":"IN_LONDON","arr":"IN_OFFICE","sen_raw":"Senior Engineer","sen":"LEVEL_3","tech":["NODE","REACT","JS_TS"],"comp_raw":"£150k-£200k TC","comp":"NO_GBP"}
+
+===
+
+1- TECH (Title and Description)
+Is this a software engineering role? If not, use ["OOS"] and continue.
+
+Rules:
+- Read both title and description for tech of interest.
+- Any mention counts — including "nice to have", "preferred", "familiar with", "ideally", "exposure to", "desirable", "advantageous", "bonus".
+- Tech must be explicitly named — do not infer from context. Never add a token unless the tech name appears in the text.
+- Evaluate each technology independently. If a JD lists "Python, Go, React, PostgreSQL" — React is tracked even though the others are not. Do not let untracked tech cause you to miss tracked tech.
+- Case-insensitive. Accept any spelling, formatting, or casing variant.
+- JDs use many unexpected formats — ALL count. Treat slashes, dots, spaces, camelCase, and no separation as cosmetic:
+  Single-tech variants: node/js, node.js, nodejs, NodeJs, NODEJS, Type Script, Node JS, reactjs, ReactJs.
+  Slash-joined combos of different techs: split each side independently and match against the token list. Node/React = NODE + REACT. React/TS = REACT + JS_TS. AI/LM or LM/AI = AI_ML. Node/TypeScript = NODE + JS_TS.
+- Always IGNORE (not tech of interest): REST, API, GQL, GraphQL, DB, Backend, BE, back-end, front-end, CSS, HTML, Server, server-side, client, TDD, Test, AWS, Microservices, Full Stack.
+- Always IGNORE these specific AI coding tools — they are NOT AI/ML domain work and do NOT trigger AI_ML: GitHub Copilot, Copilot, Cursor, Codeium, Tabnine, Claude Code, Claude (when used as a coding assistant).
+- AI mentions that refer to developer productivity or AI-assisted coding workflows (e.g., "AI-assisted development", "AI-assisted engineering", ChatGPT for code generation) do NOT trigger AI_ML. AI_ML requires that AI or ML is part of the product being built or is a technical domain skill required for the role (e.g., "build ML models", "LLM-powered product", "machine learning platform", "AI-driven systems").
+- Output tech as an array of tokens from the list below ONLY. The tech array has exactly 5 valid strings: NODE, REACT, JS_TS, AI_ML, OOS. Any other value (e.g., PYTHON, POSTGRESQL, REDIS, GO) is invalid — untracked tech is not output. Never combine or join tokens (e.g., NODE_JS and REACT_NODE are invalid).
+- No duplicates in the tech array.
+- OOS means zero tracked tech was found. Never mix OOS with other tokens — if any tracked tech exists, omit OOS.
+
+Tokens:
+- NODE — node.js, nodejs, node
+- REACT — React, react.js, reactjs
+- JS_TS — JavaScript, TypeScript, JS, TS
+- AI_ML — AI, artificial intelligence, machine learning, LLM, LLMs, LM, NLP, deep learning, fine-tuning, prompt engineering, computer vision, neural network, PyTorch, TensorFlow. These terms must appear explicitly — do not infer AI_ML from general words like "automation", "intelligent", "smart", or product domain descriptions.
+- OOS — no tracked tech found, or not a software engineering role. Use alone: ["OOS"].
+
+tech: ONLY the tracked tokens that match. The tech array must never be empty — if no tracked tokens apply, use ["OOS"].
+
+===
+
+2- LOCATION (Location field only — ignore Title and Description)
+Extract the work location city. Strip prefixes like "Greater" or "City of". Ignore HQ/client sites.
+
+Tokens:
+- UNK — not stated, not a real place, or cannot be determined.
+- IN_LONDON — in London.
+- REMOTE — fully remote with no fixed office.
+- UK_OTHER — UK office (including NI) outside London.
+- OUTSIDE_UK — outside the UK. Republic of Ireland = OUTSIDE_UK.
+
+loc_raw: verbatim from location field. Max 50 characters. null if unknown.
+
+===
+
+3- COMPENSATION (Description only)
+"k" = thousand. £ and GBP both mean British pounds. Find the first salary mentioned in reading order, then classify it using these steps:
+1. Non-£ currency ($, €, USD, EUR, or any non-GBP): NO_GBP. Stop.
+2. Disqualifier present — TC / total comp / total compensation / total package (even if followed by explicit £ figures — TC always disqualifies), daily/hourly rate, OTE: NO_GBP. Stop. Examples: "£150k-£200k TC" → NO_GBP. "OTE £92k" → NO_GBP. "Total Compensation £240k+" → NO_GBP.
+3. "competitive salary" alone with no explicit £ figures: NO_GBP. Stop. Exception: if "competitive salary" is immediately followed by explicit £ figures (e.g., "competitive salary of £75k-£95k"), ignore the phrase and proceed to step 4/5 with those figures.
+4. "negotiable" alone (no figures): NO_GBP. Stop.
+5. "up to" or "to" with no lower bound: UP_TO_ONLY. Stop. Do NOT treat the upper limit as a value or compute a range. Examples: "up to £80,000" → UP_TO_ONLY. "salary up to £75k" → UP_TO_ONLY. "up to £150k + benefits" → UP_TO_ONLY.
+6. Single £ value: that value IS the midpoint. Pick bucket below.
+7. £ range: midpoint = (min + max) / 2. Use the MIDPOINT to pick the bucket, NOT the upper or lower bound.
+   Example 1: £80k-£100k midpoint = £90k = RANGE_75_99K (not ABOVE_100K — do not use upper bound).
+   Example 2: £60k-£80k midpoint = £70k = RANGE_55_74K (not RANGE_75_99K — midpoint £70k is below the £75k threshold).
+If no salary found or no step matches: comp_raw = null, comp = NO_GBP.
+There are exactly 7 valid comp tokens. Do not invent new ones. There are NO range tokens below £45k — any midpoint under £45k is BELOW_45K. Example: £30k-£40k midpoint = £35k = BELOW_45K (not RANGE_25_44K or RANGE_35_44K — those do not exist).
+
+Tokens:
+- NO_GBP — fallback. No salary found, non-£ currency, or disqualified (see steps 1–4).
+- UP_TO_ONLY — see step 5 above.
+- BELOW_45K — midpoint < £45,000. This is the floor — no further breakdown below this.
+- RANGE_45_54K — midpoint £45,000–£54,999.
+- RANGE_55_74K — midpoint £55,000–£74,999.
+- RANGE_75_99K — midpoint £75,000–£99,999.
+- ABOVE_100K — midpoint >= £100,000.
+
+comp_raw: verbatim from description — include qualifying context (e.g., "Total Compensation of £240k+", "OTE £92k", "up to £80k"). Max 50 characters. null if no salary found.
+
+===
+
+4- WORK ARRANGEMENT (Description only)
+Classify required workplace attendance.
+Exception: if loc = REMOTE and description is silent on arrangement: arr = REMOTE.
+
+Tokens:
+- UNK — not clearly stated.
+- REMOTE — fully remote, no office attendance expected.
+- HYBRID — some office attendance expected (e.g., "2-3 days", "hybrid").
+- IN_OFFICE — full-time office attendance required.
+
+===
+
+5- SENIORITY (Title primarily, Description as fallback)
+1. Use title as primary signal.
+2. If title gives no signal, scan description.
+3. If no signal anywhere: sen_raw = null, sen = LEVEL_2.
+
+Tokens:
+- LEVEL_3 — senior, leadership, or staff-level (e.g., senior, staff, principal, lead, head, director, VP, CTO, founding, distinguished, snr, sr, III, engineering manager).
+- LEVEL_1 — junior, entry-level (e.g., junior, jr, graduate, intern, trainee, apprentice).
+- LEVEL_2 — mid-career (e.g., full stack, front-end, developer, mid-level, software engineer, software engineer ii).
+
+sen_raw: verbatim from title or description. Max 50 characters. null if no signal found.

@@ -1,0 +1,574 @@
+Output: eval_results/adapters_v10_essential_quick/2026-03-12_125409_test_labeled_student_v10_0000300.txt
+Prompt: prompts/student_v10.txt
+Adapter: finetune/adapters_v10_essential_quick/0000300_adapters.safetensors -> finetune/adapters_v10_essential_quick/adapters.safetensors
+Model: mlx-community/Qwen2.5-0.5B-Instruct-4bit
+------------------------------------------------------------
+------------------------------------------------------------
+Running V7 eval on 239 jobs...
+
+[  1/239] ✓   1.7s  Staff Software Engineer                     bad_fit               100%
+[  2/239] ✓   1.4s  Lead DevOps Architect                       bad_fit               100%
+[  3/239] ✓   1.6s  Software Engineer - Backend                 bad_fit               100%
+[  4/239] !   2.8s  Full-Stack Developer                        INVALID TOKEN: ['Invalid sen token: "FULL-STACK DEVELOPER"', 'Invalid tech token: "full stack TypeScript"', 'Invalid tech token: "Emotion"', 'Invalid tech token: "MongoDB"']
+[  5/239] ✗   1.9s  Planning Engineer                           bad_fit->maybe         60%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech OOS->NODE,REACT,JS_TS,AI_ML ✗ | comp RANGE_55_74K->NO_GBP ✗
+                    Birmingham | Node, React, JS_TS, AI_ML
+
+[  6/239] ✓   1.9s  Head Of AI Engineering (strategy And Innov  bad_fit                67%
+[  7/239] ✓   1.7s  Software Engineer - Internship              bad_fit                71%
+[  8/239] !   2.8s  Senior Software Engineer                    INVALID TOKEN: ['Invalid tech token: "Java"', 'Invalid tech token: "Spring Boot"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "AI"', 'Invalid tech token: "AI"', 'Invalid tech token: "AI"']
+[  9/239] !   1.8s  Software Engineer 1                         INVALID TOKEN: ['Missing field: comp']
+[ 10/239] !   1.8s  ATUM Deep-Tech Founder (technical) - Singa  INVALID TOKEN: ['Invalid comp token: "£"']
+[ 11/239] !   2.1s  Software Engineer - Backend                 INVALID TOKEN: ['Invalid comp token: "£"', 'Invalid tech token: "JAVA"', 'Invalid tech token: "PYTHON"', 'Invalid tech token: "NODE.JS"']
+[ 12/239] ✗   1.5s  Software Engineer                           bad_fit->good_fit      42%
+                    loc IN_LONDON->IN_LONDON ✓ | arr IN_OFFICE->REMOTE ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech OOS->NODE,REACT,JS_TS,AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+                    London | REMOTE | JD.com | Node, React, JS_TS, AI_ML | NASDAQ
+
+[ 13/239] ✗   2.5s  Full Stack Engineer                         bad_fit->maybe         38%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,REACT,JS_TS->NODE,JS_TS,AI_ML ✗ | comp RANGE_45_54K->NO_GBP ✗
+                    London
+
+[ 14/239] ✓   2.2s  Full-Stack Engineer                         maybe                  43%
+[ 15/239] ✗   2.5s  Technical Director                          bad_fit->maybe         40%
+                    loc UNK->UK_OTHER ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT,JS_TS->NODE,REACT,JS_TS,AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+                    IN_LONDON | REMOTE | LEVEL_3 | Node, REACT, JS_TS, AI_ML
+
+[ 16/239] !   2.0s  Senior Frontend Engineer                    INVALID TOKEN: ['Invalid tech token: "TAILWITCSS"', 'Invalid tech token: "Storybook"']
+[ 17/239] !   2.1s  Founding Engineer (£240k+ )                 PARSE FAIL
+           Raw: {“loc_raw”:“London”,"loc":"UK_OTHER","arr_raw":null,"arr":"HYBRID","sen_raw":null,"sen":"LEVEL_2","tech_raw":"Node","tech":["NODE"],"comp_raw":null,"comp":"£240k+"}
+[ 18/239] ✗   2.7s  Modern Workplace Tech Bar Lead              bad_fit->good_fit      33%
+                    loc UK_OTHER->UK_OTHER ✓ | arr IN_OFFICE->REMOTE ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech OOS->NODE,REACT,JS_TS,AI_ML ✗ | comp RANGE_45_54K->RANGE_55_74K ✗
+                    Glasgow | REMOTE | LEVEL_3 | Node, React, JS_TS, AI_ML | £43,804 - £51,000
+
+[ 19/239] !   2.3s  Human Resources Manager                     INVALID TOKEN: ['Invalid comp token: "£90,000"']
+[ 20/239] ✗   2.6s  Junior Software Engineer (f/m/d)            bad_fit->good_fit      30%
+                    loc OUTSIDE_UK->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_1->LEVEL_3 ✗ | tech NODE,JS_TS->NODE,REACT,JS_TS,AI_ML ✗ | comp NO_GBP->RANGE_75_99K ✗
+                    Germany | HYBRID | LEVEL_3 | JavaScript, TypeScript, React, Node.js | €1,500
+
+[ 21/239] !   1.7s  Cyber Infrastructure Engineer               INVALID TOKEN: ['Invalid comp token: "£"', 'Invalid tech token: "AI"', 'Invalid tech token: "AI"', 'Invalid tech token: "AI"', 'Invalid tech token: "AI"']
+[ 22/239] ✗   2.6s  Senior Software Engineer (php/laravel)      bad_fit->good_fit      27%
+                    loc UK_OTHER->IN_LONDON ✗ | arr HYBRID->REMOTE ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech OOS->NODE,REACT,JS_TS,AI_ML ✗ | comp RANGE_45_54K->RANGE_75_99K ✗
+                    Manchester | REMOTE | LEVEL_3 | Node, React, JS_TS, AI_ML | £40k-£60k
+
+[ 23/239] !   1.7s  Senior Software Developer, UK               INVALID TOKEN: ['Invalid comp token: "£"']
+[ 24/239] ✗   2.5s  Full Stack Web Developer                    bad_fit->good_fit      25%
+                    loc UK_OTHER->UK_OTHER ✓ | arr UNK->REMOTE ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech JS_TS->NODE,REACT,JS_TS,AI_ML ✗ | comp RANGE_55_74K->RANGE_55_74K ✓
+                    Birmingham | REMOTE | LEVEL_3 | Node, React, JS_TS, AI_ML | £58,000 - £70,000
+
+[ 25/239] !   3.0s  Software Engineer (swe/swe Ii), AI Platfor  INVALID TOKEN: ['Invalid sen token: "Software Engineer"', 'Invalid comp token: "£117,200 - £223,900"', 'Invalid tech token: "PYTHON"', 'Invalid tech token: "PHP"', 'Invalid tech token: "Hacklang"']
+[ 26/239] ✓   2.1s  Lead, Digital Applications                  bad_fit                27%
+[ 27/239] !   1.5s  Data Analyst / Data Scientist               INVALID TOKEN: ['Invalid comp token: "£45k"']
+[ 28/239] ✗   2.0s  Software Engineer (Back end)                bad_fit->good_fit      25%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->REMOTE ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech OOS->NODE,REACT,JS_TS,AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+                    London Area | REMOTE | LEVEL_3 | Node, React, JS_TS, AI_ML | £
+
+[ 29/239] ✓   2.0s  Senior Full Stack Engineer                  good_fit               28%
+[ 30/239] ✗   2.2s  Customer Solutions Engineer                 bad_fit->maybe         27%
+                    loc UNK->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech AI_ML->AI_ML,NODE,JS_TS,REACT ✗ | comp NO_GBP->NO_GBP ✓
+                    London
+
+[ 31/239] ✗   1.9s  Senior Software Engineer                    bad_fit->good_fit      26%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->REMOTE ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech OOS->NODE,REACT,JS_TS,AI_ML ✗ | comp NO_GBP->RANGE_75_99K ✗
+                    London Area | REMOTE | LEVEL_3 | Node, React, JS_TS, AI_ML | GBP
+
+[ 32/239] ✓   1.8s  Software Engineer II-Backend                bad_fit                28%
+[ 33/239] !   1.9s  Senior Software Engineer, £70,000 To £85,0  INVALID TOKEN: ['Invalid tech token: "TYPESCRIPT"']
+[ 34/239] ✓   1.7s  Senior Software Engineer                    bad_fit                29%
+[ 35/239] ✗   1.8s  Software Developer                          bad_fit->good_fit      29%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->HYBRID ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech JS_TS->JS_TS,AI_ML ✗ | comp NO_GBP->RANGE_75_99K ✗
+                    Remote | REMOTE | LEVEL_3 | JavaScript, React, TypeScript, AI | £75K
+
+[ 36/239] ✗   2.7s  Data Engineer - £150k-£200k TC              maybe->good_fit        28%
+                    loc IN_LONDON->IN_LONDON ✓ | arr UNK->REMOTE ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech OOS->NODE,REACT,JS_TS,AI_ML ✗ | comp ABOVE_100K->RANGE_75_99K ✗
+                    Greater London | REMOTE | LEVEL_3 | Node, React, JS_TS, AI_ML | £150k-£200k
+
+[ 37/239] !   1.6s  Senior Product Manager                      INVALID TOKEN: ['Invalid comp token: "£"']
+[ 38/239] ✗   2.2s  Graduate Software Developer                 bad_fit->good_fit      26%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_1->LEVEL_3 ✗ | tech JS_TS->JS_TS,AI_ML ✗ | comp RANGE_55_74K->RANGE_55_74K ✓
+                    London | REMOTE | LEVEL_3 | JavaScript, React, TypeScript, AI | £60k
+
+[ 39/239] ✗   2.3s  Senior / Lead Software Engineer             good_fit->bad_fit      26%
+                    loc IN_LONDON->UK_OTHER ✗ | arr UNK->HYBRID ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,JS_TS,AI_ML->OOS ✗ | comp RANGE_55_74K->NO_GBP ✗
+                    London
+
+[ 40/239] ✓   2.1s  Software Engineer, New Grad (recent 2025 G  bad_fit                28%
+[ 41/239] ✗   1.5s  Senior Data Engineer                        maybe->good_fit        27%
+                    loc IN_LONDON->IN_LONDON ✓ | arr IN_OFFICE->REMOTE ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech AI_ML->AI_ML ✓ | comp UP_TO_ONLY->RANGE_75_99K ✗
+                    London | REMOTE | LEVEL_3 | AI, ML | £90,000
+
+[ 42/239] ✗   2.0s  IT Support Engineer (2nd/3rd Line) - Centr  bad_fit->maybe         26%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech OOS->NODE,JS_TS,AI_ML ✗ | comp RANGE_45_54K->NO_GBP ✗
+                    London | JavaScript, React, Node.js, Node.js, Node.js, Node.js | £45000+
+
+[ 43/239] !   1.7s  Data Engineer                               INVALID TOKEN: ['Invalid tech token: "PYTHON"', 'Invalid tech token: "NODE.js"']
+[ 44/239] !   1.5s  Data Engineer                               INVALID TOKEN: ['Missing field: comp']
+[ 45/239] ✗   2.1s  Software Engineer                           bad_fit->good_fit      24%
+                    loc UK_OTHER->UK_OTHER ✓ | arr IN_OFFICE->REMOTE ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech OOS->NODE,REACT,JS_TS,AI_ML ✗ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    Bristol | REMOTE | LEVEL_3 | Ada | £64,000
+
+[ 46/239] !   1.8s  Full Stack Developer                        INVALID TOKEN: ['Invalid tech token: "C#"']
+[ 47/239] ✓   2.0s  Machine Learning Engineer                   bad_fit                26%
+[ 48/239] ✓   2.2s  Customer Success Manager                    bad_fit                27%
+[ 49/239] !   1.4s  Quality Assurance Tester                    INVALID TOKEN: ['Invalid sen token: "QA Tester"', 'Invalid comp token: "Contract"']
+[ 50/239] !   3.0s  Data Engineer                               PARSE FAIL
+           Raw: {"loc_raw":"Glasgow", "loc":"UK_OTHER", "arr_raw":null, "arr":"HYBRID", "sen_raw":null, "sen":"LEVEL_3", "tech_raw":"SSIS, T-SQL, SSRS, SQL Server Integration Services, SSRS, C#", Visual Studio, C#", Oracle SQL, PLSQL", "tech":["SSIS, T-SQL, SSRS, SQL Server Integration Services, SSRS, C#", Visual S
+[ 51/239] !   3.0s  Data Engineer                               PARSE FAIL
+           Raw: {"loc_raw":"Glasgow", "loc":"UK_OTHER", "arr_raw":null, "arr":"HYBRID", "sen_raw":null, "sen":"LEVEL_3", "tech_raw":"SSIS, T-SQL, SSRS, SQL Server Integration Services, SSRS, C#", Visual Studio, C#", Oracle SQL, PLSQL", "tech":["SSIS, T-SQL, SSRS, SQL Server Integration Services, SSRS, C#", Visual S
+[ 52/239] ✓   2.6s  DevOps Engineer                             bad_fit                27%
+[ 53/239] !   2.1s  Senior Electrical Design Engineer           INVALID TOKEN: ['Invalid comp token: "£80"']
+[ 54/239] ✓   2.0s  AI Engineer                                 bad_fit                28%
+[ 55/239] ✗   2.3s  Senior Engineering Manager                  bad_fit->maybe         27%
+                    loc OUTSIDE_UK->UK_OTHER ✗ | arr HYBRID->REMOTE ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,JS_TS->NODE,REACT,JS_TS,AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+                    Toronto | REMOTE | LEVEL_3 | Node, React, JS_TS, AI_ML | £GBP
+
+[ 56/239] ✓   2.0s  Software Engineer I                         bad_fit                29%
+[ 57/239] ✗   1.9s  Front End Developer (remote)                maybe->good_fit        28%
+                    loc IN_LONDON->UK_OTHER ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE,REACT,JS_TS->NODE,REACT,JS_TS,AI_ML ✗ | comp NO_GBP->RANGE_55_74K ✗
+                    Greater London Area | REMOTE | LEVEL_3 | React.js, Typescript, Node.js | £5000-£7500
+
+[ 58/239] ✗   2.0s  Security Engineer                           bad_fit->good_fit      28%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->REMOTE ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech OOS->NODE,REACT,JS_TS,AI_ML ✗ | comp UP_TO_ONLY->RANGE_75_99K ✗
+                    London | REMOTE | LEVEL_3 | Node, React, JS_TS, AI_ML | £80,000
+
+[ 59/239] !   2.0s  Software Developer                          INVALID TOKEN: ['Invalid comp token: "£52500"']
+[ 60/239] !   2.0s  Software Engineer                           INVALID TOKEN: ['Invalid tech token: "JAVA"', 'Invalid tech token: "TYPESCRIPT"', 'Invalid tech token: "PYTHON"']
+[ 61/239] ✓   2.1s  Senior DevOps Engineer                      bad_fit                28%
+[ 62/239] !   2.1s  AI Platform Engineer                        INVALID TOKEN: ['Invalid tech token: "ML, AI, ML"']
+[ 63/239] ✓   1.7s  Founding Engineer (Series A)                bad_fit                29%
+[ 64/239] !   2.3s  Head of Infrastructure                      INVALID TOKEN: ['Invalid tech token: "POSTGRES"']
+[ 65/239] !   2.4s  Senior Software Engineer                    INVALID TOKEN: ['Invalid comp token: "£100,000–£135,000 + Generous Equity + Strong Package"']
+[ 66/239] ✓   1.3s  Senior Software Engineer, Strategy Platfor  maybe                  29%
+[ 67/239] ✓   2.3s  Lead Frontend Engineer                      good_fit               30%
+[ 68/239] !   2.0s  Software Engineer | React & Python (full s  INVALID TOKEN: ['Invalid tech token: "PYTHON"']
+[ 69/239] !   1.8s  Fintech & Tech for Good | Profitable & Hyp  INVALID TOKEN: ['Invalid comp token: "£150K"']
+[ 70/239] !   1.8s  Frontend Developer                          INVALID TOKEN: ['Invalid tech token: "RESPONSIVE DESIGN FRAMES"']
+[ 71/239] ✓   1.7s  Staff Engineer                              good_fit               30%
+[ 72/239] ✓   1.6s  Technical Writer                            good_fit               31%
+[ 73/239] ✓   1.6s  Data Analyst                                good_fit               32%
+[ 74/239] !   1.8s  Full Stack Engineer                         INVALID TOKEN: ['Invalid sen token: "FULL STACK ENGINEER"', 'Invalid tech token: "AI, ML, Node.js"']
+[ 75/239] ✗   1.9s  Junior Software Engineer                    bad_fit->good_fit      31%
+                    loc OUTSIDE_UK->UK_OTHER ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_1->LEVEL_3 ✗ | tech NODE,JS_TS,AI_ML->NODE,JS_TS,AI_ML ✓ | comp RANGE_75_99K->RANGE_75_99K ✓
+                    Amsterdam | REMOTE | LEVEL_3 | NodeJS, javascript/typescript, AI/ML | £75,000 to £95,000
+
+[ 76/239] ✓   1.6s  Security Engineer                           good_fit               32%
+[ 77/239] ✗   1.6s  Developer                                   maybe->good_fit        31%
+                    loc REMOTE->IN_LONDON ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE,AI_ML->AI_ML ✗ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    Anywhere | REMOTE | LEVEL_3 | AI, ML | £60,000 - £80,000
+
+[ 78/239] !   1.6s  Frontend Developer                          INVALID TOKEN: ['Invalid comp token: "£85,000"', 'Invalid tech token: "TYPESCRIPT"']
+[ 79/239] !   1.8s  IT Support Engineer                         INVALID TOKEN: ['Invalid tech token: "TYPESCRIPT"']
+[ 80/239] ✗   1.5s  Trainee Engineer                            bad_fit->maybe         30%
+                    loc UNK->UK_OTHER ✗ | arr UNK->REMOTE ✗ | sen LEVEL_1->LEVEL_3 ✗ | tech NODE->NODE ✓ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    IN_LONDON | REMOTE | LEVEL_3 | nodejs | £55k-£70k
+
+[ 81/239] ✗   1.9s  Frontend Developer                          maybe->good_fit        30%
+                    loc REMOTE->IN_LONDON ✗ | arr REMOTE->HYBRID ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE->NODE,REACT,JS_TS,AI_ML ✗ | comp RANGE_75_99K->RANGE_75_99K ✓
+                    UK Remote | REMOTE | LEVEL_3 | Nodejs, React, JS_TS, AI_ML | £70k-£90k
+
+[ 82/239] !   1.6s  Lead Engineer                               INVALID TOKEN: ['Invalid comp token: "£75,000-£100,000"']
+[ 83/239] ✗   1.8s  Security Engineer                           maybe->good_fit        29%
+                    loc UNK->UK_OTHER ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE,AI_ML->NODE,AI_ML ✓ | comp RANGE_75_99K->RANGE_75_99K ✓
+                    Not specified | REMOTE | LEVEL_3 | Node.js, AI_ML | £80,000-£100,000
+
+[ 84/239] ✗   1.6s  Junior Software Engineer                    bad_fit->good_fit      29%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_1->LEVEL_3 ✗ | tech NODE->NODE ✓ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    REMOTE | REMOTE | LEVEL_3 | Node.js | £60,000-£80,000
+
+[ 85/239] ✗   1.8s  Junior Software Engineer                    maybe->good_fit        28%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_1->LEVEL_3 ✗ | tech NODE,JS_TS,AI_ML->NODE,JS_TS,AI_ML ✓ | comp RANGE_75_99K->RANGE_75_99K ✓
+                    Remote | REMOTE | LEVEL_3 | Node.js, javascript, AI, ML | £75,000-£95,000
+
+[ 86/239] ✓   1.7s  Engineering Manager                         good_fit               29%
+[ 87/239] !   1.6s  Backend Engineer                            INVALID TOKEN: ['Invalid tech token: "TYPESCRIPT"']
+[ 88/239] ✗   1.6s  IT Support Engineer                         maybe->good_fit        28%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE->NODE ✓ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    REMOTE | REMOTE | LEVEL_3 | Nodejs | £60,000-£80,000
+
+[ 89/239] ✗   1.6s  Security Engineer                           bad_fit->good_fit      28%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE->NODE ✓ | comp BELOW_45K->RANGE_75_99K ✗
+                    REMOTE | REMOTE | LEVEL_3 | Node.js | £25,000-£35,000
+
+[ 90/239] ✗   1.5s  Scrum Master                                maybe->bad_fit         28%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE->OOS ✗ | comp RANGE_75_99K->NO_GBP ✗
+                    Anywhere
+
+[ 91/239] ✗   1.6s  Database Administrator                      maybe->good_fit        27%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE->NODE ✓ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    Fully Remote | REMOTE | LEVEL_3 | nodejs | £60,000-£80,000
+
+[ 92/239] ✗   2.1s  Full Stack Engineer                         maybe->good_fit        27%
+                    loc REMOTE->IN_LONDON ✗ | arr REMOTE->HYBRID ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE->NODE,REACT,JS_TS,AI_ML ✗ | comp RANGE_75_99K->RANGE_75_99K ✓
+                    Remote - United Kingdom | REMOTE | FULL STACK ENGINEER | Node.js, React, JS_TS, AI_ML | £75,000-£95,000
+
+[ 93/239] ✓   1.8s  Lead Engineer                               good_fit               28%
+[ 94/239] ✓   1.7s  Senior Software Engineer                    good_fit               29%
+[ 95/239] ✓   1.7s  Engineering Manager                         good_fit               29%
+[ 96/239] ✓   1.7s  Frontend Developer                          good_fit               30%
+[ 97/239] !   1.7s  Full Stack Engineer                         INVALID TOKEN: ['Invalid tech token: "DBMgmt"']
+[ 98/239] ✓   1.8s  Senior Developer                            good_fit               31%
+[ 99/239] ✗   1.9s  Frontend Developer                          bad_fit->good_fit      30%
+                    loc OUTSIDE_UK->IN_LONDON ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE,JS_TS->NODE,JS_TS,AI_ML ✗ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    San Francisco, CA | REMOTE | LEVEL_3 | Node.js, JS, TypeScript, React, AI_ML | £55,000 - £70,000
+
+[100/239] ✓   1.8s  Project Manager                             good_fit               31%
+[101/239] ✓   1.6s  Security Engineer                           good_fit               32%
+[102/239] ✓   1.7s  DevOps Engineer                             good_fit               32%
+[103/239] ✓   1.8s  Senior Software Engineer                    good_fit               33%
+[104/239] ✓   1.5s  Engineering Manager                         good_fit               34%
+[105/239] ✗   1.6s  Trainee Engineer                            maybe->good_fit        33%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_1->LEVEL_3 ✗ | tech NODE,AI_ML->AI_ML ✗ | comp RANGE_75_99K->RANGE_75_99K ✓
+                    Fully Remote | REMOTE | LEVEL_3 | AI, ML | £75,000-£95,000
+
+[106/239] ✓   1.6s  DevOps Engineer                             good_fit               34%
+[107/239] ✓   1.7s  Senior Software Engineer                    good_fit               35%
+[108/239] ✗   1.6s  Full Stack Engineer                         maybe->good_fit        34%
+                    loc REMOTE->IN_LONDON ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE,AI_ML->AI_ML ✗ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    Fully Remote | REMOTE | LEVEL_3 | AI, ML | £70k-£90k
+
+[109/239] ✓   1.5s  Engineering Manager                         good_fit               35%
+[110/239] ✓   1.6s  Business Analyst                            good_fit               35%
+[111/239] ✓   1.7s  UX Designer                                 good_fit               36%
+[112/239] !   1.8s  Backend Engineer                            INVALID TOKEN: ['Invalid tech token: "RESTful APIs"', 'Invalid tech token: "MongoDB"']
+[113/239] ✗   1.7s  Junior Software Engineer                    bad_fit->good_fit      35%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_1->LEVEL_3 ✗ | tech NODE,JS_TS->NODE,JS_TS ✓ | comp BELOW_45K->RANGE_75_99K ✗
+                    Fully Remote | REMOTE | LEVEL_3 | Nodejs, JS, Typescript | £30,000 to £42,000
+
+[114/239] ✗   1.7s  Junior Developer                            maybe->good_fit        35%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_1->LEVEL_3 ✗ | tech NODE,JS_TS->NODE,JS_TS ✓ | comp RANGE_75_99K->RANGE_75_99K ✓
+                    Remote | REMOTE | LEVEL_3 | Nodejs, JavaScript/TypeScript | £75,000-£95,000
+
+[115/239] ✗   1.6s  Junior Developer                            bad_fit->good_fit      35%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_1->LEVEL_3 ✗ | tech NODE,JS_TS->NODE,JS_TS ✓ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    Fully Remote | REMOTE | LEVEL_3 | Node.js, JS, TypeScript | £55k-£70k
+
+[116/239] ✓   1.6s  IT Support Engineer                         good_fit               35%
+[117/239] ✓   1.7s  UX Designer                                 good_fit               36%
+[118/239] ✗   1.8s  DevOps Engineer                             bad_fit->good_fit      36%
+                    loc OUTSIDE_UK->IN_LONDON ✗ | arr HYBRID->REMOTE ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE,AI_ML->NODE,AI_ML ✓ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    New York, NY | REMOTE | LEVEL_3 | Node.js, AI_ML | £60,000 to £80,000
+
+[119/239] ✓   1.7s  Product Manager                             good_fit               36%
+[120/239] ✗   1.5s  UX Designer                                 maybe->good_fit        36%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech JS_TS,AI_ML->JS_TS ✗ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    Fully Remote | REMOTE | LEVEL_3 | JavaScript/typescript | £55k-£70k
+
+[121/239] ✗   1.9s  Principal Engineer                          maybe->good_fit        36%
+                    loc REMOTE->IN_LONDON ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE->NODE,REACT,JS_TS,AI_ML ✗ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    Anywhere | REMOTE | LEVEL_3 | NodeJS, React, JS_TS, AI_ML | £60,000-£80,000
+
+[122/239] ✓   1.6s  UX Designer                                 good_fit               36%
+[123/239] ✗   1.6s  Trainee Engineer                            bad_fit->maybe         36%
+                    loc OUTSIDE_UK->UK_OTHER ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_1->LEVEL_3 ✗ | tech NODE->NODE ✓ | comp RANGE_75_99K->RANGE_75_99K ✓
+                    Amsterdam | REMOTE | LEVEL_3 | node.js | £80,000-£100,000
+
+[124/239] ✗   1.9s  Technical Writer                            maybe->good_fit        35%
+                    loc REMOTE->IN_LONDON ✗ | arr REMOTE->HYBRID ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE->NODE,JS_TS,AI_ML ✗ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    Anywhere | REMOTE | LEVEL_3 | Node.js, React, JS_TS, AI_ML | £60,000-£80,000
+
+[125/239] ✗   1.4s  Junior Developer                            maybe->good_fit        35%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_1->LEVEL_3 ✗ | tech NODE->NODE ✓ | comp ABOVE_100K->RANGE_75_99K ✗
+                    REMOTE | REMOTE | LEVEL_3 | Nodejs | £100,000
+
+[126/239] ✓   1.8s  Technical Writer                            good_fit               36%
+[127/239] ✗   1.7s  Project Manager                             good_fit->bad_fit      35%
+                    loc REMOTE->OUTSIDE_UK ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,JS_TS->NODE,JS_TS,AI_ML ✗ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    Anywhere | REMOTE | LEVEL_3 | Node.js, Javascript/TS, AI_ML | £60,000
+
+[128/239] ✗   1.6s  Backend Engineer                            maybe->good_fit        35%
+                    loc IN_LONDON->IN_LONDON ✓ | arr IN_OFFICE->REMOTE ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE,JS_TS,AI_ML->NODE,JS_TS ✗ | comp UP_TO_ONLY->RANGE_75_99K ✗
+                    London | REMOTE | LEVEL_3 | Nodejs, JavaScript, TypeScript | £95,000
+
+[129/239] ✗   1.5s  Associate Developer                         maybe->bad_fit         35%
+                    loc UNK->OUTSIDE_UK ✗ | arr UNK->REMOTE ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE,AI_ML->AI_ML ✗ | comp ABOVE_100K->RANGE_75_99K ✗
+                    N/A | REMOTE | LEVEL_3 | AI, ML | £100k
+
+[130/239] ✓   1.5s  Lead Engineer                               good_fit               35%
+[131/239] !   1.5s  Frontend Developer                          INVALID TOKEN: ['Invalid comp token: "£95,000"']
+[132/239] ✓   1.7s  IT Support Engineer                         good_fit               36%
+[133/239] ✗   1.6s  Technical Writer                            maybe->good_fit        35%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE->NODE ✓ | comp RANGE_75_99K->RANGE_75_99K ✓
+                    REMOTE | REMOTE | LEVEL_3 | Node.js | £75,000-£95,000
+
+[134/239] ✓   1.8s  Project Manager                             good_fit               36%
+[135/239] ✓   1.7s  Developer                                   good_fit               36%
+[136/239] ✗   1.9s  QA Engineer                                 maybe->good_fit        36%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE->NODE,REACT,JS_TS,AI_ML ✗ | comp RANGE_75_99K->RANGE_75_99K ✓
+                    UK Remote | REMOTE | QA Engineer | NodeJS, React, JS_TS, AI_ML | £75,000-£95,000
+
+[137/239] ✓   1.7s  Business Analyst                            good_fit               36%
+[138/239] !   1.8s  Scrum Master                                INVALID TOKEN: ['Invalid tech token: "AGILE"', 'Invalid tech token: "PROJECT MANAGEMENT TOOLS"']
+[139/239] !   1.7s  Product Manager                             INVALID TOKEN: ['Invalid comp token: "£75,000-£95,000"']
+[140/239] ✗   1.6s  Software Engineer                           bad_fit->good_fit      36%
+                    loc UNK->IN_LONDON ✗ | arr UNK->REMOTE ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE,JS_TS->NODE,REACT,JS_TS ✗ | comp RANGE_75_99K->RANGE_75_99K ✓
+                    London | Node.js, ReactJS, NodeJS | £80k-£100k
+
+[141/239] !   1.4s  Full Stack Engineer                         INVALID TOKEN: ['Invalid tech token: "ML"']
+[142/239] ✗   1.6s  Engineering Manager                         maybe->good_fit        35%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE->NODE ✓ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    UK Remote | REMOTE | LEVEL_3 | Node.js | £60,000-£80,000
+
+[143/239] ✗   1.5s  QA Engineer                                 bad_fit->maybe         35%
+                    loc UNK->UNK ✓ | arr UNK->REMOTE ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE,AI_ML->NODE,AI_ML ✓ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    N/A | REMOTE | QA Engineer | Node.js, AI/ML | £65k
+
+[144/239] !   3.1s  Software Developer                          INVALID TOKEN: ['Invalid comp token: "£87k - £124k"', 'Invalid tech token: "PHP"']
+[145/239] !   2.9s  Senior Software Developer                   INVALID TOKEN: ['Invalid tech token: "JavaScript"', 'Invalid tech token: "AWS Lambda"', 'Invalid tech token: "AWS DynamoDB"', 'Invalid tech token: "AWS OpenSearch"']
+[146/239] ✗   2.2s  Senior Technical Architect                  bad_fit->good_fit      34%
+                    loc OUTSIDE_UK->IN_LONDON ✗ | arr UNK->REMOTE ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT->NODE,REACT,JS_TS,AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+                    Toronto | REMOTE | LEVEL_3 | Node, React, JS_TS, AI_ML | £GBP
+
+[147/239] !   2.1s  Software Engineer (Entry-Level)             INVALID TOKEN: ['Invalid comp token: "£84,000"']
+[148/239] !   3.3s  Senior Software Engineer - Web (m/f/d)      INVALID TOKEN: ['Invalid tech token: "Vue.js"', 'Invalid tech token: "React.js"', 'Invalid tech token: "Node.js"']
+[149/239] ✗   1.9s  Full Stack .NET Developer                   bad_fit->maybe         34%
+                    loc OUTSIDE_UK->IN_LONDON ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech JS_TS,AI_ML->NODE,JS_TS ✗ | comp NO_GBP->NO_GBP ✓
+                    Cootehill, County Cavan, Ireland | C#, JavaScript, HTML5, CSS3
+
+[150/239] !   2.3s  Senior Software Engineer                    INVALID TOKEN: ['Invalid comp token: "£500–£700/day"']
+[151/239] ✗   1.8s  Support Engineer                            bad_fit->maybe         33%
+                    loc OUTSIDE_UK->IN_LONDON ✗ | arr IN_OFFICE->HYBRID ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech AI_ML->NODE,JS_TS ✗ | comp NO_GBP->NO_GBP ✓
+                    Dublin | Java, Python, SQL, Node.js
+
+[152/239] ✗   2.0s  Data Engineer                               bad_fit->maybe         33%
+                    loc OUTSIDE_UK->UK_OTHER ✗ | arr UNK->REMOTE ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech JS_TS,AI_ML->NODE,REACT,JS_TS,AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+                    Bengaluru | REMOTE | LEVEL_3 | Node, React, JS_TS, AI_ML | GOBPLT
+
+[153/239] !   1.5s  Backend Engineer                            INVALID TOKEN: ['Invalid comp token: "£"', 'Invalid tech token: "Snowflake"']
+[154/239] !   2.0s  Freelance Full Stack Developer              INVALID TOKEN: ['Invalid comp token: "£80 - £130/h"', 'Invalid tech token: "JavaScript, TypeScript, React, Next.js, Node.js"']
+[155/239] !   1.5s  Software Engineer (backend Focused)         INVALID TOKEN: ['Invalid comp token: "£"']
+[156/239] ✗   1.7s  Back End Developer                          good_fit->maybe        32%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,JS_TS->NODE,JS_TS ✓ | comp RANGE_75_99K->RANGE_75_99K ✓
+                    London | JavaScript, TypeScript, NodeJS | £90k
+
+[157/239] !   2.4s  Backend Engineer (ai Platform) - London     INVALID TOKEN: ['Invalid tech token: "NODE, REACT, JS_TS, AI_ML" (expected array)']
+[158/239] ✓   2.0s  Backend Engineer                            maybe                  32%
+[159/239] !   3.0s  Creator Partnerships & Business Developmen  INVALID TOKEN: ['Invalid sen token: "£45,000–£60,000"']
+[160/239] ✓   2.5s  CRM +hubspot Technical Executive            bad_fit                32%
+[161/239] ✓   2.0s  Data Analyst                                maybe                  33%
+[162/239] !   2.1s  Data Scientist                              INVALID TOKEN: ['Invalid comp token: "£48,000-£53,000"']
+[163/239] ✗   1.7s  Ecommerce & Digital Marketing Manager - Up  bad_fit->maybe         33%
+                    loc IN_LONDON->UK_OTHER ✗ | arr UNK->HYBRID ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech OOS->AI_ML ✗ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    London | REMOTE | LEVEL_3 | JS_TS, AI_ML | £60,000
+
+[164/239] !   2.3s  Founding Engineer (£80k-£100k + Equity) At  INVALID TOKEN: ['Invalid tech token: "AI, React, JS_TS, AI_ML"']
+[165/239] ✗   2.9s  Frontend Developer (12-month Fixed-term Co  bad_fit->good_fit      32%
+                    loc UK_OTHER->UK_OTHER ✓ | arr IN_OFFICE->REMOTE ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech JS_TS->NODE,REACT,JS_TS,AI_ML ✗ | comp RANGE_45_54K->RANGE_55_74K ✗
+                    Blackburn | REMOTE | LEVEL_3 | Node, React, JS_TS, AI_ML | £40,000 - £50,000
+
+[166/239] ✗   1.6s  Frontend Developer                          maybe->good_fit        32%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech REACT,JS_TS->REACT,JS_TS ✓ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    London | REMOTE | Frontend Developer | React | £60-80k
+
+[167/239] ✗   1.6s  Frontend Developer                          bad_fit->maybe         32%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->REMOTE ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech REACT,JS_TS->NODE,JS_TS ✗ | comp NO_GBP->RANGE_75_99K ✗
+                    Leeds | REMOTE | LEVEL_3 | React, TypeScript | £600
+
+[168/239] !   2.4s  Frontend Developer                          INVALID TOKEN: ['Invalid tech token: "HTML5"', 'Invalid tech token: "CSS3"', 'Invalid tech token: "ES6+"', 'Invalid tech token: "Blazor"', 'Invalid tech token: "MudBlazor"']
+[169/239] ✓   2.6s  Frontend Platform Engineer                  maybe                  32%
+[170/239] ✓   2.0s  Frontend Product Engineer | EU / UK         good_fit               32%
+[171/239] ✗   2.3s  Full Stack Developer                        good_fit->maybe        32%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->REMOTE ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE,REACT,JS_TS,AI_ML->NODE,JS_TS,AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+                    London | REMOTE | FULL STACK DEVELOPER | React, Node.js, PHP, JS, AI | £
+
+[172/239] ✗   1.5s  Full Stack Developer (Typescript/NodeJs)    maybe->good_fit        32%
+                    loc UK_OTHER->IN_LONDON ✗ | arr HYBRID->REMOTE ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE,REACT,JS_TS,AI_ML->NODE,JS_TS ✗ | comp RANGE_45_54K->RANGE_75_99K ✗
+                    City Of Bristol | REMOTE | LEVEL_3 | Node.js, TypeScript | £35k to £60k
+
+[173/239] ✗   2.0s  Full Stack Engineer (£60k-£80k + Equity) A  maybe->bad_fit         32%
+                    loc IN_LONDON->UK_OTHER ✗ | arr UNK->HYBRID ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech AI_ML->OOS ✗ | comp RANGE_55_74K->NO_GBP ✗
+                    London | £60k-£80k + Equity
+
+[174/239] !   1.9s  Full Stack Engineer                         PARSE FAIL
+           Raw: {"loc_raw":"Northern Ireland","loc":"IN_LONDON","arr_raw":null,"arr":"HYBRID","sen_raw":null,"sen":"LEVEL_2","tech_raw":"JavaScript / TypeScript, .NET / C#", AWS","tech":["JavaScript / TypeScript",".NET / C#","AWS","cloud-native environment"],"comp_raw":null,"comp":"£70,000"}
+[175/239] ✓   1.9s  Full Stack Engineer                         good_fit               32%
+[176/239] ✗   2.0s  Full Stack Engineer (.net / Python / Types  bad_fit->maybe         32%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech REACT,JS_TS->NODE,REACT,JS_TS,AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+                    Surrey | Node.js, React, Angular | £5000 - £7000
+
+[177/239] !   2.7s  Fullstack Web Developer – Humanitarian Ope  INVALID TOKEN: ['Invalid tech token: "JavaScript"', 'Invalid tech token: "TypeScript"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Next.js"']
+[178/239] ✗   2.2s  Graduate Frontend Engineer                  bad_fit->good_fit      31%
+                    loc IN_LONDON->UK_OTHER ✗ | arr UNK->HYBRID ✗ | sen LEVEL_1->LEVEL_2 ✗ | tech REACT,JS_TS->NODE,REACT,JS_TS,AI_ML ✗ | comp NO_GBP->RANGE_75_99K ✗
+                    London | £1.4 trillion
+
+[179/239] !   3.0s  IT Support Associate                        INVALID TOKEN: ['Invalid comp token: "£30,000 - £40,000"']
+[180/239] ✗   2.2s  IT Support Engineer                         bad_fit->good_fit      31%
+                    loc UK_OTHER->IN_LONDON ✗ | arr IN_OFFICE->HYBRID ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech OOS->NODE,REACT,JS_TS,AI_ML ✗ | comp BELOW_45K->RANGE_55_74K ✗
+                    Liverpool | REMOTE | LEVEL_3 | Node, React, JS_TS, AI_ML | £35,000 - £40,000
+
+[181/239] ✓   1.7s  Javascript Fullstack Engineer - Senior      maybe                  31%
+[182/239] !   1.5s  Junior Data Engineer                        INVALID TOKEN: ['Invalid tech token: "SQL, Python"']
+[183/239] ✓   1.7s  Junior Developer                            bad_fit                32%
+[184/239] ✗   1.9s  Junior Front-End (react) Engineer - Up To   bad_fit->maybe         32%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_1->LEVEL_3 ✗ | tech REACT,JS_TS->NODE,JS_TS,AI_ML ✗ | comp UP_TO_ONLY->NO_GBP ✗
+                    London | JavaScript, React, Node.js, TypeScript | £100,000+ Bonus
+
+[185/239] ✓   2.0s  Junior Full Stack PHP Software Engineer     bad_fit                32%
+[186/239] ✗   2.3s  Junior Software Developer                   bad_fit->maybe         32%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->REMOTE ✗ | sen LEVEL_1->LEVEL_3 ✗ | tech NODE,JS_TS->NODE,JS_TS ✓ | comp BELOW_45K->RANGE_55_74K ✗
+                    Norwich | REMOTE | LEVEL_3 | Node.js, React, TypeScript | £30,000-£32,000
+
+[187/239] ✓   1.8s  Junior Software Engineer At Stitch Health   bad_fit                32%
+[188/239] ✗   2.3s  Lead Software Engineer (full Stack)         good_fit->maybe        32%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->REMOTE ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT,JS_TS->NODE,REACT,JS_TS ✓ | comp ABOVE_100K->RANGE_55_74K ✗
+                    Edinburgh | REMOTE | LEVEL_3 | React, TypeScript, Node.js | £92,701 - £109,060
+
+[189/239] ✓   1.8s  Lead Test Engineer                          bad_fit                32%
+[190/239] ✗   1.9s  QA Engineer                                 maybe->good_fit        32%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->REMOTE ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech AI_ML->NODE,AI_ML ✗ | comp UP_TO_ONLY->RANGE_75_99K ✗
+                    London | REMOTE | QA Engineer | Node.js, React, AI | £80,000
+
+[191/239] !   2.7s  QA Engineer                                 INVALID TOKEN: ['Invalid sen token: "QA Engineer"']
+[192/239] ✓   1.9s  Quality Engineer : Manual Software Testing  bad_fit                32%
+[193/239] ✗   2.5s  React Native Developer                      bad_fit->good_fit      32%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->REMOTE ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech REACT->NODE,REACT,JS_TS,AI_ML ✗ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    Manchester | REMOTE | LEVEL_3 | React Native | £60k-£75k
+
+[194/239] ✓   3.2s  Research Software Engineer                  bad_fit                32%
+[195/239] ✓   2.2s  Senior Back End Software Engineer           maybe                  33%
+[196/239] ✗   2.1s  Senior Backend Developer                    bad_fit->good_fit      33%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->REMOTE ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech OOS->NODE,REACT,JS_TS,AI_ML ✗ | comp RANGE_75_99K->RANGE_75_99K ✓
+                    London | REMOTE | LEVEL_3 | Node, React, JS_TS, AI_ML | £90k to £100k
+
+[197/239] ✓   1.6s  Senior Data Engineer AWS - Finance Consult  bad_fit                33%
+[198/239] ✗   1.5s  Senior DevOps Engineer                      maybe->bad_fit         33%
+                    loc UK_OTHER->UK_OTHER ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech AI_ML->OOS ✗ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    Little London | REMOTE | LEVEL_3 | AI_ML | £60k
+
+[199/239] !   1.7s  Senior Frontend Developer                   INVALID TOKEN: ['Invalid comp token: "£80k"']
+[200/239] ✗   1.9s  Senior Full Stack Engineer                  maybe->good_fit        32%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->REMOTE ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT,JS_TS->NODE,REACT,JS_TS,AI_ML ✗ | comp UP_TO_ONLY->RANGE_75_99K ✗
+                    Leeds | REMOTE | LEVEL_3 | Node, React, JS_TS, AI_ML | £80k
+
+[201/239] ✓   2.6s  Senior Full Stack Software Developer (uk)   maybe                  33%
+[202/239] !   2.2s  Senior Full-Stack Software Engineer         INVALID TOKEN: ['Invalid comp token: "£5000"', 'Invalid tech token: "TYPESCRIPT"', 'Invalid tech token: "PYTHON"', 'Invalid tech token: "NODE.JS"']
+[203/239] ✗   1.9s  Senior Games Developer - PixiJS             bad_fit->maybe         33%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_2 ✗ | tech JS_TS->NODE,JS_TS,AI_ML ✗ | comp RANGE_55_74K->NO_GBP ✗
+                    England
+
+[204/239] ✗   1.9s  Senior JavaScript Developer Vue 3           bad_fit->good_fit      32%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->REMOTE ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech JS_TS->NODE,JS_TS,AI_ML ✗ | comp UP_TO_ONLY->RANGE_75_99K ✗
+                    Billericay | REMOTE | LEVEL_3 | JavaScript, Vue.js | £75k
+
+[205/239] ✗   2.0s  Senior Machine Learning Engineer            good_fit->bad_fit      32%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->REMOTE ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech JS_TS,AI_ML->OOS ✗ | comp ABOVE_100K->NO_GBP ✗
+                    London Area, United Kingdom
+
+[206/239] ✗   4.0s  Senior Product Engineer (TS/NodeJS/Vue)     good_fit->maybe        32%
+                    loc IN_LONDON->UK_OTHER ✗ | arr REMOTE->HYBRID ✗ | sen LEVEL_3->LEVEL_2 ✗ | tech NODE,REACT,JS_TS,AI_ML->NODE,JS_TS,AI_ML ✗ | comp NO_GBP->RANGE_75_99K ✗
+                    London
+
+[207/239] !   1.9s  Senior Software Engineer                    INVALID TOKEN: ['Invalid tech token: "JavaScript"']
+[208/239] !   2.1s  Senior Software Engineer                    INVALID TOKEN: ['Invalid tech token: "Java"', 'Invalid tech token: "node.js"']
+[209/239] !   4.1s  Senior Software Engineer                    INVALID TOKEN: ['Invalid arr token: "UK_OTHER"']
+[210/239] ✗   2.1s  Senior Software Engineer                    maybe->bad_fit         31%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech REACT,JS_TS,AI_ML->OOS ✗ | comp NO_GBP->NO_GBP ✓
+                    Manchester
+
+[211/239] ✗   2.3s  Senior Software Engineer                    maybe->good_fit        31%
+                    loc UK_OTHER->UK_OTHER ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT,JS_TS,AI_ML->NODE,REACT,JS_TS,AI_ML ✓ | comp UP_TO_ONLY->RANGE_75_99K ✗
+                    UK | REMOTE | LEVEL_3 | Node, React, TypeScript, AI_ML | £80,000
+
+[212/239] ✓   2.4s  Senior Software Engineer - Backend AI Nati  good_fit               32%
+[213/239] !   2.7s  Senior Software Engineer, Backend           INVALID TOKEN: ['Invalid tech token: "Elixir"', 'Invalid tech token: "Ruby"', 'Invalid tech token: "Node.JS"']
+[214/239] ✗   2.1s  Senior Software Engineer (backend)          good_fit->bad_fit      31%
+                    loc IN_LONDON->UK_OTHER ✗ | arr UNK->HYBRID ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,JS_TS,REACT,AI_ML->OOS ✗ | comp NO_GBP->NO_GBP ✓
+                    London
+
+[215/239] ✗   2.4s  Senior Software Engineer, Full Stack, Lear  maybe->good_fit        31%
+                    loc IN_LONDON->IN_LONDON ✓ | arr UNK->REMOTE ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech JS_TS,AI_ML->JS_TS,AI_ML ✓ | comp NO_GBP->RANGE_75_99K ✗
+                    London | REMOTE | LEVEL_3 | JavaScript, TypeScript, AI, ML | £166,000-$244,000
+
+[216/239] ✓   2.0s  Senior Software Engineer - Ts, React, Node  good_fit               31%
+[217/239] ✓   1.6s  Senior Software/Founding Engineer - Health  good_fit               32%
+[218/239] !   2.3s  Software Engineer                           INVALID TOKEN: ['Invalid tech token: "JAVA"', 'Invalid tech token: "PYTHON"', 'Invalid tech token: "KAFKA"', 'Invalid tech token: "VueJS"']
+[219/239] !   1.9s  Software Engineer                           INVALID TOKEN: ['Invalid comp token: "£35K"']
+[220/239] ✓   2.0s  Software Engineer                           bad_fit                32%
+[221/239] !   1.8s  Software Engineer                           INVALID TOKEN: ['Invalid tech token: "PYTHON"']
+[222/239] !  17.5s  Software Engineer                           INVALID TOKEN: ['Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: "Node.js"', 'Invalid tech token: ""']
+[223/239] ✓   2.2s  Software Engineer, Front End                bad_fit                32%
+[224/239] ✗   2.6s  Software Engineer Intern                    bad_fit->good_fit      32%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->REMOTE ✗ | sen LEVEL_1->LEVEL_3 ✗ | tech OOS->NODE,REACT,JS_TS ✗ | comp NO_GBP->NO_GBP ✓
+                    London | REMOTE | LEVEL_3 | JavaScript, TypeScript, React, Node.js | £
+
+[225/239] ✗   2.6s  Software/ Platform Engineer                 maybe->good_fit        32%
+                    loc IN_LONDON->UK_OTHER ✗ | arr IN_OFFICE->REMOTE ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech AI_ML->NODE,REACT,JS_TS,AI_ML ✗ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    London | REMOTE | LEVEL_3 | Node, React, JS_TS, AI_ML | £60,000-80,000
+
+[226/239] ✓   2.3s  Trainee Telematics & CCTV Installation Eng  bad_fit                32%
+[227/239] !   2.5s  Unity 3D Developer                          PARSE FAIL
+           Raw: {loc_raw:"Edinburgh", loc:"UK_OTHER", arr_raw:"REMOTE", arr:"REMOTE", sen_raw:"LEVEL_3", sen:"LEVEL_3", tech_raw:"JavaScript, C#", C++, C, C++, React, Node.js, AI, OOS", tech:["NODE", "JS_TS", "AI_ML"], comp_raw:"£45,000 – £55,000", comp:"RANGE_55_74K"}
+[228/239] ✗   2.5s  Backend Developer                           bad_fit->good_fit      32%
+                    loc OUTSIDE_UK->IN_LONDON ✗ | arr UNK->REMOTE ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech REACT,JS_TS->NODE,REACT,JS_TS,AI_ML ✗ | comp NO_GBP->RANGE_75_99K ✗
+                    United States | REMOTE | LEVEL_3 | Node, React, JS_TS, AI_ML | £80K - £130K
+
+[229/239] !   3.4s  Backend Software Development Engineer - Mi  PARSE FAIL
+           Raw: {loc_raw:"San Francisco", loc:"IN_LONDON", arr_raw:"REMOTE", arr:"REMOTE", sen_raw:"LEVEL_3", sen:"LEVEL_3", tech_raw:"Java, C++, Go, C#", Ruby, Python", tech:["Java", "C++", "Go", "C#", "Ruby", "Python"], comp_raw:"£117,200 - £313,700", comp:"£117,200 - £313,700"}
+[230/239] !   2.0s  Founding Software Engineer                  INVALID TOKEN: ['Invalid tech token: "AI, NODE"', 'Invalid tech token: "AI product features"']
+[231/239] ✗   1.8s  Full-Stack Engineer                         bad_fit->good_fit      31%
+                    loc OUTSIDE_UK->IN_LONDON ✗ | arr IN_OFFICE->REMOTE ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech REACT->NODE,REACT,JS_TS,AI_ML ✗ | comp NO_GBP->UP_TO_ONLY ✗
+                    San Francisco | REMOTE | LEVEL_3 | Node, React, JS_TS, AI_ML | GBP
+
+[232/239] !   2.9s  Full-Stack Software Engineer                INVALID TOKEN: ['Invalid comp token: "£100,000 - £150,000"']
+[233/239] ✓   3.4s  Jr. Front-End Engineer                      bad_fit                31%
+[234/239] !   2.4s  Software Engineer - Full Stack              PARSE FAIL
+           Raw: {“loc_raw”: "New York, NY”, "loc": "IN_LONDON", "arr_raw": "", "arr": "REMOTE", "sen_raw": "", "sen": "", "tech_raw": "Node.js, React, TypeScript, Express", "tech": ["NODE", "REACT", "JS_TS", "Express"], "comp_raw": "", "comp": "NO_GBP"}
+[235/239] ✗   2.6s  Software Engineer I                         bad_fit->good_fit      31%
+                    loc OUTSIDE_UK->UK_OTHER ✗ | arr UNK->REMOTE ✗ | sen LEVEL_1->LEVEL_3 ✗ | tech JS_TS,AI_ML->NODE,REACT,JS_TS,AI_ML ✗ | comp NO_GBP->RANGE_75_99K ✗
+                    Redmond | REMOTE | LEVEL_3 | Node, React, JS_TS, AI_ML | USD $84,200 - $165,200
+
+[236/239] !   2.9s  Software Engineer - New Grad                INVALID TOKEN: ['Invalid comp token: "£124,000—£155,000"']
+[237/239] ✗   2.0s  Senior DevOps Engineer - AWS Infrastructur  bad_fit->good_fit      31%
+                    loc REMOTE->REMOTE ✓ | arr HYBRID->REMOTE ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech OOS->NODE,REACT,JS_TS,AI_ML ✗ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    Remote | REMOTE | LEVEL_3 | Node, React, JS_TS, AI_ML | £72k
+
+[238/239] !   2.3s  Junior DevOps Engineer                      INVALID TOKEN: ['Invalid sen token: "Senior"']
+[239/239] ✗   2.1s  Senior Software Engineer                    maybe->good_fit        31%
+                    loc REMOTE->UK_OTHER ✗ | arr HYBRID->REMOTE ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech JS_TS->NODE,REACT,JS_TS,AI_ML ✗ | comp NO_GBP->RANGE_75_99K ✗
+                    London | REMOTE | LEVEL_3 | Node, React, JS_TS, AI_ML | £GBP
+
+
+========================================================================
+  V7 EVAL  adapters_v10_essential_quick  iter 0000300
+  eval set: test_labeled  |  prompt: student_v10  |  n=239
+========================================================================
+  Parse failures: 7   Invalid tokens: 68   Fuzzy corrections: 21   Valid: 164/239
+
+  Label accuracy:  73/164 = 44.5%   NOT MET  (target >=90%)
+  Score accuracy:  23/164 = 14.0%
+
+  Fit accuracy (macro):  45.9%  NOT MET   gf=82%  maybe=19%  bad=36%
+
+  Field token accuracy:
+    loc            ###########.........   91/164  55.5%
+    arr            #########...........   76/164  46.3%
+    sen            #########...........   75/164  45.7%
+    tech           ######..............   57/164  34.8%
+    comp           ########............   70/164  42.7%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    good_fit          37      45     82%
+    maybe              8      42     19%  !
+    bad_fit           28      77     36%  !
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit          [37]         4         4
+    maybe               29       [8]         5
+    bad_fit             31        18      [28]
+
+  Field error transitions (top per field):
+    loc           : IN_LONDON->UK_OTHER:24  REMOTE->IN_LONDON:13  OUTSIDE_UK->UK_OTHER:11  UNK->UK_OTHER:8
+    arr           : HYBRID->REMOTE:34  IN_OFFICE->REMOTE:14  UNK->HYBRID:12  UNK->REMOTE:12
+    sen           : LEVEL_2->LEVEL_3:59  LEVEL_1->LEVEL_3:22  LEVEL_1->LEVEL_2:4  LEVEL_3->LEVEL_2:4
+    tech          : OOS->AI_ML,JS_TS,NODE,REACT:12  JS_TS,NODE,REACT->AI_ML,JS_TS,NODE,REACT:6  AI_ML,JS_TS,NODE->JS_TS,NODE:6  AI_ML->OOS:5
+    comp          : RANGE_55_74K->RANGE_75_99K:30  NO_GBP->RANGE_75_99K:14  ABOVE_100K->RANGE_75_99K:10  UP_TO_ONLY->RANGE_75_99K:7
+
+  Error direction:  over-scoring 49  |  under-scoring 9
+
+------------------------------------------------------------------------
+  adapters_v10_essential_quick/0000300  label=44.5%  loc=55.5%  role=45.7%  tech=34.8%  comp=42.7%  wa=46.3%  gf=82%  maybe=19%  bad=36%
+========================================================================
+
+Predictions: eval_results/adapters_v10_essential_quick/2026-03-12_125409_test_labeled_student_v10_0000300.predictions.jsonl
+Summary: eval_results/adapters_v10_essential_quick/2026-03-12_125409_test_labeled_student_v10_0000300.summary.json

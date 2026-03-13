@@ -1,0 +1,10 @@
+Adapter: finetune/adapters_v11
+Prompt: prompts/student_v11.txt
+Hint: False  Postprocess: False  Clean: True
+Jobs: 100
+------------------------------------------------------------
+============================================================
+Label accuracy: 0.0%  (0/0)
+Parse failures: 100  Invalid tokens: 0  Fuzzy: 0
+============================================================
+Predictions: eval_results_v11/2026-03-12_184833_valid_labeled_preds.jsonl
