@@ -1,0 +1,39 @@
+# MLX LoRA config for V12 student model — Qwen3-0.6B
+# Phase 5: Newer architecture at 0.5B-class size.
+# Key question: Does Qwen3's improved instruction following reduce parse failures?
+#
+# Changes from 0.5B/1.5B configs:
+#   - batch_size: 4 (up from 1) — Qwen3-0.6B is small enough to fit multiple samples
+#   - grad_accumulation_steps: 4 (down from 16) — effective batch still = 16
+#
+# Training: ALWAYS fresh from base (NEVER resume from existing adapter)
+
+model: "mlx-community/Qwen3-0.6B-4bit"
+data: "data/v12/mlx"
+train: true
+fine_tune_type: "lora"
+
+lora_parameters:
+  rank: 16
+  alpha: 32
+  dropout: 0.05
+  scale: 1.0
+  weight_decay: 0.0
+
+batch_size: 1
+grad_accumulation_steps: 16
+iters: 1920
+resume_adapter_file: "finetune/adapters_v12_qwen3_0.6B/0001050_adapters.safetensors"
+learning_rate: 2e-5
+warmup_steps: 100
+
+max_seq_length: 5120
+
+val_batches: 40
+steps_per_eval: 25
+
+adapter_path: "finetune/adapters_v12_qwen3_0.6B"
+save_every: 50
+
+mask_prompt: true
+grad_checkpoint: true

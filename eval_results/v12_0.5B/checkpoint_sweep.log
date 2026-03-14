@@ -1,0 +1,124 @@
+=== Evaluating iter 400 ===
+
+Predictions: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_120307_test_labeled_audited_student_v7_0000400.predictions.jsonl
+Summary: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_120307_test_labeled_audited_student_v7_0000400.summary.json
+
+Saved: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_120307_test_labeled_audited_student_v7_0000400.txt
+v12_hybrid: 198/239 = 82.8%  95% CI: [77.6%, 87.1%] (parse_fail=93, fallback to regex)
+  V12 Hybrid (regex loc/tech/comp + model sen/arr)         82.8%  [77.6%, 87.1%]
+  iter=400 hybrid=82.8% sen=38.5% inv_tok=82 parse_fail=93
+
+=== Evaluating iter 600 ===
+
+Predictions: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_122208_test_labeled_audited_student_v7_0000600.predictions.jsonl
+Summary: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_122208_test_labeled_audited_student_v7_0000600.summary.json
+
+Saved: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_122208_test_labeled_audited_student_v7_0000600.txt
+v12_hybrid: 203/239 = 84.9%  95% CI: [79.9%, 88.9%] (parse_fail=97, fallback to regex)
+  V12 Hybrid (regex loc/tech/comp + model sen/arr)         84.9%  [79.9%, 88.9%]
+  iter=600 hybrid=84.9% sen=47.3% inv_tok=78 parse_fail=97
+
+=== Evaluating iter 800 ===
+                    Somerville, MA | Hybrid work environment and are in the office 3+ days/per week | Full-Stack Software Engineer | TypeScript, API design, unit testing, integration testing, debuggin
+
+[233/239] ✓   1.6s  Jr. Front-End Engineer                      bad_fit                31%
+/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/resource_tracker.py:396: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown: {'/mp-mlugn2_q'}
+  warnings.warn(
+WARNING: No predictions file for iter 800
+=== Evaluating iter 1000 ===
+
+Predictions: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_124621_test_labeled_audited_student_v7_0001000.predictions.jsonl
+Summary: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_124621_test_labeled_audited_student_v7_0001000.summary.json
+
+Saved: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_124621_test_labeled_audited_student_v7_0001000.txt
+v12_hybrid: 211/239 = 88.3%  95% CI: [83.6%, 91.8%] (parse_fail=66, fallback to regex)
+  V12 Hybrid (regex loc/tech/comp + model sen/arr)         88.3%  [83.6%, 91.8%]
+  iter=1000 hybrid=88.3% sen=59.8% inv_tok=48 parse_fail=66
+
+=== Evaluating iter 1200 ===
+
+Predictions: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_130708_test_labeled_audited_student_v7_0001200.predictions.jsonl
+Summary: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_130708_test_labeled_audited_student_v7_0001200.summary.json
+
+Saved: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_130708_test_labeled_audited_student_v7_0001200.txt
+v12_hybrid: 215/239 = 90.0%  95% CI: [85.5%, 93.2%] (parse_fail=49, fallback to regex)
+  V12 Hybrid (regex loc/tech/comp + model sen/arr)         90.0%  [85.5%, 93.2%]
+  iter=1200 hybrid=90.0% sen=67.8% inv_tok=23 parse_fail=49
+
+=== Evaluating iter 1400 ===
+[ 23/239] !   2.4s  Senior Software Developer, UK               PARSE FAIL
+           Raw: {loc_raw:"London, England, United Kingdom","loc":"UK_OTHER","arr_raw":"Hybrid (2 days in the office)","arr":"HYBRID","sen_raw":"Senior","sen":"LEVEL_3","tech_raw:"React Native, React, JavaScript, Ruby, Rails, GraphQL, PostgreSQL, Redis, CouchDb","tech":["REACT","JS_TS"],"comp_raw":null,"comp":"NO_GB
+[ 24/239] !  20.2s  Full Stack Web Developer                    INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+/opt/homebrew/Cellar/python@3.14/3.14.3_1/Frameworks/Python.framework/Versions/3.14/lib/python3.14/multiprocessing/resource_tracker.py:396: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown: {'/mp-mfhprp8h'}
+  warnings.warn(
+
+Predictions: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_132405_test_labeled_audited_student_v7_0001400.predictions.jsonl
+Summary: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_132405_test_labeled_audited_student_v7_0001400.summary.json
+
+Saved: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_132405_test_labeled_audited_student_v7_0001400.txt
+v12_hybrid: 219/239 = 91.6%  95% CI: [87.4%, 94.5%] (parse_fail=50, fallback to regex)
+  V12 Hybrid (regex loc/tech/comp + model sen/arr)         91.6%  [87.4%, 94.5%]
+  iter=1400 hybrid=91.6% sen=69.0% inv_tok=28 parse_fail=50
+
+=== Evaluating iter 1600 ===
+
+Predictions: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_133607_test_labeled_audited_student_v7_0001600.predictions.jsonl
+Summary: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_133607_test_labeled_audited_student_v7_0001600.summary.json
+
+Saved: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_133607_test_labeled_audited_student_v7_0001600.txt
+v12_hybrid: 214/239 = 89.5%  95% CI: [85.0%, 92.8%] (parse_fail=71, fallback to regex)
+  V12 Hybrid (regex loc/tech/comp + model sen/arr)         89.5%  [85.0%, 92.8%]
+  iter=1600 hybrid=89.5% sen=61.1% inv_tok=44 parse_fail=71
+
+=== Evaluating iter 1800 ===
+
+Predictions: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_134918_test_labeled_audited_student_v7_0001800.predictions.jsonl
+Summary: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_134918_test_labeled_audited_student_v7_0001800.summary.json
+
+Saved: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_134918_test_labeled_audited_student_v7_0001800.txt
+v12_hybrid: 216/239 = 90.4%  95% CI: [86.0%, 93.5%] (parse_fail=75, fallback to regex)
+  V12 Hybrid (regex loc/tech/comp + model sen/arr)         90.4%  [86.0%, 93.5%]
+  iter=1800 hybrid=90.4% sen=67.4% inv_tok=28 parse_fail=75
+
+=== Evaluating iter 2000 ===
+
+Predictions: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_140101_test_labeled_audited_student_v7_0002000.predictions.jsonl
+Summary: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_140101_test_labeled_audited_student_v7_0002000.summary.json
+
+Saved: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_140101_test_labeled_audited_student_v7_0002000.txt
+v12_hybrid: 220/239 = 92.1%  95% CI: [87.9%, 94.9%] (parse_fail=60, fallback to regex)
+  V12 Hybrid (regex loc/tech/comp + model sen/arr)         92.1%  [87.9%, 94.9%]
+  iter=2000 hybrid=92.1% sen=69.5% inv_tok=16 parse_fail=60
+
+=== Evaluating iter 2200 ===
+
+Predictions: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_141014_test_labeled_audited_student_v7_0002200.predictions.jsonl
+Summary: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_141014_test_labeled_audited_student_v7_0002200.summary.json
+
+Saved: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_141014_test_labeled_audited_student_v7_0002200.txt
+v12_hybrid: 219/239 = 91.6%  95% CI: [87.4%, 94.5%] (parse_fail=78, fallback to regex)
+  V12 Hybrid (regex loc/tech/comp + model sen/arr)         91.6%  [87.4%, 94.5%]
+  iter=2200 hybrid=91.6% sen=67.8% inv_tok=21 parse_fail=78
+
+=== Evaluating iter 2400 ===
+
+Predictions: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_142023_test_labeled_audited_student_v7_0002400.predictions.jsonl
+Summary: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_142023_test_labeled_audited_student_v7_0002400.summary.json
+
+Saved: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_142023_test_labeled_audited_student_v7_0002400.txt
+v12_hybrid: 214/239 = 89.5%  95% CI: [85.0%, 92.8%] (parse_fail=111, fallback to regex)
+  V12 Hybrid (regex loc/tech/comp + model sen/arr)         89.5%  [85.0%, 92.8%]
+  iter=2400 hybrid=89.5% sen=58.2% inv_tok=21 parse_fail=111
+
+=== Done ===
+iter,val_loss,hybrid_acc,sen_acc,inv_tok,parse_fail
+400,,82.8,38.5,82,93
+600,,84.9,47.3,78,97
+1000,,88.3,59.8,48,66
+1200,,90.0,67.8,23,49
+1400,,91.6,69.0,28,50
+1600,,89.5,61.1,44,71
+1800,,90.4,67.4,28,75
+2000,,92.1,69.5,16,60
+2200,,91.6,67.8,21,78
+2400,,89.5,58.2,21,111

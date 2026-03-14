@@ -1,0 +1,560 @@
+Output: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_122208_test_labeled_audited_student_v7_0000600.txt
+Prompt: prompts/student_v7.txt
+Adapter: finetune/adapters_v12_0.5B/0000600_adapters.safetensors -> finetune/adapters_v12_0.5B/adapters.safetensors
+Model: mlx-community/Qwen2.5-0.5B-Instruct-4bit
+------------------------------------------------------------
+------------------------------------------------------------
+Running V7 eval on 239 jobs...
+
+JD preprocessing: ENABLED
+[  1/239] ✓   1.3s  Staff Software Engineer                     bad_fit               100%
+[  2/239] !   1.5s  Lead DevOps Architect                       INVALID TOKEN: ['Invalid loc token: "HYBRID"']
+[  3/239] !   5.8s  Software Engineer - Backend                 INVALID TOKEN: ['Missing field: loc', 'Missing field: arr', 'Missing field: sen', 'Missing field: tech', 'Missing field: comp']
+[  4/239] ✗   2.3s  Full-Stack Developer                        bad_fit->good_fit      25%
+                    loc OUTSIDE_UK->REMOTE ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech REACT,JS_TS->REACT,JS_TS,AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+                    Paris, Île-de-France, France (Remote) | Remote | Full-Stack Developer | MongoDB, full stack TypeScript, tRPC, React, Emotion, Vite, TypeScript, React, Emotion, TanStack Router, tRP
+
+[  5/239] ✓   1.3s  Planning Engineer                           bad_fit                40%
+[  6/239] ✓   1.6s  Head Of AI Engineering (strategy And Innov  bad_fit                50%
+[  7/239] !   7.5s  Software Engineer - Internship              INVALID TOKEN: ['Missing field: loc', 'Missing field: arr', 'Missing field: sen', 'Missing field: tech', 'Missing field: comp']
+[  8/239] !  12.4s  Senior Software Engineer                    INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[  9/239] ✓   1.4s  Software Engineer 1                         bad_fit                44%
+[ 10/239] ✗   1.4s  ATUM Deep-Tech Founder (technical) - Singa  bad_fit->maybe         40%
+                    loc OUTSIDE_UK->REMOTE ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech REACT,JS_TS,AI_ML->AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+                    Singapore, Singapore (Remote) | Remote | Technical Founder | AI/ML, biotech, robotics, cleantech, materials science, etc.
+
+[ 11/239] !  11.9s  Software Engineer - Backend                 INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[ 12/239] ✓   1.0s  Software Engineer                           bad_fit                42%
+[ 13/239] !   3.0s  Full Stack Engineer                         INVALID TOKEN: ['Invalid tech token: "POSTGRES"', 'Invalid tech token: "POSTGIS"', 'Invalid tech token: "ATLAS_MIGRATION"', 'Invalid tech token: "PRISMA"', 'Invalid tech token: "TYPESCRIPT"', 'Invalid tech token: "Konva"', 'Invalid tech token: "TAILWAND"']
+[ 14/239] !   1.9s  Full-Stack Engineer                         PARSE FAIL
+           Raw: {loc_raw:"Greater Manchester, England, United Kingdom", loc:"UK_OTHER", arr_raw:"Hybrid work model. Team members are expected to be in the office at least three days per week to foster strong collaboration and a connected team environment.", arr:"HYBRID", sen_raw:"Software Engineer", sen:"LEVEL_2", 
+[ 15/239] ✓   1.7s  Technical Director                          bad_fit                40%
+[ 16/239] ✗   1.5s  Senior Frontend Engineer                    maybe->good_fit        38%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech REACT,JS_TS->REACT,JS_TS,AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+                    London Area, United Kingdom (Hybrid) | Hybrid | Senior Frontend Engineer | React, Vite, Turbo, Tailwind CSS, Storybook
+
+[ 17/239] ✗   2.2s  Founding Engineer (£240k+ )                 maybe->bad_fit         35%
+                    loc IN_LONDON->UK_OTHER ✗ | arr IN_OFFICE->HYBRID ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech JS_TS->OOS ✗ | comp NO_GBP->NO_GBP ✓
+                    London, England, United Kingdom | We’re looking for people to take ownership, who don’t need to be told what to do, but like being given hard, complex problems and finding creative
+
+[ 18/239] !   2.1s  Modern Workplace Tech Bar Lead              PARSE FAIL
+           Raw: {loc_raw:"Glasgow, Scotland, United Kingdom", loc:"UK_OTHER", arr_raw:"Flexible Working Options", arr:"HYBRID", sen_raw:"Modern Workplace Tech Bar Lead", sen:"LEVEL_3", tech_raw:"Microsoft Entra ID & Microsoft Intune (Endpoint Manager), Windows 11 OS, Microsoft365, JAMF, Azure Virtual Desktop (AVD),
+[ 19/239] !   1.2s  Human Resources Manager                     INVALID TOKEN: ['Missing field: comp']
+[ 20/239] ✓   1.6s  Junior Software Engineer (f/m/d)            bad_fit                35%
+[ 21/239] ✓   1.4s  Cyber Infrastructure Engineer               bad_fit                38%
+[ 22/239] ✓   1.8s  Senior Software Engineer (php/laravel)      bad_fit                41%
+[ 23/239] ✓   1.6s  Senior Software Developer, UK               maybe                  43%
+[ 24/239] !  11.6s  Full Stack Web Developer                    INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[ 25/239] !  12.3s  Software Engineer (swe/swe Ii), AI Platfor  INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[ 26/239] !  11.7s  Lead, Digital Applications                  PARSE FAIL
+           Raw: {loc_raw:"Toronto Region Board of Trade", loc:"UK_OTHER", arr_raw:"Vacancy Status: Open – Immediate", arr:"HYBRID", sen_raw:"Digital Applications Lead", sen:"LEVEL_3", tech_raw:"Kentico CMS, Microsoft Azure (Web Apps, Azure Front Door, Function Apps, storage, monitoring), .NET / C#", REST APIs, Azur
+[ 27/239] !  11.1s  Data Analyst / Data Scientist               INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[ 28/239] !   1.3s  Software Engineer (Back end)                INVALID TOKEN: ['Missing field: comp']
+[ 29/239] !   1.4s  Senior Full Stack Engineer                  INVALID TOKEN: ['Invalid loc token: "HYBRID"']
+[ 30/239] ✓   1.9s  Customer Solutions Engineer                 bad_fit                37%
+[ 31/239] !   2.5s  Senior Software Engineer                    PARSE FAIL
+           Raw: {loc_raw:"London Area, United Kingdom (Hybrid)", loc:"HYBRID", arr_raw:"Hybrid", arr:"HYBRID", sen_raw:"Senior Software Engineer", sen:"LEVEL_3", tech_raw:"Golang, Kubernetes, Golang, Kubernetes", tech:["OOS"], comp_raw:"We’ll be part of a small, expert team driving a global shift in how platform en
+[ 32/239] !  11.4s  Software Engineer II-Backend                INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[ 33/239] ✗   1.9s  Senior Software Engineer, £70,000 To £85,0  good_fit->bad_fit      33%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,JS_TS,AI_ML->OOS ✗ | comp RANGE_75_99K->NO_GBP ✗
+                    Greater London, England, United Kingdom | Remote (UK based) or hybrid, we have an office in central London | Senior Software Engineer, £70,000 To £85,000, UK | Node.js, PostgreSQL,
+
+[ 34/239] !  11.1s  Senior Software Engineer                    INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[ 35/239] ✓   1.3s  Software Developer                          bad_fit                34%
+[ 36/239] !   5.4s  Data Engineer - £150k-£200k TC              INVALID TOKEN: ['Missing field: arr', 'Missing field: sen', 'Missing field: tech', 'Missing field: comp']
+[ 37/239] ✓   1.2s  Senior Product Manager                      bad_fit                35%
+[ 38/239] !   1.3s  Graduate Software Developer                 INVALID TOKEN: ['Missing field: comp']
+[ 39/239] ✗   1.9s  Senior / Lead Software Engineer             good_fit->bad_fit      33%
+                    loc IN_LONDON->UK_OTHER ✗ | arr UNK->HYBRID ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,JS_TS,AI_ML->AI_ML ✗ | comp RANGE_55_74K->NO_GBP ✗
+                    London, England, United Kingdom | We offer a salary of £62k to £74k. | Senior / Lead Software Engineer | Java, Spring Boot, Python, Microservices, AI, AI_ML | £62k to £74k
+
+[ 40/239] !  12.2s  Software Engineer, New Grad (recent 2025 G  INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[ 41/239] ✗   1.4s  Senior Data Engineer                        maybe->bad_fit         32%
+                    loc IN_LONDON->UK_OTHER ✗ | arr IN_OFFICE->IN_OFFICE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech AI_ML->OOS ✗ | comp UP_TO_ONLY->UP_TO_ONLY ✓
+                    London Area, United Kingdom | 5 days onsite – Green Park, London | Senior Data Engineer | Python, SQL, AWS, Snowflake, LLM, agent-based systems, AI workflow automation | Up to £90,
+
+[ 42/239] !  11.7s  IT Support Engineer (2nd/3rd Line) - Centr  INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[ 43/239] !  12.0s  Data Engineer                               INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[ 44/239] !  11.6s  Data Engineer                               INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[ 45/239] !   1.4s  Software Engineer                           PARSE FAIL
+           Raw: {loc_raw:"Bristol, England, United Kingdom", loc:"UK_OTHER", arr_raw:"5 days per week on-site due to workload classification (Bristol based)", arr:"IN_OFFICE", sen_raw:"Senior Software Engineer", sen:"LEVEL_3", tech_raw:"Ada programming language is key to supporting our products", tech":["OOS"]}
+[ 46/239] ✓   1.4s  Full Stack Developer                        bad_fit                30%
+[ 47/239] !   1.7s  Machine Learning Engineer                   PARSE FAIL
+           Raw: {loc_raw:"Canada", loc:"OUTSIDE_UK", arr_raw:"British Columbia (depending on location e.g. Vancouver vs. Victoria)", arr:"HYBRID", sen_raw:"Machine Learning Engineer", sen:"LEVEL_3", tech_raw:"Python, PyTorch, TensorFlow, C++, Docker containers, Kubernetes, Azure, Argo Workflows", tech":["OOS"]}
+[ 48/239] !  11.1s  Customer Success Manager                    INVALID TOKEN: ['Missing field: loc', 'Missing field: arr', 'Missing field: sen', 'Missing field: tech', 'Missing field: comp']
+[ 49/239] !  11.4s  Quality Assurance Tester                    INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[ 50/239] !  12.1s  Data Engineer                               PARSE FAIL
+           Raw: {loc_raw:"Glasgow, Scotland, United Kingdom",loc:"UK_OTHER",arr_raw:"hybrid",arr:"HYBRID",sen_raw:"Data Engineer",sen:"LEVEL_2",tech_raw:"Microsoft SQL Server, SSIS, T-SQL, SSRS, SQL Server Reporting Services, SSIS, SQL Server Integration Services, Visual Studio, C#", Oracle SQL, PLSQL, Azure, Power
+[ 51/239] !   2.1s  Data Engineer                               PARSE FAIL
+           Raw: {loc_raw:"Glasgow, Scotland, United Kingdom",loc:"UK_OTHER",arr_raw:"hybrid",arr:"HYBRID",sen_raw:"Data Engineer",sen:"LEVEL_2",tech_raw:"Microsoft SQL Server, SSIS, T-SQL, SSRS, SQL Server Reporting Services, SSRS, Oracle SQL, PLSQL, Visual Studio, C#", C#, Azure, Power BI, Oracle SQL, PLSQL, Oracl
+[ 52/239] ✓   1.7s  DevOps Engineer                             bad_fit                29%
+[ 53/239] !  11.8s  Senior Electrical Design Engineer           INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[ 54/239] !   1.3s  AI Engineer                                 INVALID TOKEN: ['Missing field: comp']
+[ 55/239] ✓   2.2s  Senior Engineering Manager                  bad_fit                29%
+[ 56/239] ✓   1.6s  Software Engineer I                         bad_fit                30%
+[ 57/239] ✗   1.4s  Front End Developer (remote)                maybe->bad_fit         30%
+                    loc IN_LONDON->UK_OTHER ✗ | arr REMOTE->HYBRID ✗ | sen LEVEL_2->LEVEL_1 ✗ | tech NODE,REACT,JS_TS->REACT,JS_TS ✗ | comp NO_GBP->NO_GBP ✓
+                    Greater London Area | Remote / Home Working, or London WeWork option | Junior/mid level front-end developer | React.js, Typescript, Debugging, Javascript build tools, Node.js
+
+[ 58/239] ✓   1.9s  Security Engineer                           bad_fit                31%
+[ 59/239] !   1.9s  Software Developer                          INVALID TOKEN: ['Invalid loc token: "HYBRID"']
+[ 60/239] ✓   1.7s  Software Engineer                           bad_fit                32%
+[ 61/239] ✓   1.9s  Senior DevOps Engineer                      bad_fit                33%
+[ 62/239] ✓   1.4s  AI Platform Engineer                        bad_fit                34%
+[ 63/239] !  11.4s  Founding Engineer (Series A)                INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[ 64/239] ✗   2.1s  Head of Infrastructure                      maybe->good_fit        33%
+                    loc UK_OTHER->UK_OTHER ✓ | arr IN_OFFICE->IN_OFFICE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,JS_TS->NODE,REACT,JS_TS,AI_ML ✗ | comp RANGE_75_99K->RANGE_75_99K ✓
+                    On-site - Oxford, UK | On-site - Oxford, UK | Head of Infrastructure | Node.js, TypeScript, PostgreSQL using Prisma/Drizzle, Prisma, Drizzle, PostgreSQL, Prisma, Drizzle, Node.js, 
+
+[ 65/239] !   6.0s  Senior Software Engineer                    INVALID TOKEN: ['Missing field: arr', 'Missing field: sen', 'Missing field: tech', 'Missing field: comp']
+[ 66/239] !   1.0s  Senior Software Engineer, Strategy Platfor  INVALID TOKEN: ['Invalid loc token: "HYBRID"']
+[ 67/239] !   1.5s  Lead Frontend Engineer                      INVALID TOKEN: ['Invalid loc token: "HYBRID"']
+[ 68/239] !   1.6s  Software Engineer | React & Python (full s  INVALID TOKEN: ['Invalid loc token: "HYBRID"']
+[ 69/239] ✗   2.0s  Fintech & Tech for Good | Profitable & Hyp  good_fit->maybe        30%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT,JS_TS->REACT,JS_TS,AI_ML ✗ | comp UP_TO_ONLY->NO_GBP ✗
+                    London Area, United Kingdom (Hybrid) | 3 Days Per Week LDN | Senior/Staff/Principal | React, TypeScript & Node, Next.js, Express, PostgreSQL, High pace early-stage businesses, with
+
+[ 70/239] ✓   1.2s  Frontend Developer                          bad_fit                31%
+[ 71/239] ✗   1.2s  Staff Engineer                              good_fit->bad_fit      31%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_3->LEVEL_1 ✗ | tech NODE,AI_ML->NODE,AI_ML ✓ | comp RANGE_75_99K->RANGE_55_74K ✗
+                    Anywhere | Staff Engineer | Nodejs, AI/ML, Node.js | £75,000 - £95,000 annually
+
+[ 72/239] !   0.8s  Technical Writer                            INVALID TOKEN: ['Missing field: comp']
+[ 73/239] !   0.8s  Data Analyst                                INVALID TOKEN: ['Missing field: comp']
+[ 74/239] ✗   1.2s  Full Stack Engineer                         maybe->bad_fit         30%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE,AI_ML->OOS ✗ | comp RANGE_55_74K->NO_GBP ✗
+                    Remote | Remote | Full Stack Engineer | Node.js, AI/ML, AI/ML, AWS, Azure | Competitive salary ranging from £55,000 to £70,000
+
+[ 75/239] ✓   1.2s  Junior Software Engineer                    bad_fit                31%
+[ 76/239] ✗   1.2s  Security Engineer                           good_fit->bad_fit      30%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,AI_ML->OOS ✗ | comp RANGE_75_99K->BELOW_45K ✗
+                    UK Remote | Remote | Security Engineer | Node.js, AI/ML | Competitive salary ranging from £75,000 to £95,000
+
+[ 77/239] ✗   1.4s  Developer                                   maybe->bad_fit         30%
+                    loc REMOTE->UNK ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE,AI_ML->AI_ML ✗ | comp RANGE_55_74K->NO_GBP ✗
+                    Anywhere | REMOTE | Developer | Node.js, AI/ML, AI/ML, AI/ML, AI/ML | Salary between £60,000 and £80,000, Salary between £60,000 and £80,000
+
+[ 78/239] !   0.9s  Frontend Developer                          INVALID TOKEN: ['Missing field: comp']
+[ 79/239] ✗   1.3s  IT Support Engineer                         good_fit->bad_fit      29%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->HYBRID ✗ | sen LEVEL_2->LEVEL_1 ✗ | tech NODE,JS_TS->OOS ✗ | comp RANGE_75_99K->NO_GBP ✗
+                    Remote | Fully remote, work from anywhere | IT Support Engineer | node.js, JavaScript/TypeScript, cloud services | Salary between £75,000-£90,000, Comprehensive health insurance, O
+
+[ 80/239] ✓   1.2s  Trainee Engineer                            bad_fit                30%
+[ 81/239] ✓   1.4s  Frontend Developer                          maybe                  31%
+[ 82/239] ✗   1.1s  Lead Engineer                               maybe->bad_fit         30%
+                    loc UNK->UNK ✓ | arr UNK->UNK ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,JS_TS->AI_ML ✗ | comp RANGE_75_99K->NO_GBP ✗
+                    N/A | UNK | Lead Engineer | NodeJavaScript, AI_ML | £75,000-£100,000
+
+[ 83/239] ✗   1.2s  Security Engineer                           maybe->bad_fit         30%
+                    loc UNK->UNK ✓ | arr REMOTE->UNK ✗ | sen LEVEL_2->LEVEL_1 ✗ | tech NODE,AI_ML->OOS ✗ | comp RANGE_75_99K->RANGE_55_74K ✗
+                    Not specified | Not specified | Security Engineer | Node.js, AI/ML | Salary of £80,000-£100,000 annually.
+
+[ 84/239] ✗   1.3s  Junior Software Engineer                    bad_fit->maybe         30%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->UNK ✗ | sen LEVEL_1->LEVEL_1 ✓ | tech NODE->NODE,REACT,JS_TS,AI_ML ✗ | comp RANGE_55_74K->NO_GBP ✗
+                    Remote (UK) | UNK | Junior Software Engineer | Node.js, Git, Node.js | Salary between £60,000-£80,000 per year.
+
+[ 85/239] ✗   1.7s  Junior Software Engineer                    maybe->bad_fit         29%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_1->LEVEL_1 ✓ | tech NODE,JS_TS,AI_ML->OOS ✗ | comp RANGE_75_99K->NO_GBP ✗
+                    Remote | NextGen Solutions is a tech company that specializes in developing AI-driven software solutions for various sectors. Our team is passionate about innovation and is dedicat
+
+[ 86/239] ✗   1.1s  Engineering Manager                         good_fit->bad_fit      29%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,JS_TS,AI_ML->OOS ✗ | comp RANGE_75_99K->NO_GBP ✗
+                    Remote (UK) | REMOTE | Engineering Manager | nodejs, Javascript/typescript, AI/ML | £75,000-£95,000 per annum
+
+[ 87/239] ✓   1.3s  Backend Engineer                            bad_fit                30%
+[ 88/239] ✗   1.2s  IT Support Engineer                         maybe->bad_fit         30%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->UNK ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE->OOS ✗ | comp RANGE_55_74K->NO_GBP ✗
+                    Remote (UK) | IT Support Engineer | Nodejs, React, JS_TS, AI_ML | Annual salary of £60,000-£80,000
+
+[ 89/239] ✗   1.2s  Security Engineer                           bad_fit->maybe         29%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE->AI_ML ✗ | comp BELOW_45K->NO_GBP ✗
+                    Remote (UK) | REMOTE | Security Engineer | Node.js, AI_ML | Salary £25,000-£35,000, 100% remote position, work from anywhere.
+
+[ 90/239] ✗   1.3s  Scrum Master                                maybe->bad_fit         29%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_2->LEVEL_1 ✗ | tech NODE->NODE,REACT,JS_TS,AI_ML ✗ | comp RANGE_75_99K->RANGE_55_74K ✗
+                    Anywhere | Scrum Master | Nodejs, REACT, JS_TS, AI_ML | £75,000-£95,000 per annum
+
+[ 91/239] ✗   1.2s  Database Administrator                      maybe->bad_fit         29%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE->OOS ✗ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    Fully Remote | Remote | Database Administrator | nodejs, React, JS_TS, AI_ML | £60,000-£80,000 per year
+
+[ 92/239] ✗   1.3s  Full Stack Engineer                         maybe->bad_fit         28%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE->OOS ✗ | comp RANGE_75_99K->RANGE_75_99K ✓
+                    Remote - United Kingdom | Remote - United Kingdom | Full Stack Engineer | Node.js, React, JS_TS, AI_ML | £75,000-£95,000
+
+[ 93/239] ✗   1.2s  Lead Engineer                               good_fit->bad_fit      28%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,AI_ML->OOS ✗ | comp RANGE_75_99K->BELOW_45K ✗
+                    Central London | Hybrid working model | Lead Engineer | Nodejs, AI/ML | Competitive salary: £75,000-£95,000
+
+[ 94/239] ✗   1.2s  Senior Software Engineer                    good_fit->bad_fit      28%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->HYBRID ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,AI_ML->OOS ✗ | comp RANGE_75_99K->NO_GBP ✗
+                    Fully Remote | 4+ years of experience in software engineering. | Senior Software Engineer | Node.js, AI/ML | Salary range of £75,000-£95,000
+
+[ 95/239] ✗   1.4s  Engineering Manager                         good_fit->bad_fit      27%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,JS_TS->OOS ✗ | comp RANGE_55_74K->NO_GBP ✗
+                    Remote (UK) | REMOTE | Engineering Manager | nodejs, JS/TypeScript, AI_ML | Salary range of £55k-£70k, Opportunity to work from anywhere in the UK, Employee stock options, Health a
+
+[ 96/239] ✗   1.3s  Frontend Developer                          good_fit->bad_fit      27%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS->OOS ✗ | comp ABOVE_100K->NO_GBP ✗
+                    Remote | Remote | Frontend Developer | Node.js, JavaScript/TypeScript, React, JS_TS, AI_ML | Salary range of £100,000-£130,000 per year.
+
+[ 97/239] ✗   1.5s  Full Stack Engineer                         maybe->good_fit        27%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->HYBRID ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE,JS_TS->NODE,JS_TS,AI_ML ✗ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    Fully Remote | Hybrid | Full Stack Engineer | Node.js, javascript, TS, RESTful APIs, database management, DevOps practices | Salary range of £60,000 - £80,000, Health insurance and
+
+[ 98/239] ✗   1.3s  Senior Developer                            good_fit->bad_fit      27%
+                    loc IN_LONDON->UK_OTHER ✗ | arr IN_OFFICE->IN_OFFICE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,AI_ML->OOS ✗ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    Central London | On-site presence in our Central London office | Senior Developer | node.js, AI/ML | Salary range of £60,000 - £80,000 per annum
+
+[ 99/239] ✓   1.3s  Frontend Developer                          bad_fit                27%
+[100/239] ✗   1.1s  Project Manager                             good_fit->bad_fit      27%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,AI_ML->OOS ✗ | comp RANGE_75_99K->NO_GBP ✗
+                    UK Remote | Remote | Project Manager | Node.js, AI/ML | £75,000-£95,000
+
+[101/239] !   0.9s  Security Engineer                           INVALID TOKEN: ['Missing field: comp']
+[102/239] ✓   1.1s  DevOps Engineer                             good_fit               27%
+[103/239] ✗   1.1s  Senior Software Engineer                    good_fit->bad_fit      27%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->UNK ✗ | sen LEVEL_3->LEVEL_2 ✗ | tech NODE,JS_TS->OOS ✗ | comp RANGE_75_99K->NO_GBP ✗
+                    UK Remote | NodeJavascript, agile development practices, DevOps | £75,000-£95,000
+
+[104/239] ✗   1.1s  Engineering Manager                         good_fit->bad_fit      27%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,AI_ML->OOS ✗ | comp RANGE_55_74K->NO_GBP ✗
+                    UK Remote | Engineering Manager | nodejs, AI/ML | Salary range of £60,000-£80,000, Fully remote working environment
+
+[105/239] ✗   1.1s  Trainee Engineer                            maybe->bad_fit         27%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->HYBRID ✗ | sen LEVEL_1->LEVEL_1 ✓ | tech NODE,AI_ML->OOS ✗ | comp RANGE_75_99K->NO_GBP ✗
+                    Fully Remote | Hybrid | Trainee Engineer | Nodejs, AI/ML | Salary between £75,000-£95,000
+
+[106/239] ✗   1.2s  DevOps Engineer                             good_fit->bad_fit      26%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE,JS_TS,AI_ML->OOS ✗ | comp ABOVE_100K->NO_GBP ✗
+                    UK Remote | Remote | DevOps Engineer | NodeJS, javascript/TypeScript, Docker, Kubernetes, AWS, Azure, AI/ML | £100k-£130k
+
+[107/239] ✗   1.1s  Senior Software Engineer                    good_fit->bad_fit      26%
+                    loc REMOTE->OUTSIDE_UK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,AI_ML,JS_TS->OOS ✗ | comp RANGE_75_99K->NO_GBP ✗
+                    Remote - United Kingdom | Senior Software Engineer | NodeJS, AI/ML | £75,000-£95,000
+
+[108/239] ✓   1.3s  Full Stack Engineer                         maybe                  27%
+[109/239] ✗   1.3s  Engineering Manager                         good_fit->bad_fit      27%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,AI_ML->OOS ✗ | comp RANGE_55_74K->NO_GBP ✗
+                    Remote (UK) | REMOTE | Engineering Manager | Nodejavascript, AI/ML | Salary range of £60,000-£80,000 annually, 100% remote working – work from anywhere you are most productive.
+
+[110/239] ✗   1.3s  Business Analyst                            good_fit->maybe        26%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE->NODE,REACT,JS_TS,AI_ML ✗ | comp ABOVE_100K->BELOW_45K ✗
+                    Remote (UK) | REMOTE | Business Analyst | Nodejs, React, JS_TS, AI_ML | Competitive salary of £100,000-£130,000 annually.
+
+[111/239] ✗   1.3s  UX Designer                                 good_fit->bad_fit      26%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE,AI_ML->OOS ✗ | comp RANGE_75_99K->NO_GBP ✗
+                    Fully Remote | Remote | UX Designer | Node.js, AI/ML | Salary between £75,000-£95,000 annually, 100% remote working – work from wherever you feel most creative.
+
+[112/239] ✗   1.2s  Backend Engineer                            good_fit->bad_fit      26%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->HYBRID ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE->OOS ✗ | comp ABOVE_100K->NO_GBP ✗
+                    Fully Remote | Hybrid | Backend Engineer | Nodejs, RESTful APIs, MongoDB, PostgreSQL, AI | Salary range of £100,000 to £130,000 per year.
+
+[113/239] ✓   1.3s  Junior Software Engineer                    bad_fit                27%
+[114/239] ✗   1.5s  Junior Developer                            maybe->bad_fit         26%
+                    loc REMOTE->OUTSIDE_UK ✗ | arr REMOTE->HYBRID ✗ | sen LEVEL_1->LEVEL_1 ✓ | tech NODE,JS_TS->OOS ✗ | comp RANGE_75_99K->NO_GBP ✗
+                    Remote - United Kingdom | NextGen Tech is an emerging software development company aiming to revolutionize the tech space. | Junior Developer | Nodejs, JavaScript/TypeScript, Node.
+
+[115/239] !   0.9s  Junior Developer                            INVALID TOKEN: ['Missing field: comp']
+[116/239] ✗   1.2s  IT Support Engineer                         good_fit->bad_fit      26%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_1 ✗ | tech NODE,AI_ML->OOS ✗ | comp RANGE_75_99K->RANGE_55_74K ✗
+                    Remote - United Kingdom | Remote - United Kingdom | IT Support Engineer | Node.js, AI/ML | £80,000-£100,000
+
+[117/239] !   0.9s  UX Designer                                 INVALID TOKEN: ['Missing field: comp']
+[118/239] !   1.0s  DevOps Engineer                             INVALID TOKEN: ['Missing field: comp']
+[119/239] ✗   1.2s  Product Manager                             good_fit->bad_fit      25%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,JS_TS,AI_ML->OOS ✗ | comp RANGE_55_74K->NO_GBP ✗
+                    Remote (UK) | Product Manager | NodeJS, javascript/Typescript, AI/ML | Salary package ranging from £60,000-£80,000
+
+[120/239] !   0.8s  UX Designer                                 INVALID TOKEN: ['Missing field: comp']
+[121/239] !  11.3s  Principal Engineer                          INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[122/239] !   0.9s  UX Designer                                 INVALID TOKEN: ['Missing field: comp']
+[123/239] ✓   1.1s  Trainee Engineer                            bad_fit                25%
+[124/239] ✗   1.2s  Technical Writer                            maybe->good_fit        25%
+                    loc REMOTE->UNK ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE->NODE,REACT,JS_TS,AI_ML ✗ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    Anywhere | REMOTE | Technical Writer | Node.js, Markdown, Confluence | £60,000-£80,000
+
+[125/239] ✗   1.3s  Junior Developer                            maybe->bad_fit         25%
+                    loc REMOTE->OUTSIDE_UK ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_1->LEVEL_1 ✓ | tech NODE->OOS ✗ | comp ABOVE_100K->BELOW_45K ✗
+                    Remote - United Kingdom | Remote - United Kingdom | Junior Developer | Nodejs, React, JS_TS, AI_ML | Competitive salary starting from £100,000 to £130,000
+
+[126/239] ✗   1.3s  Technical Writer                            good_fit->bad_fit      25%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->HYBRID ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS,AI_ML->OOS ✗ | comp RANGE_55_74K->NO_GBP ✗
+                    Fully Remote | Hybrid | Technical Writer | NodeJS, Javascript/Typescript, AI/ML | Salary range of £55,000-£70,000
+
+[127/239] !   1.0s  Project Manager                             INVALID TOKEN: ['Missing field: comp']
+[128/239] ✗   1.7s  Backend Engineer                            maybe->bad_fit         24%
+                    loc IN_LONDON->UK_OTHER ✗ | arr IN_OFFICE->HYBRID ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS,AI_ML->AI_ML ✗ | comp UP_TO_ONLY->NO_GBP ✗
+                    London, UK | NextGen Tech is transforming the way technology interacts with business through innovative backend solutions. We focus on AI-driven applications that make a real impac
+
+[129/239] !   0.8s  Associate Developer                         INVALID TOKEN: ['Missing field: comp']
+[130/239] !   1.0s  Lead Engineer                               INVALID TOKEN: ['Missing field: comp']
+[131/239] ✗   1.4s  Frontend Developer                          maybe->bad_fit         24%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->HYBRID ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS,AI_ML->OOS ✗ | comp UP_TO_ONLY->NO_GBP ✗
+                    UK Remote | AI Visionaries is at the forefront of AI-driven solutions in the tech industry. | Frontend Developer | NodeJS, javascript/Typescript, AI/ML, RESTful APIs, data visualiz
+
+[132/239] ✗   1.3s  IT Support Engineer                         good_fit->bad_fit      23%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS,AI_ML->OOS ✗ | comp RANGE_55_74K->RANGE_55_74K ✓
+                    UK Remote | Remote | IT Support Engineer | Node.js, JavaScript/TypeScript, AI | £60,000 - £80,000 per annum
+
+[133/239] ✗   1.1s  Technical Writer                            maybe->bad_fit         23%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->UNK ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE->OOS ✗ | comp RANGE_75_99K->NO_GBP ✗
+                    Remote (UK) | Technical Writer | Node.js, API documentation standards | £75,000-£95,000
+
+[134/239] !   0.9s  Project Manager                             INVALID TOKEN: ['Missing field: comp']
+[135/239] !   0.8s  Developer                                   INVALID TOKEN: ['Missing field: comp']
+[136/239] ✗   1.4s  QA Engineer                                 maybe->bad_fit         23%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->UNK ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE->OOS ✗ | comp RANGE_75_99K->NO_GBP ✗
+                    UK Remote | QA Engineer | NodeJS, automated testing frameworks, QA methodologies, automation | Salary of £75,000-£95,000 per annum, Work from home with a flexible schedule, Opportu
+
+[137/239] !   1.1s  Business Analyst                            INVALID TOKEN: ['Missing field: comp']
+[138/239] !   1.0s  Scrum Master                                INVALID TOKEN: ['Missing field: comp']
+[139/239] ✗   1.2s  Product Manager                             maybe->bad_fit         22%
+                    loc UNK->UNK ✓ | arr UNK->UNK ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,JS_TS,AI_ML->OOS ✗ | comp RANGE_75_99K->RANGE_55_74K ✗
+                    N/A | UNK | Product Manager | Node.js, JS/typescript, AI/ML | £75,000-£95,000
+
+[140/239] ✓   1.2s  Software Engineer                           bad_fit                23%
+[141/239] ✗   1.2s  Full Stack Engineer                         maybe->bad_fit         23%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE,AI_ML->OOS ✗ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    Remote | Remote | Full Stack Engineer | Node.js, AI/ML | £60,000-£80,000
+
+[142/239] ✗   1.5s  Engineering Manager                         maybe->bad_fit         23%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE->OOS ✗ | comp RANGE_55_74K->RANGE_75_99K ✗
+                    UK Remote | FutureTech Labs is at the forefront of developing innovative technology solutions for various industries. We are currently seeking an Engineering Manager to lead our ta
+
+[143/239] ✓   1.1s  QA Engineer                                 bad_fit                23%
+[144/239] ✓   2.4s  Software Developer                          bad_fit                24%
+[145/239] ✓   1.9s  Senior Software Developer                   bad_fit                24%
+[146/239] !   2.4s  Senior Technical Architect                  INVALID TOKEN: ['Missing field: sen']
+[147/239] ✓   2.3s  Software Engineer (Entry-Level)             bad_fit                24%
+[148/239] !  12.3s  Senior Software Engineer - Web (m/f/d)      INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[149/239] !  11.9s  Full Stack .NET Developer                   INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[150/239] ✗   1.5s  Senior Software Engineer                    bad_fit->maybe         24%
+                    loc OUTSIDE_UK->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT->NODE,REACT,JS_TS,AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+                    Dublin, County Dublin, Ireland | Contract: 6 months (strong chance of extension) | Senior Software Engineer | NodeJS, Python, React, Next.js, Tailwind | €500–€700/day
+
+[151/239] !   8.6s  Support Engineer                            PARSE FAIL
+           Raw: {loc_raw:"Dublin, County Dublin, Ireland", loc:"UK_OTHER", arr_raw:"5 days onsite", arr:"IN_OFFICE", sen_raw:"Support Engineer", sen:"LEVEL_1", tech_raw:"SQL, BI, SQL, SQL, SQL, SQL, SQL, SQL, SQL, SQL, SQL, SQL, SQL, SQL, SQL, SQL, SQL, SQL, SQL, SQL, SQL, SQL, SQL, SQL, SQL, SQL, SQL, SQL, SQL, SQ
+[152/239] !  11.9s  Data Engineer                               INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[153/239] ✓   1.3s  Backend Engineer                            bad_fit                24%
+[154/239] !   1.8s  Freelance Full Stack Developer              INVALID TOKEN: ['Invalid arr token: "B2B_contract"']
+[155/239] ✓   1.2s  Software Engineer (backend Focused)         bad_fit                25%
+[156/239] ✗   1.8s  Back End Developer                          good_fit->bad_fit      24%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,JS_TS->OOS ✗ | comp RANGE_75_99K->BELOW_45K ✗
+                    London Area, United Kingdom | Hybrid/remote working In Central London | Senior Backend Engineer | JavaScript/TypeScript/NodeJS, microservices, REST APIs, event-driven systems, Post
+
+[157/239] !   1.4s  Backend Engineer (ai Platform) - London     INVALID TOKEN: ['Missing field: comp']
+[158/239] ✗   1.7s  Backend Engineer                            maybe->bad_fit         24%
+                    loc IN_LONDON->UK_OTHER ✗ | arr IN_OFFICE->HYBRID ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS->OOS ✗ | comp NO_GBP->NO_GBP ✓
+                    London, England, United Kingdom | Full-time, on-site in London, UK (Spitalfields) | Backend Engineer | NestJS (Node.js), TypeScript, AWS (ECS, RDS/Postgres), Docker, Kafka
+
+[159/239] !   2.1s  Creator Partnerships & Business Developmen  PARSE FAIL
+           Raw: {loc_raw:"United Kingdom", loc:"UK_OTHER", arr_raw:"Full Time (Mon–Fri, 09:00–18:00, with early Friday finishes)", arr:"HYBRID", sen_raw:"Creator Partnerships & Business Development Executive", sen:"LEVEL_2", tech_raw:"AI_ML, REACT, JS_TS", tech":["AI_ML"],"comp_raw":"£30,000–£35,000 base + uncapped
+[160/239] !  12.4s  CRM +hubspot Technical Executive            INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[161/239] ✗   1.9s  Data Analyst                                maybe->bad_fit         24%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_1 ✗ | tech AI_ML->OOS ✗ | comp NO_GBP->NO_GBP ✓
+                    London, England, United Kingdom | Hybrid (Typically 2/3 days in the office) | Data Analyst | Advanced MS Excel (including Power Query), MS PowerPoint, MS Word skills, Python progra
+
+[162/239] !  11.9s  Data Scientist                              INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[163/239] !   3.5s  Ecommerce & Digital Marketing Manager - Up  INVALID TOKEN: ['Missing field: comp']
+[164/239] ✗   2.5s  Founding Engineer (£80k-£100k + Equity) At  good_fit->bad_fit      23%
+                    loc IN_LONDON->UK_OTHER ✗ | arr REMOTE->HYBRID ✗ | sen LEVEL_3->LEVEL_2 ✗ | tech REACT,AI_ML->OOS ✗ | comp RANGE_75_99K->NO_GBP ✗
+                    Greater London, England, United Kingdom | Join a high-growth startup that scaled from £0 to £2.5M ARR in just six months. As our third founding engineer, you will work directly wit
+
+[165/239] ✓   1.8s  Frontend Developer (12-month Fixed-term Co  bad_fit                24%
+[166/239] ✗   1.3s  Frontend Developer                          maybe->bad_fit         23%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech REACT,JS_TS->REACT,JS_TS,AI_ML ✗ | comp RANGE_55_74K->NO_GBP ✗
+                    London Area, United Kingdom | Hybrid | Front-End React Engineer | React, JavaScript (ES6+), HTML, CSS, REST APIs / GraphQL, Startup experience is highly valued
+
+[167/239] ✓   1.6s  Frontend Developer                          bad_fit                24%
+[168/239] ✓   1.7s  Frontend Developer                          bad_fit                24%
+[169/239] ✗   1.9s  Frontend Platform Engineer                  maybe->bad_fit         24%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_2 ✗ | tech REACT,JS_TS->REACT,JS_TS ✓ | comp NO_GBP->NO_GBP ✓
+                    London, England, United Kingdom | Hybrid working policy | Frontend Platform Engineer | JavaScript, React, TypeScript, modern frontend tooling, HTML, CSS, performance, accessibility
+
+[170/239] !   6.7s  Frontend Product Engineer | EU / UK         INVALID TOKEN: ['Missing field: arr', 'Missing field: sen', 'Missing field: tech', 'Missing field: comp']
+[171/239] ✗   2.1s  Full Stack Developer                        good_fit->bad_fit      24%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE,REACT,JS_TS,AI_ML->OOS ✗ | comp NO_GBP->NO_GBP ✓
+                    London, England, United Kingdom | 3 days in the office, 2 from home | Full Stack Developer | HTML, CSS, JS/TypeScript, PHP, Node.js, Vite, webpack, Rollup, GitHub Actions, GitHub, 
+
+[172/239] !  11.5s  Full Stack Developer (Typescript/NodeJs)    INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[173/239] ✗   1.8s  Full Stack Engineer (£60k-£80k + Equity) A  maybe->bad_fit         24%
+                    loc IN_LONDON->UK_OTHER ✗ | arr UNK->IN_OFFICE ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech AI_ML->AI_ML ✓ | comp RANGE_55_74K->NO_GBP ✗
+                    Greater London, England, United Kingdom | Vitruehealth.com - VC-backed AI platform for MSK health | Full Stack Engineer (£60k-£80k + Equity) | AI, computer vision, .NET, Vue.js | £
+
+[174/239] !   1.2s  Full Stack Engineer                         PARSE FAIL
+           Raw: {"loc_raw":"Northern Ireland, United Kingdom","loc":"UK_OTHER","arr_raw":"Remote","arr":"REMOTE","sen_raw":"Full Stack Engineer","sen":"LEVEL_3","tech_raw":"JavaScript / TypeScript, .NET / C#", AWS","tech":["OOS"],"comp_raw":"Up to £70k - Fully Remote","comp":"NO_GBP"}
+[175/239] !   1.2s  Full Stack Engineer                         INVALID TOKEN: ['Missing field: comp']
+[176/239] !   1.6s  Full Stack Engineer (.net / Python / Types  PARSE FAIL
+           Raw: {loc_raw:"Surrey, England, United Kingdom","loc":"UK_OTHER","arr_raw":"1-2 days on-site","arr":"HYBRID","sen_raw":"Full Stack Engineer (.Net / Python / Typescript / Angular)","sen":"LEVEL_2","tech_raw":".Net, Python, Typescript, React, Angular, CSS, Azure DevOps, Kubernetes, CI, MongoDB","tech":["OO
+[177/239] ✗   2.4s  Fullstack Web Developer – Humanitarian Ope  bad_fit->maybe         23%
+                    loc UK_OTHER->UK_OTHER ✓ | arr IN_OFFICE->HYBRID ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE,REACT,JS_TS,AI_ML->REACT,JS_TS,AI_ML ✗ | comp BELOW_45K->NO_GBP ✗
+                    Edinburgh, Scotland, United Kingdom | Mid-Level: £35,000 – £45,000 per annum | Fullstack Web Developer – Humanitarian Operations | Python, JavaScript, TypeScript, React, Node.js, N
+
+[178/239] !   6.4s  Graduate Frontend Engineer                  INVALID TOKEN: ['Missing field: arr', 'Missing field: sen', 'Missing field: tech', 'Missing field: comp']
+[179/239] !  12.4s  IT Support Associate                        INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[180/239] ✓   1.7s  IT Support Engineer                         bad_fit                23%
+[181/239] ✗   1.2s  Javascript Fullstack Engineer - Senior      maybe->bad_fit         23%
+                    loc UK_OTHER->UK_OTHER ✓ | arr REMOTE->UNK ✗ | sen LEVEL_3->LEVEL_2 ✗ | tech NODE,REACT->OOS ✗ | comp NO_GBP->NO_GBP ✓
+                    Greater Bristol Area, United Kingdom | React, Node, Express, Mongo, SQL, AI_ML
+
+[182/239] ✓   1.3s  Junior Data Engineer                        bad_fit                24%
+[183/239] ✓   1.7s  Junior Developer                            bad_fit                24%
+[184/239] ✓   1.5s  Junior Front-End (react) Engineer - Up To   bad_fit                24%
+[185/239] ✓   2.1s  Junior Full Stack PHP Software Engineer     bad_fit                25%
+[186/239] ✓   1.8s  Junior Software Developer                   bad_fit                25%
+[187/239] ✗   1.9s  Junior Software Engineer At Stitch Health   bad_fit->maybe         25%
+                    loc IN_LONDON->UK_OTHER ✗ | arr UNK->HYBRID ✗ | sen LEVEL_1->LEVEL_2 ✗ | tech NODE,REACT,JS_TS,AI_ML->NODE,REACT,JS_TS,AI_ML ✓ | comp BELOW_45K->NO_GBP ✗
+                    London Area, United Kingdom | Join a mission-driven team | Junior Software Engineer (£30k - £45k + Equity) | Node.js backend services, React frontend applications, TypeScript, Reac
+
+[188/239] !  12.0s  Lead Software Engineer (full Stack)         INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[189/239] ✓   1.7s  Lead Test Engineer                          bad_fit                25%
+[190/239] !   7.2s  QA Engineer                                 INVALID TOKEN: ['Missing field: arr', 'Missing field: sen', 'Missing field: tech', 'Missing field: comp']
+[191/239] ✓   2.4s  QA Engineer                                 bad_fit                26%
+[192/239] ✗   1.4s  Quality Engineer : Manual Software Testing  bad_fit->maybe         26%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech AI_ML->NODE,REACT,JS_TS,AI_ML ✗ | comp BELOW_45K->NO_GBP ✗
+                    Durham, England, United Kingdom | hybrid | Quality Engineer | Node, REACT, JS_TS, AI_ML
+
+[193/239] ✗   2.3s  React Native Developer                      bad_fit->maybe         25%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech REACT->REACT,JS_TS,AI_ML ✗ | comp RANGE_55_74K->NO_GBP ✗
+                    Manchester (Hybrid, up to 4 days WFH) | Hybrid-working, you can work from home up to 4 days per week | Senior Mobile Developer | React Native, Redux, React Native Testing Library, 
+
+[194/239] ✓   2.5s  Research Software Engineer                  bad_fit                26%
+[195/239] ✗   1.3s  Senior Back End Software Engineer           maybe->bad_fit         26%
+                    loc IN_LONDON->UK_OTHER ✗ | arr REMOTE->UNK ✗ | sen LEVEL_3->LEVEL_2 ✗ | tech NODE,JS_TS->OOS ✗ | comp NO_GBP->NO_GBP ✓
+                    London, England, United Kingdom
+
+[196/239] !   1.2s  Senior Backend Developer                    INVALID TOKEN: ['Missing field: comp']
+[197/239] ✓   1.7s  Senior Data Engineer AWS - Finance Consult  bad_fit                26%
+[198/239] ✗   1.3s  Senior DevOps Engineer                      maybe->bad_fit         26%
+                    loc UK_OTHER->UK_OTHER ✓ | arr REMOTE->HYBRID ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech AI_ML->OOS ✗ | comp RANGE_55_74K->NO_GBP ✗
+                    Little London, England, United Kingdom | Equity (negotiable) | Senior DevOps Engineer | AWS/GCP, CI/CD process, GitHub Actions, Terraform, Crypto/Web3 | £60k 90k
+
+[199/239] ✗   2.3s  Senior Frontend Developer                   good_fit->maybe        26%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech REACT,JS_TS->NODE,REACT,JS_TS,AI_ML ✗ | comp RANGE_75_99K->NO_GBP ✗
+                    London Area, United Kingdom | hybrid; 2 days in the office per week | Senior | Vue / .Net - Law Firm - to £80k – 2 days LondonWe're looking for a talented front-end engineer with s
+
+[200/239] ✓   1.4s  Senior Full Stack Engineer                  maybe                  26%
+[201/239] !   2.6s  Senior Full Stack Software Developer (uk)   PARSE FAIL
+           Raw: {loc_raw:"Kingston Upon Hull, England Metropolitan Area", loc:"UK_OTHER", arr_raw:"Hybrid working while valuing regular in-person collaboration", arr:"HYBRID", sen_raw:"Senior Full Stack Software Developer (uk)", sen:"LEVEL_3", tech_raw:"PHP, JavaScript, NodeJS, React, HTML5, CSS3, SQL, AWS, cloud-b
+[202/239] !   3.5s  Senior Full-Stack Software Engineer         PARSE FAIL
+           Raw: {loc_raw:"London, England, United Kingdom", loc:"UK_OTHER", arr_raw:"remote", arr:"REMOTE", sen_raw:"Senior Full-Stack Software Engineer", sen:"LEVEL_3", tech_raw:"Python, Node.js, .NET, AI/LLMs, LLMs, Azure, Microsoft Azure, data, security, CI/CD", tech:["NODE","REACT","JS_TS","AI_ML"],"comp_raw:"W
+[203/239] ✓   1.5s  Senior Games Developer - PixiJS             bad_fit                26%
+[204/239] ✗   2.1s  Senior JavaScript Developer Vue 3           bad_fit->maybe         26%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech JS_TS->REACT,JS_TS,AI_ML ✗ | comp UP_TO_ONLY->NO_GBP ✗
+                    Billericay, England, United Kingdom | Hybrid working with flexible hours | Senior JavaScript Developer / front End Engineer (Vue 3) | Vue 3, HTML5, CSS, SASS, Webpack, Gulp, REST A
+
+[205/239] ✗   2.9s  Senior Machine Learning Engineer            good_fit->bad_fit      26%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech JS_TS,AI_ML->OOS ✗ | comp ABOVE_100K->NO_GBP ✗
+                    London Area, United Kingdom | Hybrid working model: three days per week in the office (Monday, Tuesday, plus one flexible day) LDN 27 days of annual leave plus 8 bank holidays and 
+
+[206/239] ✗   2.2s  Senior Product Engineer (TS/NodeJS/Vue)     good_fit->maybe        26%
+                    loc IN_LONDON->UK_OTHER ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT,JS_TS,AI_ML->NODE,REACT,JS_TS,AI_ML ✓ | comp NO_GBP->NO_GBP ✓
+                    London, England, United Kingdom | Remote | Senior | TypeScript, Node.js, React, Vue, AI, AI orchestration, machine learning, machine learning | €1K per year
+
+[207/239] ✗   2.6s  Senior Software Engineer                    good_fit->maybe        26%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT,JS_TS->REACT,JS_TS,AI_ML ✗ | comp RANGE_55_74K->UP_TO_ONLY ✗
+                    Greater London, England, United Kingdom | Hybrid / Flexible Working, Company Bonus, Generous Pension and more | Senior Software Engineer | Python (Django), JavaScript / TypeScript,
+
+[208/239] !   2.4s  Senior Software Engineer                    PARSE FAIL
+           Raw: {loc_raw:"London, England, United Kingdom", loc:"UK_OTHER", arr_raw:"As part of the M&S Software Engineering team, you’ll be joining a well-loved historic brand, working on solutions that serve millions of loyal customers and thousands of colleagues!", arr:"HYBRID", sen_raw:"Senior Software Engineer
+[209/239] ✗   3.1s  Senior Software Engineer                    good_fit->maybe        25%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,JS_TS->NODE,REACT,JS_TS ✗ | comp RANGE_55_74K->RANGE_45_54K ✗
+                    London, England, United Kingdom | London, England, United Kingdom | Senior Software Engineer | NodeJS, Express.js, Nest.js, AI, ML | £56,475 - £76,671
+
+[210/239] !  12.5s  Senior Software Engineer                    INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[211/239] !   1.5s  Senior Software Engineer                    INVALID TOKEN: ['Missing field: comp']
+[212/239] !  11.1s  Senior Software Engineer - Backend AI Nati  INVALID TOKEN: ['Missing field: arr', 'Missing field: sen', 'Missing field: tech', 'Missing field: comp']
+[213/239] !  13.5s  Senior Software Engineer, Backend           INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[214/239] ✗   2.2s  Senior Software Engineer (backend)          good_fit->maybe        25%
+                    loc IN_LONDON->UK_OTHER ✗ | arr UNK->HYBRID ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,JS_TS,REACT,AI_ML->NODE,REACT,JS_TS,AI_ML ✓ | comp NO_GBP->NO_GBP ✓
+                    London, England, United Kingdom | Hybrid | Senior Software Engineer (backend) | Node.js, TypeScript, NestJS, AWS cloud services, Terraform | Super PaymentsOur mission is to power f
+
+[215/239] !  12.1s  Senior Software Engineer, Full Stack, Lear  INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[216/239] ✗   1.5s  Senior Software Engineer - Ts, React, Node  good_fit->maybe        25%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT,JS_TS,AI_ML->REACT,JS_TS,AI_ML ✗ | comp RANGE_75_99K->NO_GBP ✗
+                    London Area, United Kingdom | 3 days p/week in London | Senior Software Engineer | TypeScript, Node, React, Next.js, Cursor, AI | £110K
+
+[217/239] ✗   1.2s  Senior Software/Founding Engineer - Health  good_fit->bad_fit      24%
+                    loc IN_LONDON->UK_OTHER ✗ | arr IN_OFFICE->HYBRID ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech REACT->OOS ✗ | comp ABOVE_100K->NO_GBP ✗
+                    London Area, United Kingdom | Senior Software Engineer/Founding Engineer | Senior Software Engineer | Python, React.js, AI, OOS | £120k - 5 Days Onsite
+
+[218/239] !   1.6s  Software Engineer                           INVALID TOKEN: ['Missing field: comp']
+[219/239] ✗   1.8s  Software Engineer                           bad_fit->maybe         24%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->IN_OFFICE ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,REACT,JS_TS->REACT,JS_TS,AI_ML ✗ | comp BELOW_45K->RANGE_55_74K ✗
+                    London Area, United Kingdom | 1 day per week in London office | Software Developer (Employed Contractor, Part-Time) | TypeScript, ReactJS, NodeJS, TypeScript, ReactJS, Python, Dock
+
+[220/239] ✓   2.6s  Software Engineer                           bad_fit                25%
+[221/239] ✗   1.4s  Software Engineer                           maybe->bad_fit         24%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS,AI_ML->OOS ✗ | comp UP_TO_ONLY->UP_TO_ONLY ✓
+                    London Area, United Kingdom | Hybrid working25 days holiday plus bank holidays | Mid-Level Software Engineer | TypeScript (Next.js), Python (FastAPI), Node.js | Up to £80k + Equity
+
+[222/239] ✓   1.7s  Software Engineer                           bad_fit                25%
+[223/239] ✓   1.8s  Software Engineer, Front End                bad_fit                25%
+[224/239] ✓   1.6s  Software Engineer Intern                    bad_fit                25%
+[225/239] !   1.9s  Software/ Platform Engineer                 PARSE FAIL
+           Raw: {loc_raw:"London, England, United Kingdom", loc:"UK_OTHER", arr_raw:"Full-time, salary: £60,000-80,000", arr:"HYBRID", sen_raw:"Software Engineer (Application platforms/AWS/Python)", sen:"LEVEL_2", tech_raw:"Python, AWS, Lambda, API Gateway, RDS, S3, Cognito, Python, AWS, Lambda, API Gateway, RDS, S
+[226/239] !  12.1s  Trainee Telematics & CCTV Installation Eng  INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[227/239] !  11.9s  Unity 3D Developer                          INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[228/239] ✓   1.5s  Backend Developer                           bad_fit                25%
+[229/239] !   3.9s  Backend Software Development Engineer - Mi  PARSE FAIL
+           Raw: {loc_raw:"San Francisco, CA",loc:"UK_OTHER",arr_raw:"Mid Level, Senior, Lead and Principal",arr:"HYBRID",sen_raw:"Backend Software Development Engineer - Mid/Senior/Lead/Principal",sen:"LEVEL_2",tech_raw:"Java, C++, Go, C#, Ruby, Scala, Python, Node.JS, JavaScript, Spring, gRPC, REST, XML, WSDL, HTT
+[230/239] !  11.6s  Founding Software Engineer                  INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[231/239] ✓   1.6s  Full-Stack Engineer                         bad_fit                26%
+[232/239] !  12.1s  Full-Stack Software Engineer                INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[233/239] !  12.7s  Jr. Front-End Engineer                      INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[234/239] !  12.0s  Software Engineer - Full Stack              INVALID TOKEN: ['Missing field: tech', 'Missing field: comp']
+[235/239] !  12.0s  Software Engineer I                         PARSE FAIL
+           Raw: {loc_raw:"Redmond, WA",loc:"UK_OTHER",arr_raw:"Microsoft's mission is to empower every person and every organization on the planet to achieve more. As employees we come together with a growth mindset, innovate to empower others, and collaborate to realize our shared goals. Each day we build on our v
+[236/239] !   3.2s  Software Engineer - New Grad                INVALID TOKEN: ['Missing field: arr', 'Missing field: sen', 'Missing field: tech', 'Missing field: comp']
+[237/239] ✓   1.4s  Senior DevOps Engineer - AWS Infrastructur  bad_fit                25%
+[238/239] !   1.3s  Junior DevOps Engineer                      PARSE FAIL
+           Raw: {loc_raw:"Remote within United Kingdom", loc:"REMOTE", arr_raw:"Remote working cannot be guaranteed", arr:"HYBRID", sen_raw:"Junior DevOps Engineer", sen:"LEVEL_1", tech_raw:"Python or similar", tech":["OOS"]}
+[239/239] !   1.2s  Senior Software Engineer                    INVALID TOKEN: ['Invalid loc token: "HYBRID"']
+
+========================================================================
+  V7 EVAL  adapters_v12_0.5B  iter 0000600
+  eval set: test_labeled_audited  |  prompt: student_v7  |  n=239
+========================================================================
+  Parse failures: 19   Invalid tokens: 78   Fuzzy corrections: 2   Valid: 142/239
+
+  Label accuracy:  60/142 = 42.3%   NOT MET  (target >=90%)
+  Score accuracy:  14/142 = 9.9%
+
+  Fit accuracy (macro):  32.1%  NOT MET   gf=3%  maybe=10%  bad=83%
+
+  Field token accuracy:
+    loc            ##########..........   76/142  53.5%
+    arr            ############........   87/142  61.3%
+    sen            ############........   87/142  61.3%
+    tech           ###.................   25/142  17.6%
+    comp           ######..............   47/142  33.1%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    good_fit           1      37      3%  !
+    maybe              4      39     10%  !
+    bad_fit           55      66     83%
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [1]         8        28
+    maybe                4       [4]        31
+    bad_fit              1        10      [55]
+
+  Field error transitions (top per field):
+    loc           : IN_LONDON->UK_OTHER:39  OUTSIDE_UK->UK_OTHER:12  REMOTE->UNK:5  UNK->OUTSIDE_UK:3
+    arr           : REMOTE->HYBRID:15  REMOTE->UNK:15  IN_OFFICE->HYBRID:8  UNK->HYBRID:8
+    sen           : LEVEL_2->LEVEL_3:22  LEVEL_2->LEVEL_1:19  LEVEL_3->LEVEL_2:8  LEVEL_3->LEVEL_1:3
+    tech          : JS_TS,NODE->OOS:14  AI_ML,NODE->OOS:14  AI_ML,JS_TS,NODE->OOS:12  NODE->OOS:10
+    comp          : RANGE_75_99K->NO_GBP:23  RANGE_55_74K->NO_GBP:20  BELOW_45K->NO_GBP:9  UP_TO_ONLY->NO_GBP:8
+
+  Error direction:  over-scoring 11  |  under-scoring 59
+
+------------------------------------------------------------------------
+  adapters_v12_0.5B/0000600  label=42.3%  loc=53.5%  role=61.3%  tech=17.6%  comp=33.1%  wa=61.3%  gf=3%  maybe=10%  bad=83%
+========================================================================
+
+Predictions: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_122208_test_labeled_audited_student_v7_0000600.predictions.jsonl
+Summary: eval_results/v12_0.5B/adapters_v12_0.5B/2026-03-14_122208_test_labeled_audited_student_v7_0000600.summary.json

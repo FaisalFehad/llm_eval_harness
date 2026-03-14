@@ -330,6 +330,8 @@ def main():
             .replace("{{job_location}}", raw_location)
             .replace("{{jd_text}}", jd_text))
 
+        is_qwen3 = "qwen3" in args.model.lower()
+
         messages = [
             {"role": "system", "content": system_msg},
             {"role": "user", "content": prompt_text},
@@ -338,9 +340,10 @@ def main():
         formatted = tokenizer.apply_chat_template(
             messages, tokenize=False, add_generation_prompt=True)
 
-        # Force the model to start generating JSON by pre-filling the opening brace.
-        # Without this, the 0.5B model often emits <|im_end|> prematurely mid-JSON.
-        formatted += "{"
+        # For non-Qwen3 models: pre-fill opening brace to force JSON output.
+        # For Qwen3: let the model emit <think>...</think> first, then JSON.
+        if not is_qwen3:
+            formatted += "{"
 
         t0 = time.time()
         response = generate(
@@ -353,8 +356,12 @@ def main():
         )
         elapsed = time.time() - t0
 
-        # Add the brace back since the model continues after it
-        response = "{" + response
+        if not is_qwen3:
+            # Add the brace back since the model continues after it
+            response = "{" + response
+        else:
+            # Strip <think>...</think> tags from Qwen3 output
+            response = re.sub(r"<think>.*?</think>\s*", "", response, flags=re.DOTALL)
 
         parsed = parse_json_output(response)
 
