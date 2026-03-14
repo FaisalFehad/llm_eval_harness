@@ -1,0 +1,284 @@
+{
+  "v7_total": 713,
+  "v7_real": 501,
+  "v7_generated_removed": 212,
+  "v9_total": 1081,
+  "v9_new_added": 289,
+  "v9_skipped": {
+    "duplicate_v7": 471,
+    "synthetic": 301,
+    "test_contaminated": 20
+  },
+  "combined_total": 790,
+  "corrections_total": 23,
+  "corrections_by_field": {
+    "tech": 12,
+    "comp": 2,
+    "loc": 9
+  },
+  "corrections_detail": [
+    {
+      "job_id": "4373990181",
+      "field": "tech",
+      "old": [
+        "AI_ML"
+      ],
+      "new": [
+        "OOS"
+      ],
+      "reason": "regex: AI_ML not found (likely boilerplate)"
+    },
+    {
+      "job_id": "https://uk.linkedin.com/jobs/view/software-engineer-early-career-at-affirm-4354820031",
+      "field": "comp",
+      "old": "ABOVE_100K",
+      "new": "NO_GBP",
+      "reason": "TC/total compensation disqualifier"
+    },
+    {
+      "job_id": "remote_variant_1e3bea2bb79b",
+      "field": "loc",
+      "old": "REMOTE",
+      "new": "UK_OTHER",
+      "reason": "regex loc (100% accuracy): REMOTE->UK_OTHER"
+    },
+    {
+      "job_id": "4374848488",
+      "field": "tech",
+      "old": [
+        "JS_TS"
+      ],
+      "new": [
+        "JS_TS",
+        "NODE"
+      ],
+      "reason": "regex: NODE found (bare node pattern)"
+    },
+    {
+      "job_id": "4378563440_sal_0",
+      "field": "tech",
+      "old": [
+        "REACT",
+        "JS_TS",
+        "AI_ML"
+      ],
+      "new": [
+        "REACT",
+        "JS_TS"
+      ],
+      "reason": "regex: AI_ML not found (likely boilerplate)"
+    },
+    {
+      "job_id": "4378754531",
+      "field": "tech",
+      "old": [
+        "AI_ML"
+      ],
+      "new": [
+        "AI_ML",
+        "NODE"
+      ],
+      "reason": "regex: NODE found (bare node pattern)"
+    },
+    {
+      "job_id": "ext_agent_v2_2394",
+      "field": "loc",
+      "old": "UK_OTHER",
+      "new": "REMOTE",
+      "reason": "regex loc (100% accuracy): UK_OTHER->REMOTE"
+    },
+    {
+      "job_id": "https://pl.linkedin.com/jobs/view/backend-engineer-node-js-leaply-at-skelar-4339229733",
+      "field": "tech",
+      "old": [
+        "NODE",
+        "JS_TS",
+        "REACT",
+        "AI_ML"
+      ],
+      "new": [
+        "NODE",
+        "JS_TS",
+        "REACT"
+      ],
+      "reason": "regex: AI_ML not found (likely boilerplate)"
+    },
+    {
+      "job_id": "https://uk.linkedin.com/jobs/view/full-stack-engineer-at-auxo-solutions-4375809054",
+      "field": "tech",
+      "old": [
+        "JS_TS",
+        "AI_ML"
+      ],
+      "new": [
+        "AI_ML",
+        "JS_TS",
+        "NODE"
+      ],
+      "reason": "regex: NODE found (bare node pattern)"
+    },
+    {
+      "job_id": "https://uk.linkedin.com/jobs/view/fullstack-software-engineer-ai-recruiting-platform-permanent-at-collective-work-4377022658",
+      "field": "tech",
+      "old": [
+        "REACT",
+        "JS_TS"
+      ],
+      "new": [
+        "JS_TS",
+        "NODE",
+        "REACT"
+      ],
+      "reason": "regex: NODE found (bare node pattern)"
+    },
+    {
+      "job_id": "https://uk.linkedin.com/jobs/view/software-engineer-at-rise-technical-4378153990",
+      "field": "loc",
+      "old": "UK_OTHER",
+      "new": "OUTSIDE_UK",
+      "reason": "regex loc (100% accuracy): UK_OTHER->OUTSIDE_UK"
+    },
+    {
+      "job_id": "2180549139",
+      "field": "tech",
+      "old": [
+        "AI_ML"
+      ],
+      "new": [
+        "OOS"
+      ],
+      "reason": "regex: AI_ML not found (likely boilerplate)"
+    },
+    {
+      "job_id": "4361025956_locvar_0",
+      "field": "loc",
+      "old": "REMOTE",
+      "new": "OUTSIDE_UK",
+      "reason": "regex loc (100% accuracy): REMOTE->OUTSIDE_UK"
+    },
+    {
+      "job_id": "4375946478",
+      "field": "tech",
+      "old": [
+        "REACT",
+        "JS_TS",
+        "AI_ML"
+      ],
+      "new": [
+        "AI_ML",
+        "JS_TS",
+        "NODE",
+        "REACT"
+      ],
+      "reason": "regex: NODE found (bare node pattern)"
+    },
+    {
+      "job_id": "https://uk.linkedin.com/jobs/view/senior-data-engineer-at-digital-waffle-4377693410",
+      "field": "tech",
+      "old": [
+        "AI_ML"
+      ],
+      "new": [
+        "OOS"
+      ],
+      "reason": "regex: AI_ML not found (likely boilerplate)"
+    },
+    {
+      "job_id": "https://uk.linkedin.com/jobs/view/senior-software-engineer-at-accelero-4378776688",
+      "field": "loc",
+      "old": "IN_LONDON",
+      "new": "UK_OTHER",
+      "reason": "regex loc (100% accuracy): IN_LONDON->UK_OTHER"
+    },
+    {
+      "job_id": "https://uk.linkedin.com/jobs/view/software-engineer-at-sage-4298280515",
+      "field": "tech",
+      "old": [
+        "AI_ML",
+        "JS_TS"
+      ],
+      "new": [
+        "JS_TS"
+      ],
+      "reason": "regex: AI_ML not found (likely boilerplate)"
+    },
+    {
+      "job_id": "https://au.linkedin.com/jobs/view/software-developer-remote-at-mindfriend-pro-4371446958",
+      "field": "loc",
+      "old": "OUTSIDE_UK",
+      "new": "UNK",
+      "reason": "regex loc (100% accuracy): OUTSIDE_UK->UNK"
+    },
+    {
+      "job_id": "https://uk.linkedin.com/jobs/view/entry-level-grad-scheme-at-pareto-4377249777",
+      "field": "comp",
+      "old": "BELOW_45K",
+      "new": "NO_GBP",
+      "reason": "TC/total compensation disqualifier"
+    },
+    {
+      "job_id": "https://uk.linkedin.com/jobs/view/growth-marketing-manager-at-odinin-4373997563",
+      "field": "loc",
+      "old": "IN_LONDON",
+      "new": "UK_OTHER",
+      "reason": "regex loc (100% accuracy): IN_LONDON->UK_OTHER"
+    },
+    {
+      "job_id": "https://uk.linkedin.com/jobs/view/devops-engineer-at-cosine-4369212704",
+      "field": "tech",
+      "old": [
+        "JS_TS",
+        "AI_ML"
+      ],
+      "new": [
+        "AI_ML",
+        "JS_TS",
+        "NODE"
+      ],
+      "reason": "regex: NODE found (bare node pattern)"
+    },
+    {
+      "job_id": "https://uk.linkedin.com/jobs/view/auction-administrator-at-barnard-marcus-4370028773",
+      "field": "loc",
+      "old": "IN_LONDON",
+      "new": "UK_OTHER",
+      "reason": "regex loc (100% accuracy): IN_LONDON->UK_OTHER"
+    },
+    {
+      "job_id": "https://uk.linkedin.com/jobs/view/water-treatment-equipment-engineer-at-sesam-4371629554",
+      "field": "loc",
+      "old": "IN_LONDON",
+      "new": "UK_OTHER",
+      "reason": "regex loc (100% accuracy): IN_LONDON->UK_OTHER"
+    }
+  ],
+  "distribution": {
+    "labels": {
+      "bad_fit": 576,
+      "good_fit": 80,
+      "maybe": 134
+    },
+    "oos_count": 344,
+    "comp": {
+      "RANGE_45_54K": 70,
+      "RANGE_75_99K": 64,
+      "ABOVE_100K": 41,
+      "NO_GBP": 327,
+      "RANGE_55_74K": 68,
+      "BELOW_45K": 163,
+      "UP_TO_ONLY": 57
+    },
+    "sen": {
+      "LEVEL_3": 302,
+      "LEVEL_2": 378,
+      "LEVEL_1": 110
+    },
+    "tech_tokens": {
+      "OOS": 344,
+      "NODE": 165,
+      "REACT": 218,
+      "JS_TS": 311,
+      "AI_ML": 211
+    }
+  }
+}

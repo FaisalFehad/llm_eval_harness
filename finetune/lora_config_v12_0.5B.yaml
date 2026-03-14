@@ -1,0 +1,34 @@
+# MLX LoRA config for V12 student model — 0.5B fast-iteration fallback
+# Use for rapid A/B testing before committing to full 1.5B training.
+# WARNING: 0.5B will have ~15 parse failures → ~4pp sen penalty from regex fallback
+#
+# Training: ALWAYS fresh from base (NEVER resume from existing adapter)
+
+model: "mlx-community/Qwen2.5-0.5B-Instruct-4bit"
+data: "data/v12/mlx"
+train: true
+fine_tune_type: "lora"
+
+lora_parameters:
+  rank: 16
+  alpha: 32
+  dropout: 0.05
+  scale: 1.0
+  weight_decay: 0.0
+
+batch_size: 1
+grad_accumulation_steps: 16
+iters: 2500
+learning_rate: 2e-5
+warmup_steps: 100
+
+max_seq_length: 8192
+
+val_batches: 40
+steps_per_eval: 25
+
+adapter_path: "finetune/adapters_v12_0.5B"
+save_every: 50
+
+mask_prompt: true
+grad_checkpoint: true

@@ -101,33 +101,51 @@ NON_UK_INDICATORS = [
 ]
 
 
-def classify_loc(job_location: str) -> str:
-    """Classify location from the job_location field."""
+def classify_loc(job_location: str, jd_text: str = "") -> str:
+    """Classify location from the job_location field.
+
+    Phase 1A improvements (V12):
+    - "Anywhere" + remote check in JD text
+    - Non-UK check before REMOTE (fixes "Paris, France (Remote)")
+    - "Northern Ireland" handled before generic "ireland" non-UK match
+    - "Little London" exclusion
+    """
     loc = (job_location or "").strip().lower()
 
     if not loc:
         return "UNK"
 
-    # London check — match "london" but not "londonderry" etc.
+    # London check — match "london" but not "londonderry" or "little london"
     if re.search(r'\blondon\b', loc):
-        return "IN_LONDON"
+        # Exclude "Little London" (a village, not London)
+        if "little london" in loc:
+            # Fall through to UK checks below
+            pass
+        else:
+            return "IN_LONDON"
 
-    # Remote check
-    if re.search(r'\bremote\b', loc):
-        return "REMOTE"
+    # "Northern Ireland" → UK_OTHER (must check BEFORE non-UK "ireland" match)
+    if "northern ireland" in loc:
+        return "UK_OTHER"
 
-    # Non-UK check (before UK check to handle e.g., "Dublin, Ireland")
+    # Non-UK check — BEFORE remote check to fix "Paris, France (Remote)"
     for indicator in NON_UK_INDICATORS:
         if indicator in loc:
             return "OUTSIDE_UK"
 
     # US state abbreviations: ", XX" at end (2-letter uppercase)
     if re.search(r',\s*[A-Z]{2}\s*$', job_location or ""):
-        # Could be US state — but could also be "Cardiff, UK"
-        # Check if it's UK first
-        if re.search(r'\buk\b|\bunited kingdom\b|\bengland\b|\bscotland\b|\bwales\b|\bnorthern ireland\b', loc):
+        if re.search(r'\buk\b|\bunited kingdom\b|\bengland\b|\bscotland\b|\bwales\b|\bbritain\b', loc):
             return "UK_OTHER"
         return "OUTSIDE_UK"
+
+    # Remote check (after non-UK, so "Singapore (Remote)" → OUTSIDE_UK)
+    if re.search(r'\bremote\b', loc):
+        return "REMOTE"
+
+    # "Anywhere" → check JD text for remote signal, default to REMOTE
+    if "anywhere" in loc:
+        return "REMOTE"
 
     # UK cities
     for city in UK_CITIES:
@@ -135,7 +153,7 @@ def classify_loc(job_location: str) -> str:
             return "UK_OTHER"
 
     # Explicit UK indicators
-    if re.search(r'\buk\b|\bunited kingdom\b|\bengland\b|\bscotland\b|\bwales\b|\bnorthern ireland\b|\bbritain\b', loc):
+    if re.search(r'\buk\b|\bunited kingdom\b|\bengland\b|\bscotland\b|\bwales\b|\bbritain\b', loc):
         return "UK_OTHER"
 
     return "UNK"
@@ -179,33 +197,97 @@ def classify_sen(title: str) -> str:
     return "LEVEL_1"
 
 
-def classify_tech(jd_text: str) -> list[str]:
-    """Classify tech stack from JD text. Returns array of tech tokens."""
-    text = (jd_text or "").lower()
+def classify_tech(jd_text: str, title: str = "") -> list[str]:
+    """Classify tech stack from JD text. Returns array of tech tokens.
+
+    Phase 1B improvements (V12):
+    - Added bare \\bnode\\b to NODE detection (verified zero false positives)
+    - Added bare \\bjs\\b to JS_TS detection
+    - AI_ML boilerplate filter: bare \\bai\\b is ignored when only found in
+      hiring process boilerplate ("we use AI in our hiring", "AI-powered screening")
+
+    Phase 3 improvements (V12):
+    - Search title + JD body (title has tech keywords not in body for some jobs)
+    - Detect concatenated "NodeJavaScript"/"NodeJavascript" patterns
+    - Expanded AI_ML boilerplate filter for company descriptions
+    """
+    # Combine title and JD for tech detection (Phase 3: fixes Job 172 etc.)
+    text = ((title or "") + " " + (jd_text or "")).lower()
     tokens = []
 
-    # NODE detection
-    if re.search(r'\bnode\.?js\b|\bnode\s+js\b|\bnodejs\b|\bexpress\.?js\b|\bexpressjs\b|\bnest\.?js\b|\bnestjs\b|\bkoa\.?js\b|\bfastify\b', text):
+    # NODE detection — includes bare "node" (V12: +7 fixes)
+    if re.search(
+        r'\bnode\.?js\b|\bnode\s+js\b|\bnodejs\b'
+        r'|\bexpress\.?js\b|\bexpressjs\b'
+        r'|\bnest\.?js\b|\bnestjs\b'
+        r'|\bkoa\.?js\b|\bfastify\b'
+        r'|\bnode\b'  # bare "node" — nearly always Node.js in SWE job context
+        r'|nodejavascri',  # Phase 3: "NodeJavaScript" etc. (concatenated, no word boundary)
+        text
+    ):
         tokens.append("NODE")
 
     # REACT detection
     if re.search(r'\breact\b|\breact\.?js\b|\breactjs\b|\bnext\.?js\b|\bnextjs\b|\breact\s*native\b', text):
         tokens.append("REACT")
 
-    # JS_TS detection
-    if re.search(r'\btypescript\b|\bjavascript\b|\bjs/ts\b|\bts/js\b|\bangular\b|\bvue\.?js\b|\bvuejs\b|\bsvelte\b', text):
+    # JS_TS detection (V12: refined bare JS matching)
+    if re.search(
+        r'\btypescript\b|\bjavascript\b'
+        r'|\bjs/ts\b|\bts/js\b'
+        r'|\bangular\b|\bvue\.?js\b|\bvuejs\b|\bsvelte\b'
+        r'|(?<!\.)(?<!\w)js(?:/|\s*,|\s+and\b)'  # "JS/" "JS," "JS and" but NOT ".js"
+        r'|nodejavascri',  # Phase 3: "NodeJavaScript" etc. — also triggers JS_TS
+        text
+    ):
         tokens.append("JS_TS")
 
-    # AI_ML detection
-    if re.search(
+    # AI_ML detection — with boilerplate filter (V12: -2 false positives)
+    # First check for strong AI_ML signals (always count)
+    has_strong_ai = bool(re.search(
         r'\bmachine\s+learning\b|\bdeep\s+learning\b|\bartificial\s+intelligence\b'
         r'|\bnatural\s+language\s+processing\b|\bcomputer\s+vision\b'
         r'|\bneural\s+network\b|\bllm\b|\blarge\s+language\s+model\b'
         r'|\btensorflow\b|\bpytorch\b|\bml\s+engineer\b|\bml\s+platform\b'
-        r'|\b(?<!em)ai\b(?!\s*(?:r|m|ds))',  # "ai" but not "email", "aim", "aids"
+        r'|\bfine[- ]?tun(?:e|ing)\b|\bprompt\s+engineering\b|\bnlp\b',
         text
-    ):
+    ))
+
+    if has_strong_ai:
         tokens.append("AI_ML")
+    else:
+        # Weak signal: bare "ai" — only count if NOT in hiring boilerplate
+        ai_matches = list(re.finditer(r'\b(?<!em)ai\b(?!\s*(?:r|m|ds))', text))
+        if ai_matches:
+            # Check if ALL "ai" mentions are in boilerplate context
+            boilerplate_patterns = [
+                r'(?:use|using|leverage|embrace)\s+(?:of\s+)?(?:artificial\s+intelligence|ai)\s+(?:in|to|for|tools|powered)',
+                r'ai[- ](?:powered|driven|generated)\s+(?:tool|screen|hiring|recruit|assess|version|due\s+diligence|risk)',
+                r'(?:note|policy)\s+(?:on|about|regarding)\s+(?:using\s+)?ai',
+                r'ai\s+(?:usage|tools?)\s+(?:polic|to\s+support)',
+                r'(?:hiring|recruitment|screening|application)\s+(?:process|pipeline).*?ai',
+                r'ai.*?(?:hiring|recruitment|screening|application)\s+(?:process|pipeline)',
+                # Phase 3: Company/product descriptions (not job requirements)
+                r'(?:cutting[- ]edge|global\s+player\s+in)\s+ai',  # "cutting-edge AI", "global player in AI"
+                r'ai[- ]driven\s+(?:due|risk|insight|solution|platform|product|intelligence)',  # "AI-driven due diligence"
+                r'ai\s+start[- ]?up',  # "AI start up" (company name)
+                r'(?:embrace|advantages?\s+of)\s+(?:the\s+)?ai',  # "embrace the advantages of AI"
+                r'\bin\s+ai[- ]driven\b',  # "in AI-driven [noun]"
+                r'ai\s+(?:talent|agent|partner|recrui)',  # "AI talent partner", "AI agent"
+            ]
+            all_boilerplate = True
+            for m in ai_matches:
+                # Get 100-char context around each "ai" match
+                ctx_start = max(0, m.start() - 80)
+                ctx_end = min(len(text), m.end() + 80)
+                context = text[ctx_start:ctx_end]
+                is_boilerplate = any(re.search(bp, context) for bp in boilerplate_patterns)
+                if not is_boilerplate:
+                    all_boilerplate = False
+                    break
+
+            if not all_boilerplate:
+                tokens.append("AI_ML")
 
     if not tokens:
         return ["OOS"]
@@ -219,6 +301,8 @@ def _parse_salary_value(s: str) -> float | None:
     Returns None if unparseable.
     """
     s = s.strip().replace(",", "").replace(" ", "")
+    # Track whether input had explicit currency symbol (£500 is exact, not 500k)
+    has_currency = bool(re.search(r'[£$€]', s))
     # Remove currency symbols
     s = re.sub(r'[£$€]', '', s)
 
@@ -229,69 +313,138 @@ def _parse_salary_value(s: str) -> float | None:
     m = re.match(r'^(\d+(?:\.\d+)?)$', s)
     if m:
         val = float(m.group(1))
-        # If it looks like a "per hour" or too small for annual, skip
-        if val < 1000:
-            return val * 1000  # Likely in thousands (e.g., "75" meaning 75k)
+        # If it looks like shorthand (e.g., "75" meaning 75k) — but only when
+        # there's no explicit £ sign. "£500" is exactly £500 (a budget),
+        # while bare "75" in salary context likely means 75k.
+        if val < 1000 and not has_currency:
+            return val * 1000  # Likely in thousands
         return val
 
     return None
 
 
-def classify_comp(jd_text: str) -> str:
-    """Classify compensation from JD text."""
+def classify_comp(jd_text: str, title: str = "") -> str:
+    """Classify compensation from JD text.
+
+    Phase 1C improvements (V12):
+    - "between £X and £Y" range pattern
+    - "£Xk+" pattern (adjacent +)
+    - "to £X" / "Salary to £X" → UP_TO_ONLY
+    - Per-day rate → NO_GBP filter
+    - TC / total compensation disqualifier
+    - Salary in job title as fallback
+    - Filter non-salary £ amounts (£1.4 trillion, £500 budget, £2.7bn)
+    """
     text = jd_text or ""
     text_lower = text.lower()
 
-    # Check for GBP presence (£ sign or "gbp")
-    has_gbp = bool(re.search(r'£|gbp', text_lower))
+    # Check for GBP presence (£ sign or "gbp") in JD or title
+    has_gbp_jd = bool(re.search(r'£|gbp', text_lower))
+    has_gbp_title = bool(re.search(r'£|gbp', (title or "").lower()))
 
-    if not has_gbp:
-        # Check for non-GBP currencies
-        if re.search(r'\$|usd|eur|€', text_lower):
-            return "NO_GBP"
-        # No salary info at all
+    if not has_gbp_jd and not has_gbp_title:
         return "NO_GBP"
 
-    # We have GBP — look for salary patterns
+    # ── Disqualifiers (per teacher_v7.txt rules) ─────────────────────────
+    # TC / total compensation / total package → NO_GBP (case-insensitive, Phase 3 fix)
+    if re.search(r'\btotal\s+comp(?:ensation)?\b|\btotal\s+package\b|\b(?:TC)\b', text, re.IGNORECASE):
+        return "NO_GBP"
 
-    # Pattern: "up to £XXX" without a range
-    up_to_match = re.search(r'up\s+to\s+£\s*([\d,]+(?:\.\d+)?)\s*[kK]?', text, re.IGNORECASE)
-    # Pattern: salary range "£XX,XXX - £YY,YYY" or "£XXk - £YYk"
-    range_pattern = r'£\s*([\d,]+(?:\.\d+)?)\s*[kK]?\s*(?:[-–—to]+)\s*£?\s*([\d,]+(?:\.\d+)?)\s*[kK]?'
-    range_match = re.search(range_pattern, text, re.IGNORECASE)
+    # ── Find all salary-like £ patterns, pick the first valid one ────────
+    # This implements "find the first salary mentioned in reading order"
 
-    if range_match:
-        low = _parse_salary_value(range_match.group(1))
-        high = _parse_salary_value(range_match.group(2))
-        if low is not None and high is not None:
-            # Ensure low < high
-            if low > high:
-                low, high = high, low
-            midpoint = (low + high) / 2
-            return _midpoint_to_comp(midpoint)
-        elif high is not None:
-            return _midpoint_to_comp(high)
-        elif low is not None:
-            return _midpoint_to_comp(low)
+    # Collect all candidate salary mentions with their positions
+    candidates = []
 
-    if up_to_match:
-        val = _parse_salary_value(up_to_match.group(1))
-        if val is not None:
-            return "UP_TO_ONLY"
+    # Pattern: "between £X and £Y"
+    for m in re.finditer(r'between\s+£\s*([\d,]+(?:\.\d+)?)\s*[kK]?\s+and\s+£?\s*([\d,]+(?:\.\d+)?)\s*[kK]?', text, re.IGNORECASE):
+        candidates.append(("range", m.start(), m))
 
-    # Single salary value: "£XX,XXX" or "£XXk" (not in a range)
-    single_match = re.search(r'£\s*([\d,]+(?:\.\d+)?)\s*[kK]?', text)
-    if single_match:
-        val = _parse_salary_value(single_match.group(1))
-        if val is not None:
-            # Check if it's "up to" phrasing even if we didn't catch it above
-            context_start = max(0, single_match.start() - 30)
-            context = text[context_start:single_match.start()].lower()
-            if "up to" in context:
+    # Pattern: salary range "£XX - £YY" / "£XXk-£YYk"
+    for m in re.finditer(r'£\s*([\d,]+(?:\.\d+)?)\s*[kK]?\s*[-–—]\s*£?\s*([\d,]+(?:\.\d+)?)\s*[kK]?', text, re.IGNORECASE):
+        candidates.append(("range", m.start(), m))
+
+    # Pattern: "£XX to £YY" / "£XXk to £YYk" (Phase 3: fixes Job 172 "£35k to £60k")
+    for m in re.finditer(r'£\s*([\d,]+(?:\.\d+)?)\s*[kK]?\s+to\s+£?\s*([\d,]+(?:\.\d+)?)\s*[kK]?', text, re.IGNORECASE):
+        candidates.append(("range", m.start(), m))
+
+    # Pattern: "up to £XXX" / "to £XXX" / "(to £XXX)" (no lower bound)
+    for m in re.finditer(r'(?:up\s+to|salary\s+(?:up\s+)?to|(?:salary|paying)[:\s]+to|\(to)\s+£\s*([\d,]+(?:\.\d+)?)\s*[kK]?', text, re.IGNORECASE):
+        candidates.append(("up_to", m.start(), m))
+
+    # Pattern: single "£XXk" or "£XX,XXX"
+    for m in re.finditer(r'£\s*([\d,]+(?:\.\d+)?)\s*[kK]?\+?', text):
+        candidates.append(("single", m.start(), m))
+
+    # Sort by position (first salary in reading order)
+    candidates.sort(key=lambda x: x[1])
+
+    for ctype, pos, m in candidates:
+        if ctype == "range":
+            low = _parse_salary_value(m.group(1))
+            high = _parse_salary_value(m.group(2))
+            if low is not None and high is not None:
+                if low > high:
+                    low, high = high, low
+                # Filter non-salary amounts: both values should be plausible salaries
+                if not _is_plausible_salary(low) or not _is_plausible_salary(high):
+                    continue
+                # Check for per-day rate context
+                ctx_after = text[m.end():m.end()+30].lower()
+                if re.search(r'per\s+day|/day|\bday\s+rate\b|\bp\.?d\.?\b', ctx_after):
+                    return "NO_GBP"
+                midpoint = (low + high) / 2
+                return _midpoint_to_comp(midpoint)
+
+        elif ctype == "up_to":
+            val = _parse_salary_value(m.group(1))
+            if val is not None and _is_plausible_salary(val):
+                # Check for per-day rate context
+                ctx_after = text[m.end():m.end()+30].lower()
+                if re.search(r'per\s+day|/day|\bday\s+rate\b|\bp\.?d\.?\b', ctx_after):
+                    return "NO_GBP"
                 return "UP_TO_ONLY"
-            return _midpoint_to_comp(val)
+
+        elif ctype == "single":
+            # Pass full match (with £) so _parse_salary_value can detect explicit currency
+            val = _parse_salary_value(m.group(0))
+            if val is not None and _is_plausible_salary(val):
+                # Check context before for "up to" or "to" phrasing
+                ctx_start = max(0, m.start() - 40)
+                context_before = text[ctx_start:m.start()].lower()
+                if re.search(r'up\s+to\s*$', context_before):
+                    return "UP_TO_ONLY"
+                if re.search(r'(?:salary|paying|package)[:\s]*to\s*$', context_before):
+                    return "UP_TO_ONLY"
+                # Phase 3: "WFH to £X" / "(to £X)" — clear "up to" patterns
+                if re.search(r'(?:wfh|remote|hybrid|home)\s+to\s*$', context_before):
+                    return "UP_TO_ONLY"
+                if re.search(r'\(to\s*$', context_before):
+                    return "UP_TO_ONLY"
+                # Check for per-day rate context
+                ctx_after = text[m.end():m.end()+30].lower()
+                if re.search(r'per\s+day|/day|\bday\s+rate\b|\bp\.?d\.?\b', ctx_after):
+                    return "NO_GBP"
+                # Check for "£Xk+" pattern (adjacent +)
+                if m.group(0).rstrip().endswith("+"):
+                    return _midpoint_to_comp(val)
+                return _midpoint_to_comp(val)
+
+    # Fallback: check job title for £ amounts
+    if title:
+        title_match = re.search(r'£\s*([\d,]+(?:\.\d+)?)\s*[kK]?', title)
+        if title_match:
+            val = _parse_salary_value(title_match.group(1))
+            if val is not None and _is_plausible_salary(val):
+                return _midpoint_to_comp(val)
 
     return "NO_GBP"
+
+
+def _is_plausible_salary(val: float) -> bool:
+    """Filter out non-salary amounts (£1.4 trillion, £500 budget, £2.7bn)."""
+    # Plausible annual salary range: £15k - £500k
+    return 15000 <= val <= 500000
 
 
 def _midpoint_to_comp(midpoint: float) -> str:
@@ -343,11 +496,11 @@ def compute_score_and_label(loc: str, sen: str, tech: list[str], comp: str) -> d
 
 def classify_job(job: dict) -> dict:
     """Classify a single job using deterministic rules."""
-    loc = classify_loc(job.get("job_location", ""))
+    loc = classify_loc(job.get("job_location", ""), job.get("jd_text", ""))
     arr = classify_arr(job.get("jd_text", ""))
     sen = classify_sen(job.get("title", ""))
-    tech = classify_tech(job.get("jd_text", ""))
-    comp = classify_comp(job.get("jd_text", ""))
+    tech = classify_tech(job.get("jd_text", ""), job.get("title", ""))
+    comp = classify_comp(job.get("jd_text", ""), job.get("title", ""))
 
     result = compute_score_and_label(loc, sen, tech, comp)
     result["loc"] = loc

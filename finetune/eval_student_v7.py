@@ -222,6 +222,8 @@ def main():
     parser.add_argument("--verbose", action="store_true")
     parser.add_argument("--output-dir", type=str, default="eval_results")
     parser.add_argument("--save-predictions", action="store_true")
+    parser.add_argument("--preprocess", action="store_true",
+                        help="Apply JD preprocessing (V12: must match training)")
     args = parser.parse_args()
 
     # Output file setup — timestamped for history (never overwrites)
@@ -310,13 +312,23 @@ def main():
     invalid_tokens = 0
     fuzzy_total = 0
 
+    # Optional JD preprocessing (V12 train/inference consistency)
+    preprocess_fn = None
+    if args.preprocess:
+        from preprocess_jd import preprocess_jd
+        preprocess_fn = preprocess_jd
+        print("JD preprocessing: ENABLED")
+
     for seq, (orig_idx, job) in enumerate(test_examples, 1):
         # V7 golden data stores raw location as job_location
         raw_location = job.get("job_location", job.get("location", ""))
+        jd_text = job["jd_text"]
+        if preprocess_fn:
+            jd_text = preprocess_fn(jd_text)
         prompt_text = (prompt_template
             .replace("{{job_title}}", job["title"])
             .replace("{{job_location}}", raw_location)
-            .replace("{{jd_text}}", job["jd_text"]))
+            .replace("{{jd_text}}", jd_text))
 
         messages = [
             {"role": "system", "content": system_msg},

@@ -1,0 +1,45 @@
+# V12 Phase 0B: Test Set Audit Report
+
+## Corrections Applied (2)
+
+### Job 17: Founding Engineer (£240k+ )
+  Field: comp
+  Old: ABOVE_100K -> New: NO_GBP
+  Label: good_fit (score 80) -> maybe (score 55)
+  Reason: Job 17: 'Total Compensation' -> teacher labeled ABOVE_100K but rule says NO_GBP
+
+### Job 33: Senior Software Engineer, £70,000 To £85,000, UK
+  Field: comp
+  Old: RANGE_55_74K -> New: RANGE_75_99K
+  Label: good_fit (score 80) -> good_fit (score 90)
+  Reason: Job 33: £70k-£85k midpoint = £77.5k = RANGE_75_99K, teacher labeled RANGE_55_74K
+
+
+## Audit Findings (26)
+
+- Job 196: Known error but could not determine correction. Skipping.
+- Job 14 (Full-Stack Engineer): TECH: golden=['NODE', 'REACT', 'JS_TS', 'AI_ML'] but JD text suggests ['REACT', 'JS_TS', 'AI_ML'] (label would change maybe->bad_fit)
+- Job 16 (Senior Frontend Engineer): TECH: golden=['REACT', 'JS_TS'] but JD text suggests ['REACT', 'JS_TS', 'AI_ML'] (label would change maybe->good_fit)
+- Job 36 (Data Engineer - £150k-£200k TC): COMP: has TC/OTE/daily rate but golden=ABOVE_100K, should be NO_GBP
+- Job 57 (Front End Developer (remote)): TECH: golden=['NODE', 'REACT', 'JS_TS'] but JD text suggests ['NODE', 'REACT', 'JS_TS', 'AI_ML'] (label would change maybe->good_fit)
+- Job 74 (Full Stack Engineer): TECH: golden=['NODE', 'AI_ML'] but JD text suggests ['NODE', 'JS_TS', 'AI_ML'] (label would change maybe->good_fit)
+- Job 77 (Developer): TECH: golden=['NODE', 'AI_ML'] but JD text suggests ['NODE', 'JS_TS', 'AI_ML'] (label would change maybe->good_fit)
+- Job 81 (Frontend Developer): TECH: golden=['NODE'] but JD text suggests ['NODE', 'JS_TS'] (label would change maybe->good_fit)
+- Job 82 (Lead Engineer): TECH: golden=['NODE', 'JS_TS'] but JD text suggests ['OOS'] (label would change maybe->bad_fit)
+- Job 92 (Full Stack Engineer): TECH: golden=['NODE'] but JD text suggests ['NODE', 'JS_TS'] (label would change maybe->good_fit)
+- Job 103 (Senior Software Engineer): TECH: golden=['NODE', 'JS_TS'] but JD text suggests ['OOS'] (label would change good_fit->bad_fit)
+- Job 108 (Full Stack Engineer): TECH: golden=['NODE', 'AI_ML'] but JD text suggests ['NODE', 'JS_TS', 'AI_ML'] (label would change maybe->good_fit)
+- Job 109 (Engineering Manager): TECH: golden=['NODE', 'AI_ML'] but JD text suggests ['AI_ML'] (label would change good_fit->maybe)
+- Job 133 (Technical Writer): TECH: golden=['NODE'] but JD text suggests ['NODE', 'JS_TS'] (label would change maybe->good_fit)
+- Job 141 (Full Stack Engineer): TECH: golden=['NODE', 'AI_ML'] but JD text suggests ['NODE', 'JS_TS', 'AI_ML'] (label would change maybe->good_fit)
+- Job 141 (Full Stack Engineer): COMP: has TC/OTE/daily rate but golden=RANGE_55_74K, should be NO_GBP
+- Job 142 (Engineering Manager): TECH: golden=['NODE'] but JD text suggests ['NODE', 'JS_TS'] (label would change maybe->good_fit)
+- Job 156 (Back End Developer): COMP: has TC/OTE/daily rate but golden=RANGE_75_99K, should be NO_GBP
+- Job 161 (Data Analyst): TECH: golden=['AI_ML'] but JD text suggests ['OOS'] (label would change maybe->bad_fit)
+- Job 172 (Full Stack Developer (Typescript/NodeJs)): TECH: golden=['NODE', 'REACT', 'JS_TS', 'AI_ML'] but JD text suggests ['REACT', 'JS_TS'] (label would change maybe->bad_fit)
+- Job 199 (Senior Frontend Developer): COMP: has TC/OTE/daily rate but golden=RANGE_75_99K, should be NO_GBP
+- Job 212 (Senior Software Engineer - Backend AI Native): TECH: golden=['NODE', 'REACT', 'JS_TS', 'AI_ML'] but JD text suggests ['NODE', 'REACT', 'JS_TS'] (label would change good_fit->maybe)
+- Job 212 (Senior Software Engineer - Backend AI Native): COMP: has TC/OTE/daily rate but golden=RANGE_55_74K, should be NO_GBP
+- Job 221 (Software Engineer): TECH: golden=['NODE', 'JS_TS', 'AI_ML'] but JD text suggests ['NODE', 'REACT', 'JS_TS', 'AI_ML'] (label would change maybe->good_fit)
+- Job 225 (Software/ Platform Engineer): COMP: has TC/OTE/daily rate but golden=RANGE_55_74K, should be NO_GBP
+- Job 239 (Senior Software Engineer): TECH: golden=['JS_TS'] but JD text suggests ['OOS'] (label would change maybe->bad_fit)

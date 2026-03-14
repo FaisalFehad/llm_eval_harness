@@ -1,0 +1,47 @@
+# MLX LoRA config for V12 student model — 1.5B primary
+# V12 hybrid: regex loc/tech/comp + model sen/arr
+# Model's sole scoring contribution: seniority
+#
+# Data: 790 jobs (V7 real + V9 real, no generated_v7, regex-corrected)
+#       711 train / 79 valid
+#
+# Why 2500 iters: V7 used 2000 iters on 642 train = ~49.8 epochs.
+#   V12 has 711 train, so 2500 iters = ~56.3 epochs (slightly more to
+#   account for regex-corrected labels that may need extra exposure).
+#   Checkpoint selection (eval every 200 from iter 400) picks the peak.
+#
+# Training: ALWAYS fresh from base (NEVER resume from existing adapter)
+
+model: "mlx-community/Qwen2.5-1.5B-Instruct-4bit"
+data: "data/v12/mlx"
+train: true
+fine_tune_type: "lora"
+
+# LoRA hyperparameters — same as V7 (proven)
+lora_parameters:
+  rank: 16
+  alpha: 32
+  dropout: 0.05
+  scale: 1.0
+  weight_decay: 0.0
+
+# Training parameters
+batch_size: 1
+grad_accumulation_steps: 16 # Effective batch = 16
+iters: 2500
+learning_rate: 2e-5
+warmup_steps: 100
+
+max_seq_length: 8192
+
+# Validation
+val_batches: 40
+steps_per_eval: 25
+
+# Output
+adapter_path: "finetune/adapters_v12"
+save_every: 50
+
+# Memory optimization (required for M1 16GB with 1.5B)
+mask_prompt: true
+grad_checkpoint: true

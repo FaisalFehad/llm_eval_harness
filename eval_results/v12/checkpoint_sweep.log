@@ -1,0 +1,117 @@
+=== Evaluating iter 600 ===
+
+Predictions: eval_results/v12/adapters_v12/2026-03-14_023231_test_labeled_audited_student_v7_0000600.predictions.jsonl
+Summary: eval_results/v12/adapters_v12/2026-03-14_023231_test_labeled_audited_student_v7_0000600.summary.json
+
+Saved: eval_results/v12/adapters_v12/2026-03-14_023231_test_labeled_audited_student_v7_0000600.txt
+  Predictions: eval_results/v12/adapters_v12/2026-03-14_023231_test_labeled_audited_student_v7_0000600.predictions.jsonl
+v12_hybrid: 208/239 = 87.0%  95% CI: [82.2%, 90.7%] (parse_fail=42, fallback to regex)
+  V12 Hybrid (regex loc/tech/comp + model sen/arr)         87.0%  [82.2%, 90.7%]
+  iter=600 hybrid=87.0% sen=70.7% inv_tok=39 parse_fail=42
+
+=== Evaluating iter 800 ===
+
+Predictions: eval_results/v12/adapters_v12/2026-03-14_030137_test_labeled_audited_student_v7_0000800.predictions.jsonl
+Summary: eval_results/v12/adapters_v12/2026-03-14_030137_test_labeled_audited_student_v7_0000800.summary.json
+
+Saved: eval_results/v12/adapters_v12/2026-03-14_030137_test_labeled_audited_student_v7_0000800.txt
+  Predictions: eval_results/v12/adapters_v12/2026-03-14_030137_test_labeled_audited_student_v7_0000800.predictions.jsonl
+v12_hybrid: 215/239 = 90.0%  95% CI: [85.5%, 93.2%] (parse_fail=14, fallback to regex)
+  V12 Hybrid (regex loc/tech/comp + model sen/arr)         90.0%  [85.5%, 93.2%]
+  iter=800 hybrid=90.0% sen=84.1% inv_tok=14 parse_fail=14
+
+=== Evaluating iter 1000 ===
+
+Predictions: eval_results/v12/adapters_v12/2026-03-14_032016_test_labeled_audited_student_v7_0001000.predictions.jsonl
+Summary: eval_results/v12/adapters_v12/2026-03-14_032016_test_labeled_audited_student_v7_0001000.summary.json
+
+Saved: eval_results/v12/adapters_v12/2026-03-14_032016_test_labeled_audited_student_v7_0001000.txt
+  Predictions: eval_results/v12/adapters_v12/2026-03-14_032016_test_labeled_audited_student_v7_0001000.predictions.jsonl
+v12_hybrid: 217/239 = 90.8%  95% CI: [86.5%, 93.8%] (parse_fail=18, fallback to regex)
+  V12 Hybrid (regex loc/tech/comp + model sen/arr)         90.8%  [86.5%, 93.8%]
+  iter=1000 hybrid=90.8% sen=84.5% inv_tok=18 parse_fail=18
+
+=== Evaluating iter 1200 ===
+
+Predictions: eval_results/v12/adapters_v12/2026-03-14_033930_test_labeled_audited_student_v7_0001200.predictions.jsonl
+Summary: eval_results/v12/adapters_v12/2026-03-14_033930_test_labeled_audited_student_v7_0001200.summary.json
+
+Saved: eval_results/v12/adapters_v12/2026-03-14_033930_test_labeled_audited_student_v7_0001200.txt
+  Predictions: eval_results/v12/adapters_v12/2026-03-14_033930_test_labeled_audited_student_v7_0001200.predictions.jsonl
+v12_hybrid: 215/239 = 90.0%  95% CI: [85.5%, 93.2%] (parse_fail=9, fallback to regex)
+  V12 Hybrid (regex loc/tech/comp + model sen/arr)         90.0%  [85.5%, 93.2%]
+  iter=1200 hybrid=90.0% sen=86.6% inv_tok=9 parse_fail=9
+
+=== Evaluating iter 1400 ===
+
+Predictions: eval_results/v12/adapters_v12/2026-03-14_035727_test_labeled_audited_student_v7_0001400.predictions.jsonl
+Summary: eval_results/v12/adapters_v12/2026-03-14_035727_test_labeled_audited_student_v7_0001400.summary.json
+
+Saved: eval_results/v12/adapters_v12/2026-03-14_035727_test_labeled_audited_student_v7_0001400.txt
+  Predictions: eval_results/v12/adapters_v12/2026-03-14_035727_test_labeled_audited_student_v7_0001400.predictions.jsonl
+v12_hybrid: 218/239 = 91.2%  95% CI: [86.9%, 94.2%] (parse_fail=9, fallback to regex)
+  V12 Hybrid (regex loc/tech/comp + model sen/arr)         91.2%  [86.9%, 94.2%]
+  iter=1400 hybrid=91.2% sen=88.7% inv_tok=9 parse_fail=9
+
+=== Evaluating iter 1600 ===
+
+Predictions: eval_results/v12/adapters_v12/2026-03-14_041529_test_labeled_audited_student_v7_0001600.predictions.jsonl
+Summary: eval_results/v12/adapters_v12/2026-03-14_041529_test_labeled_audited_student_v7_0001600.summary.json
+
+Saved: eval_results/v12/adapters_v12/2026-03-14_041529_test_labeled_audited_student_v7_0001600.txt
+  Predictions: eval_results/v12/adapters_v12/2026-03-14_041529_test_labeled_audited_student_v7_0001600.predictions.jsonl
+v12_hybrid: 215/239 = 90.0%  95% CI: [85.5%, 93.2%] (parse_fail=7, fallback to regex)
+  V12 Hybrid (regex loc/tech/comp + model sen/arr)         90.0%  [85.5%, 93.2%]
+  iter=1600 hybrid=90.0% sen=85.4% inv_tok=7 parse_fail=7
+
+=== Evaluating iter 1800 ===
+
+Predictions: eval_results/v12/adapters_v12/2026-03-14_043259_test_labeled_audited_student_v7_0001800.predictions.jsonl
+Summary: eval_results/v12/adapters_v12/2026-03-14_043259_test_labeled_audited_student_v7_0001800.summary.json
+
+Saved: eval_results/v12/adapters_v12/2026-03-14_043259_test_labeled_audited_student_v7_0001800.txt
+  Predictions: eval_results/v12/adapters_v12/2026-03-14_043259_test_labeled_audited_student_v7_0001800.predictions.jsonl
+v12_hybrid: 221/239 = 92.5%  95% CI: [88.4%, 95.2%] (parse_fail=8, fallback to regex)
+  V12 Hybrid (regex loc/tech/comp + model sen/arr)         92.5%  [88.4%, 95.2%]
+  iter=1800 hybrid=92.5% sen=89.5% inv_tok=8 parse_fail=8
+
+=== Evaluating iter 2000 ===
+
+Predictions: eval_results/v12/adapters_v12/2026-03-14_045011_test_labeled_audited_student_v7_0002000.predictions.jsonl
+Summary: eval_results/v12/adapters_v12/2026-03-14_045011_test_labeled_audited_student_v7_0002000.summary.json
+
+Saved: eval_results/v12/adapters_v12/2026-03-14_045011_test_labeled_audited_student_v7_0002000.txt
+  Predictions: eval_results/v12/adapters_v12/2026-03-14_045011_test_labeled_audited_student_v7_0002000.predictions.jsonl
+v12_hybrid: 222/239 = 92.9%  95% CI: [88.9%, 95.5%] (parse_fail=8, fallback to regex)
+  V12 Hybrid (regex loc/tech/comp + model sen/arr)         92.9%  [88.9%, 95.5%]
+  iter=2000 hybrid=92.9% sen=90.0% inv_tok=8 parse_fail=8
+
+=== Evaluating iter 2200 ===
+
+Predictions: eval_results/v12/adapters_v12/2026-03-14_050503_test_labeled_audited_student_v7_0002200.predictions.jsonl
+Summary: eval_results/v12/adapters_v12/2026-03-14_050503_test_labeled_audited_student_v7_0002200.summary.json
+
+Saved: eval_results/v12/adapters_v12/2026-03-14_050503_test_labeled_audited_student_v7_0002200.txt
+  Predictions: eval_results/v12/adapters_v12/2026-03-14_050503_test_labeled_audited_student_v7_0002200.predictions.jsonl
+v12_hybrid: 219/239 = 91.6%  95% CI: [87.4%, 94.5%] (parse_fail=17, fallback to regex)
+  V12 Hybrid (regex loc/tech/comp + model sen/arr)         91.6%  [87.4%, 94.5%]
+  iter=2200 hybrid=91.6% sen=89.1% inv_tok=17 parse_fail=17
+
+=== Evaluating iter 2400 ===
+
+Predictions: eval_results/v12/adapters_v12/2026-03-14_052521_test_labeled_audited_student_v7_0002400.predictions.jsonl
+Summary: eval_results/v12/adapters_v12/2026-03-14_052521_test_labeled_audited_student_v7_0002400.summary.json
+
+Saved: eval_results/v12/adapters_v12/2026-03-14_052521_test_labeled_audited_student_v7_0002400.txt
+  Predictions: eval_results/v12/adapters_v12/2026-03-14_052521_test_labeled_audited_student_v7_0002400.predictions.jsonl
+v12_hybrid: 221/239 = 92.5%  95% CI: [88.4%, 95.2%] (parse_fail=10, fallback to regex)
+  V12 Hybrid (regex loc/tech/comp + model sen/arr)         92.5%  [88.4%, 95.2%]
+  iter=2400 hybrid=92.5% sen=90.8% inv_tok=10 parse_fail=10
+
+=== Done ===
+Results saved to eval_results/v12/checkpoint_selection.csv
+
+Best checkpoint:
+2000,,92.9,90.0,8,8
+2400,,92.5,90.8,10,10
+1800,,92.5,89.5,8,8

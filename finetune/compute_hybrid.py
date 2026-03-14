@@ -72,6 +72,9 @@ def main():
     parser = argparse.ArgumentParser(description="Compute hybrid accuracy (model + regex)")
     parser.add_argument("--test-file", required=True, help="Golden test set")
     parser.add_argument("--predictions", required=True, help="V7 model predictions .jsonl")
+    parser.add_argument("--output", default=None, help="Save summary JSON to this path")
+    parser.add_argument("--v12", action="store_true",
+                        help="V12 hybrid mode: regex loc/tech/comp + model sen/arr")
     args = parser.parse_args()
 
     # Load test set
@@ -101,11 +104,12 @@ def main():
     for job in test_jobs:
         regex_preds.append(classify_job(job))
 
-    # ── Compute 4 approaches ─────────────────────────────────────────────
+    # ── Compute approaches ──────────────────────────────────────────────
     # 1. Model only (handling parse failures)
     # 2. Regex only
-    # 3. Hybrid: model loc/arr/sen + regex tech/comp
+    # 3. Hybrid A: model loc/arr/sen + regex tech/comp
     # 4. Hybrid B: model loc/sen + regex tech/comp/arr
+    # 5. V12 Hybrid: regex loc/tech/comp + model sen/arr (--v12 flag)
 
     results = {
         "model_only": {"correct": 0, "total": 0, "field_correct": {f: 0 for f in ["loc","arr","sen","tech","comp"]}, "parse_fail": 0},
@@ -113,6 +117,10 @@ def main():
         "hybrid_A": {"correct": 0, "total": 0, "field_correct": {f: 0 for f in ["loc","arr","sen","tech","comp"]}, "parse_fail": 0},
         "hybrid_B": {"correct": 0, "total": 0, "field_correct": {f: 0 for f in ["loc","arr","sen","tech","comp"]}, "parse_fail": 0},
     }
+    if args.v12:
+        results["v12_hybrid"] = {"correct": 0, "total": 0, "field_correct": {f: 0 for f in ["loc","arr","sen","tech","comp"]}, "parse_fail": 0}
+    v12_errors = []
+    v12_per_label = {l: {"correct": 0, "total": 0} for l in ["good_fit", "maybe", "bad_fit"]}
 
     # Track per-job details for error analysis
     hybrid_errors = []
@@ -264,6 +272,59 @@ def main():
             if h_fb["label"] == golden_label:
                 results["hybrid_B"]["correct"] += 1
 
+        # ── V12 Hybrid: regex loc/tech/comp + model sen/arr ────────────
+        if args.v12:
+            v12_loc = regex["loc"]  # regex loc (100% accuracy)
+            v12_tech = regex["tech"]  # regex tech
+            v12_comp = regex["comp"]  # regex comp
+
+            if has_model:
+                model_tokens = mp["pred_tokens"]
+                v12_sen = model_tokens["sen"]  # model sen
+                v12_arr = model_tokens["arr"]  # model arr
+            else:
+                # Parse failure fallback: regex for all fields
+                results["v12_hybrid"]["parse_fail"] += 1
+                v12_sen = regex["sen"]
+                v12_arr = regex["arr"]
+
+            v12_result = compute_label(v12_loc, v12_sen, v12_tech, v12_comp)
+            v12_label = v12_result["label"]
+            results["v12_hybrid"]["total"] += 1
+            v12_per_label[golden_label]["total"] += 1
+
+            if v12_label == golden_label:
+                results["v12_hybrid"]["correct"] += 1
+                v12_per_label[golden_label]["correct"] += 1
+            else:
+                diffs = []
+                if v12_loc != golden["loc"]:
+                    diffs.append(f"loc:{golden['loc']}->{v12_loc}")
+                if has_model and model_tokens["sen"] != golden["sen"]:
+                    diffs.append(f"sen:{golden['sen']}->{model_tokens['sen']}")
+                if sorted(v12_tech) != sorted(golden["tech"]):
+                    diffs.append(f"tech:{golden['tech']}->{v12_tech}")
+                if v12_comp != golden["comp"]:
+                    diffs.append(f"comp:{golden['comp']}->{v12_comp}")
+                v12_errors.append({
+                    "idx": i, "title": job.get("title", ""),
+                    "golden_label": golden_label, "v12_label": v12_label,
+                    "golden_score": job.get("score", "?"), "v12_score": v12_result["score"],
+                    "diffs": diffs,
+                })
+
+            # Per-field accuracy for V12
+            if v12_loc == golden["loc"]:
+                results["v12_hybrid"]["field_correct"]["loc"] += 1
+            if v12_arr == golden["arr"]:
+                results["v12_hybrid"]["field_correct"]["arr"] += 1
+            if (v12_sen if has_model else regex["sen"]) == golden["sen"]:
+                results["v12_hybrid"]["field_correct"]["sen"] += 1
+            if sorted(v12_tech) == sorted(golden["tech"]):
+                results["v12_hybrid"]["field_correct"]["tech"] += 1
+            if v12_comp == golden["comp"]:
+                results["v12_hybrid"]["field_correct"]["comp"] += 1
+
     # ── Print Results ─────────────────────────────────────────────────────
     print("\n" + "=" * 70)
     print("HYBRID ACCURACY COMPUTATION — ACTUAL MEASURED RESULTS")
@@ -375,6 +436,10 @@ def main():
         ("Hybrid A (model sen/loc/arr + regex tech/comp)", results["hybrid_A"]["correct"], results["hybrid_A"]["total"]),
         ("Hybrid B (model sen/loc + regex tech/comp/arr)", results["hybrid_B"]["correct"], results["hybrid_B"]["total"]),
     ]
+    if args.v12:
+        comparisons.append(
+            ("V12 Hybrid (regex loc/tech/comp + model sen/arr)", results["v12_hybrid"]["correct"], results["v12_hybrid"]["total"]),
+        )
 
     for name, c, t in comparisons:
         acc = 100 * c / t if t > 0 else 0
@@ -382,6 +447,60 @@ def main():
         print(f"  {name:<55} {acc:5.1f}%  [{100*lo:.1f}%, {100*hi:.1f}%]")
 
     print(f"\n  Note: With n=239, 1pp ≈ 2.4 jobs. Differences <3pp are within noise.")
+
+    # ── V12 Hybrid details ─────────────────────────────────────────────
+    if args.v12:
+        r = results["v12_hybrid"]
+        print(f"\n{'=' * 70}")
+        print("V12 HYBRID DETAILS (regex loc/tech/comp + model sen/arr)")
+        print(f"{'=' * 70}")
+        acc = 100 * r["correct"] / r["total"]
+        lo, hi = wilson_ci(r["correct"], r["total"])
+        print(f"\n  Accuracy: {r['correct']}/{r['total']} = {acc:.1f}%  95% CI: [{100*lo:.1f}%, {100*hi:.1f}%]")
+        print(f"  Parse failures (regex fallback): {r['parse_fail']}")
+        print(f"\n  Per-field:")
+        for f in ["loc", "arr", "sen", "tech", "comp"]:
+            fc = r["field_correct"][f]
+            fa = 100 * fc / r["total"]
+            print(f"    {f}: {fa:.1f}% ({fc}/{r['total']})")
+        print(f"\n  Per-label:")
+        for lbl in ["good_fit", "maybe", "bad_fit"]:
+            c = v12_per_label[lbl]["correct"]
+            t = v12_per_label[lbl]["total"]
+            a = 100 * c / t if t > 0 else 0
+            print(f"    {lbl:<12}: {c}/{t} = {a:.1f}%")
+        print(f"\n  Errors ({len(v12_errors)}):")
+        for e in v12_errors:
+            diff_str = ", ".join(e["diffs"]) if e["diffs"] else "score_calc_only"
+            print(f"    Job {e['idx']+1}: {e['golden_label']}->{e['v12_label']} (score {e['golden_score']}->{e['v12_score']}) [{diff_str}] {e['title'][:50]}")
+
+    # ── Save summary JSON ───────────────────────────────────────────────
+    if args.output:
+        summary = {}
+        for name, r in results.items():
+            summary[name] = {
+                "correct": r["correct"],
+                "total": r["total"],
+                "accuracy_pct": round(100 * r["correct"] / r["total"], 1) if r["total"] > 0 else 0,
+                "parse_fail": r.get("parse_fail", 0),
+                "field_accuracy": {f: round(100 * r["field_correct"][f] / r["total"], 1)
+                                   for f in ["loc","arr","sen","tech","comp"]}
+                                   if r["total"] > 0 else {},
+            }
+        if args.v12:
+            summary["v12_errors"] = [
+                {"job_index": e["idx"]+1, "golden": e["golden_label"],
+                 "predicted": e["v12_label"], "diffs": e["diffs"]}
+                for e in v12_errors
+            ]
+            summary["v12_per_label"] = {
+                lbl: {"correct": v12_per_label[lbl]["correct"],
+                      "total": v12_per_label[lbl]["total"]}
+                for lbl in ["good_fit", "maybe", "bad_fit"]
+            }
+        with open(args.output, "w") as f:
+            json.dump(summary, f, indent=2)
+        print(f"\nSaved summary to {args.output}")
 
 
 if __name__ == "__main__":

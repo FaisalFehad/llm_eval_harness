@@ -1,0 +1,92 @@
+# V12 Phase 0A: Hybrid error jobs (26 total)
+# Baseline: 213/239 = 89.1%
+# V7 1.5B model + regex hybrid (Hybrid A)
+
+## Error Jobs
+# idx | golden      | hybrid      | g_score | h_score | diffs | title
+
+ 10 | bad_fit     | maybe       |       0 |      60 | loc:OUTSIDE_UK->REMOTE, tech:['REACT', 'JS_TS', 'AI_ML']->['AI_ML'] | ATUM Deep-Tech Founder (technical) - Singapore
+ 16 | maybe       | good_fit    |      60 |      70 | tech:['REACT', 'JS_TS']->['REACT', 'JS_TS', 'AI_ML'] | Senior Frontend Engineer
+ 17 | good_fit    | bad_fit     |      80 |      30 | tech:['JS_TS']->['AI_ML'], comp:ABOVE_100K->BELOW_45K | Founding Engineer (£240k+ )
+ 69 | good_fit    | maybe       |      70 |      60 | tech:['NODE', 'REACT', 'JS_TS']->['REACT', 'JS_TS'] | Fintech & Tech for Good | Profitable & Hyper-Growth Start-Up | Senior/Staff/Principal | Up to £150K | 3 Days Per Week LDN
+ 82 | maybe       | bad_fit     |      55 |      15 | tech:['NODE', 'JS_TS']->['OOS'] | Lead Engineer
+ 90 | maybe       | good_fit    |      65 |      75 | sen:LEVEL_2->LEVEL_3 | Scrum Master
+103 | good_fit    | bad_fit     |      80 |      40 | tech:['NODE', 'JS_TS']->['OOS'] | Senior Software Engineer
+108 | maybe       | good_fit    |      65 |      85 | sen:LEVEL_2->LEVEL_3, comp:RANGE_55_74K->RANGE_75_99K | Full Stack Engineer
+109 | good_fit    | maybe       |      75 |      65 | tech:['NODE', 'AI_ML']->['AI_ML'] | Engineering Manager
+122 | good_fit    | maybe       |      70 |      65 | tech:['NODE', 'JS_TS']->['NODE'] | UX Designer
+150 | bad_fit     | maybe       |       0 |      55 | loc:OUTSIDE_UK->UK_OTHER, tech:['NODE', 'REACT']->['NODE', 'REACT', 'JS_TS'] | Senior Software Engineer
+156 | good_fit    | maybe       |      80 |      65 | comp:RANGE_75_99K->UP_TO_ONLY | Back End Developer
+157 | maybe       | good_fit    |      65 |      75 | sen:LEVEL_2->LEVEL_3 | Backend Engineer (ai Platform) - London
+172 | maybe       | bad_fit     |      55 |      30 | tech:['NODE', 'REACT', 'JS_TS', 'AI_ML']->['REACT'] | Full Stack Developer (Typescript/NodeJs)
+181 | maybe       | bad_fit     |      50 |      40 | tech:['NODE', 'REACT']->['REACT'] | Javascript Fullstack Engineer - Senior
+183 | bad_fit     | maybe       |      25 |      50 | comp:NO_GBP->ABOVE_100K | Junior Developer
+199 | good_fit    | bad_fit     |      75 |      30 | comp:RANGE_75_99K->BELOW_45K | Senior Frontend Developer
+204 | bad_fit     | maybe       |      40 |      55 | comp:UP_TO_ONLY->RANGE_75_99K | Senior JavaScript Developer Vue 3
+210 | maybe       | bad_fit     |      55 |      25 | comp:NO_GBP->BELOW_45K | Senior Software Engineer
+213 | good_fit    | bad_fit     |      75 |      40 | tech:['NODE']->['OOS'] | Senior Software Engineer, Backend
+217 | good_fit    | maybe       |      80 |      65 | tech:['REACT']->['REACT', 'AI_ML'], comp:ABOVE_100K->NO_GBP | Senior Software/Founding Engineer - HealthTech AI Start Up - £120k - 5 Days Onsite
+218 | maybe       | good_fit    |      55 |      70 | tech:['AI_ML']->['JS_TS', 'AI_ML'], comp:RANGE_55_74K->RANGE_75_99K | Software Engineer
+221 | maybe       | good_fit    |      65 |      70 | tech:['NODE', 'JS_TS', 'AI_ML']->['NODE', 'REACT', 'JS_TS', 'AI_ML'] | Software Engineer
+230 | bad_fit     | good_fit    |       5 |      80 | loc:OUTSIDE_UK->IN_LONDON | Founding Software Engineer
+232 | bad_fit     | maybe       |       0 |      55 | loc:OUTSIDE_UK->UK_OTHER | Full-Stack Software Engineer
+239 | maybe       | bad_fit     |      55 |      25 | tech:['JS_TS']->['OOS'] | Senior Software Engineer
+
+## Boundary-Zone Non-Error Jobs (score 50-74, correct) — 55 total
+# idx | golden      | g_score | title
+
+ 14 | maybe       |      55 | Full-Stack Engineer
+ 23 | maybe       |      60 | Senior Software Developer, UK
+ 36 | maybe       |      50 | Data Engineer - £150k-£200k TC
+ 41 | maybe       |      60 | Senior Data Engineer
+ 57 | maybe       |      60 | Front End Developer (remote)
+ 64 | maybe       |      65 | Head of Infrastructure
+ 66 | maybe       |      60 | Senior Software Engineer, Strategy Platform
+ 67 | good_fit    |      70 | Lead Frontend Engineer
+ 68 | maybe       |      50 | Software Engineer | React & Python (full stack)
+ 74 | maybe       |      65 | Full Stack Engineer
+ 77 | maybe       |      65 | Developer
+ 78 | maybe       |      65 | Frontend Developer
+ 79 | good_fit    |      70 | IT Support Engineer
+ 81 | maybe       |      65 | Frontend Developer
+ 83 | maybe       |      50 | Security Engineer
+ 85 | maybe       |      65 | Junior Software Engineer
+ 88 | maybe       |      55 | IT Support Engineer
+ 91 | maybe       |      55 | Database Administrator
+ 92 | maybe       |      65 | Full Stack Engineer
+ 95 | good_fit    |      70 | Engineering Manager
+ 97 | maybe       |      60 | Full Stack Engineer
+105 | maybe       |      60 | Trainee Engineer
+114 | maybe       |      55 | Junior Developer
+120 | maybe       |      60 | UX Designer
+121 | maybe       |      65 | Principal Engineer
+124 | maybe       |      55 | Technical Writer
+125 | maybe       |      60 | Junior Developer
+126 | good_fit    |      70 | Technical Writer
+127 | good_fit    |      70 | Project Manager
+128 | maybe       |      65 | Backend Engineer
+129 | maybe       |      60 | Associate Developer
+131 | maybe       |      65 | Frontend Developer
+132 | good_fit    |      70 | IT Support Engineer
+133 | maybe       |      65 | Technical Writer
+136 | maybe       |      65 | QA Engineer
+139 | maybe       |      65 | Product Manager
+141 | maybe       |      65 | Full Stack Engineer
+142 | maybe       |      65 | Engineering Manager
+158 | maybe       |      55 | Backend Engineer
+161 | maybe       |      50 | Data Analyst
+166 | maybe       |      55 | Frontend Developer
+169 | maybe       |      60 | Frontend Platform Engineer
+171 | good_fit    |      70 | Full Stack Developer
+173 | maybe       |      55 | Full Stack Engineer (£60k-£80k + Equity) At Vitruehealth.com
+190 | maybe       |      50 | QA Engineer
+195 | maybe       |      65 | Senior Back End Software Engineer
+198 | maybe       |      50 | Senior DevOps Engineer
+200 | maybe       |      55 | Senior Full Stack Engineer
+201 | maybe       |      55 | Senior Full Stack Software Developer (uk)
+208 | maybe       |      60 | Senior Software Engineer
+209 | good_fit    |      70 | Senior Software Engineer
+211 | maybe       |      65 | Senior Software Engineer
+212 | good_fit    |      70 | Senior Software Engineer - Backend AI Native
+215 | maybe       |      65 | Senior Software Engineer, Full Stack, Learning Platforms
+225 | maybe       |      55 | Software/ Platform Engineer
