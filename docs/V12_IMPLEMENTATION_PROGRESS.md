@@ -449,7 +449,9 @@ Training duration: ~6.5 hours. Peak memory: 6.8 GB.
 
 ---
 
-## Final Results Summary
+## Final Results & Analysis
+
+### Accuracy Progression
 
 | Phase | Accuracy | Delta | Key Change |
 |-------|----------|-------|------------|
@@ -461,7 +463,8 @@ Training duration: ~6.5 hours. Peak memory: 6.8 GB.
 | Phase 3B (tech) | 95.4% (228/239) | +2.5pp | Concat patterns + AI_ML boilerplate filter + title search |
 | **Phase 3C (comp)** | **97.1% (232/239)** | **+1.7pp** | TC case-insensitive, title fallback, range patterns, currency parsing |
 
-**Final V12 Hybrid System:**
+### Final V12 Hybrid System
+
 - **Model**: V12 1.5B (iter 2000 checkpoint) with JD preprocessing
 - **Regex**: deterministic_baseline.py (LOC 100%, TECH 86.2%, COMP 95.4%)
 - **Architecture**: regex loc/tech/comp + model sen/arr
@@ -479,23 +482,73 @@ Training duration: ~6.5 hours. Peak memory: 6.8 GB.
 | **comp** | 70.6% | **95.4%** | **95.4%** | Regex | Salary extraction is pattern matching (£75k-£100k) |
 | **Label** | 78.4% | 79.1% | **97.1%** | Combined | Each system covers the other's weaknesses |
 
-*\*Model sen 93.1% is on 231 valid parses only. 8 parse failures fall back to regex sen (29.3%), reducing effective hybrid sen to 90.0% across all 239 jobs.*
+*\*Model sen 93.1% is on 231 valid parses only. 8 invalid token outputs fall back to regex sen (29.3%), reducing effective hybrid sen to 90.0% across all 239 jobs.*
 
 **Key takeaway**: Neither system alone exceeds 80%. The hybrid achieves 97.1% by routing each field to whichever system handles it best — regex for structured/pattern fields, model for semantic/contextual fields.
 
-**Production config:**
+### Invalid Token Analysis (8 jobs)
+
+The V12 model produces valid JSON for all 239 jobs (0 true parse failures), but 8 jobs contain **invalid token values** — the JSON structure is correct but token values aren't in the vocabulary. These 8 jobs are excluded from model scoring and all fields fall back to regex.
+
+| Job | Title | Field | Invalid Token(s) | Valid tokens also present? | Golden | Failure Mode |
+|-----|-------|-------|------------------|---------------------------|--------|--------------|
+| 36 | Data Engineer - £150k-£200k TC | **comp** | `RANGE_150_200K` | N/A (single value) | `NO_GBP` | Invented comp bucket |
+| 81 | Frontend Developer | **tech** | `GIT` | Possibly — 1 invalid among potentially valid tokens | `["NODE"]` | Real tool, not in vocabulary |
+| 106 | DevOps Engineer | **comp** | `RANGE_100_130K` | N/A (single value) | `ABOVE_100K` | Invented comp bucket |
+| 174 | Full Stack Engineer | **tech** | `NET`, `C#` | Possibly — may have had valid tokens alongside | `["JS_TS"]` | Real techs listed verbatim |
+| 200 | Senior Full Stack Engineer | **tech** | `EXPRESS`, `NESTJS` | Likely `NODE` present (Express/NestJS are Node frameworks) | `["NODE", "REACT", "JS_TS"]` | Node sub-frameworks listed |
+| 211 | Senior Software Engineer | **loc** | `UK RemoteAWS Cloud` | No — entire loc value garbled | `UK_OTHER` | Output corruption |
+| 232 | Full-Stack Software Engineer | **tech** | `GOLANG`, `ELIXIR`, `ELECTRON`, `MONGODB`, `POSTGRES`, `DOCKER` | No — all 6 tokens invalid, zero valid | `["NODE", "REACT", "JS_TS", "AI_ML"]` | Full tech stack dumped verbatim |
+| 234 | Software Engineer - Full Stack | **tech** | `EXPERIENCE`, `FULL_STACK` | No — neither is a tech name | `["NODE", "REACT", "JS_TS"]` | Non-tech words as tokens |
+
+**By field**: tech 5/8 (62.5%), comp 2/8 (25%), loc 1/8 (12.5%), sen and arr 0/8 (never fail)
+
+**Three distinct failure modes:**
+
+1. **Tech listing instead of classifying (5/8: Jobs 81, 174, 200, 232, 234)**: The model lists technologies it *sees* in the JD (`"EXPRESS"`, `"GOLANG"`, `"DOCKER"`) instead of mapping them to the 5 valid tokens (NODE, REACT, JS_TS, AI_ML, OOS). It treats tech as an open extraction task rather than a closed classification. Job 232 is the extreme case — 6 raw tech names, zero valid tokens.
+
+2. **Comp bucket invention (2/8: Jobs 36, 106)**: The model understands the naming *pattern* (`RANGE_X_YK`) and invents buckets that don't exist (`RANGE_150_200K`, `RANGE_100_130K`). It hasn't memorized the exact vocabulary but knows the format — a near-miss that could be fixed with more training examples showing the boundary cases.
+
+3. **Output corruption (1/8: Job 211)**: Garbled concatenation (`"UK RemoteAWS Cloud"`) — multiple fields merged into one string. Suggests the model's generation went off-rails, possibly due to a long/complex JD.
+
+**Impact on hybrid**: These 8 invalid token jobs fall back to regex for ALL fields, including sen (29.3% accuracy). This causes ~5-6 wrong seniority predictions. Job 200 (one of the 7 remaining hybrid errors) is directly caused by this fallback.
+
+### Parse Failure Comparison: V7 vs V12
+
+| Version | Model | True Parse Failures | Invalid Tokens | Total Unusable | Impact |
+|---------|-------|-------------------|----------------|----------------|--------|
+| V7 1.5B | Qwen2.5-1.5B-Instruct-4bit | 0 | 13 | 13 | 13 jobs fall back to regex |
+| V12 1.5B | Same base model, V12 training data | **0** | **8** | **8** | 8 jobs fall back to regex |
+
+V12 actually has **fewer** invalid tokens than V7 (8 vs 13). The difference is that V7's 13 invalid tokens didn't include any of the 7 remaining hybrid errors, while V12's 8 include Job 200.
+
+**Root cause of invalid tokens**: The model hasn't fully internalized the closed vocabulary constraint. It sees technologies in the JD and outputs them verbatim instead of classifying into the 5 valid tokens. This is a training signal issue — the student prompt lists the valid tokens but doesn't explicitly say "only these values are allowed, map everything else to OOS."
+
+**Potential fixes for future versions**:
+1. **Train on raw JDs** (like V7) but preprocess at inference time — V7's raw training produced more format-robust output
+2. **Add vocabulary-enforcement examples** — contrastive training showing diverse tech stacks all mapped to `["OOS"]` or the correct subset
+3. **Add comp boundary examples** — jobs with £100k+ salaries correctly labeled `ABOVE_100K`, not invented ranges
+4. **Post-processing fallback** — instead of rejecting the entire prediction, salvage valid tokens from the array and only fall back to regex for the invalid field
+
+### Production Config
+
 - Model: `mlx-community/Qwen2.5-1.5B-Instruct-4bit`
 - Adapter: `finetune/adapters_v12/0002000_adapters.safetensors`
 - Prompt: `prompts/student_v7.txt`
 - Preprocessing: `finetune/preprocess_jd.py` (required at inference time)
 - Hybrid: `finetune/compute_hybrid.py --v12`
 
-**Targets achieved:**
+### Targets Achieved
+
 - [x] All-jobs accuracy ≥ 90% (minimum) — **97.1%**
 - [x] All-jobs accuracy ≥ 95% (goal) — **97.1%**
 - [x] Wilson 95% CI lower bound ≥ 86% — **93.5%**
 - [x] No regression guardrail violations — **all 7 pass**
 - [x] Documentation saved to `docs/V12_IMPLEMENTATION_PROGRESS.md`
+
+---
+
+## Future Improvement Opportunities
 
 ### Built-in Feedback Loop for Continuous Improvement
 
@@ -509,22 +562,13 @@ The student model is trained on **all 5 fields** (loc, arr, sen, tech, comp) eve
 
 4. **Regression detection is automatic.** Because model predictions on all fields are scored against golden labels, any model regression on loc/tech/comp is immediately visible — even though those fields aren't used in the hybrid score. This acts as an early warning system: if model tech accuracy drops from 66.7% to 50%, something is wrong with the training data or hyperparameters, even if hybrid accuracy stays flat.
 
-**Current opportunity**: Model tech accuracy (66.7%) and comp accuracy (70.6%) are significantly below regex. These represent the largest potential gains for future model improvements. If the model reached regex-level tech accuracy (86.2%), it would also reduce the impact of parse failures — since parse failures currently fall back to regex for all fields including sen (29.3% accuracy), a model that rarely fails parsing would eliminate this penalty entirely.
+### Key Improvement Targets
 
-### Parse Failure Penalty — Key Improvement Target
+**1. Invalid token reduction** — Model tech (66.7%) and comp (70.6%) are significantly below regex. The 8 invalid token jobs are the single biggest improvement target: fixing them would eliminate ~5-6 wrong seniority predictions from regex fallback, potentially gaining +2-3pp hybrid accuracy. Approaches: vocabulary-enforcement training examples, comp boundary examples, and partial-salvage post-processing.
 
-Parse failures occur when the model's JSON output can't be parsed. When this happens, **all 5 fields** fall back to regex — including seniority, where regex only achieves 29.3% accuracy.
+**2. Seniority accuracy** — Sen is the model's sole scoring contribution. Current 93.1% on valid parses is strong, but the 2 remaining model sen errors (Jobs 108, 141: LEVEL_2→LEVEL_3) show the model struggles with mid-level vs senior boundary cases. Targeted contrastive examples could help.
 
-| Version | Model | Parse Failures | Impact |
-|---------|-------|---------------|--------|
-| V7 1.5B | Qwen2.5-1.5B-Instruct-4bit | **0** | No fallback needed |
-| V12 1.5B | Same model, different training data | **8** | 8 jobs fall back to all-regex (sen=29.3%) |
-
-**Impact**: 8 parse failures × ~70% chance of wrong seniority = ~5-6 wrong predictions. Job 200 (one of the 7 remaining errors) is directly caused by a parse failure.
-
-**Root cause**: V12 was trained on preprocessed (shorter) JDs, while V7 was trained on raw JDs. The shorter training sequences may have reduced the model's format robustness — it sometimes truncates JSON mid-word or misplaces tokens across fields.
-
-**Potential fix for future versions**: Train on raw JDs (like V7 did) but still preprocess at inference time. V7 1.5B achieved 0 parse failures with this approach. The train/infer mismatch (train raw, infer preprocessed) actually worked better than matching (train preprocessed, infer preprocessed) — likely because raw JDs have more formatting variety, making the model more robust to diverse inputs. If V12 parse failures dropped to 0, hybrid accuracy could gain +2-3pp.
+**3. Train on raw JDs** — V7 (trained on raw JDs) had 0 parse failures and 13 invalid tokens. V12 (trained on preprocessed JDs) has 0 parse failures and 8 invalid tokens. The raw-training approach may produce more format-robust output overall, even when preprocessing is applied at inference time.
 
 ---
 
