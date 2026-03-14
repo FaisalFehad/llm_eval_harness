@@ -468,6 +468,21 @@ Training duration: ~6.5 hours. Peak memory: 6.8 GB.
 - **Accuracy**: **97.1% (232/239)**, 95% CI [93.5%, 98.3%]
 - **Per-label**: good_fit 100.0% (56/56), maybe 87.7% (50/57), bad_fit 100.0% (126/126)
 
+### Why the Hybrid Works: Model vs Regex vs Hybrid Per-Field
+
+| Field | Model only | Regex only | V12 Hybrid | Hybrid uses | Why |
+|-------|-----------|------------|------------|-------------|-----|
+| **loc** | 94.4% | **100.0%** | **100.0%** | Regex | Location is deterministic string matching |
+| **arr** | **90.5%** | 77.4% | 90.4% | Model | Arrangement needs context (informational, score=0) |
+| **sen** | **93.1%*** | 29.3% | 90.0% | Model | Seniority requires understanding "5+ years", "Senior" — regex just defaults LEVEL_2 |
+| **tech** | 66.7% | **86.2%** | **86.2%** | Regex | Tech detection is keyword matching with boilerplate filtering |
+| **comp** | 70.6% | **95.4%** | **95.4%** | Regex | Salary extraction is pattern matching (£75k-£100k) |
+| **Label** | 78.4% | 79.1% | **97.1%** | Combined | Each system covers the other's weaknesses |
+
+*\*Model sen 93.1% is on 231 valid parses only. 8 parse failures fall back to regex sen (29.3%), reducing effective hybrid sen to 90.0% across all 239 jobs.*
+
+**Key takeaway**: Neither system alone exceeds 80%. The hybrid achieves 97.1% by routing each field to whichever system handles it best — regex for structured/pattern fields, model for semantic/contextual fields.
+
 **Production config:**
 - Model: `mlx-community/Qwen2.5-1.5B-Instruct-4bit`
 - Adapter: `finetune/adapters_v12/0002000_adapters.safetensors`
@@ -481,6 +496,35 @@ Training duration: ~6.5 hours. Peak memory: 6.8 GB.
 - [x] Wilson 95% CI lower bound ≥ 86% — **93.5%**
 - [x] No regression guardrail violations — **all 7 pass**
 - [x] Documentation saved to `docs/V12_IMPLEMENTATION_PROGRESS.md`
+
+### Built-in Feedback Loop for Continuous Improvement
+
+The student model is trained on **all 5 fields** (loc, arr, sen, tech, comp) even though the V12 hybrid only uses the model for sen and arr. This is a deliberate architectural choice that creates a continuous improvement feedback loop:
+
+1. **The model scores on all fields at eval time.** Even though the hybrid ignores the model's loc/tech/comp predictions, `compute_hybrid.py` still records per-field model accuracy (model_only section). This means every eval run produces a scorecard showing exactly where the model is improving or regressing across all fields.
+
+2. **Model improvements can shift fields from regex → model.** Today regex handles loc (100%), tech (86.2%), and comp (95.4%). If a future model version pushes tech accuracy above regex, the hybrid can simply flip `v12_tech = model["tech"]` instead of `v12_tech = regex["tech"]`. No retraining or architecture changes needed — just a routing decision.
+
+3. **Multi-task training improves seniority.** Training on all fields forces the model to deeply parse the full JD (location clues, salary ranges, tech stack). This cross-field understanding improves the model's seniority predictions — the one field that matters most. Removing loc/tech/comp from training would likely degrade sen accuracy because the model loses the multi-task learning signal.
+
+4. **Regression detection is automatic.** Because model predictions on all fields are scored against golden labels, any model regression on loc/tech/comp is immediately visible — even though those fields aren't used in the hybrid score. This acts as an early warning system: if model tech accuracy drops from 66.7% to 50%, something is wrong with the training data or hyperparameters, even if hybrid accuracy stays flat.
+
+**Current opportunity**: Model tech accuracy (66.7%) and comp accuracy (70.6%) are significantly below regex. These represent the largest potential gains for future model improvements. If the model reached regex-level tech accuracy (86.2%), it would also reduce the impact of parse failures — since parse failures currently fall back to regex for all fields including sen (29.3% accuracy), a model that rarely fails parsing would eliminate this penalty entirely.
+
+### Parse Failure Penalty — Key Improvement Target
+
+Parse failures occur when the model's JSON output can't be parsed. When this happens, **all 5 fields** fall back to regex — including seniority, where regex only achieves 29.3% accuracy.
+
+| Version | Model | Parse Failures | Impact |
+|---------|-------|---------------|--------|
+| V7 1.5B | Qwen2.5-1.5B-Instruct-4bit | **0** | No fallback needed |
+| V12 1.5B | Same model, different training data | **8** | 8 jobs fall back to all-regex (sen=29.3%) |
+
+**Impact**: 8 parse failures × ~70% chance of wrong seniority = ~5-6 wrong predictions. Job 200 (one of the 7 remaining errors) is directly caused by a parse failure.
+
+**Root cause**: V12 was trained on preprocessed (shorter) JDs, while V7 was trained on raw JDs. The shorter training sequences may have reduced the model's format robustness — it sometimes truncates JSON mid-word or misplaces tokens across fields.
+
+**Potential fix for future versions**: Train on raw JDs (like V7 did) but still preprocess at inference time. V7 1.5B achieved 0 parse failures with this approach. The train/infer mismatch (train raw, infer preprocessed) actually worked better than matching (train preprocessed, infer preprocessed) — likely because raw JDs have more formatting variety, making the model more robust to diverse inputs. If V12 parse failures dropped to 0, hybrid accuracy could gain +2-3pp.
 
 ---
 
