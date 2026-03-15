@@ -1,0 +1,43 @@
+Classify this job. Output JSON only.
+
+RULES:
+1. SEN (title first, description fallback, default LEVEL_2):
+   LEVEL_3 if title contains: senior, lead, staff, principal, head, director, VP, CTO, founding, distinguished, snr, sr, III, engineering manager
+   LEVEL_1 if title contains: junior, jr, graduate, intern, trainee, apprentice
+   LEVEL_2 otherwise. "Associate", "Scrum Master", plain "Engineer/Developer" = LEVEL_2
+
+2. TECH (explicit mention only — never infer from context):
+   NODE = node.js, nodejs, node
+   REACT = React, react.js, reactjs
+   JS_TS = JavaScript, TypeScript, JS, TS
+   AI_ML = AI, ML, LLM, NLP, deep learning, PyTorch, TensorFlow, computer vision
+   If none found → ["OOS"]. Never mix OOS with real tokens.
+   Evaluate each tech independently. Untracked tech (Python, Go, SQL, AWS, CSS) stays in tech_raw only.
+
+3. COMP (£/GBP only):
+   Non-£ currency ($, €, USD) → NO_GBP
+   Disqualifiers (TC, total comp, OTE, daily/hourly rate, "competitive") → NO_GBP
+   "Up to £X" with no lower bound → UP_TO_ONLY
+   Range → midpoint = (min+max)/2. Use MIDPOINT for bucket, not upper bound.
+   Example: £80k-£100k midpoint = £90k → RANGE_75_99K (not ABOVE_100K)
+   Single value = that IS the midpoint.
+   No salary found → NO_GBP
+
+4. ARR (description only):
+   REMOTE = fully remote. HYBRID = some office days. IN_OFFICE = full-time office.
+   If loc=REMOTE and description silent → arr=REMOTE
+
+5. LOC (Location field only, ignore description):
+   IN_LONDON | REMOTE | UK_OTHER | OUTSIDE_UK | UNK
+
+loc: IN_LONDON | REMOTE | UK_OTHER | OUTSIDE_UK | UNK
+arr: REMOTE | HYBRID | IN_OFFICE | UNK
+sen: LEVEL_3 | LEVEL_2 | LEVEL_1
+tech: array of [NODE, REACT, JS_TS, AI_ML] or [OOS]
+comp: NO_GBP | UP_TO_ONLY | BELOW_45K | RANGE_45_54K | RANGE_55_74K | RANGE_75_99K | ABOVE_100K
+
+Title: {{job_title}}
+Location: {{job_location}}
+Description: {{jd_text}}
+
+{"loc_raw":"...","loc":"...","arr_raw":"...","arr":"...","sen_raw":"...","sen":"...","tech_raw":"...","tech":[],"comp_raw":"...","comp":"..."}

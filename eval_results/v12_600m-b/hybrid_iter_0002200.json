@@ -1,0 +1,207 @@
+{
+  "model_only": {
+    "correct": 163,
+    "total": 218,
+    "accuracy_pct": 74.8,
+    "parse_fail": 21,
+    "field_accuracy": {
+      "loc": 94.0,
+      "arr": 83.9,
+      "sen": 85.8,
+      "tech": 64.7,
+      "comp": 70.6
+    }
+  },
+  "regex_only": {
+    "correct": 187,
+    "total": 239,
+    "accuracy_pct": 78.2,
+    "parse_fail": 0,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 77.4,
+      "sen": 29.3,
+      "tech": 86.2,
+      "comp": 94.1
+    }
+  },
+  "hybrid_A": {
+    "correct": 213,
+    "total": 239,
+    "accuracy_pct": 89.1,
+    "parse_fail": 21,
+    "field_accuracy": {
+      "loc": 85.8,
+      "arr": 76.6,
+      "sen": 78.2,
+      "tech": 78.2,
+      "comp": 86.6
+    }
+  },
+  "hybrid_B": {
+    "correct": 213,
+    "total": 239,
+    "accuracy_pct": 89.1,
+    "parse_fail": 21,
+    "field_accuracy": {
+      "loc": 0.0,
+      "arr": 0.0,
+      "sen": 0.0,
+      "tech": 0.0,
+      "comp": 0.0
+    }
+  },
+  "v12_hybrid": {
+    "correct": 223,
+    "total": 239,
+    "accuracy_pct": 93.3,
+    "parse_fail": 21,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 84.1,
+      "sen": 80.3,
+      "tech": 86.2,
+      "comp": 94.1
+    }
+  },
+  "v12_errors": [
+    {
+      "job_index": 17,
+      "golden": "good_fit",
+      "predicted": "maybe",
+      "diffs": [
+        "tech:['JS_TS']->['AI_ML']",
+        "comp:ABOVE_100K->NO_GBP"
+      ]
+    },
+    {
+      "job_index": 36,
+      "golden": "maybe",
+      "predicted": "bad_fit",
+      "diffs": [
+        "comp:ABOVE_100K->NO_GBP"
+      ]
+    },
+    {
+      "job_index": 46,
+      "golden": "bad_fit",
+      "predicted": "maybe",
+      "diffs": [
+        "sen:LEVEL_2->LEVEL_3",
+        "comp:RANGE_45_54K->RANGE_55_74K"
+      ]
+    },
+    {
+      "job_index": 74,
+      "golden": "maybe",
+      "predicted": "good_fit",
+      "diffs": [
+        "sen:LEVEL_2->LEVEL_3"
+      ]
+    },
+    {
+      "job_index": 90,
+      "golden": "maybe",
+      "predicted": "good_fit",
+      "diffs": [
+        "sen:LEVEL_2->LEVEL_3"
+      ]
+    },
+    {
+      "job_index": 92,
+      "golden": "maybe",
+      "predicted": "good_fit",
+      "diffs": [
+        "sen:LEVEL_2->LEVEL_3"
+      ]
+    },
+    {
+      "job_index": 98,
+      "golden": "good_fit",
+      "predicted": "maybe",
+      "diffs": []
+    },
+    {
+      "job_index": 128,
+      "golden": "maybe",
+      "predicted": "good_fit",
+      "diffs": [
+        "sen:LEVEL_2->LEVEL_3"
+      ]
+    },
+    {
+      "job_index": 172,
+      "golden": "maybe",
+      "predicted": "bad_fit",
+      "diffs": [
+        "tech:['NODE', 'REACT', 'JS_TS', 'AI_ML']->['NODE', 'REACT', 'JS_TS']"
+      ]
+    },
+    {
+      "job_index": 173,
+      "golden": "maybe",
+      "predicted": "good_fit",
+      "diffs": [
+        "sen:LEVEL_2->LEVEL_3",
+        "tech:['AI_ML']->['JS_TS', 'AI_ML']"
+      ]
+    },
+    {
+      "job_index": 190,
+      "golden": "maybe",
+      "predicted": "bad_fit",
+      "diffs": []
+    },
+    {
+      "job_index": 200,
+      "golden": "maybe",
+      "predicted": "bad_fit",
+      "diffs": []
+    },
+    {
+      "job_index": 212,
+      "golden": "good_fit",
+      "predicted": "maybe",
+      "diffs": []
+    },
+    {
+      "job_index": 218,
+      "golden": "maybe",
+      "predicted": "good_fit",
+      "diffs": [
+        "tech:['AI_ML']->['JS_TS', 'AI_ML']",
+        "comp:RANGE_55_74K->RANGE_75_99K"
+      ]
+    },
+    {
+      "job_index": 221,
+      "golden": "maybe",
+      "predicted": "good_fit",
+      "diffs": [
+        "tech:['NODE', 'JS_TS', 'AI_ML']->['NODE', 'REACT', 'JS_TS', 'AI_ML']"
+      ]
+    },
+    {
+      "job_index": 239,
+      "golden": "maybe",
+      "predicted": "bad_fit",
+      "diffs": [
+        "tech:['JS_TS']->['OOS']"
+      ]
+    }
+  ],
+  "v12_per_label": {
+    "good_fit": {
+      "correct": 54,
+      "total": 57
+    },
+    "maybe": {
+      "correct": 45,
+      "total": 57
+    },
+    "bad_fit": {
+      "correct": 124,
+      "total": 125
+    }
+  }
+}

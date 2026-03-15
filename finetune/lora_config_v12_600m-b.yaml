@@ -1,0 +1,40 @@
+# MLX LoRA config for V12 student model — 600m-b
+# Enhanced prompt + higher rank + weight decay
+#
+# Changes from 0.6B config:
+#   - rank: 32 (up from 16) — more capacity for structured rules
+#   - alpha: 64 (up from 32) — maintains 2.0 scaling ratio
+#   - weight_decay: 0.01 (was 0.0) — regularization to prevent overfitting with higher rank
+#   - prompt: student_v7_enhanced.txt (compressed teacher rules)
+#   - data: data/v12/mlx_600m-b (reformatted with enhanced prompt)
+#
+# Training: ALWAYS fresh from base (NEVER resume from existing adapter)
+
+model: "mlx-community/Qwen3-0.6B-4bit"
+data: "data/v12/mlx_600m-b"
+train: true
+fine_tune_type: "lora"
+
+lora_parameters:
+  rank: 32
+  alpha: 64
+  dropout: 0.05
+  scale: 1.0
+  weight_decay: 0.01
+
+batch_size: 1
+grad_accumulation_steps: 16
+iters: 2500
+learning_rate: 2e-5
+warmup_steps: 100
+
+max_seq_length: 5120
+
+val_batches: 40
+steps_per_eval: 25
+
+adapter_path: "finetune/adapters_v12_600m-b"
+save_every: 50
+
+mask_prompt: true
+grad_checkpoint: true

@@ -222,6 +222,8 @@ def main():
     parser.add_argument("--verbose", action="store_true")
     parser.add_argument("--output-dir", type=str, default="eval_results")
     parser.add_argument("--save-predictions", action="store_true")
+    parser.add_argument("--system-msg", type=str, default=None,
+                        help="Custom system message (default: 'Respond with JSON only.')")
     parser.add_argument("--preprocess", action="store_true",
                         help="Apply JD preprocessing (V12: must match training)")
     args = parser.parse_args()
@@ -276,7 +278,7 @@ def main():
     print("-" * 60)
 
     model, tokenizer = load(args.model, adapter_path=adapter_path)
-    system_msg = "Respond with JSON only."
+    system_msg = args.system_msg or "Respond with JSON only."
     print("-" * 60)
 
     # Load test examples

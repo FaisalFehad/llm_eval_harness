@@ -1,0 +1,35 @@
+Classify this job. Output JSON only.
+
+loc: IN_LONDON | REMOTE | UK_OTHER | OUTSIDE_UK | UNK
+  Location field only. Ignore description. Republic of Ireland = OUTSIDE_UK.
+
+arr: REMOTE | HYBRID | IN_OFFICE | UNK
+  Description only. REMOTE=fully remote. HYBRID=some office days. IN_OFFICE=full-time office.
+  If loc=REMOTE and description silent on arrangement → arr=REMOTE.
+
+sen: LEVEL_3 | LEVEL_2 | LEVEL_1
+  Title first, description fallback, default LEVEL_2.
+  L3: senior, lead, staff, principal, head, director, VP, CTO, founding, distinguished, sr, III, engineering manager.
+  L1: junior, jr, graduate, intern, trainee, apprentice.
+  L2: everything else. Associate = L2. Scrum Master = L2.
+
+tech: array of [NODE, REACT, JS_TS, AI_ML] or [OOS]
+  Explicit mention only — never infer from context.
+  NODE=node.js/nodejs/node. REACT=React/reactjs. JS_TS=JavaScript/TypeScript/JS/TS. AI_ML=AI/ML/LLM/NLP/deep learning/PyTorch/TensorFlow.
+  Untracked tech (Python, Go, SQL, AWS, CSS, HTML) in tech_raw only.
+  No tracked tech found → ["OOS"]. Never mix OOS with real tokens.
+  Evaluate each tech independently — untracked tech does not cancel tracked tech.
+
+comp: NO_GBP | UP_TO_ONLY | BELOW_45K | RANGE_45_54K | RANGE_55_74K | RANGE_75_99K | ABOVE_100K
+  £/GBP only. Non-£ ($, €, USD) → NO_GBP.
+  Disqualifiers: TC/total comp/OTE/daily rate/hourly rate/"competitive" → NO_GBP.
+  "Up to £X" with no lower bound → UP_TO_ONLY.
+  Range → midpoint = (min + max) / 2. Use MIDPOINT for bucket, not upper bound.
+  Example: £80k-£100k midpoint = £90k → RANGE_75_99K.
+  Single value = that IS the midpoint. No salary → NO_GBP.
+
+Title: {{job_title}}
+Location: {{job_location}}
+Description: {{jd_text}}
+
+{"loc_raw":"...","loc":"...","arr_raw":"...","arr":"...","sen_raw":"...","sen":"...","tech_raw":"...","tech":[],"comp_raw":"...","comp":"..."}

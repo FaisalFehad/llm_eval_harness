@@ -1,0 +1,202 @@
+{
+  "model_only": {
+    "correct": 158,
+    "total": 231,
+    "accuracy_pct": 68.4,
+    "parse_fail": 8,
+    "field_accuracy": {
+      "loc": 88.3,
+      "arr": 72.3,
+      "sen": 87.4,
+      "tech": 37.7,
+      "comp": 68.0
+    }
+  },
+  "regex_only": {
+    "correct": 187,
+    "total": 239,
+    "accuracy_pct": 78.2,
+    "parse_fail": 0,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 77.4,
+      "sen": 29.3,
+      "tech": 86.2,
+      "comp": 94.1
+    }
+  },
+  "hybrid_A": {
+    "correct": 208,
+    "total": 239,
+    "accuracy_pct": 87.0,
+    "parse_fail": 8,
+    "field_accuracy": {
+      "loc": 85.4,
+      "arr": 69.9,
+      "sen": 84.5,
+      "tech": 82.8,
+      "comp": 90.8
+    }
+  },
+  "hybrid_B": {
+    "correct": 208,
+    "total": 239,
+    "accuracy_pct": 87.0,
+    "parse_fail": 8,
+    "field_accuracy": {
+      "loc": 0.0,
+      "arr": 0.0,
+      "sen": 0.0,
+      "tech": 0.0,
+      "comp": 0.0
+    }
+  },
+  "v12_hybrid": {
+    "correct": 224,
+    "total": 239,
+    "accuracy_pct": 93.7,
+    "parse_fail": 8,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 72.4,
+      "sen": 87.0,
+      "tech": 86.2,
+      "comp": 94.1
+    }
+  },
+  "v12_errors": [
+    {
+      "job_index": 17,
+      "golden": "good_fit",
+      "predicted": "maybe",
+      "diffs": [
+        "tech:['JS_TS']->['AI_ML']",
+        "comp:ABOVE_100K->NO_GBP"
+      ]
+    },
+    {
+      "job_index": 36,
+      "golden": "maybe",
+      "predicted": "bad_fit",
+      "diffs": [
+        "comp:ABOVE_100K->NO_GBP"
+      ]
+    },
+    {
+      "job_index": 57,
+      "golden": "maybe",
+      "predicted": "bad_fit",
+      "diffs": []
+    },
+    {
+      "job_index": 74,
+      "golden": "maybe",
+      "predicted": "good_fit",
+      "diffs": [
+        "sen:LEVEL_2->LEVEL_3"
+      ]
+    },
+    {
+      "job_index": 95,
+      "golden": "good_fit",
+      "predicted": "maybe",
+      "diffs": [
+        "sen:LEVEL_3->LEVEL_2"
+      ]
+    },
+    {
+      "job_index": 97,
+      "golden": "maybe",
+      "predicted": "good_fit",
+      "diffs": [
+        "sen:LEVEL_2->LEVEL_3"
+      ]
+    },
+    {
+      "job_index": 104,
+      "golden": "good_fit",
+      "predicted": "maybe",
+      "diffs": [
+        "sen:LEVEL_3->LEVEL_2"
+      ]
+    },
+    {
+      "job_index": 108,
+      "golden": "maybe",
+      "predicted": "good_fit",
+      "diffs": [
+        "comp:RANGE_55_74K->RANGE_75_99K"
+      ]
+    },
+    {
+      "job_index": 127,
+      "golden": "good_fit",
+      "predicted": "maybe",
+      "diffs": [
+        "sen:LEVEL_3->LEVEL_2"
+      ]
+    },
+    {
+      "job_index": 172,
+      "golden": "maybe",
+      "predicted": "bad_fit",
+      "diffs": [
+        "tech:['NODE', 'REACT', 'JS_TS', 'AI_ML']->['NODE', 'REACT', 'JS_TS']"
+      ]
+    },
+    {
+      "job_index": 173,
+      "golden": "maybe",
+      "predicted": "good_fit",
+      "diffs": [
+        "sen:LEVEL_2->LEVEL_3",
+        "tech:['AI_ML']->['JS_TS', 'AI_ML']"
+      ]
+    },
+    {
+      "job_index": 190,
+      "golden": "maybe",
+      "predicted": "bad_fit",
+      "diffs": []
+    },
+    {
+      "job_index": 218,
+      "golden": "maybe",
+      "predicted": "good_fit",
+      "diffs": [
+        "tech:['AI_ML']->['JS_TS', 'AI_ML']",
+        "comp:RANGE_55_74K->RANGE_75_99K"
+      ]
+    },
+    {
+      "job_index": 221,
+      "golden": "maybe",
+      "predicted": "good_fit",
+      "diffs": [
+        "tech:['NODE', 'JS_TS', 'AI_ML']->['NODE', 'REACT', 'JS_TS', 'AI_ML']"
+      ]
+    },
+    {
+      "job_index": 239,
+      "golden": "maybe",
+      "predicted": "bad_fit",
+      "diffs": [
+        "tech:['JS_TS']->['OOS']"
+      ]
+    }
+  ],
+  "v12_per_label": {
+    "good_fit": {
+      "correct": 53,
+      "total": 57
+    },
+    "maybe": {
+      "correct": 46,
+      "total": 57
+    },
+    "bad_fit": {
+      "correct": 125,
+      "total": 125
+    }
+  }
+}

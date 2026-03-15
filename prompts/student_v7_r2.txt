@@ -1,0 +1,16 @@
+Classify this job. Output JSON only.
+
+loc: IN_LONDON | REMOTE | UK_OTHER | OUTSIDE_UK | UNK
+arr: REMOTE | HYBRID | IN_OFFICE | UNK
+sen: LEVEL_3 | LEVEL_2 | LEVEL_1
+  L3=senior/lead/staff/principal/head/founding/sr/III. L1=junior/jr/graduate/intern. L2=default.
+tech: array of [NODE, REACT, JS_TS, AI_ML] or [OOS]
+  Explicit mention only. Never infer. Untracked tech in tech_raw only.
+comp: NO_GBP | UP_TO_ONLY | BELOW_45K | RANGE_45_54K | RANGE_55_74K | RANGE_75_99K | ABOVE_100K
+  £ only. Non-£/TC/OTE→NO_GBP. "Up to"→UP_TO_ONLY. Range→midpoint=(min+max)/2.
+
+Title: {{job_title}}
+Location: {{job_location}}
+Description: {{jd_text}}
+
+{"loc_raw":"...","loc":"...","arr_raw":"...","arr":"...","sen_raw":"...","sen":"...","tech_raw":"...","tech":[],"comp_raw":"...","comp":"..."}
