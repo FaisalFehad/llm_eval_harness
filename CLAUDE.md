@@ -6,28 +6,29 @@ Distilling gpt-4.1-mini into a local Qwen3-0.6B student model for job-fit scorin
 
 ## Current Status
 
-**V13.1 in progress — 1.5B Qwen2.5 training. Best 0.6B still V13 at 97.9%.**
+**V13.1 COMPLETE. Best 0.6B: V13 at 97.9%. Best 1.5B: V13.1 at 97.5% (iter 1800).**
 
-| Model | Hybrid Acc | Sen | Arr | Tech | Comp | Parse Fail |
-|-------|-----------|-----|-----|------|------|------------|
-| **0.6B Qwen3 (V13, iter 1500)** | **97.9%** | **86.6%** | 72.8% | 88.3% | 95.8% | 19* |
+| Model | Hybrid Acc | Sen (hybrid) | Arr (hybrid) | Tech | Comp | Parse Fail |
+|-------|-----------|-------------|-------------|------|------|------------|
+| **0.6B Qwen3 (V13, iter 1500)** | **97.9%** | 86.6% | 72.8% | 88.3% | 95.8% | 19* |
 | 0.6B Qwen3 (V13.1 corrective, iter 200) | 97.5% | 84.9% | 76.2% | **90.4%†** | **96.2%†** | 13 |
 | 0.6B Qwen3 (V12.1) | 97.5% | 84.5% | 80.3% | 87.9% | 95.4% | 0 |
-| 1.5B Qwen2.5 (V13.1, in training) | — | — | — | — | — | — |
-| 1.5B Qwen2.5 (V12.1) | 98.3% | 90.0% | 90.4% | 87.9% | 95.4% | 8 |
+| **1.5B Qwen2.5 (V13.1, iter 1800)** | **97.5%** | **90.8%** | 85.4% | **90.4%†** | **96.2%†** | 36 |
+| 1.5B Qwen2.5 (V12.1) | 98.3% | 90.0% | **90.4%** | 87.9% | 95.4% | **8** |
 
-*Parse failures fall back to regex in hybrid pipeline — hybrid accuracy unaffected.
-†V13.1 regex (tech=90.4%, comp=96.2%) is an improvement over V13 (88.3%, 95.8%), but error interdependency on Job 14 means the 0.6B corrective retrain doesn't beat V13's 97.9% overall.
+*Parse failures fall back to regex in hybrid pipeline — hybrid accuracy unaffected at label level, but reduces hybrid sen/arr field accuracy.
+†V13.1 regex (tech=90.4%, comp=96.2%) is strictly better than V12.1 (87.9%, 95.4%).
 
 **Production model**: Qwen3-0.6B-4bit, adapter `finetune/adapters_v13_0.6B/0001500_adapters.safetensors`
 
-**Next step**: V13.1 1.5B training in progress. V13.1 0.6B corrective retrain peaked at 97.5% (iter 200, all 6 remaining errors are irreducible sen boundary cases). V13.1 regex: tech=90.4% (+2.1pp), comp=96.2% (+0.4pp).
+**Next step**: V13.1 complete. V13.1 1.5B has best-ever model-only sen (93.6%) but 36 parse failures prevent beating V12.1 (98.3%). V14 priorities: (1) reduce parse failures with format prompt fix, (2) relax arr REMOTE definition, (3) L1/L2 boundary contrastive examples, (4) correct Job 14 teacher label error.
 
 ### Tracking Documents
 
 | Document | Purpose |
 |----------|---------|
-| `docs/V13_PLAN.md` | V13 + V13.1 execution plan |
+| `docs/V13_1_IMPLEMENTATION_PROGRESS.md` | **V13.1 full history — regex, 0.6B corrective, 1.5B training, error analysis** |
+| `docs/V13_PLAN.md` | V13 execution plan (V13 phases 1–4 complete) |
 | `docs/V12_IMPLEMENTATION_PROGRESS.md` | Full V12 history — all phases, models, comparisons |
 | `V6_DIAGNOSTIC_FINDINGS.md` | Pre-V12 findings and decisions (38 findings) |
 
@@ -87,11 +88,13 @@ score = max(0, min(100, loc_score + role_score + tech_score + comp_score))
 
 ## Key Files
 
-### V13.1 (current — 1.5B in training)
+### V13.1 (current — complete)
 | File | Purpose |
 |------|---------|
 | finetune/deterministic_baseline_v13_1.py | **V13.1 regex** (tech=90.4%, comp=96.2% — use for V13.1+ evals) |
 | finetune/compute_hybrid_v13_1.py | V13.1 hybrid evaluator (V13.1 regex + model) |
+| finetune/sweep_v13_1_1.5B.py | **V13.1 1.5B checkpoint sweep script** |
+| finetune/sweep_v13_1.py | V13.1 0.6B checkpoint sweep script |
 | finetune/deterministic_baseline_v13.py | V13 regex classifier (production — use with V13 model) |
 | finetune/compute_hybrid_v13.py | V13 hybrid evaluator (V13 regex + model) |
 | finetune/deterministic_baseline_v12_1.py | V12.1 regex classifier (previous) |
@@ -106,8 +109,8 @@ score = max(0, min(100, loc_score + role_score + tech_score + comp_score))
 ### Configs & Adapters
 | File | Purpose |
 |------|---------|
-| finetune/lora_config_v13_1_1.5B.yaml | **V13.1 1.5B training config (in training)** |
-| finetune/adapters_v13_1_1.5B/ | V13.1 1.5B adapters (in training) |
+| finetune/lora_config_v13_1_1.5B.yaml | **V13.1 1.5B training config** |
+| finetune/adapters_v13_1_1.5B/ | **V13.1 1.5B adapters (best: iter 1800, 97.5%)** |
 | finetune/lora_config_v13_1_0.6B.yaml | V13.1 0.6B corrective retrain config |
 | finetune/adapters_v13_1_0.6B/ | V13.1 0.6B adapters (best: iter 200, 97.5%) |
 | finetune/lora_config_v13_0.6B.yaml | V13 0.6B training config (production) |
@@ -130,7 +133,8 @@ score = max(0, min(100, loc_score + role_score + tech_score + comp_score))
 ### Eval Results
 | Directory | Purpose |
 |-----------|---------|
-| eval_results/v13_1_sweep/ | **V13.1 0.6B sweep (8 checkpoints, iter 50–400, best: iter 200 at 97.5%)** |
+| eval_results/v13_1_1.5B_sweep/ | **V13.1 1.5B sweep (10 checkpoints, iter 200–2000, best: iter 1800 at 97.5%)** |
+| eval_results/v13_1_sweep/ | V13.1 0.6B sweep (8 checkpoints, iter 50–400, best: iter 200 at 97.5%) |
 | eval_results/v13_sweep/ | V13 0.6B sweep (9 checkpoints, iter 1500–1900, best: iter 1500 at 97.9%) |
 | eval_results/v13_think_compare/ | Thinking experiment results (think ON/OFF comparison) |
 | eval_results/v12_1/ | V12.1 hybrid results (previous production) |
@@ -147,7 +151,7 @@ score = max(0, min(100, loc_score + role_score + tech_score + comp_score))
 
 ## Training Config
 
-### V13.1 1.5B (in training)
+### V13.1 1.5B (complete — best: iter 1800)
 | Parameter | Value |
 |-----------|-------|
 | Model | mlx-community/Qwen2.5-1.5B-Instruct-4bit |
@@ -159,6 +163,7 @@ score = max(0, min(100, loc_score + role_score + tech_score + comp_score))
 | max_seq_length | 8192 |
 | Eval every / Save every | 100 / 200 |
 | mask_prompt / grad_checkpoint | true / true |
+| Best checkpoint | iter 1800 (97.5% hybrid, sen=90.8%, parse=36) |
 | Training data | 860 jobs (842 V13 + 18 contrastive) |
 
 ### V13.1 0.6B corrective (done)
@@ -202,12 +207,12 @@ score = max(0, min(100, loc_score + role_score + tech_score + comp_score))
 ## Common Commands
 
 ```bash
-# ── V13.1 Hybrid Eval (current workflow) ──────────────────────────
+# ── V13.1 1.5B Hybrid Eval ─────────────────────────────────────────
 
-# Model-only eval (V13.1 1.5B — use student_v13_1.txt prompt)
+# Model-only eval (V13.1 1.5B best checkpoint — iter 1800)
 .venv/bin/python3 finetune/eval_student_v7.py \
   --model mlx-community/Qwen2.5-1.5B-Instruct-4bit \
-  --adapter finetune/adapters_v13_1_1.5B/<ITER>_adapters.safetensors \
+  --adapter finetune/adapters_v13_1_1.5B/0001800_adapters.safetensors \
   --test-file data/v12/test_labeled_audited.jsonl \
   --prompt prompts/student_v13_1.txt \
   --output-dir eval_results/v13_1_1.5B/ \
@@ -219,6 +224,12 @@ score = max(0, min(100, loc_score + role_score + tech_score + comp_score))
   --predictions <predictions.jsonl> \
   --v12 \
   --output <output.json>
+
+# Checkpoint sweep (1.5B — all 10 checkpoints)
+.venv/bin/python3 finetune/sweep_v13_1_1.5B.py --skip-existing
+
+# Checkpoint sweep (0.6B corrective)
+.venv/bin/python3 finetune/sweep_v13_1.py --skip-existing
 
 # V13.1 regex-only baseline
 .venv/bin/python3 finetune/deterministic_baseline_v13_1.py \
@@ -273,6 +284,8 @@ npx tsx src/cli/format-for-mlx-v7.ts --input <train.jsonl> --output-dir <dir> --
 - **V13 regex imports**: `compute_hybrid_v13.py` imports from `deterministic_baseline_v13.py`; `compute_hybrid_v13_1.py` imports from `deterministic_baseline_v13_1.py` — keep pairs in `finetune/`
 - **Model-only scores are misleading for hybrid**: Model-only tech dropped 20pp V12→V13 but hybrid tech improved — regex overrides model for loc/tech/comp so model-only accuracy on those fields is irrelevant. Always compare hybrid-to-hybrid, never model-only-to-hybrid.
 - **`eval_student_v7.py` extra flags**: `--no-think` disables Qwen3 thinking mode (faster but more parse failures); `--max-tokens N` raises token budget (3000+ causes 55s/job on M1 — impractical). Keep defaults.
+- **V13.1 1.5B parse failures (36/239 = 15%)**: Qwen2.5-1.5B with V13.1 prompt generates verbose preambles on long JDs before the JSON, consuming the token budget. V12.1 1.5B had only 8. This costs ~3 hybrid labels. V14 fix: add "Begin response with `{`" to prompt end.
+- **Val loss ≠ hybrid accuracy for V13.1 1.5B**: Iter 1400 has the best mid-run val loss (0.142) but only 95.0% hybrid due to 67 parse failures. Iter 1800 (val 0.148) beats it with 36 parse failures. Always run the full sweep — don't pick checkpoint by val loss alone.
 
 ## Data Pipeline
 ```

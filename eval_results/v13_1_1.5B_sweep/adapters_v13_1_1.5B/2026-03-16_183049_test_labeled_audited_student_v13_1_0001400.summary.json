@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-03-16_183049",
+  "adapter": "finetune/adapters_v13_1_1.5B/0001400_adapters.safetensors",
+  "checkpoint": "0001400",
+  "model": "mlx-community/Qwen2.5-1.5B-Instruct-4bit",
+  "prompt": "prompts/student_v13_1.txt",
+  "test_file": "data/v12/test_labeled_audited.jsonl",
+  "n_total": 239,
+  "n_valid": 172,
+  "parse_failures": 47,
+  "invalid_tokens": 20,
+  "fuzzy_corrections": 1,
+  "label_accuracy": 76.2,
+  "score_accuracy": 44.2,
+  "field_accuracy": {
+    "loc": 95.9,
+    "arr": 87.2,
+    "sen": 86.0,
+    "tech": 65.1,
+    "comp": 63.4
+  },
+  "per_label": {
+    "good_fit": 67.6,
+    "maybe": 57.9,
+    "bad_fit": 86.0
+  }
+}
