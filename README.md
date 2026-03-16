@@ -52,18 +52,18 @@ Each row is a phase of the project. Click any phase to jump to its story.
 | 11½ | [V6–V11 gauntlet](#the-v6v11-training-gauntlet) | 75.3% | 8 experiments, most failed. Regex beats model on mechanical tasks. |
 | 12 | [Hybrid pipeline](#phase-12--the-hybrid-breakthrough) | 97.5% | Model + regex, each doing what it does best. |
 | 13 | [Final push](#phase-13--the-final-push) | **97.9%** | Contrastive training, surgical fixes. Hit the 0.6B ceiling. |
-| 14 | [Still pushing](#whats-next) | 🔄 | 1.5B training complete. Sweeping checkpoints. |
+| 14 | [V13.1 — still pushing](#whats-next) | 97.5% | 1.5B trained. Bigger ≠ better — parse failures dragged it below the 0.6B. |
 
 ```mermaid
 xychart-beta
     title "Accuracy Evolution — Can I Make It Better?"
-    x-axis ["Baseline", "Fine-tune", "Real-world", "Prompt fix", "OOD", "Teacher v2", "v9.8", "Student v1", "V5 tokens", "V6-V11", "V12 hybrid", "V12.1", "V12.1 0.6B", "V13 0.6B", "V13 1.5B"]
+    x-axis ["Baseline", "Fine-tune", "Real-world", "Prompt fix", "OOD", "Teacher v2", "v9.8", "Student v1", "V5 tokens", "V6-V11", "V12 hybrid", "V12.1", "V12.1 0.6B", "V13 0.6B", "V13.1 1.5B"]
     y-axis "Label Accuracy %" 0 --> 100
-    bar [39.8, 90.9, 81.9, 95.8, 98.6, 94.4, 96.5, 76.6, 83.9, 75.3, 92.9, 97.1, 97.5, 97.9, 98.3]
-    line [39.8, 90.9, 81.9, 95.8, 98.6, 94.4, 96.5, 76.6, 83.9, 75.3, 92.9, 97.1, 97.5, 97.9, 98.3]
+    bar [39.8, 90.9, 81.9, 95.8, 98.6, 94.4, 96.5, 76.6, 83.9, 75.3, 92.9, 97.1, 97.5, 97.9, 97.5]
+    line [39.8, 90.9, 81.9, 95.8, 98.6, 94.4, 96.5, 76.6, 83.9, 75.3, 92.9, 97.1, 97.5, 97.9, 97.5]
 ```
 
-> Every dip in the chart is a moment I raised the bar — harder data, smaller model, stricter eval. The drops aren't regressions; they're ambition.
+> Every dip in the chart is a moment I raised the bar — harder data, smaller model, stricter eval. Even the final dip: upgrading to a 2.5× bigger model didn't help. The 0.6B was already the right answer.
 
 ---
 
@@ -635,27 +635,40 @@ Fix: corrective retraining — resume from the best adapter (V13 iter 1500) with
 
 ```mermaid
 xychart-beta
-    title "Hybrid Accuracy vs Model Size — Diminishing Returns"
+    title "Hybrid Accuracy vs Model Size — Bigger ≠ Better"
     x-axis ["0.5B Qwen2.5", "0.6B Qwen3", "1.5B Qwen2.5"]
     y-axis "Hybrid Accuracy %" 90 --> 100
-    bar [92.1, 97.9, 98.3]
+    bar [92.1, 97.9, 97.5]
 ```
 
-| Model | Size | Hybrid | Sen | Parse Fail |
-|-------|------|--------|-----|-----------|
-| 0.5B Qwen2.5 | 290 MB | 92.1% | 69.5% | 44 |
-| **0.6B Qwen3** | **351 MB** | **97.9%** | **86.6%** | 19 |
-| 1.5B Qwen2.5 | 880 MB | 98.3% | 90.0% | 8 |
+| Model | Size | Hybrid | Sen | Parse Fail | Notes |
+|-------|------|--------|-----|-----------|-------|
+| 0.5B Qwen2.5 | 290 MB | 92.1% | 69.5% | 44 | Formatting kills accuracy |
+| **0.6B Qwen3** | **351 MB** | **97.9%** | **86.6%** | **19** | **Production model** |
+| 1.5B Qwen2.5 | 880 MB | 97.5% | 90.8% | 36 | Better comprehension, worse formatting |
 
-The 0.6B → 1.5B jump gains only 0.4pp for 2.5× the size.
+The 1.5B actually scores *lower* than the 0.6B despite being 2.5× the size. It understands seniority better (+4.2pp sen) but produces 36 parse failures vs 19 — and each parse failure falls back to regex for seniority, which is only 29.3% accurate on sen. **Parse reliability beats raw comprehension.**
 
 ---
 
 ## What's next
 
-**V13.1 — 1.5B Qwen2.5 training complete.** 2,000 iterations finished, val loss converged at 0.129. Eval sweep covers iters 200–800 so far (best: **92.9% hybrid at iter 800**, on an upward trajectory). Iters 1000–2000 still need evaluation — given the V13 0.6B peaked at iter 1500, the best 1.5B checkpoint is likely in that unevaluated range. Target: match/beat V12.1's 98.3%.
+**V13.1 — 1.5B training complete. It didn't help.**
 
-The 0.6B hit its ceiling — all remaining errors are seniority boundary cases that need more model capacity.
+Trained 2,000 iterations of Qwen2.5-1.5B on 860 jobs (V13 data + 18 contrastive examples). Swept all 10 checkpoints from iter 200 to 2000. Four checkpoints tied at 97.5% (iters 1000, 1600, 1800, 2000). Best pick: **iter 1800** — highest seniority accuracy (90.8%) with moderate parse failures (36).
+
+| Iter | Hybrid | Sen | Arr | Parse Fail |
+|------|--------|-----|-----|-----------|
+| 200 | 92.1% | 65.3% | 73.6% | 83 |
+| 800 | 95.8% | 79.5% | 79.9% | 34 |
+| **1800** | **97.5%** | **90.8%** | **85.4%** | **36** |
+| 2000 | 97.5% | 90.0% | 86.2% | 56 |
+
+The 1.5B understands seniority better than the 0.6B (+4.2pp) — but it can't reliably produce valid JSON. 36 parse failures vs 19 for the 0.6B, each one falling back to 29.3%-accurate regex for seniority. **The model that understands more loses to the model that formats better.**
+
+One teacher labeling error found during analysis: Job 14's JD lists "Java, Javascript, TypeScript + React" — no Node.js — but the teacher labeled NODE. Regex correctly omits it. Accounting for this, the 1.5B's effective accuracy is 97.9% (5 real errors, all irreducible sen L2/L3 boundaries).
+
+The 0.6B remains the production model. Same effective ceiling, 60% smaller, fewer parse failures.
 
 The question I keep asking: **can I make it better?**
 
@@ -663,7 +676,7 @@ The question I keep asking: **can I make it better?**
 
 ## What I learned
 
-Across 13 versions, 20+ models, and 9 prompt iterations:
+Across 14 versions, 20+ models, and 9 prompt iterations:
 
 **Data quality beats quantity.** Every training failure traced back to data composition — London bias, NODE-biased synthetic jobs, comp imbalance — never model capacity. More data often hurt (V9: +57% data, −16pp accuracy). Targeted data always helped (V13: +52 surgical contrastive examples, +0.4pp). Both 0.5B and 1.5B models made identical errors on 52% of shared failures, proving the bottleneck is training signal, not parameters. ([Phase 8](#phase-8--knowledge-distillation), [Phase 10](#phase-10--the-openai-pivot), [V6–V11 Gauntlet](#the-v6v11-training-gauntlet))
 
@@ -677,9 +690,9 @@ Across 13 versions, 20+ models, and 9 prompt iterations:
 
 **Small models need explicit signal, not bigger prompts.** `_raw` fields provide evidence-before-classification scaffolding — a 10pp improvement over tokens-only. But once LoRA-tuned, the model can't absorb new instructions — only new training data. Even adding one hint line caused 35% parse failures. ([Phase 11](#phase-11--the-architectural-pivot), [Phase 12](#phase-12--the-hybrid-breakthrough))
 
-**Architecture generation > parameter count.** The 0.6B Qwen3 (newer architecture, `<think>` tokens) beat the 0.5B Qwen2.5 by 4.6pp on hybrid accuracy — despite being only 21% larger. The 0.6B also beat the 1.5B Qwen2.5 on hybrid by 0.4pp at 40% of the size. Model architecture matters more than raw parameter count for structured output tasks. ([Phase 12](#phase-12--the-hybrid-breakthrough))
+**Architecture generation > parameter count.** The 0.6B Qwen3 (newer architecture, `<think>` tokens) beat the 0.5B Qwen2.5 by 5.8pp on hybrid accuracy — despite being only 21% larger. It also beat the 1.5B Qwen2.5 (V13.1) by 0.4pp at 40% the size — the bigger model understands seniority better (+4.2pp) but produces 36 parse failures to the 0.6B's 19, and each failure cascades through the pipeline. **Parse reliability is a first-class accuracy variable.** ([Phase 12](#phase-12--the-hybrid-breakthrough), [Phase 14](#whats-next))
 
-**Val loss ≠ downstream accuracy.** Confirmed three times: best validation loss (iter 1600, val loss 0.165) consistently appeared after best hybrid accuracy (iter 1500, 97.9%). Val loss optimises token prediction; hybrid accuracy optimises label boundaries. Different objectives, different optima. ([Phase 13](#phase-13--the-final-push))
+**Val loss ≠ downstream accuracy.** Confirmed across both models: 0.6B best val loss at iter 1600 (0.165) but best hybrid at iter 1500 (97.9%). 1.5B best val loss at iter 1400 (0.142) but best hybrid at iter 1800 (97.5%) — and iter 1400 had 67 parse failures that tanked it to 95.0%. Val loss optimises token prediction; hybrid accuracy optimises label boundaries. Different objectives, different optima. ([Phase 13](#phase-13--the-final-push), [Phase 14](#whats-next))
 
 **The student can surpass the teacher.** gpt-4.1-mini disagrees with itself on 52.5% of AI_ML edge cases at temperature=0. Temperature zero doesn't guarantee determinism — the same job re-labeled twice gets different tokens. The student, constrained to 21 categories + deterministic regex, is more consistent than its source. ([Phase 13](#phase-13--the-final-push))
 

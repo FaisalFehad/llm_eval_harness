@@ -60,7 +60,7 @@ Each row is a phase of the project. Click any phase to jump to its story. The ac
 | 11½ | [V6–V11 training gauntlet](#the-v6v11-training-gauntlet-what-didnt-work) | 75.3% | 8 experiments, most failed. More data made it worse. Synthetic data hurt. Learned: regex beats model on mechanical tasks. |
 | 12 | [V12 hybrid pipeline](#phase-12--the-hybrid-breakthrough) | 97.5% | Regex handles what regex does best. Model handles the rest. 87.0% → 97.5%. |
 | 13 | [V13 production push](#phase-13--the-final-push) | **97.9%** | 0.6B model, 351 MB, production-ready. Smaller AND more accurate than the teacher. |
-| 14 | [V13.1 — still pushing](#whats-next) | 92.9%* | 1.5B training done, eval sweep in progress. *Best so far at iter 800 — iters 1000–2000 pending. |
+| 14 | [V13.1 — still pushing](#whats-next) | 97.5% | 1.5B trained and swept. Bigger ≠ better — parse failures dragged it below the 0.6B. |
 
 ```mermaid
 xychart-beta
@@ -958,19 +958,19 @@ The corrective retrain peaked at 97.5% — all 6 remaining errors were pure sen 
 
 ```mermaid
 xychart-beta
-    title "Hybrid Accuracy vs Model Size — Diminishing Returns"
+    title "Hybrid Accuracy vs Model Size — Bigger ≠ Better"
     x-axis ["0.5B Qwen2.5", "0.6B Qwen3", "1.5B Qwen2.5"]
     y-axis "Hybrid Accuracy %" 90 --> 100
-    bar [92.1, 97.9, 98.3]
+    bar [92.1, 97.9, 97.5]
 ```
 
-| Model | Size | Hybrid | Improvement over previous |
-|-------|------|--------|--------------------------|
-| 0.5B Qwen2.5 | ~400 MB | 92.1% | Baseline |
-| **0.6B Qwen3** | **351 MB** | **97.9%** | **+5.8pp** |
-| 1.5B Qwen2.5 | ~1.5 GB | 98.3% | +0.4pp |
+| Model | Size | Hybrid | Sen | Parse Fail | Verdict |
+|-------|------|--------|-----|-----------|---------|
+| 0.5B Qwen2.5 | ~400 MB | 92.1% | 69.5% | 44 | Too many parse failures |
+| **0.6B Qwen3** | **351 MB** | **97.9%** | **86.6%** | **19** | **Production model** |
+| 1.5B Qwen2.5 | ~1.5 GB | 97.5% | 90.8% | 36 | Better comprehension, worse formatting |
 
-The 0.6B → 1.5B jump gains only 0.4pp for 4× the model size. The sweet spot is clear.
+The 1.5B actually scores *lower* than the 0.6B despite being 4× the size. The 1.5B understands seniority better (+4.2pp) but generates 36 parse failures — verbose preambles on long job descriptions consume the token budget, truncating the JSON output. Each parse failure falls back to regex for seniority (29.3% accurate), cascading into label errors. **Parse reliability is the bottleneck, not comprehension.**
 
 ### Per-field accuracy breakdown (V13 production)
 
