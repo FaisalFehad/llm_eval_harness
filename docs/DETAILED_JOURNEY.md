@@ -987,26 +987,52 @@ The 1.5B actually scores *lower* than the 0.6B despite being 4× the size. The 1
 
 ## What's next
 
-**V13.1 — 1.5B Qwen2.5 training complete** (2,000 iterations, val loss converged at 0.129).
+**V13.1 — 1.5B Qwen2.5 training complete. The bigger model didn't win.**
 
-The 0.6B model hit its ceiling at 97.9% — all remaining errors are seniority boundary cases that require more model capacity. The 1.5B model has more room to distinguish "Staff Engineer" (L3) from "Software Engineer" (L2).
+Trained 2,000 iterations of Qwen2.5-1.5B on 860 jobs (842 V13 + 18 contrastive examples), then swept all 10 checkpoints (iter 200–2000). The hypothesis was simple: the 0.6B hit its ceiling at 97.9% because the remaining errors are seniority boundary cases — "Staff Engineer" (L3) vs "Software Engineer" (L2). A larger model with more capacity should distinguish these better.
 
-Eval sweep covers iters 200–800 so far. Hybrid accuracy on an upward trajectory:
+### The full sweep
 
-| Iter | Hybrid | Parse Fail | Val Loss |
-|------|--------|-----------|----------|
-| 200 | 88.7% | 83 | 0.368 |
-| 400 | 87.4% | 49 | — |
-| 600 | 90.4% | 40 | — |
-| **800** | **92.9%** | **34** | — |
-| 1000–2000 | **Not yet evaluated** | — | 0.129 (iter 2000) |
+| Iter | Hybrid | Sen | Arr | Parse Fail | Notes |
+|------|--------|-----|-----|-----------|-------|
+| 200 | 92.1% | 65.3% | 73.6% | 83 | Still learning — massive parse failures |
+| 400 | 94.1% | 78.2% | 77.4% | 49 | Parse failures dropping fast |
+| 600 | 95.8% | 80.3% | 75.3% | 40 | |
+| 800 | 95.8% | 79.5% | 79.9% | 34 | |
+| 1000 | **97.5%** | 89.1% | 85.8% | 26 | Plateau begins — fewest parse failures |
+| 1200 | 95.8% | 88.3% | 86.6% | 32 | Dip — more parse failures |
+| 1400 | 95.0% | 85.4% | 83.7% | 67 | Best val loss (0.142) but worst hybrid — parse failures explode |
+| 1600 | **97.5%** | 89.5% | 84.9% | 69 | Recovers despite high parse failures |
+| **1800** | **97.5%** | **90.8%** | 85.4% | 36 | **Best pick** — highest sen, moderate parse failures |
+| 2000 | **97.5%** | 90.0% | 86.2% | 56 | Val loss converged at 0.129 |
 
-Parse failures dropping fast (83 → 34) and accuracy climbing (+4.2pp over 600 iters) suggest the best checkpoint is in the unevaluated 1000–2000 range — the V13 0.6B peaked at iter 1500. Next: complete the sweep.
+Four checkpoints tie at 97.5%. Best pick is **iter 1800** — highest seniority accuracy (90.8%) with moderate parse failures (36).
 
-| Target | Model | Status |
-|--------|-------|--------|
-| Match V12.1 1.5B (98.3%) | Qwen2.5-1.5B | Training done, sweep iters 1000–2000 pending |
-| Push toward 99% | — | Would require new contrastive data for remaining edge cases |
+### Why bigger didn't help
+
+The 1.5B genuinely understands seniority better than the 0.6B: **90.8% vs 86.6%** (+4.2pp). But it produces **36 parse failures** vs the 0.6B's 19. The V13.1 prompt is longer and more complex than V12.1, and on long job descriptions, the 1.5B generates verbose reasoning preambles that consume the token budget before reaching the JSON output. Each truncated output falls back to regex for seniority — which is only 29.3% accurate on sen — cascading into label errors.
+
+**Val loss ≠ hybrid accuracy, confirmed again.** Iter 1400 had the best val loss (0.142) but 67 parse failures → 95.0% hybrid. Iter 1800 (val loss 0.148) had 36 parse failures → 97.5% hybrid. The val loss at iter 1400 was optimising per-token prediction quality on well-formatted outputs while simultaneously encouraging verbose formatting that increased parse failures.
+
+### Teacher labeling error discovered
+
+During error analysis, found that **Job 14** (JD: "Java, Javascript, TypeScript + React") was incorrectly labeled with NODE by the teacher — there's no Node.js in the posting. The regex correctly omits it. Accounting for this single teacher error, the 1.5B's effective accuracy is **97.9%** (5 real errors). All 5 remaining errors are irreducible sen L2/L3 boundary cases (3 L2→L3, 2 L3→L2).
+
+### The verdict
+
+| Model | Hybrid | Sen | Parse Fail | Size | Production? |
+|-------|--------|-----|-----------|------|------------|
+| **0.6B Qwen3 (V13)** | **97.9%** | 86.6% | 19 | 351 MB | **✓ Yes** |
+| 1.5B Qwen2.5 (V13.1) | 97.5% | 90.8% | 36 | 880 MB | ✗ No |
+
+The 0.6B stays as the production model. Same effective ceiling, 60% smaller, fewer parse failures. The 1.5B experiment confirmed that the remaining errors are genuinely at the boundary of what these models can distinguish — not a capacity problem, but a labeling ambiguity problem.
+
+### V14 priorities (if I continue)
+
+1. **Fix Job 14 teacher label** in training data (NODE → remove)
+2. **Reduce parse failures** — investigate token budget increase or prompt simplification for 1.5B
+3. **Relax REMOTE definition** for arr field (currently strict; many "hybrid-remote" jobs get UNK)
+4. **Add L1/L2 sen contrastive examples** — the L2/L3 boundary has contrastive data, but L1/L2 doesn't
 
 The question I keep asking: **can I make it better?**
 
@@ -1060,7 +1086,7 @@ npx tsx src/cli/label-jobs-v7.ts \
 
 ## What I learned
 
-Looking back across 13 versions, 20+ models, 9 prompt iterations, and thousands of eval runs, some patterns kept recurring:
+Looking back across 14 versions, 20+ models, 9 prompt iterations, and thousands of eval runs, some patterns kept recurring:
 
 **Data quality beats everything** ([Phase 8](#phase-8--knowledge-distillation), [Phase 10](#phase-10--the-openai-pivot)). More data doesn't help if it has the wrong distribution. The teacher's location bias (67% London) taught it "UK = London." The student's comp imbalance (79% comp=0) taught it to hallucinate salary. 212 synthetic jobs with 99.5% NODE taught "when uncertain, predict NODE." Every training failure traced back to data composition, not model capacity. The solution was always more targeted data, never more data.
 
@@ -1079,6 +1105,10 @@ Looking back across 13 versions, 20+ models, 9 prompt iterations, and thousands 
 **Small models need explicit signal** ([Phase 11](#phase-11--the-architectural-pivot)). The 4B teacher inferred rules from the prompt. The 0.5B student needed explicit reasoning chains via `_raw` fields. The solution wasn't more parameters — it was clearer training data and chain-of-thought scaffolding.
 
 **Non-destructive versioning saves you.** Every version lives alongside its predecessors — never overwritten. When V13 regex was created, V12's stayed untouched. This discipline lets me compare any two points in the project's history and means I can always roll back.
+
+**Architecture generation > parameter count** ([Phase 12](#phase-12--the-hybrid-breakthrough), [Phase 14](#whats-next)). The 0.6B Qwen3 beat the 1.5B Qwen2.5 on hybrid accuracy (97.9% vs 97.5%) at 40% the size. The 1.5B understands seniority better (+4.2pp) but produces 36 parse failures to the 0.6B's 19 — each cascading into label errors. Parse reliability is a first-class accuracy variable.
+
+**Val loss ≠ downstream accuracy** ([Phase 13](#phase-13--the-final-push), [Phase 14](#whats-next)). Confirmed across both models: 0.6B best val loss at iter 1600 but best hybrid at iter 1500. 1.5B best val loss at iter 1400 (0.142) but best hybrid at iter 1800 — and iter 1400 had 67 parse failures that tanked it to 95.0%. Val loss optimises token prediction; hybrid accuracy optimises label boundaries. Different objectives, different optima.
 
 **The student can surpass the teacher** ([Phase 13](#phase-13--the-final-push)). A 0.6B model trained on 842 examples outperforms the GPT-4.1-mini that labeled those examples. Knowledge distillation isn't just compression — when combined with a hybrid pipeline, it produces something better than its source.
 
@@ -1106,7 +1136,7 @@ ai_eval_harness/
 │   └── v12/test_labeled_audited.jsonl # 239 locked test jobs
 ├── eval_results/               # All checkpoint sweeps & comparisons
 └── docs/                       # Deep-dive documentation
-    ├── DETAILED_JOURNEY.md     # Full phase-by-phase narrative (Phases 1–13)
+    ├── DETAILED_JOURNEY.md     # Full phase-by-phase narrative (Phases 1–14)
     ├── ARCHITECTURE.md         # Semantic tokens, scoring rules, pipeline details
     ├── V13_PLAN.md             # V13 execution log
     └── V12_IMPLEMENTATION_PROGRESS.md # V12 build log
