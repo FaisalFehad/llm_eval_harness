@@ -1,0 +1,47 @@
+# MLX LoRA config for V13.1 corrective retrain — Qwen3-0.6B
+# Corrective retrain from V13 best checkpoint (iter 1500).
+#
+# Changes from V13:
+#   - Prompt: student_v13_1.txt (added "manager" to L3, "internship" to L1)
+#   - Data: 860 jobs (842 V13 original + 18 contrastive targeting clusters A-D)
+#     Cluster A (5): Lead/Staff titles → L3
+#     Cluster B (5): Manager titles → L3
+#     Cluster C (4): Internship / Roman numeral I → L1
+#     Cluster D (4): Full Stack Engineer (unqualified) → L2
+#
+# LR: 2e-6 (10x lower than V13) — fine correction, not full retrain
+# Resume from V13 best checkpoint (iter 1500)
+
+model: "mlx-community/Qwen3-0.6B-4bit"
+data: "data/v13_1/mlx"
+train: true
+fine_tune_type: "lora"
+
+optimizer: "adamw"
+optimizer_config:
+  adamw:
+    weight_decay: 0.01
+
+lora_parameters:
+  rank: 16
+  alpha: 32
+  dropout: 0.05
+  scale: 1.0
+
+batch_size: 1
+grad_accumulation_steps: 16
+iters: 400
+learning_rate: 2e-6
+warmup_steps: 40
+
+max_seq_length: 8192
+
+val_batches: 40
+steps_per_eval: 25
+
+resume_adapter_file: "finetune/adapters_v13_0.6B/0001500_adapters.safetensors"
+adapter_path: "finetune/adapters_v13_1_0.6B"
+save_every: 50
+
+mask_prompt: true
+grad_checkpoint: true

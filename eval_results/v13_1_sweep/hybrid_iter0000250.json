@@ -1,0 +1,139 @@
+{
+  "model_only": {
+    "correct": 140,
+    "total": 221,
+    "accuracy_pct": 63.3,
+    "parse_fail": 18,
+    "field_accuracy": {
+      "loc": 91.0,
+      "arr": 75.1,
+      "sen": 85.5,
+      "tech": 39.8,
+      "comp": 37.6
+    }
+  },
+  "regex_only": {
+    "correct": 227,
+    "total": 239,
+    "accuracy_pct": 95.0,
+    "parse_fail": 0,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 77.4,
+      "sen": 79.9,
+      "tech": 88.3,
+      "comp": 95.8
+    }
+  },
+  "hybrid_A": {
+    "correct": 220,
+    "total": 239,
+    "accuracy_pct": 92.1,
+    "parse_fail": 18,
+    "field_accuracy": {
+      "loc": 84.1,
+      "arr": 69.5,
+      "sen": 79.1,
+      "tech": 83.3,
+      "comp": 88.3
+    }
+  },
+  "hybrid_B": {
+    "correct": 220,
+    "total": 239,
+    "accuracy_pct": 92.1,
+    "parse_fail": 18,
+    "field_accuracy": {
+      "loc": 0.0,
+      "arr": 0.0,
+      "sen": 0.0,
+      "tech": 0.0,
+      "comp": 0.0
+    }
+  },
+  "v12_hybrid": {
+    "correct": 232,
+    "total": 239,
+    "accuracy_pct": 97.1,
+    "parse_fail": 18,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 73.6,
+      "sen": 84.9,
+      "tech": 88.3,
+      "comp": 95.8
+    }
+  },
+  "v12_errors": [
+    {
+      "job_index": 57,
+      "golden": "maybe",
+      "predicted": "bad_fit",
+      "diffs": [
+        "sen:LEVEL_2->LEVEL_1"
+      ]
+    },
+    {
+      "job_index": 92,
+      "golden": "maybe",
+      "predicted": "good_fit",
+      "diffs": [
+        "sen:LEVEL_2->LEVEL_3"
+      ]
+    },
+    {
+      "job_index": 95,
+      "golden": "good_fit",
+      "predicted": "maybe",
+      "diffs": [
+        "sen:LEVEL_3->LEVEL_2"
+      ]
+    },
+    {
+      "job_index": 97,
+      "golden": "maybe",
+      "predicted": "good_fit",
+      "diffs": [
+        "sen:LEVEL_2->LEVEL_3"
+      ]
+    },
+    {
+      "job_index": 127,
+      "golden": "good_fit",
+      "predicted": "maybe",
+      "diffs": [
+        "sen:LEVEL_3->LEVEL_2"
+      ]
+    },
+    {
+      "job_index": 129,
+      "golden": "bad_fit",
+      "predicted": "maybe",
+      "diffs": [
+        "sen:LEVEL_1->LEVEL_2"
+      ]
+    },
+    {
+      "job_index": 170,
+      "golden": "good_fit",
+      "predicted": "maybe",
+      "diffs": [
+        "sen:LEVEL_3->LEVEL_2"
+      ]
+    }
+  ],
+  "v12_per_label": {
+    "good_fit": {
+      "correct": 54,
+      "total": 57
+    },
+    "maybe": {
+      "correct": 51,
+      "total": 54
+    },
+    "bad_fit": {
+      "correct": 127,
+      "total": 128
+    }
+  }
+}

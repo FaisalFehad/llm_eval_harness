@@ -1,0 +1,48 @@
+# MLX LoRA config for V13.1 — Qwen2.5-1.5B-Instruct (fresh from base)
+#
+# Data: 860 jobs (data/v13_1/mlx) — same data as V13.1 0.6B corrective retrain
+#   Training split: ~774 train / 86 valid
+#
+# Key differences from V12 1.5B:
+#   - Prompt: student_v13_1.txt (manager → L3, internship → L1)
+#   - Data: 18 contrastive examples for clusters A-D (sen correction)
+#   - Fresh from base (not from V12 adapters)
+#
+# Iter budget: 2000 iters (matches V12 1.5B which peaked ~iter 2000)
+#   860 train examples at batch=1 / grad_accum=16 → effective batch 16
+#   2000 iters ≈ 37 epochs — similar to V12 1.5B training regime
+#
+# LR: 2e-5 (standard, matches V13 0.6B fresh-from-base)
+
+model: "mlx-community/Qwen2.5-1.5B-Instruct-4bit"
+data: "data/v13_1/mlx"
+train: true
+fine_tune_type: "lora"
+
+optimizer: "adamw"
+optimizer_config:
+  adamw:
+    weight_decay: 0.01
+
+lora_parameters:
+  rank: 16
+  alpha: 32
+  dropout: 0.05
+  scale: 1.0
+
+batch_size: 1
+grad_accumulation_steps: 16
+iters: 2000
+learning_rate: 2e-5
+warmup_steps: 100
+
+max_seq_length: 8192
+
+val_batches: 40
+steps_per_eval: 100
+
+adapter_path: "finetune/adapters_v13_1_1.5B"
+save_every: 200
+
+mask_prompt: true
+grad_checkpoint: true

@@ -226,6 +226,12 @@ def main():
                         help="Custom system message (default: 'Respond with JSON only.')")
     parser.add_argument("--preprocess", action="store_true",
                         help="Apply JD preprocessing (V12: must match training)")
+    parser.add_argument("--no-think", action="store_true",
+                        help="Qwen3: disable thinking mode (enable_thinking=False). "
+                             "Faster, eliminates thinking-overflow parse failures.")
+    parser.add_argument("--max-tokens", type=int, default=MAX_TOKENS,
+                        help=f"Max tokens to generate (default: {MAX_TOKENS}). "
+                             "Increase to 3000+ to give thinking mode more budget.")
     args = parser.parse_args()
 
     # Output file setup — timestamped for history (never overwrites)
@@ -339,26 +345,28 @@ def main():
             {"role": "user", "content": prompt_text},
         ]
 
+        no_think = args.no_think if is_qwen3 else False
+        chat_kwargs = {"enable_thinking": False} if no_think else {}
         formatted = tokenizer.apply_chat_template(
-            messages, tokenize=False, add_generation_prompt=True)
+            messages, tokenize=False, add_generation_prompt=True, **chat_kwargs)
 
-        # For non-Qwen3 models: pre-fill opening brace to force JSON output.
-        # For Qwen3: let the model emit <think>...</think> first, then JSON.
-        if not is_qwen3:
+        # For non-Qwen3 or Qwen3 with thinking disabled: pre-fill opening brace.
+        # For Qwen3 with thinking enabled: let model emit <think>...</think> first.
+        if not is_qwen3 or no_think:
             formatted += "{"
 
         t0 = time.time()
         response = generate(
             model, tokenizer,
             prompt=formatted,
-            max_tokens=MAX_TOKENS,
+            max_tokens=args.max_tokens,
             verbose=False,
             prefill_step_size=4096,
             sampler=greedy_sampler,
         )
         elapsed = time.time() - t0
 
-        if not is_qwen3:
+        if not is_qwen3 or no_think:
             # Add the brace back since the model continues after it
             response = "{" + response
         else:

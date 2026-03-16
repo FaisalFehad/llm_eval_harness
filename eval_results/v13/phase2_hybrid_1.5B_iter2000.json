@@ -1,0 +1,91 @@
+{
+  "model_only": {
+    "correct": 181,
+    "total": 231,
+    "accuracy_pct": 78.4,
+    "parse_fail": 8,
+    "field_accuracy": {
+      "loc": 94.4,
+      "arr": 90.5,
+      "sen": 93.1,
+      "tech": 66.2,
+      "comp": 71.0
+    }
+  },
+  "regex_only": {
+    "correct": 228,
+    "total": 239,
+    "accuracy_pct": 95.4,
+    "parse_fail": 0,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 77.4,
+      "sen": 80.3,
+      "tech": 88.3,
+      "comp": 95.8
+    }
+  },
+  "hybrid_A": {
+    "correct": 228,
+    "total": 239,
+    "accuracy_pct": 95.4,
+    "parse_fail": 8,
+    "field_accuracy": {
+      "loc": 91.2,
+      "arr": 87.4,
+      "sen": 90.0,
+      "tech": 84.9,
+      "comp": 92.5
+    }
+  },
+  "hybrid_B": {
+    "correct": 228,
+    "total": 239,
+    "accuracy_pct": 95.4,
+    "parse_fail": 8,
+    "field_accuracy": {
+      "loc": 0.0,
+      "arr": 0.0,
+      "sen": 0.0,
+      "tech": 0.0,
+      "comp": 0.0
+    }
+  },
+  "v12_hybrid": {
+    "correct": 238,
+    "total": 239,
+    "accuracy_pct": 99.6,
+    "parse_fail": 8,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 90.4,
+      "sen": 93.3,
+      "tech": 88.3,
+      "comp": 95.8
+    }
+  },
+  "v12_errors": [
+    {
+      "job_index": 141,
+      "golden": "maybe",
+      "predicted": "good_fit",
+      "diffs": [
+        "sen:LEVEL_2->LEVEL_3"
+      ]
+    }
+  ],
+  "v12_per_label": {
+    "good_fit": {
+      "correct": 57,
+      "total": 57
+    },
+    "maybe": {
+      "correct": 54,
+      "total": 55
+    },
+    "bad_fit": {
+      "correct": 127,
+      "total": 127
+    }
+  }
+}

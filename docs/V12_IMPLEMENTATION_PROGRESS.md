@@ -31,7 +31,7 @@
 | 3b: Comp regex fixes | DONE | **97.1% (232/239)** | +4 from TC case-insensitive, title fallback, range patterns, salary parsing |
 | 4A: 0.5B training | DONE | 2500 iters complete | Val loss 1.262 → 0.183 (best at iter 2225). 2.4x faster than 1.5B |
 | 4B: 0.5B checkpoint eval | DONE | **Best: iter 2000 = 92.1%** | 10 checkpoints evaluated (400-2400), all fields tracked |
-| 4C: 0.5B vs 1.5B comparison | DONE | 1.5B wins by 5.0pp | 97.1% vs 92.1%. Gap caused by parse failures (60 vs 0) |
+| 4C: 0.5B vs 1.5B comparison | DONE | 1.5B wins by 5.0pp | 97.1% vs 92.1%. Gap caused by format errors (44 parse + 16 inv_tok vs 0 + 8) |
 | 5A: Qwen3-0.6B training | DONE | 3000 eff iters | Resumed after interruption at iter 1080. Val loss 1.635 → 0.152 |
 | 5B: 0.6B checkpoint eval | DONE | **Best: iter 1400 = 96.7%** | 6 checkpoints evaluated (1000-1900). 1 job short of 1.5B |
 | 5C: Three-way comparison | DONE | 1.5B > 0.6B > 0.5B | 97.1% vs 96.7% vs 92.1%. 0.6B viable production alternative |
@@ -492,7 +492,7 @@ Hybrid Accuracy vs Model Size (best checkpoints, final regex)
 
 ### Motivation
 
-The 0.5B vs 1.5B comparison showed the accuracy gap is driven by parse failures (60 vs 0), not comprehension. Qwen3 is a newer architecture generation with improved instruction following. The Qwen3-0.6B-4bit model (351MB) is only 21% larger than the Qwen2.5-0.5B-4bit (290MB) — if it achieves fewer parse failures, it could be the sweet spot: 0.5B-class speed/memory with 1.5B-class reliability.
+The 0.5B vs 1.5B comparison showed the accuracy gap is driven by format errors (44 parse failures + 16 invalid tokens = 60 unusable vs 0 + 8 = 8 for 1.5B), not comprehension. Qwen3 is a newer architecture generation with improved instruction following. The Qwen3-0.6B-4bit model (351MB) is only 21% larger than the Qwen2.5-0.5B-4bit (290MB) — if it achieves fewer parse failures, it could be the sweet spot: 0.5B-class speed/memory with 1.5B-class reliability.
 
 ### 5A: Training (DONE)
 
@@ -551,8 +551,8 @@ All models evaluated with Phase 3 regex. Tech and comp are regex-determined, so 
 | sen (model) | 69.5% | 84.5% | 90.0% |
 | tech (regex) | 86.2% | 86.2% | 86.2% |
 | comp (regex) | 95.4% | 95.4% | 95.4% |
-| Parse failures | 60 | 0 | 8 |
-| Invalid tokens | 16 | 13 | — |
+| Parse failures | 44 | 0 | 0 |
+| Invalid tokens | 16 | 13 | 8 |
 | n_valid (of 239) | 179 | 226 | 231 |
 
 #### Model-Only Accuracy (no regex — model predictions only, on valid outputs)
@@ -576,7 +576,7 @@ All models evaluated with Phase 3 regex. Tech and comp are regex-determined, so 
 
 ### Key Findings
 
-1. **Qwen3-0.6B achieves near-zero parse failures** — 0 at best checkpoint vs 60 for 0.5B and 8 for 1.5B. This confirms the hypothesis that newer architecture = better instruction following = fewer format errors.
+1. **Qwen3-0.6B achieves near-zero parse failures** — 0 at best checkpoint vs 44 for 0.5B (plus 16 invalid tokens) and 0 for 1.5B (plus 8 invalid tokens). This confirms the hypothesis that newer architecture = better instruction following = fewer format errors.
 
 2. **0.6B hybrid (96.7%) nearly matches 1.5B (97.1%)** — Just 1 job short (231 vs 232 correct). The 0.6B is a viable production alternative at 40% of the 1.5B's size. The gap is entirely in arr/sen accuracy (model-dependent fields).
 
@@ -659,8 +659,8 @@ Evaluated 10 checkpoints (iter 600–2400, step 200) with V12 hybrid + `--prepro
 
 | Iter | Model% | Loc | Arr | Sen | Tech | Comp | **Hybrid%** | InvTok | Parse |
 |------|--------|-----|-----|-----|------|------|-------------|--------|-------|
-| 600 | — | — | — | — | — | — | 88.3 | 44 | 44 |
-| 800 | — | — | — | — | — | — | 92.5 | 35 | 35 |
+| 600 | 53.3 | 68.2 | 56.4 | 77.9 | 24.1 | 42.1 | 93.3 | 41 | 3 |
+| 800 | 52.5 | 80.9 | 74.5 | 80.9 | 29.9 | 29.4 | 92.5 | 30 | 5 |
 | 1000 | 70.2 | 91.6 | 78.6 | 83.7 | 42.8 | 59.5 | 91.6 | 23 | 1 |
 | 1200 | 68.4 | 88.3 | 72.3 | 87.4 | 37.7 | 68.0 | 93.7 | 7 | 1 |
 | 1400 | 61.2 | 92.7 | 84.0 | 86.8 | 53.0 | 46.6 | 95.0 | 20 | 0 |
@@ -669,6 +669,8 @@ Evaluated 10 checkpoints (iter 600–2400, step 200) with V12 hybrid + `--prepro
 | **2000** | 65.2 | 91.8 | 85.8 | 89.3 | 52.8 | 55.4 | **95.8** | **6** | 0 |
 | 2200 | 74.8 | 94.0 | 83.9 | 85.8 | 64.7 | 70.6 | 93.3 | 20 | 1 |
 | 2400 | 74.5 | 93.5 | 86.1 | 88.7 | 59.7 | 63.6 | 95.4 | 8 | 0 |
+
+> **Note**: Model% and field accuracies are model-only (before regex override). Hybrid% is the V12 hybrid label accuracy. InvTok = invalid token outputs, Parse = true JSON parse failures. Iter 600/800 have very high InvTok counts, making model-only numbers unreliable.
 
 **Best checkpoint: iter 2000 = 95.8% (229/239)**
 
@@ -712,12 +714,14 @@ Qwen3 models support a thinking mode where the model emits `<think>...</think>` 
 
 ### 7A: Full Sweep Results
 
-**Thinking ON** (10 checkpoints, iter 600–2400):
+> **Note**: Thinking ON data is the same as Phase 6B (the default eval uses thinking ON). Shown here for side-by-side comparison.
+
+**Thinking ON** (10 checkpoints, iter 600–2400 — same as Phase 6B):
 
 | Iter | Model% | Loc | Arr | Sen | Tech | Comp | **Hybrid%** | InvTok | Parse |
 |------|--------|-----|-----|-----|------|------|-------------|--------|-------|
-| 600 | — | — | — | — | — | — | 88.3 | 44 | 44 |
-| 800 | — | — | — | — | — | — | 92.5 | 35 | 35 |
+| 600 | 53.3 | 68.2 | 56.4 | 77.9 | 24.1 | 42.1 | 93.3 | 41 | 3 |
+| 800 | 52.5 | 80.9 | 74.5 | 80.9 | 29.9 | 29.4 | 92.5 | 30 | 5 |
 | 1000 | 70.2 | 91.6 | 78.6 | 83.7 | 42.8 | 59.5 | 91.6 | 23 | 1 |
 | 1200 | 68.4 | 88.3 | 72.3 | 87.4 | 37.7 | 68.0 | 93.7 | 7 | 1 |
 | 1400 | 61.2 | 92.7 | 84.0 | 86.8 | 53.0 | 46.6 | 95.0 | 20 | 0 |
@@ -783,8 +787,8 @@ Qwen3 models support a thinking mode where the model emits `<think>...</think>` 
 
 | Model | Best Ckpt | Model% | **Hybrid%** | Loc | Arr | Sen | Tech | Comp | Parse | InvTok |
 |-------|-----------|--------|-------------|-----|-----|-----|------|------|-------|--------|
-| V12 0.5B Qwen2.5 | 2000 | 57.5 | **92.1** | 100 | 72.8 | 69.5 | 86.2 | 95.4 | 60 | 16 |
-| V12 1.5B Qwen2.5 | 2000 | 78.4 | **97.1** | 100 | 90.4 | 90.0 | 86.2 | 95.4 | 8 | 8 |
+| V12 0.5B Qwen2.5 | 2000 | 57.5 | **92.1** | 100 | 72.8 | 69.5 | 86.2 | 95.4 | 44 | 16 |
+| V12 1.5B Qwen2.5 | 2000 | 78.4 | **97.1** | 100 | 90.4 | 90.0 | 86.2 | 95.4 | 0 | 8 |
 | V12 0.6B Qwen3 | 1400 | 67.7 | **96.7** | 100 | 80.3 | 84.5 | 86.2 | 95.4 | 0 | 13 |
 | V12 600m-b Qwen3² | 2000 | 65.2 | **95.8** | 100 | 85.4 | 87.9 | 86.2 | 94.1 | 0 | 6 |
 
@@ -917,8 +921,8 @@ Training duration: ~6.5 hours. Peak memory: 6.8 GB.
 | 2026-03-14 | Phase 3C: comp regex fixes | 7 changes to classify_comp: TC case-insensitive, title fallback, range patterns, currency parsing → 97.1% |
 | 2026-03-14 | V12 final = iter 2000 + Phase 3 regex | 97.1% (232/239), 95% CI [93.5%, 98.3%]. Exceeds 95% stretch goal. |
 | 2026-03-14 | Train 0.5B for comparison | Same data, same hyperparams. Tests whether smaller model is viable for production |
-| 2026-03-14 | 0.5B best checkpoint: iter 2000 | 92.1% hybrid — 5.0pp below 1.5B. Parse failures (60 vs 8) explain the gap |
-| 2026-03-14 | 1.5B confirmed as production model | 0.5B's 60 parse failures make it unsuitable. 1.5B's 0 parse failures = reliable output |
+| 2026-03-14 | 0.5B best checkpoint: iter 2000 | 92.1% hybrid — 5.0pp below 1.5B. Format errors (44 parse + 16 inv_tok = 60 total) explain the gap |
+| 2026-03-14 | 1.5B confirmed as production model | 0.5B's 44 parse failures make it unsuitable. 1.5B's 0 parse failures + 8 inv_tok = reliable output |
 | 2026-03-14 | Download Qwen3-0.6B-4bit for Phase 5 | Newer architecture (351MB) may achieve fewer parse failures than Qwen2.5-0.5B (290MB) |
 | 2026-03-14 | Qwen3-0.6B best checkpoint: iter 1400 | 96.7% hybrid, 0 parse failures. Within 1 job of 1.5B. Viable production alternative |
 | 2026-03-15 | Enhanced prompt experiment (600m-b) | Compressed teacher rules in prompt + rank 32 + weight decay 0.01. Test if richer prompt improves model accuracy |
@@ -1070,10 +1074,10 @@ The student model is trained on **all 5 fields** (loc, arr, sen, tech, comp) eve
 
 | Model | Hybrid | Sen | Parse Fail | Size | Speed | Verdict |
 |-------|--------|-----|------------|------|-------|---------|
-| **Qwen2.5-0.5B-4bit** | 92.1% | 69.5% | 60 | 290MB | 0.556 it/s | Too many parse failures |
+| **Qwen2.5-0.5B-4bit** | 92.1% | 69.5% | 44 (+16 inv) | 290MB | 0.556 it/s | Too many parse failures |
 | **Qwen3-0.6B-4bit** | 96.7% | 84.5% | **0** | 351MB | ~0.4 it/s | **Best small model — 0 parse failures** |
 | **Qwen3-0.6B-4bit (600m-b)** | 95.8% | 87.9% | **0** | 351MB | ~0.4 it/s | Enhanced prompt, best sen/arr |
-| **Qwen2.5-1.5B-4bit** | **97.1%** | **90.0%** | 8 | 880MB | 0.235 it/s | **Highest accuracy** |
+| **Qwen2.5-1.5B-4bit** | **97.1%** | **90.0%** | 0 (+8 inv) | 880MB | 0.235 it/s | **Highest accuracy** |
 
 The Qwen3-0.6B (96.7%) nearly matches the 1.5B (97.1%) at 40% of the size with **zero** parse failures. The 600m-b enhanced prompt variant trades 0.9pp hybrid accuracy for better sen/arr and halved invalid tokens.
 
