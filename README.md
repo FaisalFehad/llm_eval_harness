@@ -73,14 +73,14 @@ The pipeline scores LinkedIn job postings for personal fit across 5 dimensions, 
 
 ```text
 ┌─────────────────────────────────────────────────────┐
-│                  Job Description                     │
+│          Job Description + Location + Title         │
 └──────────────────────┬──────────────────────────────┘
                        │
           ┌────────────┴────────────┐
           ▼                         ▼
    ┌─────────────┐          ┌──────────────┐
-   │  Neural Net  │          │    Regex     │
-   │  (0.6B model)│          │  (rules)    │
+   │ Neural Net  │          │    Regex     │
+   │ (0.6B model)│          │   (rules)    │
    │             │          │              │
    │ • seniority │          │ • location   │
    │ • work arr. │          │ • tech stack │
@@ -90,11 +90,11 @@ The pipeline scores LinkedIn job postings for personal fit across 5 dimensions, 
           └────────┬───────────────┘
                    ▼
           ┌────────────────┐
-          │  Score Engine   │
-          │  (deterministic)│
+          │ Score Engine   │
+          │ (deterministic)│
           │                │
-          │  tokens → score │
-          │  score → label  │
+          │ tokens → score │
+          │ score → label  │
           └────────────────┘
 ```
 
