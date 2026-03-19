@@ -1,0 +1,1956 @@
+Output: eval_results/v14_sweep_0.6B/adapters_v14_0.6B/2026-03-18_145041_test_labeled_audited_student_v14_200.txt
+Prompt: prompts/student_v14.txt
+Model:   Qwen/Qwen3-0.6B
+Adapter: finetune/adapters_v14_0.6B/checkpoint-200
+PEFT adapter loaded: finetune/adapters_v14_0.6B/checkpoint-200
+------------------------------------------------------------
+Running V7 eval on 239 jobs...
+
+Inference batch size: 32
+
+[  1/239] !   0.5s  Staff Software Engineer                     PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["AWS", "Docker", "CircleCI/GitHub Actions"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["AWS", "Docker", "CircleCI/GitHub Actions"],
+  "comp": "NO_GBP"
+}
+
+[  2/239] !   0.5s  Lead DevOps Architect                       PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["AWS", "Terraform", "Docker", "CircleCI/GitHub Actions"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["AWS", "Terraform", "Docker", "CircleCI/GitHub Actions"],
+  "comp": "NO_GBP"
+}
+
+[  3/239] ✓   0.5s  Software Engineer - Backend                 bad_fit                33%
+[  4/239] !   0.5s  Full-Stack Developer                        PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["REACT", "JS_TS", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["REACT", "JS_TS", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+[  5/239] ✓   0.5s  Planning Engineer                           bad_fit                40%
+[  6/239] !   0.5s  Head Of AI Engineering (strategy And Innov  PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_3", "tech": ["AI", "ML", "TensorFlow", "PyTorch", "RAG", "MCP", "MLflow", "RPA"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_3",
+  "tech": ["AI", "ML", "TensorFlow", "PyTorch", "RAG", "MCP", "MLflow", "RPA"],
+  "comp": "UP_T
+[  7/239] !   0.5s  Software Engineer - Internship              PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+[  8/239] !   0.5s  Senior Software Engineer                    PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+[  9/239] !   0.5s  Software Engineer 1                         PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS", "REACT"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "REACT"],
+  "comp": "NO_GBP"
+}
+
+[ 10/239] !   0.5s  ATUM Deep-Tech Founder (technical) - Singa  PARSE FAIL
+           Raw: { "loc": "OUTSIDE_UK", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["AI", "ML", "deep tech", "biotech", "robotics", "cleantech", "materials science"], "comp": "RANGE_75_99K" }
+
+
+{
+  "loc": "OUTSIDE_UK",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["AI", "ML", "deep tech", "biotech", "robotics", 
+[ 11/239] !   0.5s  Software Engineer - Backend                 PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS", "REACT"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "REACT"],
+  "comp": "NO_GBP"
+}
+
+[ 12/239] ✓   0.5s  Software Engineer                           bad_fit                25%
+[ 13/239] !   0.5s  Full Stack Engineer                         PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["REACT", "JS_TS", "AI_ML"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["REACT", "JS_TS", "AI_ML"],
+  "comp": "UP_TO_ONLY"
+}
+
+[ 14/239] !   0.5s  Full-Stack Engineer                         PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "UP_TO_ONLY", "title": "Full-Stack Engineer", "description": "OTE £92k" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "UP_TO_ONLY",
+  "title": "Full
+[ 15/239] ✓   0.5s  Technical Director                          bad_fit                27%
+[ 16/239] !   0.5s  Senior Frontend Engineer                    PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["REACT", "JS_TS", "AI_ML"], "comp": "RANGE_75_99K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["REACT", "JS_TS", "AI_ML"],
+  "comp": "RANGE_75_99K"
+}
+
+[ 17/239] !   0.5s  Founding Engineer (£240k+ )                 PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["AI", "Next.js", "Typescript", "FastAPI", "PostgreSQL"], "comp": "RANGE_75_99K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["AI", "Next.js", "Typescript", "FastAPI", "PostgreSQL"],
+  "comp": "RANGE_75_9
+[ 18/239] ✓   0.5s  Modern Workplace Tech Bar Lead              bad_fit                28%
+[ 19/239] ✓   0.5s  Human Resources Manager                     bad_fit                32%
+[ 20/239] !   0.5s  Junior Software Engineer (f/m/d)            PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+[ 21/239] !   0.5s  Cyber Infrastructure Engineer               INVALID TOKEN: ['Invalid tech token: "AI"', 'Invalid tech token: "Darktrace"']
+[ 22/239] !   0.5s  Senior Software Engineer (php/laravel)      PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["PHP", "Laravel", "Vue", "AWS", "GCP"], "comp": "RANGE_45_54K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["PHP", "Laravel", "Vue", "AWS", "GCP"],
+  "comp": "RANGE_45_54K"
+}
+
+[ 23/239] ✓   0.5s  Senior Software Developer, UK               maybe                  30%
+[ 24/239] !   0.5s  Full Stack Web Developer                    PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "RANGE_55_74K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "RANGE_55_74K"
+}
+
+[ 25/239] !   0.5s  Software Engineer (swe/swe Ii), AI Platfor  PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+[ 26/239] ✓   0.5s  Lead, Digital Applications                  bad_fit                31%
+[ 27/239] ✓   0.5s  Data Analyst / Data Scientist               bad_fit                33%
+[ 28/239] !   0.5s  Software Engineer (Back end)                PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["JS_TS"], "comp": "RANGE_45_54K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS"],
+  "comp": "RANGE_45_54K"
+}
+
+[ 29/239] !   0.5s  Senior Full Stack Engineer                  PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["NODE", "REACT", "JS_TS", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["NODE", "REACT", "JS_TS", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+
+{"loc":"UK_OTHER","arr":"HYBRID","sen":"LEVEL_
+[ 30/239] !   0.5s  Customer Solutions Engineer                 INVALID TOKEN: ['Invalid tech token: "AI"', 'Invalid tech token: "Llama"']
+[ 31/239] ✓   0.5s  Senior Software Engineer                    bad_fit                32%
+[ 32/239] !   0.5s  Software Engineer II-Backend                PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["JS_TS", "REACT", "NODE"], "comp": "RANGE_55_74K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "REACT", "NODE"],
+  "comp": "RANGE_55_74K"
+}
+
+[ 33/239] !   0.4s  Senior Software Engineer, £70,000 To £85,0  PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["NODE", "REACT", "JS_TS", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["NODE", "REACT", "JS_TS", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+[ 34/239] !   0.4s  Senior Software Engineer                    PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["JS_TS"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["JS_TS"],
+  "comp": "UP_TO_ONLY"
+}
+
+[ 35/239] !   0.4s  Software Developer                          PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["JS_TS"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS"],
+  "comp": "UP_TO_ONLY"
+}
+
+[ 36/239] ✗   0.4s  Data Engineer - £150k-£200k TC              bad_fit->maybe         28%
+                    loc IN_LONDON->UK_OTHER ✗ | arr UNK->UNK ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech OOS->AI_ML ✗ | comp NO_GBP->RANGE_75_99K ✗
+
+[ 37/239] !   0.4s  Senior Product Manager                      PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["AI_ML"], "comp": "RANGE_75_99K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["AI_ML"],
+  "comp": "RANGE_75_99K"
+}
+
+[ 38/239] ✓   0.4s  Graduate Software Developer                 bad_fit                29%
+[ 39/239] !   0.4s  Senior / Lead Software Engineer             PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["AI_ML"], "comp": "RANGE_55_74K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["AI_ML"],
+  "comp": "RANGE_55_74K"
+}
+
+[ 40/239] !   0.4s  Software Engineer, New Grad (recent 2025 G  PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "RANGE_55_74K" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "RANGE_55_74K"
+}
+
+[ 41/239] ✗   0.4s  Senior Data Engineer                        maybe->bad_fit         27%
+                    loc IN_LONDON->UK_OTHER ✗ | arr IN_OFFICE->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech AI_ML->AI_ML ✓ | comp UP_TO_ONLY->UP_TO_ONLY ✓
+
+[ 42/239] ✓   0.4s  IT Support Engineer (2nd/3rd Line) - Centr  bad_fit                29%
+[ 43/239] !   0.4s  Data Engineer                               PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_2", "tech": ["NODE", "JS_TS"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["NODE", "JS_TS"],
+  "comp": "NO_GBP"
+}
+
+[ 44/239] !   0.4s  Data Engineer                               PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["AI_ML"], "comp": "RANGE_55_74K" }
+
+
+{"loc":"UK_OTHER","arr":"HYBRID","sen":"LEVEL_3","tech":["AI_ML"],"comp":"RANGE_55_74K"}
+
+
+[ 45/239] ✓   0.4s  Software Engineer                           bad_fit                29%
+[ 46/239] !   0.4s  Full Stack Developer                        PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["REACT", "JS_TS", "AI_ML"], "comp": "RANGE_55_74K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["REACT", "JS_TS", "AI_ML"],
+  "comp": "RANGE_55_74K"
+}
+
+[ 47/239] !   0.4s  Machine Learning Engineer                   PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+[ 48/239] ✓   0.4s  Customer Success Manager                    bad_fit                29%
+[ 49/239] !   0.4s  Quality Assurance Tester                    PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+[ 50/239] ✓   0.4s  Data Engineer                               bad_fit                30%
+[ 51/239] ✓   0.4s  Data Engineer                               bad_fit                31%
+[ 52/239] !   0.4s  DevOps Engineer                             PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+[ 53/239] ✓   0.4s  Senior Electrical Design Engineer           bad_fit                32%
+[ 54/239] !   0.4s  AI Engineer                                 PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["AI"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["AI"],
+  "comp": "NO_GBP"
+}
+
+[ 55/239] !   0.4s  Senior Engineering Manager                  PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_3", "tech": ["NODE", "REACT", "JS_TS", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_3",
+  "tech": ["NODE", "REACT", "JS_TS", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+[ 56/239] !   0.4s  Software Engineer I                         PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS", "REACT"], "comp": "RANGE_55_74K" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "REACT"],
+  "comp": "RANGE_55_74K"
+}
+
+[ 57/239] !   0.4s  Front End Developer (remote)                PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS"],
+  "comp": "NO_GBP"
+}
+
+[ 58/239] ✓   0.4s  Security Engineer                           bad_fit                31%
+[ 59/239] !   0.4s  Software Developer                          PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["NODE", "REACT", "JS_TS"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["NODE", "REACT", "JS_TS"],
+  "comp": "UP_TO_ONLY"
+}
+
+[ 60/239] ✓   0.4s  Software Engineer                           bad_fit                32%
+[ 61/239] !   0.4s  Senior DevOps Engineer                      PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_3", "tech": ["AI_ML"], "comp": "RANGE_75_99K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_3",
+  "tech": ["AI_ML"],
+  "comp": "RANGE_75_99K"
+}
+
+[ 62/239] !   0.4s  AI Platform Engineer                        PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["AI", "ML", "Python", "React", "Kubernetes", "Docker"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["AI", "ML", "Python", "React", "Kubernetes", "Docker"],
+  "comp": "NO_GBP"
+}
+
+[ 63/239] ✓   0.4s  Founding Engineer (Series A)                bad_fit                32%
+[ 64/239] !   0.4s  Head of Infrastructure                      PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_3", "tech": ["NODE", "REACT", "JS_TS", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_3",
+  "tech": ["NODE", "REACT", "JS_TS", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+[ 65/239] !   0.5s  Senior Software Engineer                    PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["AI_ML", "REACT", "JS_TS"], "comp": "RANGE_75_99K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["AI_ML", "REACT", "JS_TS"],
+  "comp": "RANGE_75_99K"
+}
+
+[ 66/239] !   0.5s  Senior Software Engineer, Strategy Platfor  PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["AI_ML"], "comp": "RANGE_75_99K" }
+
+
+{"loc":"UK_OTHER","arr":"HYBRID","sen":"LEVEL_3","tech":["AI_ML"],"comp":"RANGE_75_99K"}
+[ 67/239] !   0.5s  Lead Frontend Engineer                      PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["NODE", "REACT", "JS_TS", "AI_ML"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["NODE", "REACT", "JS_TS", "AI_ML"],
+  "comp": "UP_TO_ONLY"
+}
+
+[ 68/239] !   0.5s  Software Engineer | React & Python (full s  PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["REACT", "JS_TS", "AI_ML"], "comp": "UP_TO_ONLY", "title": "Software Engineer | React & Python (full stack)" }
+
+
+{"loc":"UK_OTHER","arr":"HYBRID","sen":"LEVEL_2","tech":["REACT","JS_TS","AI_ML"],"comp":"UP_TO_ONLY","title":"Software En
+[ 69/239] ✗   0.5s  Fintech & Tech for Good | Profitable & Hyp  good_fit->maybe        29%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT,JS_TS->NODE,REACT,JS_TS,AI_ML ✗ | comp UP_TO_ONLY->UP_TO_ONLY ✓
+
+[ 70/239] !   0.5s  Frontend Developer                          PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["NODE", "JS_TS"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["NODE", "JS_TS"],
+  "comp": "UP_TO_ONLY"
+}
+
+[ 71/239] ✗   0.5s  Staff Engineer                              good_fit->bad_fit      28%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_3->LEVEL_2 ✗ | tech NODE,AI_ML->NODE,JS_TS ✗ | comp RANGE_75_99K->NO_GBP ✗
+
+[ 72/239] !   0.5s  Technical Writer                            PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_1", "tech": ["OOS"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_1",
+  "tech": ["OOS"],
+  "comp": "NO_GBP"
+}
+
+[ 73/239] !   0.5s  Data Analyst                                PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "UP_TO_ONLY"
+}
+
+[ 74/239] ✗   0.5s  Full Stack Engineer                         maybe->bad_fit         27%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,AI_ML->NODE,JS_TS ✗ | comp RANGE_55_74K->UP_TO_ONLY ✗
+
+[ 75/239] !   0.5s  Junior Software Engineer                    PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_1", "tech": ["JS_TS", "NODE", "REACT", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_1",
+  "tech": ["JS_TS", "NODE", "REACT", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+
+{"loc":"UK_OTHER","arr":"UNK","sen":"LEVEL_1","tech"
+[ 76/239] ✗   0.5s  Security Engineer                           good_fit->bad_fit      26%
+                    loc REMOTE->UK_OTHER ✗ | arr REMOTE->UNK ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,AI_ML->JS_TS ✗ | comp RANGE_75_99K->NO_GBP ✗
+
+[ 77/239] ✗   0.5s  Developer                                   maybe->bad_fit         26%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,AI_ML->NODE,AI_ML ✓ | comp RANGE_55_74K->NO_GBP ✗
+
+[ 78/239] !   0.5s  Frontend Developer                          PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+[ 79/239] !   0.5s  IT Support Engineer                         PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS"],
+  "comp": "UP_TO_ONLY"
+}
+
+[ 80/239] ✓   0.5s  Trainee Engineer                            bad_fit                26%
+[ 81/239] ✗   0.5s  Frontend Developer                          maybe->bad_fit         26%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE->NODE,JS_TS ✗ | comp RANGE_75_99K->NO_GBP ✗
+
+[ 82/239] ✗   0.5s  Lead Engineer                               maybe->bad_fit         26%
+                    loc UNK->UNK ✓ | arr UNK->UNK ✓ | sen LEVEL_3->LEVEL_2 ✗ | tech NODE,JS_TS->NODE,JS_TS ✓ | comp RANGE_75_99K->UP_TO_ONLY ✗
+
+[ 83/239] !   0.5s  Security Engineer                           PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["OOS"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["OOS"],
+  "comp": "NO_GBP"
+}
+
+[ 84/239] ✓   0.5s  Junior Software Engineer                    bad_fit                26%
+[ 85/239] !   0.5s  Junior Software Engineer                    PARSE FAIL
+           Raw: { "loc": "REMOTE", "arr": "REMOTE", "sen": "LEVEL_1", "tech": ["JS_TS", "NODE"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "REMOTE",
+  "arr": "REMOTE",
+  "sen": "LEVEL_1",
+  "tech": ["JS_TS", "NODE"],
+  "comp": "NO_GBP"
+}
+
+[ 86/239] !   0.5s  Engineering Manager                         PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_3", "tech": ["JS_TS", "NODE"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_3",
+  "tech": ["JS_TS", "NODE"],
+  "comp": "UP_TO_ONLY"
+}
+
+[ 87/239] ✗   0.5s  Backend Engineer                            bad_fit->maybe         25%
+                    loc OUTSIDE_UK->UK_OTHER ✗ | arr IN_OFFICE->UNK ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE,JS_TS->NODE,JS_TS ✓ | comp RANGE_55_74K->UP_TO_ONLY ✗
+
+[ 88/239] !   0.5s  IT Support Engineer                         PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["NODE", "JS_TS"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["NODE", "JS_TS"],
+  "comp": "NO_GBP"
+}
+
+[ 89/239] ✓   0.5s  Security Engineer                           bad_fit                26%
+[ 90/239] ✗   0.5s  Scrum Master                                maybe->bad_fit         26%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE->NODE,JS_TS ✗ | comp RANGE_75_99K->NO_GBP ✗
+
+[ 91/239] ✗   0.5s  Database Administrator                      maybe->bad_fit         25%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE->OOS ✗ | comp RANGE_55_74K->NO_GBP ✗
+
+[ 92/239] !   0.5s  Full Stack Engineer                         PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_2", "tech": ["NODE", "JS_TS"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["NODE", "JS_TS"],
+  "comp": "NO_GBP"
+}
+
+[ 93/239] ✓   0.5s  Lead Engineer                               good_fit               26%
+[ 94/239] ✗   0.5s  Senior Software Engineer                    good_fit->bad_fit      26%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,AI_ML->NODE,AI_ML ✓ | comp RANGE_75_99K->UP_TO_ONLY ✗
+
+[ 95/239] !   0.5s  Engineering Manager                         PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS", "NODE"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "NODE"],
+  "comp": "NO_GBP"
+}
+
+[ 96/239] ✗   0.5s  Frontend Developer                          good_fit->bad_fit      25%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE,JS_TS->JS_TS,NODE ✓ | comp ABOVE_100K->NO_GBP ✗
+
+[ 97/239] ✗   0.5s  Full Stack Engineer                         maybe->bad_fit         25%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS->JS_TS,NODE ✓ | comp RANGE_55_74K->NO_GBP ✗
+
+[ 98/239] !   0.5s  Senior Developer                            PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_3", "tech": ["NODE", "AI_ML"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_3",
+  "tech": ["NODE", "AI_ML"],
+  "comp": "UP_TO_ONLY"
+}
+
+[ 99/239] !   0.5s  Frontend Developer                          PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS"],
+  "comp": "NO_GBP"
+}
+
+[100/239] !   0.5s  Project Manager                             PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["OOS"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["OOS"],
+  "comp": "NO_GBP"
+}
+
+[101/239] ✗   0.5s  Security Engineer                           good_fit->bad_fit      24%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS,AI_ML->JS_TS,NODE ✗ | comp RANGE_75_99K->NO_GBP ✗
+
+[102/239] !   0.5s  DevOps Engineer                             PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["NODE", "JS_TS"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["NODE", "JS_TS"],
+  "comp": "NO_GBP"
+}
+
+[103/239] !   0.5s  Senior Software Engineer                    PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_3", "tech": ["NODE", "JS_TS"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_3",
+  "tech": ["NODE", "JS_TS"],
+  "comp": "UP_TO_ONLY"
+}
+
+[104/239] !   0.5s  Engineering Manager                         PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["NODE", "REACT", "JS_TS"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["NODE", "REACT", "JS_TS"],
+  "comp": "UP_TO_ONLY"
+}
+
+[105/239] ✗   0.5s  Trainee Engineer                            maybe->bad_fit         23%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_1->LEVEL_1 ✓ | tech NODE,AI_ML->NODE,AI_ML ✓ | comp RANGE_75_99K->UP_TO_ONLY ✗
+
+[106/239] !   0.5s  DevOps Engineer                             PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS", "NODE", "REACT"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "NODE", "REACT"],
+  "comp": "UP_TO_ONLY"
+}
+
+[107/239] !   0.5s  Senior Software Engineer                    PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_3", "tech": ["NODE", "AI_ML"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_3",
+  "tech": ["NODE", "AI_ML"],
+  "comp": "UP_TO_ONLY"
+}
+
+[108/239] !   0.5s  Full Stack Engineer                         PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_3", "tech": ["NODE", "AI_ML"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_3",
+  "tech": ["NODE", "AI_ML"],
+  "comp": "UP_TO_ONLY"
+}
+
+[109/239] !   0.5s  Engineering Manager                         PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["NODE", "JS_TS"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["NODE", "JS_TS"],
+  "comp": "UP_TO_ONLY"
+}
+
+[110/239] !   0.5s  Business Analyst                            PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["NODE", "REACT"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["NODE", "REACT"],
+  "comp": "UP_TO_ONLY"
+}
+
+[111/239] !   0.5s  UX Designer                                 PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["NODE", "AI_ML"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["NODE", "AI_ML"],
+  "comp": "UP_TO_ONLY"
+}
+
+[112/239] ✗   0.5s  Backend Engineer                            good_fit->bad_fit      21%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE->NODE,JS_TS ✗ | comp ABOVE_100K->UP_TO_ONLY ✗
+
+[113/239] !   0.5s  Junior Software Engineer                    PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_1", "tech": ["JS_TS"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_1",
+  "tech": ["JS_TS"],
+  "comp": "NO_GBP"
+}
+
+[114/239] !   0.5s  Junior Developer                            PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_1", "tech": ["JS_TS", "NODE"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_1",
+  "tech": ["JS_TS", "NODE"],
+  "comp": "UP_TO_ONLY"
+}
+
+[115/239] !   0.5s  Junior Developer                            PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_1", "tech": ["JS_TS"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_1",
+  "tech": ["JS_TS"],
+  "comp": "NO_GBP"
+}
+
+[116/239] ✗   0.5s  IT Support Engineer                         good_fit->bad_fit      21%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,AI_ML->JS_TS ✗ | comp RANGE_75_99K->NO_GBP ✗
+
+[117/239] ✗   0.5s  UX Designer                                 good_fit->bad_fit      21%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech JS_TS,AI_ML->JS_TS ✗ | comp ABOVE_100K->NO_GBP ✗
+
+[118/239] ✓   0.5s  DevOps Engineer                             bad_fit                21%
+[119/239] ✗   0.5s  Product Manager                             good_fit->bad_fit      21%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_3->LEVEL_2 ✗ | tech NODE,JS_TS,AI_ML->JS_TS,AI_ML ✗ | comp RANGE_55_74K->UP_TO_ONLY ✗
+
+[120/239] !   0.5s  UX Designer                                 PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS"],
+  "comp": "UP_TO_ONLY"
+}
+
+[121/239] ✗   0.5s  Principal Engineer                          maybe->bad_fit         21%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_3->LEVEL_2 ✗ | tech NODE->NODE,JS_TS ✗ | comp RANGE_55_74K->NO_GBP ✗
+
+[122/239] !   0.5s  UX Designer                                 PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS"],
+  "comp": "UP_TO_ONLY"
+}
+
+[123/239] !   0.5s  Trainee Engineer                            PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_1", "tech": ["OOS"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_1",
+  "tech": ["OOS"],
+  "comp": "NO_GBP"
+}
+
+[124/239] !   0.5s  Technical Writer                            PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["OOS"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["OOS"],
+  "comp": "NO_GBP"
+}
+
+[125/239] ✗   0.5s  Junior Developer                            maybe->bad_fit         20%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_1->LEVEL_1 ✓ | tech NODE->NODE,JS_TS ✗ | comp ABOVE_100K->NO_GBP ✗
+
+[126/239] ✗   0.5s  Technical Writer                            good_fit->bad_fit      20%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS,AI_ML->JS_TS,AI_ML ✗ | comp RANGE_55_74K->UP_TO_ONLY ✗
+
+[127/239] ✗   0.5s  Project Manager                             good_fit->bad_fit      20%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_3->LEVEL_2 ✗ | tech NODE,JS_TS->JS_TS ✗ | comp RANGE_55_74K->NO_GBP ✗
+
+[128/239] !   0.5s  Backend Engineer                            PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS"],
+  "comp": "NO_GBP"
+}
+
+[129/239] !   3.0s  Associate Developer                         PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["NODE"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["NODE"],
+  "comp": "NO_GBP"
+}
+
+[130/239] ✓   3.0s  Lead Engineer                               good_fit               20%
+[131/239] !   3.0s  Frontend Developer                          PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS"],
+  "comp": "NO_GBP"
+}
+
+[132/239] !   3.0s  IT Support Engineer                         PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS"],
+  "comp": "NO_GBP"
+}
+
+[133/239] ✗   3.0s  Technical Writer                            maybe->bad_fit         20%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE->JS_TS ✗ | comp RANGE_75_99K->NO_GBP ✗
+
+[134/239] !   3.0s  Project Manager                             PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS"],
+  "comp": "NO_GBP"
+}
+
+[135/239] ✗   3.0s  Developer                                   good_fit->bad_fit      19%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,AI_ML->NODE,JS_TS ✗ | comp RANGE_75_99K->NO_GBP ✗
+
+[136/239] !   3.0s  QA Engineer                                 PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_2", "tech": ["NODE", "JS_TS"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["NODE", "JS_TS"],
+  "comp": "NO_GBP"
+}
+
+[137/239] !   3.0s  Business Analyst                            PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["NODE", "REACT", "JS_TS"], "comp": "UP_TO_ONLY", "title": "Business Analyst" }
+
+
+{"loc":"UK_OTHER","arr":"HYBRID","sen":"LEVEL_3","tech":["NODE","REACT","JS_TS"],"comp":"UP_TO_ONLY","title":"Business Analyst"}
+[138/239] ✓   3.0s  Scrum Master                                bad_fit                20%
+[139/239] !   3.0s  Product Manager                             PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS", "NODE"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "NODE"],
+  "comp": "UP_TO_ONLY"
+}
+
+[140/239] ✓   3.0s  Software Engineer                           bad_fit                20%
+[141/239] !   3.0s  Full Stack Engineer                         PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["NODE", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["NODE", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+[142/239] ✗   3.0s  Engineering Manager                         maybe->bad_fit         20%
+                    loc REMOTE->UNK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_3->LEVEL_2 ✗ | tech NODE->NODE,REACT,JS_TS ✗ | comp RANGE_55_74K->NO_GBP ✗
+
+[143/239] ✓   3.0s  QA Engineer                                 bad_fit                20%
+[144/239] ✓   3.0s  Software Developer                          bad_fit                21%
+[145/239] !   3.0s  Senior Software Developer                   PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["JS_TS", "AI_ML"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "UP_TO_ONLY"
+}
+
+[146/239] !   3.0s  Senior Technical Architect                  PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_3", "tech": ["NODE", "JS_TS", "AI_ML"], "comp": "ABOVE_100K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_3",
+  "tech": ["NODE", "JS_TS", "AI_ML"],
+  "comp": "ABOVE_100K"
+}
+
+[147/239] !   3.0s  Software Engineer (Entry-Level)             PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_1", "tech": ["JS_TS"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_1",
+  "tech": ["JS_TS"],
+  "comp": "NO_GBP"
+}
+
+[148/239] ✗   3.0s  Senior Software Engineer - Web (m/f/d)      bad_fit->maybe         20%
+                    loc OUTSIDE_UK->UK_OTHER ✗ | arr UNK->HYBRID ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT,JS_TS,AI_ML->JS_TS,AI_ML ✗ | comp NO_GBP->UP_TO_ONLY ✗
+
+[149/239] !   3.0s  Full Stack .NET Developer                   PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "UP_TO_ONLY"
+}
+
+[150/239] !   3.0s  Senior Software Engineer                    PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "IN_OFFICE", "sen": "LEVEL_3", "tech": ["NODE", "REACT", "JS_TS"], "comp": "UP_TO_ONLY", "title": "Senior Software Engineer" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "IN_OFFICE",
+  "sen": "LEVEL_3",
+  "tech": ["NODE", "REACT", "JS_TS"],
+  "comp": "UP_TO_ONLY",
+  "title": "Seni
+[151/239] ✓   3.0s  Support Engineer                            bad_fit                21%
+[152/239] !   3.0s  Data Engineer                               PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+[153/239] !   3.0s  Backend Engineer                            PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+[154/239] !   3.0s  Freelance Full Stack Developer              PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+[155/239] !   3.0s  Software Engineer (backend Focused)         PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS", "NODE", "REACT"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "NODE", "REACT"],
+  "comp": "NO_GBP"
+}
+
+[156/239] !   3.0s  Back End Developer                          PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["JS_TS", "AI_ML"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "UP_TO_ONLY"
+}
+
+[157/239] ✓   3.0s  Backend Engineer (ai Platform) - London     maybe                  20%
+[158/239] !   3.0s  Backend Engineer                            PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS", "REACT"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "REACT"],
+  "comp": "NO_GBP"
+}
+
+[159/239] !   3.0s  Creator Partnerships & Business Developmen  PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["AI_ML"], "comp": "RANGE_55_74K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["AI_ML"],
+  "comp": "RANGE_55_74K"
+}
+
+[160/239] ✗   3.0s  CRM +hubspot Technical Executive            bad_fit->maybe         20%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_1->LEVEL_3 ✗ | tech JS_TS->AI_ML ✗ | comp BELOW_45K->RANGE_55_74K ✗
+
+[161/239] !   2.9s  Data Analyst                                INVALID TOKEN: ['Missing field: comp']
+[162/239] ✓   2.9s  Data Scientist                              bad_fit                20%
+[163/239] ✓   2.9s  Ecommerce & Digital Marketing Manager - Up  bad_fit                21%
+[164/239] !   2.9s  Founding Engineer (£80k-£100k + Equity) At  PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_3", "tech": ["OOS"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_3",
+  "tech": ["OOS"],
+  "comp": "UP_TO_ONLY"
+}
+
+[165/239] !   2.9s  Frontend Developer (12-month Fixed-term Co  PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "UP_TO_ONLY"
+}
+
+[166/239] !   2.9s  Frontend Developer                          PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["JS_TS"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS"],
+  "comp": "NO_GBP"
+}
+
+[167/239] ✓   2.9s  Frontend Developer                          bad_fit                21%
+[168/239] !   2.9s  Frontend Developer                          PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "RANGE_45_54K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "RANGE_45_54K"
+}
+
+[169/239] !   2.9s  Frontend Platform Engineer                  PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_3", "tech": ["REACT", "JS_TS"], "comp": "RANGE_75_99K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_3",
+  "tech": ["REACT", "JS_TS"],
+  "comp": "RANGE_75_99K"
+}
+
+[170/239] !   2.9s  Frontend Product Engineer | EU / UK         PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "REMOTE", "sen": "LEVEL_3", "tech": ["JS_TS", "AI_ML"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "REMOTE",
+  "sen": "LEVEL_3",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "UP_TO_ONLY"
+}
+
+[171/239] !   2.9s  Full Stack Developer                        PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["AI_ML", "NODE", "REACT", "JS_TS"], "comp": "RANGE_75_99K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["AI_ML", "NODE", "REACT", "JS_TS"],
+  "comp": "RANGE_75_99K"
+}
+
+[172/239] !   2.9s  Full Stack Developer (Typescript/NodeJs)    PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["NODE", "REACT", "JS_TS", "AI_ML"], "comp": "RANGE_55_74K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["NODE", "REACT", "JS_TS", "AI_ML"],
+  "comp": "RANGE_55_74K"
+}
+
+[173/239] !   2.9s  Full Stack Engineer (£60k-£80k + Equity) A  PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["AI", "Computer Vision", "Vue.js"], "comp": "RANGE_55_74K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["AI", "Computer Vision", "Vue.js"],
+  "comp": "RANGE_55_74K"
+}
+
+[174/239] ✗   2.9s  Full Stack Engineer                         bad_fit->maybe         20%
+                    loc UK_OTHER->UK_OTHER ✓ | arr REMOTE->UNK ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech JS_TS->JS_TS,AI_ML ✗ | comp UP_TO_ONLY->UP_TO_ONLY ✓
+
+[175/239] ✗   2.9s  Full Stack Engineer                         good_fit->bad_fit      20%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech REACT,JS_TS,AI_ML->AI_ML ✗ | comp RANGE_55_74K->UP_TO_ONLY ✗
+
+[176/239] ✓   2.9s  Full Stack Engineer (.net / Python / Types  bad_fit                20%
+[177/239] ✓   2.9s  Fullstack Web Developer – Humanitarian Ope  bad_fit                21%
+[178/239] ✓   2.9s  Graduate Frontend Engineer                  bad_fit                21%
+[179/239] !   2.9s  IT Support Associate                        PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["AI", "Microsoft 365", "Google Workspace", "Slack", "Intune", "Kandji"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["AI", "Microsoft 365", "Google Workspace", "Slack", "Intune", "Kandj
+[180/239] !   2.9s  IT Support Engineer                         PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["AI_ML"], "comp": "RANGE_45_54K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["AI_ML"],
+  "comp": "RANGE_45_54K"
+}
+
+[181/239] ✓   2.9s  Javascript Fullstack Engineer - Senior      maybe                  22%
+[182/239] !   2.9s  Junior Data Engineer                        PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_1", "tech": ["JS_TS"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_1",
+  "tech": ["JS_TS"],
+  "comp": "NO_GBP"
+}
+
+[183/239] ✓   2.9s  Junior Developer                            bad_fit                22%
+[184/239] !   2.9s  Junior Front-End (react) Engineer - Up To   PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["JS_TS"], "comp": "UP_TO_ONLY", "title": "Junior Front-End (react) Engineer - Up To £100,000 P/A + Bonus", "description": "Title – Junior JavaScript EngineerClient – Fintech Start-Up (Trading)Rate - Up to £100,000 + BonusLocation – Lon
+[185/239] ✓   2.9s  Junior Full Stack PHP Software Engineer     bad_fit                22%
+[186/239] !   2.9s  Junior Software Developer                   PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_1", "tech": ["JS_TS", "REACT"], "comp": "NO_GBP", "title": "Junior Software Developer", "description": "Location: Norwich (4 days per week in office, 1 day WFH)Salary: £30,000-£32,000Type: Full-time, PermanentA growing business is looking for a Jun
+[187/239] !   2.9s  Junior Software Engineer At Stitch Health   PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_2", "tech": ["NODE", "REACT"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["NODE", "REACT"],
+  "comp": "NO_GBP"
+}
+
+[188/239] !   2.9s  Lead Software Engineer (full Stack)         PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["REACT", "JS_TS", "AI_ML"], "comp": "RANGE_75_99K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["REACT", "JS_TS", "AI_ML"],
+  "comp": "RANGE_75_99K"
+}
+
+[189/239] !   2.9s  Lead Test Engineer                          PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["REACT", "C#", "AI_ML"], "comp": "RANGE_55_74K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["REACT", "C#", "AI_ML"],
+  "comp": "RANGE_55_74K"
+}
+
+[190/239] ✗   2.9s  QA Engineer                                 maybe->bad_fit         22%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech AI_ML->AI_ML ✓ | comp UP_TO_ONLY->UP_TO_ONLY ✓
+
+[191/239] !   2.9s  QA Engineer                                 PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["JS_TS", "AI_ML"], "comp": "UP_TO_ONLY", "description": "At Person Centred Software, we’re committed to improving the lives of people in care through dependable, high-performing digital solutions. As a Test Engineer, you’ll play a cruc
+[192/239] !   2.9s  Quality Engineer : Manual Software Testing  PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["AI_ML"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["AI_ML"],
+  "comp": "UP_TO_ONLY"
+}
+
+[193/239] !   3.3s  React Native Developer                      PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["REACT", "JS_TS"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["REACT", "JS_TS"],
+  "comp": "UP_TO_ONLY"
+}
+
+[194/239] !   3.3s  Research Software Engineer                  PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_2", "tech": ["AI", "machine learning", "Python", "R", "C++", "Java", "Julia", "C", "C++", "C", "C++", "C", "C++", "C", "C++", "C", "C++", "C", "C++", "C", "C++", "C", "C++", "C", "C++", "C", "C++", "C", "C++", "C", "C++", "C", "C++", "C", "C++", "C", 
+[195/239] ✗   3.3s  Senior Back End Software Engineer           maybe->bad_fit         21%
+                    loc IN_LONDON->UK_OTHER ✗ | arr REMOTE->UNK ✗ | sen LEVEL_3->LEVEL_2 ✗ | tech NODE,JS_TS->JS_TS,AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+
+[196/239] !   3.3s  Senior Backend Developer                    PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["JS_TS"], "comp": "RANGE_75_99K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["JS_TS"],
+  "comp": "RANGE_75_99K"
+}
+
+[197/239] !   3.3s  Senior Data Engineer AWS - Finance Consult  PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["AWS", "Kafka", "Python"], "comp": "NO_GBP" }
+
+
+{"loc":"UK_OTHER","arr":"HYBRID","sen":"LEVEL_3","tech":["AWS","Kafka","Python"],"comp":"NO_GBP"}
+
+
+{"loc":"UK_OTHER","arr":"HYBRID","sen":"LEVEL_3","tech":["AWS","Kafka","Python"],"comp"
+[198/239] !   3.3s  Senior DevOps Engineer                      PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["AWS", "GCP", "Kubernetes", "Terraform"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["AWS", "GCP", "Kubernetes", "Terraform"],
+  "comp": "NO_GBP"
+}
+
+
+{"loc":"UK_OTHER","arr":"HYBRID","
+[199/239] !   3.3s  Senior Frontend Developer                   PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["JS_TS", "AI_ML"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "UP_TO_ONLY"
+}
+
+[200/239] !   3.3s  Senior Full Stack Engineer                  PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["JS_TS", "REACT", "NODE", "AI_ML"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["JS_TS", "REACT", "NODE", "AI_ML"],
+  "comp": "UP_TO_ONLY"
+}
+
+
+{"loc":"UK_OTHER","arr":"HYBRID","sen"
+[201/239] !   3.3s  Senior Full Stack Software Developer (uk)   PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["JS_TS", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+[202/239] !   3.3s  Senior Full-Stack Software Engineer         PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_3", "tech": ["REACT", "JS_TS"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_3",
+  "tech": ["REACT", "JS_TS"],
+  "comp": "UP_TO_ONLY"
+}
+
+[203/239] ✗   3.3s  Senior Games Developer - PixiJS             bad_fit->maybe         20%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech JS_TS->JS_TS,AI_ML ✗ | comp RANGE_55_74K->RANGE_55_74K ✓
+
+[204/239] ✗   3.3s  Senior JavaScript Developer Vue 3           bad_fit->maybe         20%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech JS_TS->JS_TS,AI_ML ✗ | comp UP_TO_ONLY->UP_TO_ONLY ✓
+
+[205/239] !   3.3s  Senior Machine Learning Engineer            PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["AI_ML", "OOS"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["AI_ML", "OOS"],
+  "comp": "UP_TO_ONLY"
+}
+
+[206/239] !   3.3s  Senior Product Engineer (TS/NodeJS/Vue)     PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["NODE", "REACT", "JS_TS"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["NODE", "REACT", "JS_TS"],
+  "comp": "UP_TO_ONLY"
+}
+
+[207/239] !   3.3s  Senior Software Engineer                    PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["JS_TS", "REACT", "AI_ML"], "comp": "RANGE_75_99K" }
+
+
+{"loc":"UK_OTHER","arr":"HYBRID","sen":"LEVEL_3","tech":["JS_TS","REACT"],"comp":"RANGE_75_99K"}
+
+
+[208/239] !   3.3s  Senior Software Engineer                    PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["MICRONAUT", "NODE", "JS_TS", "AI_ML"], "comp": "RANGE_75_99K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["MICRONAUT", "NODE", "JS_TS", "AI_ML"],
+  "comp": "RANGE_75_99K"
+}
+
+[209/239] ✗   3.3s  Senior Software Engineer                    good_fit->maybe        20%
+                    loc IN_LONDON->UK_OTHER ✗ | arr HYBRID->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,JS_TS->NODE,REACT,JS_TS,AI_ML ✗ | comp RANGE_55_74K->NO_GBP ✗
+
+[210/239] !   3.3s  Senior Software Engineer                    PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_3", "tech": ["AI_ML", "Golang", "JavaScript", "NextJS", "React", "Python", "OOS"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_3",
+  "tech": ["AI_ML", "Golang", "JavaScript", "NextJS", "React", "Python"],
+  "comp": "NO_
+[211/239] !   3.3s  Senior Software Engineer                    PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_3", "tech": ["NODE", "REACT", "JS_TS", "AI_ML"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_3",
+  "tech": ["NODE", "REACT", "JS_TS", "AI_ML"],
+  "comp": "UP_TO_ONLY"
+}
+
+[212/239] !   3.3s  Senior Software Engineer - Backend AI Nati  PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["AI_ML"], "comp": "RANGE_55_74K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["AI_ML"],
+  "comp": "RANGE_55_74K"
+}
+
+[213/239] !   3.3s  Senior Software Engineer, Backend           PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["OOS"], "comp": "RANGE_75_99K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["OOS"],
+  "comp": "RANGE_75_99K"
+}
+
+[214/239] !   3.3s  Senior Software Engineer (backend)          PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["NODE", "REACT", "JS_TS", "AI_ML"], "comp": "RANGE_75_99K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["NODE", "REACT", "JS_TS", "AI_ML"],
+  "comp": "RANGE_75_99K"
+}
+
+[215/239] !   3.3s  Senior Software Engineer, Full Stack, Lear  PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["JS_TS", "AI_ML"], "comp": "RANGE_75_99K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "RANGE_75_99K"
+}
+
+
+{"loc":"UK_OTHER","arr":"HYBRID","sen":"LEVEL_3","tech":["JS_TS","AI
+[216/239] !   3.3s  Senior Software Engineer - Ts, React, Node  PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["NODE", "REACT", "JS_TS", "AI_ML"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["NODE", "REACT", "JS_TS", "AI_ML"],
+  "comp": "UP_TO_ONLY"
+}
+
+[217/239] ✗   3.3s  Senior Software/Founding Engineer - Health  good_fit->bad_fit      19%
+                    loc IN_LONDON->UK_OTHER ✗ | arr IN_OFFICE->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech REACT->JS_TS ✗ | comp ABOVE_100K->NO_GBP ✗
+
+[218/239] !   3.3s  Software Engineer                           PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "UP_TO_ONLY"
+}
+
+[219/239] !   3.3s  Software Engineer                           PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+[220/239] ✓   3.3s  Software Engineer                           bad_fit                19%
+[221/239] !   3.3s  Software Engineer                           PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "UP_TO_ONLY"
+}
+
+[222/239] !   3.3s  Software Engineer                           PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+[223/239] !   3.3s  Software Engineer, Front End                PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "RANGE_55_74K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "RANGE_55_74K"
+}
+
+
+{"loc":"UK_OTHER","arr":"HYBRID","sen":"LEVEL_2","tech":["JS_TS","AI
+[224/239] !   3.3s  Software Engineer Intern                    PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+[225/239] !   1.8s  Software/ Platform Engineer                 PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "UP_TO_ONLY"
+}
+
+[226/239] ✓   1.8s  Trainee Telematics & CCTV Installation Eng  bad_fit                19%
+[227/239] ✓   1.8s  Unity 3D Developer                          bad_fit                19%
+[228/239] !   1.8s  Backend Developer                           PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS", "REACT", "NODE"], "comp": "UP_TO_ONLY" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "REACT", "NODE"],
+  "comp": "UP_TO_ONLY"
+}
+
+[229/239] !   1.8s  Backend Software Development Engineer - Mi  PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_2", "tech": ["JS_TS", "REACT"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "REACT"],
+  "comp": "NO_GBP"
+}
+
+[230/239] !   1.8s  Founding Software Engineer                  PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["AI_ML"], "comp": "RANGE_75_99K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["AI_ML"],
+  "comp": "RANGE_75_99K"
+}
+
+[231/239] !   1.8s  Full-Stack Engineer                         PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "IN_OFFICE", "sen": "LEVEL_2", "tech": ["JS_TS", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "IN_OFFICE",
+  "sen": "LEVEL_2",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+[232/239] !   1.8s  Full-Stack Software Engineer                PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["REACT", "AI_ML"], "comp": "RANGE_55_74K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["REACT", "AI_ML"],
+  "comp": "RANGE_55_74K"
+}
+
+[233/239] !   1.8s  Jr. Front-End Engineer                      PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_1", "tech": ["JS_TS", "AI_ML"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_1",
+  "tech": ["JS_TS", "AI_ML"],
+  "comp": "NO_GBP"
+}
+
+[234/239] ✓   1.8s  Software Engineer - Full Stack              bad_fit                19%
+[235/239] ✓   1.8s  Software Engineer I                         bad_fit                20%
+[236/239] !   1.8s  Software Engineer - New Grad                PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "UNK", "sen": "LEVEL_2", "tech": ["REACT", "JS_TS"], "comp": "RANGE_55_74K" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "UNK",
+  "sen": "LEVEL_2",
+  "tech": ["REACT", "JS_TS"],
+  "comp": "RANGE_55_74K"
+}
+
+[237/239] !   1.8s  Senior DevOps Engineer - AWS Infrastructur  PARSE FAIL
+           Raw: { "loc": "UK_OTHER", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["OOS"], "comp": "NO_GBP" }
+
+
+{
+  "loc": "UK_OTHER",
+  "arr": "HYBRID",
+  "sen": "LEVEL_3",
+  "tech": ["OOS"],
+  "comp": "NO_GBP"
+}
+
+[238/239] ✓   1.8s  Junior DevOps Engineer                      bad_fit                20%
+[239/239] !   1.8s  Senior Software Engineer                    PARSE FAIL
+           Raw: { "loc": "UNK", "arr": "UNK", "sen": "LEVEL_3", "tech": ["AI_ML"], "comp": "ABOVE_100K" }
+
+
+{
+  "loc": "UNK",
+  "arr": "UNK",
+  "sen": "LEVEL_3",
+  "tech": ["AI_ML"],
+  "comp": "ABOVE_100K"
+}
+
+
+========================================================================
+  V14 EVAL  adapters_v14_0.6B  step 200
+  test set: test_labeled_audited  |  prompt: student_v14  |  n=239
+========================================================================
+  Parse failures: 151   Invalid tokens: 3   Fuzzy corrections: 1   Valid: 85/239
+
+  Label accuracy:  47/85 = 55.3%   NOT MET  (target >=90%)
+  Score accuracy:  6/85 = 7.1%
+
+  Fit accuracy (macro):  37.8%  NOT MET   gf=11%  maybe=17%  bad=86%
+
+  Field token accuracy:
+    loc            ######..............   29/85  34.1%
+    arr            ########............   34/85  40.0%
+    sen            #############.......   56/85  65.9%
+    tech           #####...............   25/85  29.4%
+    comp           ####................   19/85  22.4%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    good_fit           2      18     11%  !
+    maybe              3      18     17%  !
+    bad_fit           42      49     86%
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [2]         2        14
+    maybe                0       [3]        15
+    bad_fit              0         7      [42]
+
+  Field error transitions (top per field):
+    loc           : IN_LONDON->UK_OTHER:23  REMOTE->UNK:22  OUTSIDE_UK->UK_OTHER:4  OUTSIDE_UK->UNK:4
+    arr           : REMOTE->UNK:28  IN_OFFICE->UNK:10  HYBRID->UNK:6  IN_OFFICE->HYBRID:5
+    sen           : LEVEL_3->LEVEL_2:14  LEVEL_2->LEVEL_3:10  LEVEL_1->LEVEL_2:3  LEVEL_1->LEVEL_3:2
+    tech          : OOS->AI_ML:7  NODE->JS_TS,NODE:7  OOS->JS_TS:5  AI_ML,NODE->JS_TS,NODE:4
+    comp          : RANGE_55_74K->NO_GBP:14  NO_GBP->UP_TO_ONLY:10  RANGE_75_99K->NO_GBP:9  RANGE_55_74K->UP_TO_ONLY:8
+
+  Error direction:  over-scoring 7  |  under-scoring 29
+
+------------------------------------------------------------------------
+  adapters_v14_0.6B/step200  label=55.3%  loc=34.1%  role=65.9%  tech=29.4%  comp=22.4%  wa=40.0%  gf=11%  maybe=17%  bad=86%
+========================================================================
+
+Predictions: eval_results/v14_sweep_0.6B/adapters_v14_0.6B/2026-03-18_145041_test_labeled_audited_student_v14_200.predictions.jsonl
+Summary: eval_results/v14_sweep_0.6B/adapters_v14_0.6B/2026-03-18_145041_test_labeled_audited_student_v14_200.summary.json

@@ -6,28 +6,34 @@ Distilling gpt-4.1-mini into a local Qwen3-0.6B student model for job-fit scorin
 
 ## Current Status
 
-**V13.1 COMPLETE. Best 0.6B: V13 at 97.9%. Best 1.5B: V13.1 at 97.5% (iter 1800).**
+**V14 COMPLETE. Best model: Qwen3-4B at 98.7% hybrid (new all-time record). Mac deployment: Q6_K GGUF at 98.3% hybrid / 83.7% model-only (3.1 GB).**
 
-| Model | Hybrid Acc | Sen (hybrid) | Arr (hybrid) | Tech | Comp | Parse Fail |
-|-------|-----------|-------------|-------------|------|------|------------|
-| **0.6B Qwen3 (V13, iter 1500)** | **97.9%** | 86.6% | 72.8% | 88.3% | 95.8% | 19* |
-| 0.6B Qwen3 (V13.1 corrective, iter 200) | 97.5% | 84.9% | 76.2% | **90.4%†** | **96.2%†** | 13 |
-| 0.6B Qwen3 (V12.1) | 97.5% | 84.5% | 80.3% | 87.9% | 95.4% | 0 |
-| **1.5B Qwen2.5 (V13.1, iter 1800)** | **97.5%** | **90.8%** | 85.4% | **90.4%†** | **96.2%†** | 36 |
-| 1.5B Qwen2.5 (V12.1) | 98.3% | 90.0% | **90.4%** | 87.9% | 95.4% | **8** |
+| Model | Format | Hybrid | Model-only | Parse | Size | Speed (hardware) |
+|-------|--------|--------|-----------|-------|------|-----------------|
+| **Qwen3-4B V14 (step 800)** | bfloat16 HF | **98.7%** | 86.2% | 5 | ~8 GB | — (Lambda only) |
+| Qwen3-4B V14 F16 GGUF | GGUF F16 | 98.7% | 86.2% | 8 | 7.5 GB | 0.7s/job (Lambda GH200) |
+| **Qwen3-4B V14 Q6_K GGUF** | GGUF Q6_K | **98.3%** | **83.7%** | 10 | **3.1 GB** ✅ Mac | 0.7s/job (Lambda GH200) / ❓ Mac untested |
+| Qwen3-4B V14 MLX 6-bit | MLX 6-bit | TBD | TBD | TBD | ~3.1 GB ⏳ eval running | ~25s/job (Mac M1, thinking ON) |
+| Qwen3-4B V14 Q4_K_M GGUF | GGUF Q4_K_M | 97.9% | 62.3% | 51 | 2.3 GB | 0.7s/job (Lambda GH200) / ❓ Mac untested |
+| Qwen3-4B V14 MLX 4-bit | MLX 4-bit | TBD | TBD | TBD | ~2.3 GB ⏳ pending | ❓ untested |
+| Qwen3-0.6B V14 (step 2000) | HF 4-bit | 97.9% | 49.4% | 83 | 335 MB |
+| Qwen2.5-1.5B V14 (step 1200) | HF 4-bit | 96.7% | 41.4% | 116 | 839 MB |
+| V13 0.6B MLX (iter 1500) | MLX 4-bit | 97.9% | — | 19 | 335 MB |
+| V13.1 1.5B MLX (iter 1800) | MLX 4-bit | 97.5% | — | 36 | 839 MB |
+| V12.1 1.5B MLX (iter 2000) | MLX 4-bit | 98.3% | — | 8 | 839 MB |
 
-*Parse failures fall back to regex in hybrid pipeline — hybrid accuracy unaffected at label level, but reduces hybrid sen/arr field accuracy.
-†V13.1 regex (tech=90.4%, comp=96.2%) is strictly better than V12.1 (87.9%, 95.4%).
-
-**Production model**: Qwen3-0.6B-4bit, adapter `finetune/adapters_v13_0.6B/0001500_adapters.safetensors`
-
-**Next step**: V13.1 complete. V13.1 1.5B has best-ever model-only sen (93.6%) but 36 parse failures prevent beating V12.1 (98.3%). V14 priorities: (1) reduce parse failures with format prompt fix, (2) relax arr REMOTE definition, (3) L1/L2 boundary contrastive examples, (4) correct Job 14 teacher label error.
+**Production model (Mac)**: `~/qwen3_4B_v14_Q6_K.gguf` (3.1 GB, downloaded)
+**HuggingFace archive**: `FF-01/qwen3-4b-v14` (private) — all GGUFs + merged_v14_4B. Lambda deleted 2026-03-19.
+**Next steps**: MLX 4-bit and 6-bit eval pending (download `merged_v14_4B` from HF → convert on Mac). V15 priorities in `docs/V14_IMPLEMENTATION_PROGRESS.md`.
 
 ### Tracking Documents
 
 | Document | Purpose |
 |----------|---------|
-| `docs/V13_1_IMPLEMENTATION_PROGRESS.md` | **V13.1 full history — regex, 0.6B corrective, 1.5B training, error analysis** |
+| `docs/V14_IMPLEMENTATION_PROGRESS.md` | **V14 full history — 4B training, sweep, quantization comparison, GGUF debugging** |
+| `docs/V14_REPRODUCTION_GUIDE.md` | **Step-by-step reproduction guide — all commands to redo any V14 step** |
+| `docs/lambda_logs/` | All Lambda training/eval/conversion logs + imatrix calibration data |
+| `docs/V13_1_IMPLEMENTATION_PROGRESS.md` | V13.1 full history — regex, 0.6B corrective, 1.5B training, error analysis |
 | `docs/V13_PLAN.md` | V13 execution plan (V13 phases 1–4 complete) |
 | `docs/V12_IMPLEMENTATION_PROGRESS.md` | Full V12 history — all phases, models, comparisons |
 | `V6_DIAGNOSTIC_FINDINGS.md` | Pre-V12 findings and decisions (38 findings) |
@@ -88,6 +94,29 @@ score = max(0, min(100, loc_score + role_score + tech_score + comp_score))
 
 ## Key Files
 
+### V14 (current — complete)
+| File | Purpose |
+|------|---------|
+| finetune/train_v14.py | V14 training script (Unsloth + HuggingFace, Lambda only) |
+| finetune/run_v14_training.sh | Full training queue — all 3 models (0.6B, 1.5B, 4B) |
+| finetune/sweep_v14.py | V14 checkpoint sweep script |
+| finetune/eval_student_v14_gguf.py | GGUF inference eval (llama-cpp-python) |
+| finetune/eval_student_v14.py | HF bfloat16 inference eval (Lambda) |
+| prompts/student_v14.txt | **V14 student prompt** |
+| finetune/adapters_v14_4B/checkpoint-800/ | **Best 4B checkpoint (98.7% hybrid)** |
+| finetune/adapters_v14_0.6B/checkpoint-2000/ | Best 0.6B checkpoint (97.9% hybrid) |
+| finetune/adapters_v14/checkpoint-1200/ | Best 1.5B checkpoint (96.7% hybrid) |
+| ~/merged_v14_4B/ | Merged 4B HF model (~7.6 GB) — source for MLX/GGUF conversion |
+| ~/qwen3_4B_v14_Q6_K.gguf | **Mac deployment model (3.1 GB, 98.3% hybrid)** |
+| ~/qwen3_4B_v14_Q4_K_M.gguf | Smaller option (2.3 GB, 97.9% hybrid, model-only 62%) |
+| ~/qwen3_4B_v14_f16.gguf | Full precision GGUF (7.5 GB, 98.7% hybrid) |
+| data/v14/train.jsonl | V14 training data (774 jobs) |
+| data/v14/valid.jsonl | V14 validation data (86 jobs) |
+| eval_results/v14_sweep_4B_fixed/ | 4B fixed sweep results (best: step 800) |
+| eval_results/v14_gguf_Q6_K/ | Q6_K GGUF eval results |
+| eval_results/v14_gguf_Q4_K_M/ | Q4_K_M GGUF eval results |
+| docs/lambda_logs/imatrix.dat | IQ2 calibration data (for future IQ quantization) |
+
 ### V13.1 (current — complete)
 | File | Purpose |
 |------|---------|
@@ -133,6 +162,14 @@ score = max(0, min(100, loc_score + role_score + tech_score + comp_score))
 ### Eval Results
 | Directory | Purpose |
 |-----------|---------|
+| eval_results/v14_sweep_4B_fixed/ | **V14 4B fixed sweep (best: step 800, 98.7% hybrid)** |
+| eval_results/v14_sweep_0.6B/ | V14 0.6B sweep (best: step 2000, 97.9% hybrid) |
+| eval_results/v14_sweep_1.5B/ | V14 1.5B sweep (best: step 1200, 96.7% hybrid) |
+| eval_results/v14_gguf_f16/ | 4B F16 GGUF eval (98.7% hybrid, 86.2% model-only) |
+| eval_results/v14_gguf_Q6_K/ | 4B Q6_K GGUF eval (98.3% hybrid, 83.7% model-only) |
+| eval_results/v14_gguf_Q4_K_M/ | 4B Q4_K_M GGUF eval (97.9% hybrid, 62.3% model-only) |
+| eval_results/v14_mlx4bit/ | 4B MLX 4-bit eval ⏳ in progress |
+| eval_results/v14_mlx6bit/ | 4B MLX 6-bit eval ⏳ in progress |
 | eval_results/v13_1_1.5B_sweep/ | **V13.1 1.5B sweep (10 checkpoints, iter 200–2000, best: iter 1800 at 97.5%)** |
 | eval_results/v13_1_sweep/ | V13.1 0.6B sweep (8 checkpoints, iter 50–400, best: iter 200 at 97.5%) |
 | eval_results/v13_sweep/ | V13 0.6B sweep (9 checkpoints, iter 1500–1900, best: iter 1500 at 97.9%) |
@@ -207,6 +244,35 @@ score = max(0, min(100, loc_score + role_score + tech_score + comp_score))
 ## Common Commands
 
 ```bash
+# ── V14 GGUF Eval (Mac — llama-cpp-python) ────────────────────────
+
+# Q6_K eval (Mac deployment target)
+.venv/bin/python3 finetune/eval_student_v14_gguf.py \
+  --model ~/qwen3_4B_v14_Q6_K.gguf \
+  --test-file data/v12/test_labeled_audited.jsonl \
+  --prompt prompts/student_v14.txt \
+  --output-dir eval_results/v14_gguf_Q6_K_mac
+
+# Hybrid score GGUF predictions
+.venv/bin/python3 finetune/compute_hybrid_v13_1.py \
+  --test-file data/v12/test_labeled_audited.jsonl \
+  --predictions <predictions.jsonl> --v12
+
+# ── V14 MLX Eval (Mac) ────────────────────────────────────────────
+
+# Convert merged HF model to MLX (one-time, run from Mac)
+.venv/bin/python3 -m mlx_lm convert \
+  --hf-path ~/merged_v14_4B --mlx-path ~/qwen3_4B_v14_mlx4bit -q --q-bits 4
+.venv/bin/python3 -m mlx_lm convert \
+  --hf-path ~/merged_v14_4B --mlx-path ~/qwen3_4B_v14_mlx6bit -q --q-bits 6
+
+# Eval MLX model
+.venv/bin/python3 finetune/eval_student_v7.py \
+  --model ~/qwen3_4B_v14_mlx4bit \
+  --test-file data/v12/test_labeled_audited.jsonl \
+  --prompt prompts/student_v14.txt \
+  --output-dir eval_results/v14_mlx4bit --save-predictions
+
 # ── V13.1 1.5B Hybrid Eval ─────────────────────────────────────────
 
 # Model-only eval (V13.1 1.5B best checkpoint — iter 1800)
@@ -274,6 +340,11 @@ npx tsx src/cli/format-for-mlx-v7.ts --input <train.jsonl> --output-dir <dir> --
 
 ## Gotchas
 
+- **V14 GGUF: no `chat_format` override**: Remove `chat_format="chatml"` from `Llama()` — it overrides the GGUF's embedded Jinja template, producing garbage output. Let llama-cpp-python auto-detect from GGUF metadata.
+- **V14 GGUF: use `/no_think` not pre-fill**: Disable Qwen3 thinking via `/no_think` in system prompt. Pre-filling assistant messages in `create_chat_completion` closes the turn with `<|im_end|>` → zero output.
+- **V14 `{{` pre-fill bug**: Original sweep had `{{` in eval script causing 60–70% parse failures. Fixed sweep results in `eval_results/v14_sweep_4B_fixed/`. Never use `v14_sweep_4B/`.
+- **Q4_K_M model-only ceiling**: 62.3% due to schema hallucination in weights (wrong field names like `loc_field`). Not fixable at inference — minimum viable quantization for fine-tuned JSON schema is ~6-bit (Q6_K).
+- **MLX is Apple Silicon only**: Cannot convert or run MLX models on Lambda (NVIDIA). Conversion must happen on Mac.
 - **Qwen3 needs `--model` flag**: `eval_student_v7.py` defaults to Qwen2.5-0.5B. Pass `--model mlx-community/Qwen3-0.6B-4bit` for 0.6B evals
 - **Audited vs original test set**: `data/v12/test_labeled_audited.jsonl` has 3 golden corrections from V12 Phase 0B. Always use this for V12+ evals
 - **Prompt is baked into training data**: Fine-tuned models can't use different prompts at inference — the prompt is part of the learned input distribution

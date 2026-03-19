@@ -1,0 +1,132 @@
+[
+  {
+    "step": 800,
+    "hybrid_acc": 98.74476987447699,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 91.6,
+      "sen": 93.7,
+      "tech": 90.4,
+      "comp": 96.2
+    },
+    "parse_fail": 5,
+    "per_label": {
+      "good_fit": {
+        "correct": 56,
+        "total": 57
+      },
+      "maybe": {
+        "correct": 52,
+        "total": 54
+      },
+      "bad_fit": {
+        "correct": 128,
+        "total": 128
+      }
+    }
+  },
+  {
+    "step": 1200,
+    "hybrid_acc": 98.74476987447699,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 89.5,
+      "sen": 94.6,
+      "tech": 90.4,
+      "comp": 96.2
+    },
+    "parse_fail": 8,
+    "per_label": {
+      "good_fit": {
+        "correct": 56,
+        "total": 57
+      },
+      "maybe": {
+        "correct": 52,
+        "total": 54
+      },
+      "bad_fit": {
+        "correct": 128,
+        "total": 128
+      }
+    }
+  },
+  {
+    "step": 600,
+    "hybrid_acc": 98.32635983263597,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 91.6,
+      "sen": 95.4,
+      "tech": 90.4,
+      "comp": 96.2
+    },
+    "parse_fail": 3,
+    "per_label": {
+      "good_fit": {
+        "correct": 56,
+        "total": 57
+      },
+      "maybe": {
+        "correct": 52,
+        "total": 54
+      },
+      "bad_fit": {
+        "correct": 127,
+        "total": 128
+      }
+    }
+  },
+  {
+    "step": 1400,
+    "hybrid_acc": 98.32635983263597,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 90.0,
+      "sen": 93.7,
+      "tech": 90.4,
+      "comp": 96.2
+    },
+    "parse_fail": 7,
+    "per_label": {
+      "good_fit": {
+        "correct": 55,
+        "total": 57
+      },
+      "maybe": {
+        "correct": 52,
+        "total": 54
+      },
+      "bad_fit": {
+        "correct": 128,
+        "total": 128
+      }
+    }
+  },
+  {
+    "step": 1000,
+    "hybrid_acc": 97.90794979079497,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 89.5,
+      "sen": 92.9,
+      "tech": 90.4,
+      "comp": 96.2
+    },
+    "parse_fail": 10,
+    "per_label": {
+      "good_fit": {
+        "correct": 56,
+        "total": 57
+      },
+      "maybe": {
+        "correct": 51,
+        "total": 54
+      },
+      "bad_fit": {
+        "correct": 127,
+        "total": 128
+      }
+    }
+  }
+]

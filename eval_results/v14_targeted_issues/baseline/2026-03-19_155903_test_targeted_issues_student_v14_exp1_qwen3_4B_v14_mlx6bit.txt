@@ -1,0 +1,70 @@
+Output: eval_results/v14_targeted_issues/baseline/2026-03-19_155903_test_targeted_issues_student_v14_exp1_qwen3_4B_v14_mlx6bit.txt
+Prompt: prompts/student_v14_exp1.txt
+No adapter (baseline)
+Model: /Users/faisal/qwen3_4B_v14_mlx6bit
+------------------------------------------------------------
+------------------------------------------------------------
+Running V7 eval on 5 jobs...
+
+[  1/5] ✗  47.7s  Full-Stack Developer                        bad_fit->maybe          0%
+                  loc OUTSIDE_UK->REMOTE ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech REACT,JS_TS->NODE,REACT,JS_TS ✗ | comp NO_GBP->NO_GBP ✓
+                  Paris, Île-de-France, France (Remote) | Full-Stack Developer | TypeScript, React, MongoDB, tRPC, Emotion, Vite, Kubernetes (GKE), Terraform, ArgoCD, Vitest, Playwright, Cucumber, m
+
+[  2/5] ✓  35.5s  ATUM Deep-Tech Founder (technical) - Singa  bad_fit                50%
+[  3/5] ✗  55.4s  Full Stack Engineer                         bad_fit->maybe         33%
+                  loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,REACT,JS_TS->NODE,REACT,JS_TS ✓ | comp RANGE_45_54K->RANGE_55_74K ✗
+                  United Kingdom | Hybrid working: Min. 2 days in-person a week (London or Bristol) | Full Stack Engineer | Node, Prisma, React, Typescript, Konva, Tailwind, Docker, Docker Compose, 
+
+[  4/5] ✗  60.5s  Full-Stack Engineer                         maybe->good_fit        25%
+                  loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,REACT,JS_TS,AI_ML->NODE,REACT,JS_TS,AI_ML ✓ | comp NO_GBP->RANGE_75_99K ✗
+                  Greater Manchester, England, United Kingdom | This role is based in our Manchester, UK office and follows a hybrid work model. Team members are expected to be in the office at leas
+
+[  5/5] ✓  36.1s  Full Stack Web Developer                    bad_fit                40%
+
+========================================================================
+  V7 EVAL  baseline  iter qwen3_4B_v14_mlx6bit
+  eval set: test_targeted_issues  |  prompt: student_v14_exp1  |  n=5
+========================================================================
+  Parse failures: 0   Invalid tokens: 0   Fuzzy corrections: 0   Valid: 5/5
+
+  Speed:  total=3.9min  avg=47.0s/job  hardware=Mac M1 MLX 6-bit
+
+  Label accuracy:  2/5 = 40.0%   NOT MET  (target >=90%)
+  True accuracy:   2/5 = 40.0%  (parse fails counted as wrong — use for cross-experiment comparison)
+  Score accuracy:  2/5 = 40.0%
+
+  Fit accuracy (macro):  16.7%  NOT MET   gf=0%  maybe=0%  bad=50%
+
+  Field token accuracy:
+    loc            ################....    4/5  80.0%
+    arr            ####################    5/5  100.0%
+    sen            ################....    4/5  80.0%
+    tech           ############........    3/5  60.0%
+    comp           ############........    3/5  60.0%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    maybe              0       1      0%  !
+    bad_fit            2       4     50%  !
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [0]         0         0
+    maybe                1       [0]         0
+    bad_fit              0         2       [2]
+
+  Field error transitions (top per field):
+    loc           : OUTSIDE_UK->REMOTE:1
+    sen           : LEVEL_3->LEVEL_1:1
+    tech          : JS_TS,REACT->JS_TS,NODE,REACT:1  AI_ML,JS_TS,REACT->AI_ML,JS_TS,NODE,REACT:1
+    comp          : RANGE_45_54K->RANGE_55_74K:1  NO_GBP->RANGE_75_99K:1
+
+  Error direction:  over-scoring 2  |  under-scoring 0
+
+------------------------------------------------------------------------
+  baseline/qwen3_4B_v14_mlx6bit  label=40.0%  loc=80.0%  role=80.0%  tech=60.0%  comp=60.0%  wa=100.0%  gf=0%  maybe=0%  bad=50%
+========================================================================
+
+Predictions: eval_results/v14_targeted_issues/baseline/2026-03-19_155903_test_targeted_issues_student_v14_exp1_qwen3_4B_v14_mlx6bit.predictions.jsonl
+Summary: eval_results/v14_targeted_issues/baseline/2026-03-19_155903_test_targeted_issues_student_v14_exp1_qwen3_4B_v14_mlx6bit.summary.json

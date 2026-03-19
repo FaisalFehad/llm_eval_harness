@@ -16,8 +16,18 @@ results/**/*.html
 .venv
 finetune/__pycache__
 
-# LoRA adapter weights (too large for git, ~50-200MB each)
+# LoRA adapter weights + HF training artifacts (too large for git)
+# Covers both root-level and checkpoint subdirectories
 finetune/adapters*/*.safetensors
+finetune/adapters*/**/*.safetensors
+finetune/adapters*/optimizer.pt
+finetune/adapters*/scheduler.pt
+finetune/adapters*/rng_state.pth
+finetune/adapters*/training_args.bin
+finetune/adapters*/checkpoint-*/optimizer.pt
+finetune/adapters*/checkpoint-*/scheduler.pt
+finetune/adapters*/checkpoint-*/rng_state.pth
+finetune/adapters*/checkpoint-*/training_args.bin
 
 # Intermediate/generated data
 data/promptfoo_tests_eval.yaml
@@ -26,4 +36,10 @@ data/software_engineer_salaries_scored.jsonl
 
 # Log files
 eval_qwen3.log
+sweep_v14_1.5B.log
 *.partial
+*.log
+
+# PhotoRec data recovery files
+photorec.se2
+photorec.ses

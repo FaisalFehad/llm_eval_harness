@@ -1,0 +1,69 @@
+Output: eval_results/v14_comp_midpoint_test/baseline/2026-03-19_152624_test_comp_midpoint_student_v14_exp1_qwen3_4B_v14_mlx6bit.txt
+Prompt: prompts/student_v14_exp1.txt
+No adapter (baseline)
+Model: /Users/faisal/qwen3_4B_v14_mlx6bit
+------------------------------------------------------------
+------------------------------------------------------------
+Running V7 eval on 7 jobs...
+
+[  1/7] ✓  14.0s  IT Support Engineer                         maybe                 100%
+[  2/7] ✗  13.8s  Full Stack Engineer                         maybe->good_fit        50%
+                  loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS->NODE,JS_TS ✓ | comp RANGE_55_74K->RANGE_75_99K ✗
+                  Fully Remote | Fully remote working arrangement | Full Stack Engineer | Node.js, javascript, JavaScript/TS, DevOps | Salary range of £60,000 - £80,000
+
+[  3/7] ✓  13.9s  Project Manager                             good_fit               67%
+[  4/7] ✓  12.9s  Scrum Master                                bad_fit                75%
+[  5/7] ✗  13.7s  Engineering Manager                         maybe->good_fit        60%
+                  loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE->NODE ✓ | comp RANGE_55_74K->RANGE_75_99K ✗
+                  UK Remote | 100% remote working, giving you the flexibility to work from anywhere. | Engineering Manager | Node.js | Salary range: £60,000-£80,000.
+
+[  6/7] ✓  17.4s  Senior Software Engineer                    good_fit               67%
+[  7/7] !  19.9s  Senior DevOps Engineer - AWS Infrastructur  PARSE FAIL
+           Raw: {"loc_raw":"Remote UK","loc":"REMOTE","arr_raw":"A minimum of 4 days a week on-site is required for deep collaboration, strategic planning, and essential on-site presence during major deployments or outages","arr":"HYBRID","sen_raw":"Senior DevOps Engineer - AWS Infrastructure Architect","sen":"LEVE
+
+========================================================================
+  V7 EVAL  baseline  iter qwen3_4B_v14_mlx6bit
+  eval set: test_comp_midpoint  |  prompt: student_v14_exp1  |  n=7
+========================================================================
+  Parse failures: 1   Invalid tokens: 0   Fuzzy corrections: 0   Valid: 6/7
+
+  Speed:  total=1.8min  avg=15.1s/job  hardware=Mac M1 MLX 6-bit
+
+  Label accuracy:  4/6 = 66.7%   NOT MET  (target >=90%)
+  True accuracy:   4/7 = 57.1%  (parse fails counted as wrong — use for cross-experiment comparison)
+  Score accuracy:  2/6 = 33.3%
+
+  Fit accuracy (macro):  77.8%  NOT MET   gf=100%  maybe=33%  bad=100%
+
+  Field token accuracy:
+    loc            ####################    6/6  100.0%
+    arr            ####################    6/6  100.0%
+    sen            ################....    5/6  83.3%
+    tech           ####################    6/6  100.0%
+    comp           ###.................    1/6  16.7%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    good_fit           2       2    100%
+    maybe              1       3     33%  !
+    bad_fit            1       1    100%
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [2]         0         0
+    maybe                2       [1]         0
+    bad_fit              0         0       [1]
+
+  Field error transitions (top per field):
+    sen           : LEVEL_3->LEVEL_2:1
+    comp          : RANGE_55_74K->RANGE_75_99K:5
+
+  Error direction:  over-scoring 0  |  under-scoring 0
+
+------------------------------------------------------------------------
+  baseline/qwen3_4B_v14_mlx6bit  label=66.7%  loc=100.0%  role=83.3%  tech=100.0%  comp=16.7%  wa=100.0%  gf=100%  maybe=33%  bad=100%
+========================================================================
+
+Predictions: eval_results/v14_comp_midpoint_test/baseline/2026-03-19_152624_test_comp_midpoint_student_v14_exp1_qwen3_4B_v14_mlx6bit.predictions.jsonl
+Summary: eval_results/v14_comp_midpoint_test/baseline/2026-03-19_152624_test_comp_midpoint_student_v14_exp1_qwen3_4B_v14_mlx6bit.summary.json

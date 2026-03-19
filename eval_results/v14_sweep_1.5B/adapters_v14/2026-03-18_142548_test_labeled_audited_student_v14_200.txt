@@ -1,0 +1,397 @@
+Output: eval_results/v14_sweep_1.5B/adapters_v14/2026-03-18_142548_test_labeled_audited_student_v14_200.txt
+Prompt: prompts/student_v14.txt
+Model:   Qwen/Qwen2.5-1.5B-Instruct
+Adapter: finetune/adapters_v14/checkpoint-200
+PEFT adapter loaded: finetune/adapters_v14/checkpoint-200
+------------------------------------------------------------
+Running V7 eval on 239 jobs...
+
+[  1/239] ✓   2.5s  Staff Software Engineer                     bad_fit               100%
+[  2/239] !   2.3s  Lead DevOps Architect                       INVALID TOKEN: ['Invalid loc token: "HYBRID"']
+[  3/239] !   0.1s  Software Engineer - Backend                 INVALID TOKEN: ['Missing field: loc', 'Missing field: arr', 'Missing field: sen', 'Missing field: tech', 'Missing field: comp']
+[  4/239] !   2.6s  Full-Stack Developer                        INVALID TOKEN: ['Invalid sen token: "UNK"', 'Invalid tech token: "TypeScript"']
+[  5/239] ✓   2.5s  Planning Engineer                           bad_fit                40%
+[  6/239] !   0.1s  Head Of AI Engineering (strategy And Innov  INVALID TOKEN: ['Missing field: loc', 'Missing field: arr', 'Missing field: sen', 'Missing field: tech', 'Missing field: comp']
+[  7/239] !   2.4s  Software Engineer - Internship              INVALID TOKEN: ['Invalid sen token: "UNK"']
+[  8/239] ✓   2.2s  Senior Software Engineer                    bad_fit                38%
+[  9/239] !   0.1s  Software Engineer 1                         INVALID TOKEN: ['Missing field: loc', 'Missing field: arr', 'Missing field: sen', 'Missing field: tech', 'Missing field: comp']
+[ 10/239] ✓   2.8s  ATUM Deep-Tech Founder (technical) - Singa  bad_fit                40%
+[ 11/239] !   2.6s  Software Engineer - Backend                 INVALID TOKEN: ['Invalid tech token: "JAVA"']
+[ 12/239] ✓   2.3s  Software Engineer                           bad_fit                42%
+[ 13/239] ✓   2.7s  Full Stack Engineer                         bad_fit                46%
+[ 14/239] ✗   2.6s  Full-Stack Engineer                         maybe->bad_fit         43%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->UNK ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,REACT,JS_TS,AI_ML->JS_TS ✗ | comp NO_GBP->NO_GBP ✓
+
+[ 15/239] !   0.1s  Technical Director                          INVALID TOKEN: ['Missing field: loc', 'Missing field: arr', 'Missing field: sen', 'Missing field: tech', 'Missing field: comp']
+[ 16/239] ✓   2.7s  Senior Frontend Engineer                    maybe                  44%
+[ 17/239] ✓   2.7s  Founding Engineer (£240k+ )                 maybe                  47%
+[ 18/239] ✓   2.7s  Modern Workplace Tech Bar Lead              bad_fit                50%
+[ 19/239] ✓   2.5s  Human Resources Manager                     bad_fit                53%
+[ 20/239] ✓   2.7s  Junior Software Engineer (f/m/d)            bad_fit                55%
+[ 21/239] ✓   2.8s  Cyber Infrastructure Engineer               bad_fit                57%
+[ 22/239] !   2.6s  Senior Software Engineer (php/laravel)      INVALID TOKEN: ['Invalid tech token: "PHP"']
+[ 23/239] ✓   2.9s  Senior Software Developer, UK               maybe                  57%
+[ 24/239] ✓   2.7s  Full Stack Web Developer                    bad_fit                58%
+[ 25/239] !   0.1s  Software Engineer (swe/swe Ii), AI Platfor  INVALID TOKEN: ['Missing field: loc', 'Missing field: arr', 'Missing field: sen', 'Missing field: tech', 'Missing field: comp']
+[ 26/239] ✓   2.7s  Lead, Digital Applications                  bad_fit                58%
+[ 27/239] ✓   2.5s  Data Analyst / Data Scientist               bad_fit                59%
+[ 28/239] ✓   2.8s  Software Engineer (Back end)                bad_fit                61%
+[ 29/239] ✗   3.0s  Senior Full Stack Engineer                  good_fit->maybe        59%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_2 ✗ | tech NODE,REACT,JS_TS->REACT,JS_TS ✗ | comp RANGE_75_99K->RANGE_45_54K ✗
+
+[ 30/239] !   0.1s  Customer Solutions Engineer                 INVALID TOKEN: ['Missing field: loc', 'Missing field: arr', 'Missing field: sen', 'Missing field: tech', 'Missing field: comp']
+[ 31/239] !   3.0s  Senior Software Engineer                    INVALID TOKEN: ['Invalid tech token: "Kubernetes"']
+[ 32/239] !   2.7s  Software Engineer II-Backend                INVALID TOKEN: ['Invalid tech token: "JAVA"']
+[ 33/239] ✓   3.3s  Senior Software Engineer, £70,000 To £85,0  good_fit               55%
+[ 34/239] ✗   2.4s  Senior Software Engineer                    bad_fit->maybe         53%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech OOS->JS_TS ✗ | comp NO_GBP->NO_GBP ✓
+
+[ 35/239] !   3.6s  Software Developer                          INVALID TOKEN: ['Invalid sen token: "UNK"', 'Invalid tech token: "C#"', 'Invalid tech token: "Angular"', 'Invalid tech token: "SQL"', 'Invalid tech token: "JavaScript"', 'Invalid tech token: "PHP"', 'Invalid tech token: "Python"', 'Invalid tech token: "Ruby"', 'Invalid tech token: "Java"']
+[ 36/239] !   3.1s  Data Engineer - £150k-£200k TC              INVALID TOKEN: ['Invalid tech token: "PYTHON"', 'Invalid tech token: "C#"', 'Invalid tech token: "SCALA"', 'Invalid tech token: "SPARK"', 'Invalid tech token: "HIVE"']
+[ 37/239] ✓   2.7s  Senior Product Manager                      bad_fit                51%
+[ 38/239] ✓   2.7s  Graduate Software Developer                 bad_fit                53%
+[ 39/239] !   3.4s  Senior / Lead Software Engineer             INVALID TOKEN: ['Invalid tech token: "JAVA"', 'Invalid tech token: "SPRING_BOOT"', 'Invalid tech token: "PYTHON"']
+[ 40/239] !   2.8s  Software Engineer, New Grad (recent 2025 G  INVALID TOKEN: ['Invalid tech token: "JAVA"']
+[ 41/239] !   2.4s  Senior Data Engineer                        PARSE FAIL
+           Raw: {“loc”:“IN_LONDON”,"arr":“HYBRID”,"sen":"LEVEL_3","tech":["JS_TS"],"comp":"RANGE_45_54K"}
+[ 42/239] ✓   2.7s  IT Support Engineer (2nd/3rd Line) - Centr  bad_fit                50%
+[ 43/239] ✓   2.7s  Data Engineer                               bad_fit                51%
+[ 44/239] ✓   2.4s  Data Engineer                               bad_fit                52%
+[ 45/239] ✗   2.8s  Software Engineer                           bad_fit->maybe         51%
+                    loc UK_OTHER->IN_LONDON ✗ | arr IN_OFFICE->HYBRID ✗ | sen LEVEL_3->LEVEL_2 ✗ | tech OOS->AI_ML ✗ | comp RANGE_55_74K->NO_GBP ✗
+
+[ 46/239] !   2.6s  Full Stack Developer                        PARSE FAIL
+           Raw: {“loc”: “UK_OTHER”, “arr”: “HYBRID”, “sen”: “LEVEL_2”, “tech”: “NO_OOS”, “comp”: “BELOW_45K”}
+[ 47/239] !   2.5s  Machine Learning Engineer                   INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 48/239] !   0.1s  Customer Success Manager                    INVALID TOKEN: ['Missing field: loc', 'Missing field: arr', 'Missing field: sen', 'Missing field: tech', 'Missing field: comp']
+[ 49/239] ✓   2.7s  Quality Assurance Tester                    bad_fit                49%
+[ 50/239] ✓   2.4s  Data Engineer                               bad_fit                50%
+[ 51/239] ✓   2.4s  Data Engineer                               bad_fit                51%
+[ 52/239] !   2.1s  DevOps Engineer                             INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 53/239] ✓   2.7s  Senior Electrical Design Engineer           bad_fit                51%
+[ 54/239] !   2.4s  AI Engineer                                 INVALID TOKEN: ['Invalid sen token: "UNK"', 'Invalid tech token: "AI"']
+[ 55/239] ✓   2.5s  Senior Engineering Manager                  bad_fit                51%
+[ 56/239] !   0.1s  Software Engineer I                         INVALID TOKEN: ['Missing field: loc', 'Missing field: arr', 'Missing field: sen', 'Missing field: tech', 'Missing field: comp']
+[ 57/239] ✓   2.5s  Front End Developer (remote)                maybe                  51%
+[ 58/239] ✓   2.8s  Security Engineer                           bad_fit                52%
+[ 59/239] ✓   2.7s  Software Developer                          bad_fit                53%
+[ 60/239] ✓   2.6s  Software Engineer                           bad_fit                53%
+[ 61/239] ✓   2.7s  Senior DevOps Engineer                      bad_fit                54%
+[ 62/239] ✓   2.6s  AI Platform Engineer                        bad_fit                55%
+[ 63/239] ✗   2.3s  Founding Engineer (Series A)                bad_fit->maybe         54%
+                    loc IN_LONDON->IN_LONDON ✓ | arr IN_OFFICE->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech OOS->REACT ✗ | comp NO_GBP->NO_GBP ✓
+
+[ 64/239] !   3.5s  Head of Infrastructure                      INVALID TOKEN: ['Invalid loc token: "ON_SITE - OXFORD, UK"']
+[ 65/239] !   2.8s  Senior Software Engineer                    INVALID TOKEN: ['Invalid tech token: "RUST"']
+[ 66/239] ✓   2.8s  Senior Software Engineer, Strategy Platfor  maybe                  53%
+[ 67/239] ✗   2.8s  Lead Frontend Engineer                      good_fit->maybe        52%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT,JS_TS->REACT ✗ | comp NO_GBP->NO_GBP ✓
+
+[ 68/239] ✗   2.8s  Software Engineer | React & Python (full s  maybe->bad_fit         51%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech REACT->REACT ✓ | comp RANGE_55_74K->NO_GBP ✗
+
+[ 69/239] ✗   2.7s  Fintech & Tech for Good | Profitable & Hyp  good_fit->maybe        51%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT,JS_TS->REACT ✗ | comp UP_TO_ONLY->NO_GBP ✗
+
+[ 70/239] !   2.1s  Frontend Developer                          INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 71/239] !   2.1s  Staff Engineer                              INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 72/239] !   2.1s  Technical Writer                            INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 73/239] !   2.1s  Data Analyst                                INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 74/239] !   2.1s  Full Stack Engineer                         INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 75/239] ✓   2.4s  Junior Software Engineer                    bad_fit                48%
+[ 76/239] ✗   2.1s  Security Engineer                           good_fit->maybe        47%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,AI_ML->NODE ✗ | comp RANGE_75_99K->NO_GBP ✗
+
+[ 77/239] !   2.1s  Developer                                   INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 78/239] !   2.1s  Frontend Developer                          INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 79/239] !   2.1s  IT Support Engineer                         INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 80/239] !   2.1s  Trainee Engineer                            INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 81/239] !   2.1s  Frontend Developer                          INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 82/239] !   2.1s  Lead Engineer                               INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 83/239] !   2.1s  Security Engineer                           INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 84/239] !   2.1s  Junior Software Engineer                    INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 85/239] !   2.1s  Junior Software Engineer                    INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 86/239] !   2.1s  Engineering Manager                         INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 87/239] ✓   2.4s  Backend Engineer                            bad_fit                43%
+[ 88/239] !   2.1s  IT Support Engineer                         INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 89/239] ✗   2.1s  Security Engineer                           bad_fit->maybe         42%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE->NODE ✓ | comp BELOW_45K->NO_GBP ✗
+
+[ 90/239] !   2.1s  Scrum Master                                INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 91/239] !   2.1s  Database Administrator                      INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 92/239] !   2.1s  Full Stack Engineer                         INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 93/239] ✗   2.7s  Lead Engineer                               good_fit->maybe        40%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_2 ✗ | tech NODE,AI_ML->NODE ✗ | comp RANGE_75_99K->RANGE_45_54K ✗
+
+[ 94/239] !   2.1s  Senior Software Engineer                    INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 95/239] !   2.1s  Engineering Manager                         INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 96/239] !   2.1s  Frontend Developer                          INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 97/239] !   2.1s  Full Stack Engineer                         INVALID TOKEN: ['Invalid sen token: "UNK"']
+[ 98/239] ✗   2.6s  Senior Developer                            good_fit->maybe        38%
+                    loc IN_LONDON->IN_LONDON ✓ | arr IN_OFFICE->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,AI_ML->NODE ✗ | comp RANGE_55_74K->RANGE_45_54K ✗
+
+[ 99/239] ✓   2.4s  Frontend Developer                          bad_fit                38%
+[100/239] ✗   2.2s  Project Manager                             good_fit->bad_fit      38%
+                    loc REMOTE->UNK ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_2 ✗ | tech NODE,AI_ML->OOS ✗ | comp RANGE_75_99K->NO_GBP ✗
+
+[101/239] !   2.1s  Security Engineer                           INVALID TOKEN: ['Invalid sen token: "UNK"']
+[102/239] !   2.1s  DevOps Engineer                             INVALID TOKEN: ['Invalid sen token: "UNK"']
+[103/239] !   2.1s  Senior Software Engineer                    INVALID TOKEN: ['Invalid sen token: "UNK"']
+[104/239] !   2.1s  Engineering Manager                         INVALID TOKEN: ['Invalid sen token: "UNK"']
+[105/239] !   2.1s  Trainee Engineer                            INVALID TOKEN: ['Invalid sen token: "UNK"']
+[106/239] ✗   2.4s  DevOps Engineer                             good_fit->bad_fit      36%
+                    loc REMOTE->UNK ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS,AI_ML->NODE,JS_TS ✗ | comp ABOVE_100K->NO_GBP ✗
+
+[107/239] !   2.1s  Senior Software Engineer                    INVALID TOKEN: ['Invalid sen token: "UNK"']
+[108/239] !   2.1s  Full Stack Engineer                         INVALID TOKEN: ['Invalid sen token: "UNK"']
+[109/239] !   2.1s  Engineering Manager                         INVALID TOKEN: ['Invalid sen token: "UNK"']
+[110/239] !   2.1s  Business Analyst                            INVALID TOKEN: ['Invalid sen token: "UNK"']
+[111/239] !   2.1s  UX Designer                                 INVALID TOKEN: ['Invalid sen token: "UNK"']
+[112/239] !   2.1s  Backend Engineer                            INVALID TOKEN: ['Invalid sen token: "UNK"']
+[113/239] !   2.1s  Junior Software Engineer                    INVALID TOKEN: ['Invalid sen token: "UNK"']
+[114/239] !   2.1s  Junior Developer                            INVALID TOKEN: ['Invalid sen token: "UNK"']
+[115/239] !   2.1s  Junior Developer                            INVALID TOKEN: ['Invalid sen token: "UNK"']
+[116/239] !   2.1s  IT Support Engineer                         INVALID TOKEN: ['Invalid sen token: "UNK"']
+[117/239] ✗   2.8s  UX Designer                                 good_fit->maybe        32%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech JS_TS,AI_ML->AI_ML ✗ | comp ABOVE_100K->RANGE_45_54K ✗
+
+[118/239] ✓   2.4s  DevOps Engineer                             bad_fit                33%
+[119/239] !   2.1s  Product Manager                             INVALID TOKEN: ['Invalid sen token: "UNK"']
+[120/239] !   2.1s  UX Designer                                 INVALID TOKEN: ['Invalid sen token: "UNK"']
+[121/239] !   2.1s  Principal Engineer                          INVALID TOKEN: ['Invalid sen token: "UNK"']
+[122/239] ✗   2.2s  UX Designer                                 good_fit->bad_fit      32%
+                    loc REMOTE->UNK ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS->OOS ✗ | comp RANGE_75_99K->NO_GBP ✗
+
+[123/239] ✓   2.4s  Trainee Engineer                            bad_fit                33%
+[124/239] !   2.1s  Technical Writer                            INVALID TOKEN: ['Invalid sen token: "UNK"']
+[125/239] !   2.1s  Junior Developer                            INVALID TOKEN: ['Invalid sen token: "UNK"']
+[126/239] !   2.1s  Technical Writer                            INVALID TOKEN: ['Invalid sen token: "UNK"']
+[127/239] !   2.1s  Project Manager                             INVALID TOKEN: ['Invalid sen token: "UNK"']
+[128/239] ✗   2.3s  Backend Engineer                            maybe->bad_fit         31%
+                    loc IN_LONDON->IN_LONDON ✓ | arr IN_OFFICE->UNK ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS,AI_ML->JS_TS ✗ | comp UP_TO_ONLY->NO_GBP ✗
+
+[129/239] !   2.1s  Associate Developer                         INVALID TOKEN: ['Invalid sen token: "UNK"']
+[130/239] ✗   2.7s  Lead Engineer                               good_fit->maybe        31%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_2 ✗ | tech NODE->NODE ✓ | comp RANGE_75_99K->RANGE_45_54K ✗
+
+[131/239] ✗   2.2s  Frontend Developer                          maybe->bad_fit         31%
+                    loc REMOTE->UNK ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS,AI_ML->OOS ✗ | comp UP_TO_ONLY->NO_GBP ✗
+
+[132/239] !   2.1s  IT Support Engineer                         INVALID TOKEN: ['Invalid sen token: "UNK"']
+[133/239] !   2.1s  Technical Writer                            INVALID TOKEN: ['Invalid sen token: "UNK"']
+[134/239] !   2.1s  Project Manager                             INVALID TOKEN: ['Invalid sen token: "UNK"']
+[135/239] !   2.1s  Developer                                   INVALID TOKEN: ['Invalid sen token: "UNK"']
+[136/239] ✗   2.1s  QA Engineer                                 maybe->bad_fit         29%
+                    loc REMOTE->UNK ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE->NODE ✓ | comp RANGE_75_99K->NO_GBP ✗
+
+[137/239] ✗   2.8s  Business Analyst                            good_fit->bad_fit      29%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS,AI_ML->JS_TS ✗ | comp RANGE_75_99K->RANGE_45_54K ✗
+
+[138/239] ✓   2.4s  Scrum Master                                bad_fit                30%
+[139/239] !   2.1s  Product Manager                             INVALID TOKEN: ['Invalid sen token: "UNK"']
+[140/239] !   2.1s  Software Engineer                           INVALID TOKEN: ['Invalid sen token: "UNK"']
+[141/239] !   2.1s  Full Stack Engineer                         INVALID TOKEN: ['Invalid sen token: "UNK"']
+[142/239] !   2.1s  Engineering Manager                         INVALID TOKEN: ['Invalid sen token: "UNK"']
+[143/239] !   2.1s  QA Engineer                                 INVALID TOKEN: ['Invalid sen token: "UNK"']
+[144/239] !   2.4s  Software Developer                          INVALID TOKEN: ['Invalid sen token: "UNK"']
+[145/239] ✓   2.2s  Senior Software Developer                   bad_fit                29%
+[146/239] ✓   2.5s  Senior Technical Architect                  bad_fit                29%
+[147/239] ✓   2.4s  Software Engineer (Entry-Level)             bad_fit                30%
+[148/239] ✓   2.7s  Senior Software Engineer - Web (m/f/d)      bad_fit                30%
+[149/239] !   2.4s  Full Stack .NET Developer                   INVALID TOKEN: ['Invalid sen token: "UNK"']
+[150/239] !   2.2s  Senior Software Engineer                    INVALID TOKEN: ['Invalid sen token: "UNK"', 'Invalid tech token: "Python"']
+[151/239] !   2.4s  Support Engineer                            INVALID TOKEN: ['Invalid sen token: "UNK"', 'Invalid tech token: "SQL"']
+[152/239] !   2.4s  Data Engineer                               INVALID TOKEN: ['Invalid sen token: "UNK"']
+[153/239] !   2.4s  Backend Engineer                            INVALID TOKEN: ['Invalid sen token: "UNK"']
+[154/239] !   2.3s  Freelance Full Stack Developer              INVALID TOKEN: ['Invalid sen token: "UNK"']
+[155/239] !   1.8s  Software Engineer (backend Focused)         PARSE FAIL
+           Raw: {loc: OUTSIDE_UK, arr: REMOTE, sen: LEVEL_2, tech: ["OOS"], comp: NO_GBP}
+[156/239] !   2.8s  Back End Developer                          PARSE FAIL
+           Raw: {“loc”: “IN_LONDON”, “arr”: “HYBRID”, “sen”: “LEVEL_3”, “tech”: “REACT”, “comp”: “RANGE_45_54K”}
+[157/239] ✗   2.7s  Backend Engineer (ai Platform) - London     maybe->bad_fit         29%
+                    loc IN_LONDON->IN_LONDON ✓ | arr IN_OFFICE->UNK ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech AI_ML->JS_TS ✗ | comp RANGE_75_99K->NO_GBP ✗
+
+[158/239] ✗   2.7s  Backend Engineer                            maybe->bad_fit         28%
+                    loc IN_LONDON->IN_LONDON ✓ | arr IN_OFFICE->UNK ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS->OOS ✗ | comp NO_GBP->NO_GBP ✓
+
+[159/239] !   2.4s  Creator Partnerships & Business Developmen  INVALID TOKEN: ['Invalid sen token: "UNK"']
+[160/239] ✓   2.3s  CRM +hubspot Technical Executive            bad_fit                29%
+[161/239] ✗   2.7s  Data Analyst                                maybe->bad_fit         29%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->UNK ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech AI_ML->OOS ✗ | comp NO_GBP->NO_GBP ✓
+
+[162/239] ✓   2.7s  Data Scientist                              bad_fit                29%
+[163/239] ✓   2.3s  Ecommerce & Digital Marketing Manager - Up  bad_fit                29%
+[164/239] ✗   2.7s  Founding Engineer (£80k-£100k + Equity) At  good_fit->maybe        29%
+                    loc IN_LONDON->IN_LONDON ✓ | arr REMOTE->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech REACT,AI_ML->REACT ✗ | comp RANGE_75_99K->NO_GBP ✗
+
+[165/239] ✓   2.7s  Frontend Developer (12-month Fixed-term Co  bad_fit                30%
+[166/239] !   2.1s  Frontend Developer                          PARSE FAIL
+           Raw: {“loc”:“IN_LONDON”,"arr":“HYBRID”,"sen":"LEVEL_2","tech":["REACT"],"comp":"NO_GBP"}
+[167/239] ✓   2.6s  Frontend Developer                          bad_fit                30%
+[168/239] ✓   2.5s  Frontend Developer                          bad_fit                30%
+[169/239] ✗   2.7s  Frontend Platform Engineer                  maybe->bad_fit         30%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->UNK ✗ | sen LEVEL_3->LEVEL_2 ✗ | tech REACT,JS_TS->JS_TS ✗ | comp NO_GBP->NO_GBP ✓
+
+[170/239] ✗   2.7s  Frontend Product Engineer | EU / UK         good_fit->bad_fit      30%
+                    loc UK_OTHER->OUTSIDE_UK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_3->LEVEL_2 ✗ | tech JS_TS,AI_ML->JS_TS ✗ | comp ABOVE_100K->NO_GBP ✗
+
+[171/239] ✗   2.7s  Full Stack Developer                        good_fit->bad_fit      30%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->UNK ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,REACT,JS_TS,AI_ML->JS_TS ✗ | comp NO_GBP->NO_GBP ✓
+
+[172/239] ✗   2.9s  Full Stack Developer (Typescript/NodeJs)    maybe->bad_fit         30%
+                    loc UK_OTHER->OUTSIDE_UK ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,REACT,JS_TS,AI_ML->NODE,REACT,JS_TS,AI_ML ✓ | comp RANGE_45_54K->NO_GBP ✗
+
+[173/239] ✗   2.7s  Full Stack Engineer (£60k-£80k + Equity) A  maybe->bad_fit         29%
+                    loc IN_LONDON->IN_LONDON ✓ | arr UNK->UNK ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech AI_ML->OOS ✗ | comp RANGE_55_74K->NO_GBP ✗
+
+[174/239] !   1.8s  Full Stack Engineer                         PARSE FAIL
+           Raw: {loc: OUTSIDE_UK, arr: REMOTE, sen: LEVEL_2, tech: ["JS_TS"], comp: NO_GBP}
+[175/239] !   3.5s  Full Stack Engineer                         INVALID TOKEN: ['Invalid tech token: "Python"', 'Invalid tech token: "Flask"', 'Invalid tech token: "FastAPI"', 'Invalid tech token: "TypeScript"']
+[176/239] !   2.7s  Full Stack Engineer (.net / Python / Types  INVALID TOKEN: ['Invalid tech token: "NET"']
+[177/239] ✓   2.6s  Fullstack Web Developer – Humanitarian Ope  bad_fit                29%
+[178/239] ✓   2.7s  Graduate Frontend Engineer                  bad_fit                30%
+[179/239] ✓   2.3s  IT Support Associate                        bad_fit                30%
+[180/239] ✓   2.7s  IT Support Engineer                         bad_fit                31%
+[181/239] ✗   2.1s  Javascript Fullstack Engineer - Senior      maybe->bad_fit         30%
+                    loc UK_OTHER->OUTSIDE_UK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_3->LEVEL_2 ✗ | tech NODE,REACT->REACT ✗ | comp NO_GBP->NO_GBP ✓
+
+[182/239] ✓   2.3s  Junior Data Engineer                        bad_fit                31%
+[183/239] ✓   2.7s  Junior Developer                            bad_fit                31%
+[184/239] !   2.3s  Junior Front-End (react) Engineer - Up To   PARSE FAIL
+           Raw: {“loc”: “IN_LONDON”, “arr”: “UNK”, “sen”: “LEVEL_2”, “tech”: “JS_TS”, “comp”: “NO_GBP”}
+[185/239] !   2.6s  Junior Full Stack PHP Software Engineer     INVALID TOKEN: ['Invalid tech token: "PHP"']
+[186/239] !   2.1s  Junior Software Developer                   INVALID TOKEN: ['Invalid sen token: "UNK"']
+[187/239] ✓   2.7s  Junior Software Engineer At Stitch Health   bad_fit                31%
+[188/239] ✗   2.6s  Lead Software Engineer (full Stack)         good_fit->bad_fit      31%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT,JS_TS->REACT ✗ | comp ABOVE_100K->NO_GBP ✗
+
+[189/239] !   2.4s  Lead Test Engineer                          INVALID TOKEN: ['Invalid sen token: "UNK"']
+[190/239] ✗   2.8s  QA Engineer                                 maybe->bad_fit         31%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech AI_ML->JS_TS ✗ | comp UP_TO_ONLY->NO_GBP ✗
+
+[191/239] ✓   2.7s  QA Engineer                                 bad_fit                31%
+[192/239] ✓   2.7s  Quality Engineer : Manual Software Testing  bad_fit                31%
+[193/239] ✓   2.7s  React Native Developer                      bad_fit                32%
+[194/239] ✓   2.7s  Research Software Engineer                  bad_fit                32%
+[195/239] !   2.6s  Senior Back End Software Engineer           INVALID TOKEN: ['Invalid tech token: "PYTHON"']
+[196/239] !   2.6s  Senior Backend Developer                    INVALID TOKEN: ['Invalid tech token: "PYTHON"']
+[197/239] ✗   2.4s  Senior Data Engineer AWS - Finance Consult  bad_fit->maybe         31%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech OOS->AI_ML ✗ | comp UP_TO_ONLY->NO_GBP ✗
+
+[198/239] ✗   2.7s  Senior DevOps Engineer                      maybe->bad_fit         31%
+                    loc UK_OTHER->IN_LONDON ✗ | arr REMOTE->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech AI_ML->OOS ✗ | comp RANGE_55_74K->NO_GBP ✗
+
+[199/239] ✗   2.4s  Senior Frontend Developer                   good_fit->bad_fit      31%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_2 ✗ | tech REACT,JS_TS->JS_TS ✗ | comp RANGE_75_99K->NO_GBP ✗
+
+[200/239] ✗   2.4s  Senior Full Stack Engineer                  maybe->bad_fit         31%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_2 ✗ | tech NODE,REACT,JS_TS->JS_TS ✗ | comp UP_TO_ONLY->NO_GBP ✗
+
+[201/239] ✗   2.7s  Senior Full Stack Software Developer (uk)   maybe->bad_fit         31%
+                    loc UK_OTHER->OUTSIDE_UK ✗ | arr HYBRID->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT,JS_TS->OOS ✗ | comp RANGE_45_54K->NO_GBP ✗
+
+[202/239] ✗   2.7s  Senior Full-Stack Software Engineer         good_fit->maybe        31%
+                    loc IN_LONDON->IN_LONDON ✓ | arr REMOTE->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT,JS_TS,AI_ML->REACT ✗ | comp NO_GBP->NO_GBP ✓
+
+[203/239] ✓   2.4s  Senior Games Developer - PixiJS             bad_fit                31%
+[204/239] ✓   2.4s  Senior JavaScript Developer Vue 3           bad_fit                31%
+[205/239] ✓   3.0s  Senior Machine Learning Engineer            good_fit               32%
+[206/239] ✗   2.7s  Senior Product Engineer (TS/NodeJS/Vue)     good_fit->maybe        32%
+                    loc IN_LONDON->IN_LONDON ✓ | arr REMOTE->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT,JS_TS,AI_ML->REACT ✗ | comp NO_GBP->NO_GBP ✓
+
+[207/239] !   3.0s  Senior Software Engineer                    INVALID TOKEN: ['Invalid tech token: "Python"', 'Invalid tech token: "JavaScript"', 'Invalid tech token: "TypeScript"']
+[208/239] !   3.0s  Senior Software Engineer                    INVALID TOKEN: ['Invalid tech token: "JAVA"']
+[209/239] ✗   2.7s  Senior Software Engineer                    good_fit->bad_fit      31%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->UNK ✗ | sen LEVEL_3->LEVEL_2 ✗ | tech NODE,JS_TS->OOS ✗ | comp RANGE_55_74K->NO_GBP ✗
+
+[210/239] ✗   2.7s  Senior Software Engineer                    maybe->bad_fit         31%
+                    loc UK_OTHER->OUTSIDE_UK ✗ | arr HYBRID->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech REACT,JS_TS,AI_ML->OOS ✗ | comp NO_GBP->NO_GBP ✓
+
+[211/239] ✗   2.7s  Senior Software Engineer                    maybe->bad_fit         31%
+                    loc UK_OTHER->OUTSIDE_UK ✗ | arr REMOTE->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT,JS_TS,AI_ML->JS_TS ✗ | comp UP_TO_ONLY->NO_GBP ✗
+
+[212/239] ✗   2.7s  Senior Software Engineer - Backend AI Nati  good_fit->bad_fit      31%
+                    loc UK_OTHER->OUTSIDE_UK ✗ | arr HYBRID->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT,JS_TS,AI_ML->OOS ✗ | comp RANGE_55_74K->NO_GBP ✗
+
+[213/239] ✗   2.7s  Senior Software Engineer, Backend           good_fit->bad_fit      31%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE->OOS ✗ | comp RANGE_75_99K->NO_GBP ✗
+
+[214/239] ✓   3.1s  Senior Software Engineer (backend)          good_fit               31%
+[215/239] ✓   2.7s  Senior Software Engineer, Full Stack, Lear  maybe                  31%
+[216/239] ✗   2.8s  Senior Software Engineer - Ts, React, Node  good_fit->maybe        31%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT,JS_TS,AI_ML->JS_TS ✗ | comp RANGE_75_99K->NO_GBP ✗
+
+[217/239] !   2.5s  Senior Software/Founding Engineer - Health  PARSE FAIL
+           Raw: {“loc”:“IN_LONDON”,"arr":“UNK”,"sen":“LEVEL_3”,"tech":["JS_TS"],"comp":“RANGE_45_54K"}
+[218/239] !   2.6s  Software Engineer                           INVALID TOKEN: ['Invalid tech token: "JAVA"']
+[219/239] ✓   2.7s  Software Engineer                           bad_fit                31%
+[220/239] ✓   2.7s  Software Engineer                           bad_fit                31%
+[221/239] ✗   2.7s  Software Engineer                           maybe->bad_fit         31%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->UNK ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS,AI_ML->JS_TS ✗ | comp UP_TO_ONLY->NO_GBP ✗
+
+[222/239] ✓   2.7s  Software Engineer                           bad_fit                32%
+[223/239] !   2.3s  Software Engineer, Front End                INVALID TOKEN: ['Invalid sen token: "UNK"']
+[224/239] ✓   2.7s  Software Engineer Intern                    bad_fit                32%
+[225/239] !   2.6s  Software/ Platform Engineer                 INVALID TOKEN: ['Invalid tech token: "PYTHON"']
+[226/239] ✓   2.7s  Trainee Telematics & CCTV Installation Eng  bad_fit                32%
+[227/239] ✓   2.7s  Unity 3D Developer                          bad_fit                32%
+[228/239] !   2.4s  Backend Developer                           INVALID TOKEN: ['Invalid sen token: "UNK"']
+[229/239] !   1.9s  Backend Software Development Engineer - Mi  PARSE FAIL
+           Raw: { loc: OUTSIDE_UK, arr: HYBRID, sen: LEVEL_2, tech: OOS, comp: NO_GBP }
+[230/239] ✓   2.7s  Founding Software Engineer                  bad_fit                32%
+[231/239] !   2.0s  Full-Stack Engineer                         INVALID TOKEN: ['Invalid sen token: "UNK"']
+[232/239] ✓   2.7s  Full-Stack Software Engineer                bad_fit                32%
+[233/239] !   2.4s  Jr. Front-End Engineer                      INVALID TOKEN: ['Invalid sen token: "UNK"']
+[234/239] ✓   2.5s  Software Engineer - Full Stack              bad_fit                32%
+[235/239] ✓   2.7s  Software Engineer I                         bad_fit                33%
+[236/239] ✓   2.7s  Software Engineer - New Grad                bad_fit                33%
+[237/239] !   2.1s  Senior DevOps Engineer - AWS Infrastructur  INVALID TOKEN: ['Invalid sen token: "UNK"']
+[238/239] ✓   2.5s  Junior DevOps Engineer                      bad_fit                33%
+[239/239] ✓   2.5s  Senior Software Engineer                    bad_fit                33%
+
+========================================================================
+  V14 EVAL  adapters_v14  step 200
+  test set: test_labeled_audited  |  prompt: student_v14  |  n=239
+========================================================================
+  Parse failures: 9   Invalid tokens: 103   Fuzzy corrections: 3   Valid: 127/239
+
+  Label accuracy:  80/127 = 63.0%   NOT MET  (target >=90%)
+  Score accuracy:  25/127 = 19.7%
+
+  Fit accuracy (macro):  43.0%  NOT MET   gf=12%  maybe=24%  bad=93%
+
+  Field token accuracy:
+    loc            ############........   78/127  61.4%
+    arr            #######.............   50/127  39.4%
+    sen            ##############......   91/127  71.7%
+    tech           #####...............   32/127  25.2%
+    comp           #######.............   48/127  37.8%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    good_fit           3      26     12%  !
+    maybe              6      25     24%  !
+    bad_fit           71      76     93%
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [3]        12        11
+    maybe                0       [6]        19
+    bad_fit              0         5      [71]
+
+  Field error transitions (top per field):
+    loc           : UK_OTHER->OUTSIDE_UK:32  REMOTE->UNK:7  OUTSIDE_UK->UNK:6  UK_OTHER->IN_LONDON:2
+    arr           : HYBRID->UNK:46  IN_OFFICE->UNK:21  REMOTE->UNK:9  IN_OFFICE->HYBRID:1
+    sen           : LEVEL_3->LEVEL_2:22  LEVEL_1->LEVEL_2:13  LEVEL_3->LEVEL_1:1
+    tech          : OOS->JS_TS:8  JS_TS,NODE,REACT->REACT:6  AI_ML,JS_TS,NODE,REACT->JS_TS:6  AI_ML->OOS:6
+    comp          : RANGE_55_74K->NO_GBP:18  RANGE_75_99K->NO_GBP:16  BELOW_45K->NO_GBP:13  UP_TO_ONLY->NO_GBP:12
+
+  Error direction:  over-scoring 5  |  under-scoring 30
+
+------------------------------------------------------------------------
+  adapters_v14/step200  label=63.0%  loc=61.4%  role=71.7%  tech=25.2%  comp=37.8%  wa=39.4%  gf=12%  maybe=24%  bad=93%
+========================================================================
+
+Predictions: eval_results/v14_sweep_1.5B/adapters_v14/2026-03-18_142548_test_labeled_audited_student_v14_200.predictions.jsonl
+Summary: eval_results/v14_sweep_1.5B/adapters_v14/2026-03-18_142548_test_labeled_audited_student_v14_200.summary.json

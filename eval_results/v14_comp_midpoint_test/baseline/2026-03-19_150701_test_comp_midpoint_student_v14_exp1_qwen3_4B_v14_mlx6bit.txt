@@ -1,0 +1,65 @@
+Output: eval_results/v14_comp_midpoint_test/baseline/2026-03-19_150701_test_comp_midpoint_student_v14_exp1_qwen3_4B_v14_mlx6bit.txt
+Prompt: prompts/student_v14_exp1.txt
+No adapter (baseline)
+Model: /Users/faisal/qwen3_4B_v14_mlx6bit
+------------------------------------------------------------
+------------------------------------------------------------
+Running V7 eval on 7 jobs...
+
+[  1/7] !  11.7s  IT Support Engineer                         INVALID TOKEN: ['Invalid comp token: "RANGE_60_80K"']
+[  2/7] !  11.7s  Full Stack Engineer                         INVALID TOKEN: ['Invalid comp token: "RANGE_65_85K"']
+[  3/7] ✗  12.6s  Project Manager                             good_fit->maybe         0%
+                  loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_2 ✗ | tech NODE,JS_TS->NODE,JS_TS ✓ | comp RANGE_55_74K->NO_GBP ✗
+                  Anywhere | Fully remote working options – work from anywhere! | Project Manager | Nodejs, Node.js, Node.js and Javascript/TS, Node.js and Javascript/TS, Node.js, Javascript/TS | Sa
+
+[  4/7] !  11.0s  Scrum Master                                PARSE FAIL
+           Raw: {"loc_raw":"New York, NY","loc":"OUTSIDE_UK","arr_raw":"Office-based position with a vibrant team.","arr":"IN_OFFICE","sen_raw","sen":"LEVEL_2","tech_raw":"nodejs","tech":["NODE"],"comp_raw":"Salary: £60,000-£80,000.","comp":"RANGE_65_85K"}
+[  5/7] !  11.6s  Engineering Manager                         INVALID TOKEN: ['Invalid comp token: "RANGE_65_85K"']
+[  6/7] ✓  14.9s  Senior Software Engineer                    good_fit               17%
+[  7/7] !  17.4s  Senior DevOps Engineer - AWS Infrastructur  PARSE FAIL
+           Raw: {"loc_raw":"Remote UK","loc":"REMOTE","arr_raw":"A minimum of 4 days a week on-site is required for deep collaboration, strategic planning, and essential on-site presence during major deployments or outages","arr":"HYBRID","sen_raw":"Senior DevOps Engineer - AWS Infrastructure Architect","sen":"LEVE
+
+========================================================================
+  V7 EVAL  baseline  iter qwen3_4B_v14_mlx6bit
+  eval set: test_comp_midpoint  |  prompt: student_v14_exp1  |  n=7
+========================================================================
+  Parse failures: 2   Invalid tokens: 3   Fuzzy corrections: 0   Valid: 2/7
+
+  Speed:  total=1.5min  avg=13.0s/job  hardware=Mac M1 MLX 6-bit
+
+  Label accuracy:  1/2 = 50.0%   NOT MET  (target >=90%)
+  True accuracy:   1/7 = 14.3%  (parse fails counted as wrong — use for cross-experiment comparison)
+  Score accuracy:  0/2 = 0.0%
+
+  Fit accuracy (macro):  16.7%  NOT MET   gf=50%  maybe=0%  bad=0%
+
+  Field token accuracy:
+    loc            ####################    2/2  100.0%
+    arr            ####################    2/2  100.0%
+    sen            ##########..........    1/2  50.0%
+    tech           ####################    2/2  100.0%
+    comp           ....................    0/2  0.0%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    good_fit           1       2     50%  !
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [1]         1         0
+    maybe                0       [0]         0
+    bad_fit              0         0       [0]
+
+  Field error transitions (top per field):
+    sen           : LEVEL_3->LEVEL_2:1
+    comp          : RANGE_55_74K->NO_GBP:1  RANGE_55_74K->RANGE_75_99K:1
+
+  Error direction:  over-scoring 0  |  under-scoring 0
+
+------------------------------------------------------------------------
+  baseline/qwen3_4B_v14_mlx6bit  label=50.0%  loc=100.0%  role=50.0%  tech=100.0%  comp=0.0%  wa=100.0%  gf=50%  maybe=0%  bad=0%
+========================================================================
+
+Predictions: eval_results/v14_comp_midpoint_test/baseline/2026-03-19_150701_test_comp_midpoint_student_v14_exp1_qwen3_4B_v14_mlx6bit.predictions.jsonl
+Summary: eval_results/v14_comp_midpoint_test/baseline/2026-03-19_150701_test_comp_midpoint_student_v14_exp1_qwen3_4B_v14_mlx6bit.summary.json

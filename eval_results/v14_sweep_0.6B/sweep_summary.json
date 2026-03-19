@@ -1,0 +1,262 @@
+[
+  {
+    "step": 2000,
+    "hybrid_acc": 97.90794979079497,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 76.6,
+      "sen": 86.6,
+      "tech": 90.4,
+      "comp": 96.2
+    },
+    "parse_fail": 83,
+    "per_label": {
+      "good_fit": {
+        "correct": 56,
+        "total": 57
+      },
+      "maybe": {
+        "correct": 52,
+        "total": 54
+      },
+      "bad_fit": {
+        "correct": 126,
+        "total": 128
+      }
+    }
+  },
+  {
+    "step": 800,
+    "hybrid_acc": 97.48953974895397,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 82.8,
+      "sen": 86.2,
+      "tech": 90.4,
+      "comp": 96.2
+    },
+    "parse_fail": 109,
+    "per_label": {
+      "good_fit": {
+        "correct": 56,
+        "total": 57
+      },
+      "maybe": {
+        "correct": 51,
+        "total": 54
+      },
+      "bad_fit": {
+        "correct": 126,
+        "total": 128
+      }
+    }
+  },
+  {
+    "step": 600,
+    "hybrid_acc": 97.07112970711297,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 83.7,
+      "sen": 83.3,
+      "tech": 90.4,
+      "comp": 96.2
+    },
+    "parse_fail": 105,
+    "per_label": {
+      "good_fit": {
+        "correct": 55,
+        "total": 57
+      },
+      "maybe": {
+        "correct": 50,
+        "total": 54
+      },
+      "bad_fit": {
+        "correct": 127,
+        "total": 128
+      }
+    }
+  },
+  {
+    "step": 1000,
+    "hybrid_acc": 97.07112970711297,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 80.8,
+      "sen": 85.4,
+      "tech": 90.4,
+      "comp": 96.2
+    },
+    "parse_fail": 103,
+    "per_label": {
+      "good_fit": {
+        "correct": 55,
+        "total": 57
+      },
+      "maybe": {
+        "correct": 51,
+        "total": 54
+      },
+      "bad_fit": {
+        "correct": 126,
+        "total": 128
+      }
+    }
+  },
+  {
+    "step": 1600,
+    "hybrid_acc": 97.07112970711297,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 77.0,
+      "sen": 84.5,
+      "tech": 90.4,
+      "comp": 96.2
+    },
+    "parse_fail": 92,
+    "per_label": {
+      "good_fit": {
+        "correct": 57,
+        "total": 57
+      },
+      "maybe": {
+        "correct": 51,
+        "total": 54
+      },
+      "bad_fit": {
+        "correct": 124,
+        "total": 128
+      }
+    }
+  },
+  {
+    "step": 1400,
+    "hybrid_acc": 96.23430962343096,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 73.6,
+      "sen": 81.6,
+      "tech": 90.4,
+      "comp": 96.2
+    },
+    "parse_fail": 95,
+    "per_label": {
+      "good_fit": {
+        "correct": 54,
+        "total": 57
+      },
+      "maybe": {
+        "correct": 50,
+        "total": 54
+      },
+      "bad_fit": {
+        "correct": 126,
+        "total": 128
+      }
+    }
+  },
+  {
+    "step": 1800,
+    "hybrid_acc": 96.23430962343096,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 76.6,
+      "sen": 84.9,
+      "tech": 90.4,
+      "comp": 96.2
+    },
+    "parse_fail": 81,
+    "per_label": {
+      "good_fit": {
+        "correct": 54,
+        "total": 57
+      },
+      "maybe": {
+        "correct": 51,
+        "total": 54
+      },
+      "bad_fit": {
+        "correct": 125,
+        "total": 128
+      }
+    }
+  },
+  {
+    "step": 400,
+    "hybrid_acc": 94.56066945606695,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 66.5,
+      "sen": 80.3,
+      "tech": 90.4,
+      "comp": 96.2
+    },
+    "parse_fail": 60,
+    "per_label": {
+      "good_fit": {
+        "correct": 53,
+        "total": 57
+      },
+      "maybe": {
+        "correct": 49,
+        "total": 54
+      },
+      "bad_fit": {
+        "correct": 124,
+        "total": 128
+      }
+    }
+  },
+  {
+    "step": 1200,
+    "hybrid_acc": 94.56066945606695,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 77.8,
+      "sen": 80.8,
+      "tech": 90.4,
+      "comp": 96.2
+    },
+    "parse_fail": 83,
+    "per_label": {
+      "good_fit": {
+        "correct": 51,
+        "total": 57
+      },
+      "maybe": {
+        "correct": 49,
+        "total": 54
+      },
+      "bad_fit": {
+        "correct": 126,
+        "total": 128
+      }
+    }
+  },
+  {
+    "step": 200,
+    "hybrid_acc": 92.46861924686193,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 54.0,
+      "sen": 70.7,
+      "tech": 90.4,
+      "comp": 96.2
+    },
+    "parse_fail": 17,
+    "per_label": {
+      "good_fit": {
+        "correct": 54,
+        "total": 57
+      },
+      "maybe": {
+        "correct": 46,
+        "total": 54
+      },
+      "bad_fit": {
+        "correct": 121,
+        "total": 128
+      }
+    }
+  }
+]

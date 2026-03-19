@@ -1,0 +1,67 @@
+Output: eval_results/v14_comp_midpoint_test/baseline/2026-03-19_153342_test_comp_midpoint_student_v14_exp1_qwen3_4B_v14_mlx6bit.txt
+Prompt: prompts/student_v14_exp1.txt
+No adapter (baseline)
+Model: /Users/faisal/qwen3_4B_v14_mlx6bit
+------------------------------------------------------------
+------------------------------------------------------------
+Running V7 eval on 7 jobs...
+
+[  1/7] ✓  12.8s  IT Support Engineer                         maybe                 100%
+[  2/7] ✓  12.4s  Full Stack Engineer                         maybe                 100%
+[  3/7] ✗  13.3s  Project Manager                             good_fit->maybe        67%
+                  loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_2 ✗ | tech NODE,JS_TS->NODE,JS_TS ✓ | comp RANGE_55_74K->UP_TO_ONLY ✗
+                  Anywhere | Fully remote working options – work from anywhere! | Project Manager | Nodejs, Node.js, Nodejs, Javascript/TS, Node.js and Javascript/TS | Salary between £60,000 and £80
+
+[  4/7] ✓  11.7s  Scrum Master                                bad_fit                75%
+[  5/7] ✓  12.3s  Engineering Manager                         maybe                  80%
+[  6/7] ✓  17.7s  Senior Software Engineer                    good_fit               83%
+[  7/7] !  19.6s  Senior DevOps Engineer - AWS Infrastructur  PARSE FAIL
+           Raw: {"loc_raw":"Remote UK","loc":"REMOTE","arr_raw":"A minimum of 4 days a week on-site is required for deep collaboration, strategic planning, and essential on-site presence during major deployments or outages","arr":"HYBRID","sen_raw":"Senior DevOps Engineer - AWS Infrastructure Architect","sen":"LEVE
+
+========================================================================
+  V7 EVAL  baseline  iter qwen3_4B_v14_mlx6bit
+  eval set: test_comp_midpoint  |  prompt: student_v14_exp1  |  n=7
+========================================================================
+  Parse failures: 1   Invalid tokens: 0   Fuzzy corrections: 0   Valid: 6/7
+
+  Speed:  total=1.7min  avg=14.3s/job  hardware=Mac M1 MLX 6-bit
+
+  Label accuracy:  5/6 = 83.3%   NOT MET  (target >=90%)
+  True accuracy:   5/7 = 71.4%  (parse fails counted as wrong — use for cross-experiment comparison)
+  Score accuracy:  1/6 = 16.7%
+
+  Fit accuracy (macro):  83.3%  NOT MET   gf=50%  maybe=100%  bad=100%
+
+  Field token accuracy:
+    loc            ####################    6/6  100.0%
+    arr            ################....    5/6  83.3%
+    sen            #############.......    4/6  66.7%
+    tech           ####################    6/6  100.0%
+    comp           ....................    0/6  0.0%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    good_fit           1       2     50%  !
+    maybe              3       3    100%
+    bad_fit            1       1    100%
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [1]         1         0
+    maybe                0       [3]         0
+    bad_fit              0         0       [1]
+
+  Field error transitions (top per field):
+    arr           : IN_OFFICE->UNK:1
+    sen           : LEVEL_3->LEVEL_2:1  LEVEL_2->LEVEL_3:1
+    comp          : RANGE_55_74K->UP_TO_ONLY:5  RANGE_55_74K->RANGE_75_99K:1
+
+  Error direction:  over-scoring 0  |  under-scoring 0
+
+------------------------------------------------------------------------
+  baseline/qwen3_4B_v14_mlx6bit  label=83.3%  loc=100.0%  role=66.7%  tech=100.0%  comp=0.0%  wa=83.3%  gf=50%  maybe=100%  bad=100%
+========================================================================
+
+Predictions: eval_results/v14_comp_midpoint_test/baseline/2026-03-19_153342_test_comp_midpoint_student_v14_exp1_qwen3_4B_v14_mlx6bit.predictions.jsonl
+Summary: eval_results/v14_comp_midpoint_test/baseline/2026-03-19_153342_test_comp_midpoint_student_v14_exp1_qwen3_4B_v14_mlx6bit.summary.json

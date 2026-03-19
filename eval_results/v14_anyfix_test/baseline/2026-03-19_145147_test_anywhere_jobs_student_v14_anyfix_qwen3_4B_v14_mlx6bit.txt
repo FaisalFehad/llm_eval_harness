@@ -1,0 +1,67 @@
+Output: eval_results/v14_anyfix_test/baseline/2026-03-19_145147_test_anywhere_jobs_student_v14_anyfix_qwen3_4B_v14_mlx6bit.txt
+Prompt: prompts/student_v14_anyfix.txt
+No adapter (baseline)
+Model: /Users/faisal/qwen3_4B_v14_mlx6bit
+------------------------------------------------------------
+------------------------------------------------------------
+Running V7 eval on 9 jobs...
+
+[  1/9] ✓  12.0s  Staff Engineer                              good_fit              100%
+[  2/9] ✓  11.0s  Data Analyst                                good_fit              100%
+[  3/9] !  12.7s  Developer                                   PARSE FAIL
+           Raw: {"loc_raw':'Anywhere','loc':'REMOTE','arr_raw':'Salary between £60,000 and £80,000.','arr':'REMOTE','sen_raw':'Developer','sen':'LEVEL_2','tech_raw':'nodejs, AI/ML technologies, Node.js, database technologies, containerization (e.g., Docker)','tech':["NODE","AI_ML"],"comp_raw':'Salary between £60,00
+[  4/9] ✓  10.4s  Frontend Developer                          maybe                  75%
+[  5/9] ✓  10.8s  Scrum Master                                maybe                  80%
+[  6/9] ✓  11.8s  Principal Engineer                          maybe                  83%
+[  7/9] !  12.1s  Technical Writer                            PARSE FAIL
+           Raw: {"loc_raw':'Anywhere','loc':'REMOTE','arr_raw':'Fully remote working opportunity','arr':'REMOTE','sen_raw':'Technical Writer','sen':'LEVEL_2','tech_raw':'Node.js, Markdown, Confluence','tech':["NODE"],"comp_raw":"Competitive salary between £60,000-£80,000","comp":"RANGE_55_74K"}
+[  8/9] ✓  13.3s  Project Manager                             good_fit               75%
+[  9/9] ✓  13.3s  Project Manager                             good_fit               78%
+
+========================================================================
+  V7 EVAL  baseline  iter qwen3_4B_v14_mlx6bit
+  eval set: test_anywhere_jobs  |  prompt: student_v14_anyfix  |  n=9
+========================================================================
+  Parse failures: 2   Invalid tokens: 0   Fuzzy corrections: 0   Valid: 7/9
+
+  Speed:  total=1.8min  avg=11.9s/job  hardware=Mac M1 MLX 6-bit
+
+  Label accuracy:  7/7 = 100.0%   MET  (target >=90%)
+  True accuracy:   7/9 = 77.8%  (parse fails counted as wrong — use for cross-experiment comparison)
+  Score accuracy:  5/7 = 71.4%
+
+  Fit accuracy (macro):  66.7%  NOT MET   gf=100%  maybe=100%  bad=0%
+
+  Field token accuracy:
+    loc            ####################    7/7  100.0%
+    arr            #################...    6/7  85.7%
+    sen            #################...    6/7  85.7%
+    tech           ##############......    5/7  71.4%
+    comp           #################...    6/7  85.7%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    good_fit           4       4    100%
+    maybe              3       3    100%
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [4]         0         0
+    maybe                0       [3]         0
+    bad_fit              0         0       [0]
+
+  Field error transitions (top per field):
+    arr           : REMOTE->UNK:1
+    sen           : LEVEL_3->LEVEL_2:1
+    tech          : AI_ML,JS_TS,NODE->JS_TS,NODE:2
+    comp          : RANGE_55_74K->RANGE_75_99K:1
+
+  Error direction:  over-scoring 0  |  under-scoring 0
+
+------------------------------------------------------------------------
+  baseline/qwen3_4B_v14_mlx6bit  label=100.0%  loc=100.0%  role=85.7%  tech=71.4%  comp=85.7%  wa=85.7%  gf=100%  maybe=100%  bad=0%
+========================================================================
+
+Predictions: eval_results/v14_anyfix_test/baseline/2026-03-19_145147_test_anywhere_jobs_student_v14_anyfix_qwen3_4B_v14_mlx6bit.predictions.jsonl
+Summary: eval_results/v14_anyfix_test/baseline/2026-03-19_145147_test_anywhere_jobs_student_v14_anyfix_qwen3_4B_v14_mlx6bit.summary.json

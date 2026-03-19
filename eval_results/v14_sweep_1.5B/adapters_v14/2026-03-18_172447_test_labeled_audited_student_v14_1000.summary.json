@@ -1,0 +1,27 @@
+{
+  "timestamp": "2026-03-18_172447",
+  "adapter": "finetune/adapters_v14/checkpoint-1000",
+  "checkpoint": "1000",
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "prompt": "prompts/student_v14.txt",
+  "test_file": "data/v12/test_labeled_audited.jsonl",
+  "n_total": 239,
+  "n_valid": 107,
+  "parse_failures": 12,
+  "invalid_tokens": 120,
+  "fuzzy_corrections": 1,
+  "label_accuracy": 76.6,
+  "score_accuracy": 29.0,
+  "field_accuracy": {
+    "loc": 73.8,
+    "arr": 46.7,
+    "sen": 90.7,
+    "tech": 29.0,
+    "comp": 57.9
+  },
+  "per_label": {
+    "good_fit": 21.4,
+    "maybe": 35.0,
+    "bad_fit": 98.6
+  }
+}

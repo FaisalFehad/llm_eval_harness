@@ -1,0 +1,45 @@
+# V14 Lambda GH200 requirements — exact versions pinned for reproducibility
+# Tested: Lambda GH200 480GB, CUDA 12.8, Python 3.12, 2026-03-18
+#
+# Install order matters:
+#   1. pip install torch==2.7.0 --index-url https://download.pytorch.org/whl/cu124
+#   2. pip install flash-attn==2.7.4.post1 --no-build-isolation
+#   3. pip install unsloth==2026.3.5
+#   4. pip install -r finetune/requirements_v14.txt
+#
+# IMPORTANT: numpy must stay <2.0 — transformers/trl use numpy.core which was
+# removed in numpy 2.0. Pin strictly to avoid silent breakage on future pip updates.
+
+# Core training stack
+torch==2.7.0
+# torchvision not required for text-only training
+
+# HuggingFace ecosystem
+transformers==5.3.0
+peft==0.18.1
+trl==0.24.0
+datasets==4.3.0
+accelerate==1.13.0
+
+# Speed — Unsloth: 2-5x faster LoRA kernels + smart gradient checkpointing
+# Must be installed after torch (detects CUDA arch at install time)
+unsloth==2026.3.5
+
+# Speed — Liger Kernel: fused cross-entropy (fallback if not using unsloth)
+# Eliminates 40GB logit tensor for large vocab (Qwen vocab=152,064)
+liger-kernel==0.7.0
+
+# Flash Attention 2 — O(n) memory attention at long seq_len
+# Install separately: pip install flash-attn==2.7.4.post1 --no-build-isolation
+# (requires compilation for your GPU arch — SM90 for GH200/H100)
+flash-attn==2.7.4.post1
+
+# Serialisation / tokenization
+safetensors==0.7.0
+sentencepiece==0.2.1
+protobuf==4.21.12
+tokenizers==0.22.2
+
+# Utilities
+numpy==1.26.4
+tqdm==4.67.3
