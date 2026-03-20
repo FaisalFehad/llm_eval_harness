@@ -1,8 +1,8 @@
 # AI Eval Harness
 
-**Can a model 8,000× smaller than GPT-4 score jobs better than GPT-4 — running locally on a £999 MacBook Air?**
+**Can a model 8,000× smaller than GPT-4 score jobs better than GPT-4 — running locally on M1 MacBook Air?**
 
-Yes. **98.7% accuracy.** A 3.1 GB model (Q6_K GGUF) - Tunned the offical Qwen3 4B 16bit model using lambda.ai cloud GPU with Pytorch + Unsloth to achive high accuracy then quanitised it to Q6_K GGUF reducing the size to 3.1 GB while maintaing very similar accuracy profile, then I converted it to MLX for faster infrence on my MacOS system resulting in super fast sub 18s per job on local M1 MacBook Air.
+Yes. **98.7% accuracy.** A 3.1 GB model (Q6_K GGUF) - Tunned the offical Qwen3 4B 16bit model using lambda.ai cloud GPU with Pytorch + Unsloth to achive  extermaly high accuracy then quanitised it to Q6_K GGUF reducing the size to 3.1 GB while maintaing very similar accuracy profile on a 39% smaller model with reasoning capablity, then I converted it to MLX for faster infrence on MacOS system to acheave sub 18s per job on local M1 MacBook Air, then I heavley optimised it's prompot to achive 85%+ model only label accuracy, then I paired with with regex code to push it's total accuracy to 98.7% from this tiny model.
 
 This project is my journey through LLM knowledge distillation — from hand-labeling 103 jobs to building a production-grade hybrid pipeline that outperforms the teacher it learned from. Every technique was learned by doing, every decision driven by data, and every setback turned into a better solution.
 
