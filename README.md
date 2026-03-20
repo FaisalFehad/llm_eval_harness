@@ -2,7 +2,7 @@
 
 **Can a model 8,000× smaller than GPT-4 score jobs better than GPT-4 — running locally on a £999 MacBook Air?**
 
-Yes. **98.7% accuracy.** A 3.1 GB model (Q6_K GGUF) - Tunned the offical Qwen3 4B 16bit model using lambda.ai cloud GPU with Pytorch + Unsloth to achive high accuracy then quanitised it to Q6_K GGUF reducing the size to 3.1 GB while maintaing very similar accuracy profile, then I converted it to MLX for faster infrence on my MacOS system.
+Yes. **98.7% accuracy.** A 3.1 GB model (Q6_K GGUF) - Tunned the offical Qwen3 4B 16bit model using lambda.ai cloud GPU with Pytorch + Unsloth to achive high accuracy then quanitised it to Q6_K GGUF reducing the size to 3.1 GB while maintaing very similar accuracy profile, then I converted it to MLX for faster infrence on my MacOS system resulting in super fast sub 18s per job on local M1 MacBook Air.
 
 This project is my journey through LLM knowledge distillation — from hand-labeling 103 jobs to building a production-grade hybrid pipeline that outperforms the teacher it learned from. Every technique was learned by doing, every decision driven by data, and every setback turned into a better solution.
 
