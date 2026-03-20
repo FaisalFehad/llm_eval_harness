@@ -22,14 +22,13 @@ The student surpassed the teacher. Not by being smarter — by combining a large
 | What | Number |
 |------|--------|
 | Final accuracy | **98.7%** (236/239 test jobs — new all-time best) |
-| Mac deployment model | **3.1 GB** (Qwen3-4B, Q6_K GGUF — 98.3% on Mac) |
-| Hardware | Apple M1, 16 GB RAM (£999 MacBook Air) |
+| Mac deployment final model | **3.1 GB** (Qwen3-4B, Q6_K GGUF — 98.3% on Mac) |
 | Training data | 860 labeled jobs |
-| Inference speed | ~0.7s/job (Lambda GH200) — Mac M1 speed untested |
+| Inference speed | ~0.7s/job (Lambda GH200 96GB vRAM) — ~18s on Mac M1 via MLX - reasoning |
 | Inference cost | **£0.00** |
-| Models tested | 25+ across 4 runtimes |
+| Models tested and optimised | 25+ across 4 runtimes |
 | Prompt iterations | 9 major versions |
-| Training versions | 14 pipeline iterations (V1–V14) |
+| Training versions | 14 pipelines with major training iterations (V1–V14) |
 
 ---
 
