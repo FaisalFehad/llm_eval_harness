@@ -2,7 +2,7 @@
 
 **Can a model 8,000× smaller than GPT-4 score jobs better than GPT-4 — running locally on a £999 MacBook Air?**
 
-Yes. **98.7% accuracy.** A 3.1 GB model (Q6_K GGUF), trained on a cloud GPU then compressed to run locally, beating commercial LLM quality at zero inference cost.
+Yes. **98.3% accuracy.** Three models from 335 MB to 3.1 GB, running locally on Apple Silicon via MLX — beating commercial LLM quality at zero inference cost.
 
 This project is my journey through LLM knowledge distillation — from hand-labeling 103 jobs to building a production-grade hybrid pipeline that outperforms the teacher it learned from. Every technique was learned by doing, every decision driven by data, and every setback turned into a better solution.
 
@@ -12,24 +12,19 @@ This project is my journey through LLM knowledge distillation — from hand-labe
 
 ```text
 GPT-4.1-mini (teacher)     → labels 860 jobs         → 95%+ accuracy, ~£0.08/batch
-Qwen3-4B (student)         → trained on cloud GPU     → 98.7% hybrid accuracy
-                              3.1 GB Q6_K GGUF          0 cost per inference
-                              runs on M1 16 GB via llama.cpp
+Student models (3 sizes)   → trained via LoRA         → 98.3% hybrid accuracy
+                              335 MB – 3.1 GB MLX       0 cost per inference
+                              runs on M1 16 GB           ~3–7 sec/job
 ```
 
-The student surpassed the teacher. Not by being smarter — by combining a large distilled model with surgical regex rules, each handling what it does best.
+The student surpassed the teacher. Not by being smarter — by combining distilled models with surgical regex rules, each handling what it does best.
 
 | What | Number |
 |------|--------|
-| Final accuracy | **98.7%** (236/239 test jobs — new all-time best) |
-| Mac deployment model | **3.1 GB** (Qwen3-4B, Q6_K GGUF — 98.3% on Mac) |
-| Hardware | Apple M1, 16 GB RAM (£999 MacBook Air) |
-| Training data | 860 labeled jobs |
-| Inference speed | ~0.7s/job (Lambda GH200) — Mac M1 speed untested |
-| Inference cost | **£0.00** |
-| Models tested | 25+ across 4 runtimes |
-| Prompt iterations | 9 major versions |
-| Training versions | 14 pipeline iterations (V1–V14) |
+| Final accuracy | **98.3%** (235/239 test jobs) |
+| Models | 3 sizes: 335 MB, 839 MB, 3.1 GB — all MLX on Mac |
+| Inference | ~3–7s/job on Mac M1, **£0.00**/job |
+| Training | 860 jobs, 14 versions, 25+ models tested |
 
 ---
 
@@ -54,18 +49,18 @@ Each row is a phase of the project. Click any phase to jump to its story.
 | 12 | [Hybrid pipeline](#phase-12--the-hybrid-breakthrough) | 97.5% | Model + regex, each doing what it does best. |
 | 13 | [Final push](#phase-13--the-final-push) | **97.9%** vs ~91% GPT-4.1 | Contrastive training, surgical fixes. Hit the 0.6B ceiling. |
 | 14 | [V13.1 — still pushing](#whats-next) | 97.5% | 1.5B trained. Bigger ≠ better — parse failures dragged it below the 0.6B. |
-| 15 | [V14 — cloud GPU breakthrough](#phase-15--v14-cloud-gpu-breakthrough) | **98.7%** | 4B model on Lambda GH200. Removed the size constraint entirely. New all-time record. |
+| 15 | [V14 — cloud GPU breakthrough](#phase-15--v14-cloud-gpu-breakthrough) | **98.7%** (full precision) | 4B model on Lambda GH200. 98.3% on Mac via MLX. New all-time record. |
 
 ```mermaid
 xychart-beta
     title "Accuracy Evolution — Can I Make It Better?"
-    x-axis ["Baseline", "Fine-tune", "Real-world", "Prompt fix", "OOD", "Teacher v2", "v9.8", "Student v1", "V5 tokens", "V6-V11", "V12 hybrid", "V12.1", "V12.1 0.6B", "V13 0.6B", "V13.1 1.5B", "V14 4B Q6_K"]
+    x-axis ["Baseline", "Fine-tune", "Real-world", "Prompt fix", "OOD", "Teacher v2", "v9.8", "Student v1", "V5 tokens", "V6-V11", "V12 hybrid", "V12.1", "V12.1 0.6B", "V13 0.6B", "V13.1 1.5B", "V14 4B MLX"]
     y-axis "Label Accuracy %" 0 --> 100
     bar [39.8, 90.9, 81.9, 95.8, 98.6, 94.4, 96.5, 76.6, 83.9, 75.3, 92.9, 97.1, 97.5, 97.9, 97.5, 98.3]
     line [39.8, 90.9, 81.9, 95.8, 98.6, 94.4, 96.5, 76.6, 83.9, 75.3, 92.9, 97.1, 97.5, 97.9, 97.5, 98.3]
 ```
 
-> Every dip in the chart is a moment I raised the bar — harder data, smaller model, stricter eval. Even the final dip: upgrading to a 2.5× bigger model didn't help. The 0.6B was already the right answer.
+> Every dip in the chart is a moment I raised the bar — harder data, smaller model, stricter eval. The final rise: moving training to a cloud GPU and scaling to 4B broke through the 0.6B ceiling — then three models from different generations all converged on 98.3%.
 
 ---
 
@@ -82,7 +77,7 @@ The pipeline scores LinkedIn job postings for personal fit across 5 dimensions, 
           ▼                         ▼
    ┌─────────────┐          ┌──────────────┐
    │ Neural Net  │          │    Regex     │
-   │ (0.6B model)│          │   (rules)    │
+   │ (MLX model) │          │   (rules)    │
    │             │          │              │
    │ • seniority │          │ • location   │
    │ • work arr. │          │ • tech stack │
@@ -100,16 +95,18 @@ The pipeline scores LinkedIn job postings for personal fit across 5 dimensions, 
           └────────────────┘
 ```
 
-**Why hybrid?** The model alone gets tech right **38%** of the time and comp at **48%**. Regex gets tech at 88% and comp at 96%. But regex can't judge seniority from a job description — that requires reading context, understanding role levels, interpreting ambiguous titles. The model gets seniority at 87%. Each system handles what it's best at.
+**Why hybrid?** The model alone gets tech right **72%** of the time and comp at **79%**. Regex gets tech at 90% and comp at 96%. But regex can't judge seniority from a job description — that requires reading context, understanding role levels, interpreting ambiguous titles. The model gets seniority at **92%**, outperforming regex's 80%. Each system handles what it's best at.
 
 | Field | Model alone | Regex alone | Hybrid uses | Hybrid accuracy |
 |-------|------------|-------------|-------------|----------------|
-| **Location** | 90.0% | **100%** | Regex | **100%** |
-| **Tech stack** | 38.2% | **88.3%** | Regex | **88.3%** |
-| **Compensation** | 47.7% | **95.8%** | Regex | **95.8%** |
-| **Seniority** | 87.3% | 79.9% | **Model** | **86.6%** |
-| **Work arrangement** | 73.6% | 77.4% | **Model** | **72.8%** |
-| **Combined label** | 67.3% | 95.0% | **Both** | **97.9%** |
+| **Location** | 97.3% | **100%** | Regex | **100%** |
+| **Tech stack** | 71.6% | **90.4%** | Regex | **90.4%** |
+| **Compensation** | 79.1% | **96.2%** | Regex | **96.2%** |
+| **Seniority** | **92.0%** | 79.9% | **Model** | **92.1%** |
+| **Work arrangement** | **91.1%** | 77.4% | **Model** | **90.4%** |
+| **Combined label** | 86.2% | 94.6% | **Both** | **98.3%** |
+
+*Numbers from V12.1 1.5B (production all-rounder) on V13.1 regex. Other candidates show similar patterns — see [production candidates](#production-candidates).*
 
 The model still outputs predictions for **all 5 fields** — even the 3 that regex overrides. Why keep predictions you don't use? Because they're diagnostic gold: they reveal the model's weak points, track whether the model is improving on regex-handled fields across training versions, and could enable a future cross-validation architecture where model-regex disagreement flags jobs for human review. The model doesn't know which fields will be overridden — it learns to classify everything, and the hybrid layer picks the best source per field.
 
@@ -622,55 +619,61 @@ Fix: corrective retraining — resume from the best adapter (V13 iter 1500) with
 
 ## Where it stands now
 
-### Production model
+### Production candidates
 
-| Property | Value |
-|----------|-------|
-| Model | Qwen3-4B (Q6_K GGUF) |
-| Size | **3.1 GB** |
-| Checkpoint | `finetune/adapters_v14_4B/checkpoint-800` |
-| Hybrid accuracy (Mac) | **98.3%** (235/239, Q6_K GGUF via llama.cpp) |
-| Hybrid accuracy (full precision) | **98.7%** (236/239, F16 GGUF) |
-| Hardware | Apple M1, 16 GB RAM |
-| Inference | ~2 sec/job, £0.00/inference |
-| Model storage | [HuggingFace FF-01/qwen3-4b-v14](https://huggingface.co/FF-01/qwen3-4b-v14) (private) |
+Three models achieve 97.5–98.3% hybrid accuracy on Mac, each with different trade-offs. All benchmarked on the same test set (239 jobs), same V13.1 regex, same scorer.
 
-### Accuracy by model size (all V14 models)
+| Property | V12.1 1.5B MLX | V14 4B MLX 6-bit | V13 0.6B MLX |
+|----------|---------------|-------------------|--------------|
+| **Hybrid accuracy** | **98.3%** (235/239) | **98.3%** (235/239) | 97.5% (233/239) |
+| **Model-only** | **86.2%** | 82.7% | 67.3% |
+| **Size** | **839 MB** | 3.1 GB | **335 MB** |
+| **Mac M1 speed** | **~7s/job** | ~32–45s/job | **~3–5s/job** |
+| Parse failures | 14 | 13 | 19 |
+| Base model | Qwen2.5-1.5B-4bit | Qwen3-4B (6-bit) | Qwen3-0.6B-4bit |
+| **Best for** | **All-rounder** | V15 development baseline | **Low-latency / small footprint** |
+| Prompt | `student_v7.txt` | `student_v14_exp1.txt` | `student_v13.txt` |
+| Adapter | `adapters_v12/0002000` | merged (MLX 6-bit) | `adapters_v13_0.6B/0001500` |
+
+The V12.1 1.5B is the surprise: it matches the V14 4B on hybrid accuracy at 3.7× smaller and 4.5× faster. The V14 4B's advantage is as the most recent training pipeline — the starting point for V15 development.
+
+### V14 training results (Lambda GH200)
+
+V14 moved training to a cloud GPU (Lambda GH200, 97.8 GB VRAM) using PyTorch + Unsloth. Three model sizes trained in bfloat16, then the 4B was converted to MLX for Mac deployment. GGUF quantization was used for Lambda-side eval only — Mac inference uses MLX.
 
 ```mermaid
 xychart-beta
     title "Hybrid Accuracy vs Model Size — Bigger IS Better (With Cloud GPU)"
-    x-axis ["0.6B Q14", "1.5B V14", "4B Q4_K_M", "4B Q6_K", "4B F16"]
+    x-axis ["0.6B V14", "1.5B V14", "4B V14 MLX 6-bit", "4B V14 full precision"]
     y-axis "Hybrid Accuracy %" 94 --> 100
-    bar [97.9, 96.7, 97.9, 98.3, 98.7]
+    bar [97.9, 96.7, 98.3, 98.7]
 ```
 
 | Model | Size | Hybrid | Parse Fail | Notes |
 |-------|------|--------|-----------|-------|
 | 0.6B Qwen3 V14 | 335 MB | 97.9% | 83 | High parse fails with V14 prompt |
 | 1.5B Qwen2.5 V14 | 839 MB | 96.7% | 116 | Worst parse fail rate (49%) |
-| **4B Q4_K_M GGUF** | **2.3 GB** | **97.9%** | 51 | ✅ Mac fits; schema hallucination at model-only |
-| **4B Q6_K GGUF** | **3.1 GB** | **98.3%** | **10** | ✅ **Mac deployment target** |
-| 4B F16 GGUF | 7.5 GB | **98.7%** | 8 | Too large for Mac |
+| **4B MLX 6-bit (exp1 fix1)** | **~3.1 GB** | **98.3%** | **13** | ✅ **Mac deployment via MLX** |
+| 4B bfloat16 (full precision) | ~8 GB | **98.7%** | 5 | Lambda only — training ceiling |
 
-**V14's key finding:** With a cloud GPU (Lambda GH200), size constraints disappear — the 4B trains in 41 min to 0.464 loss vs the 0.6B's 1.359. Bigger IS better once you remove the hardware ceiling. The challenge shifts from "fit the model on the Mac" to "compress the 4B to run on the Mac" — and Q6_K does this perfectly at 98.3% in 3.1 GB.
+**V14's key finding:** With a cloud GPU, size constraints disappear — the 4B trains in 41 min to 0.464 loss vs the 0.6B's 1.359. Bigger IS better once you remove the hardware ceiling. The 4B then converts to MLX 6-bit for Mac at 98.3% in ~3.1 GB.
 
 ### Teacher vs student
 
-| | GPT-4.1-mini (teacher) | Qwen3-0.6B hybrid (student) |
+| | GPT-4.1-mini (teacher) | Student hybrid (best) |
 |---|---|---|
-| **Label accuracy** | ~91%* | **97.9%** |
+| **Label accuracy** | ~91%* | **98.3%** (235/239) |
 | **Self-consistency** | 52.5% on AI_ML edge cases† | Deterministic |
-| **Model size** | API-hosted | 351 MB, runs locally |
+| **Model size** | API-hosted | 839 MB – 3.1 GB, runs locally |
 | **Cost per job** | ~£0.0001 | **£0.00** |
-| **Latency** | API + rate limits | ~3 sec on M1 |
+| **Latency** | API + rate limits | ~7s/job (Mac M1, 1.5B) |
 
 \*Estimated from training data audit — ~9% of teacher labels are wrong ([V6–V11 analysis](docs/V6_V11_DEEP_ANALYSIS_2026-03-13.md), Section 9.8).
 †Re-labeling the same borderline AI_ML jobs twice at temperature=0 produced different answers half the time. Clear cases (~85% of jobs) are ~99% consistent — the 52.5% applies to genuine edge cases.
 
 The student doesn't win by being smarter. It wins by being *constrained* — 21 token categories + deterministic regex eliminate the teacher's self-consistency problem entirely. The teacher has to get everything right with language alone; the student offloads mechanical tasks (salary parsing, tech detection, location) to regex at near-perfect accuracy, leaving only judgment calls (seniority, arrangement) to the model.
 
-The irony: the student was trained on the teacher's labels, and measured against them. If ~9% of test labels are wrong, the student's "97.9%" is against imperfect ground truth — and some of its "errors" may actually be correct. The true accuracy of both systems is unknowable without a full human audit.
+The irony: the student was trained on the teacher's labels, and measured against them. If ~9% of test labels are wrong, the student's "98.3%" is against imperfect ground truth — and some of its "errors" may actually be correct. The true accuracy of both systems is unknowable without a full human audit.
 
 ---
 
@@ -688,7 +691,7 @@ The eval bug that almost hid everything: a single `"{"` pre-fill in the eval scr
 | V13.1 1.5B (M1) | 97.5% | 36 | ~2.75 hrs |
 | **V14 4B (Lambda)** | **98.7%** | **5** | **41 min** |
 
-**98.7% — new all-time best.** Then compressed to 3.1 GB (Q6_K GGUF) at 98.3% for Mac deployment.
+**98.7% — new all-time best** at full precision. Then converted to MLX 6-bit (~3.1 GB) at 98.3% for Mac deployment.
 
 The question I keep asking: **can I make it better?** V14 says yes.
 
@@ -696,7 +699,16 @@ The question I keep asking: **can I make it better?** V14 says yes.
 
 **V14 complete. All models archived to [HuggingFace FF-01/qwen3-4b-v14](https://huggingface.co/FF-01/qwen3-4b-v14).**
 
-Next: MLX 4-bit and 6-bit comparison (convert `merged_v14_4B` from HF, eval on Mac). Key question: is MLX faster than GGUF via llama.cpp on Apple Silicon?
+MLX 6-bit eval complete: exp1 fix1 = 98.3% hybrid (no-think). Thinking mode tested and found worse (96.7% — chain-of-thought undermines structured classification). 95% model-only not achievable via prompting; requires V15 training.
+
+**V15 priorities** (from error analysis across all models):
+
+1. **NODE false positives** (18 jobs) — model adds NODE to any JS job. Needs contrastive training: JS+React without Node.js backend
+2. **OOS false negatives** (16 jobs) — model over-filters to OOS. Contrastive training with edge-case in-scope roles
+3. **AI_ML inconsistency** (~30 errors) — clearer teacher labeling threshold + contrastive data
+4. **Technical Writer → LEVEL_1** (3 hybrid errors) — few-shot examples with explicit counter-examples
+5. **USD/CAD → NO_GBP** (7 jobs) — training prior too strong for prompting; needs training data fix
+6. **"Greater London" → IN_LONDON** (6 model errors) — contrastive loc examples
 
 ---
 
@@ -739,9 +751,9 @@ Across 14 versions, 20+ models, and 9 prompt iterations:
 | ML framework (Mac) | [MLX](https://github.com/ml-explore/mlx) (Apple Silicon native) |
 | ML framework (cloud) | PyTorch + [Unsloth](https://github.com/unslothai/unsloth) (4× faster LoRA, Lambda GH200) |
 | Fine-tuning | LoRA (mlx-lm on Mac, TRL SFTTrainer on Lambda) |
-| Student models | Qwen3-4B (V14 production), Qwen3-0.6B, Qwen2.5-1.5B |
+| Student models | Qwen2.5-1.5B (V12.1), Qwen3-4B (V14), Qwen3-0.6B (V13) — three production candidates |
 | Teacher | gpt-4.1-mini |
-| Mac inference | [llama.cpp](https://github.com/ggerganov/llama.cpp) (GGUF Q6_K via Metal) |
+| Mac inference | [MLX](https://github.com/ml-explore/mlx) (Apple Silicon native, 4-bit and 6-bit quantization) |
 | Pipeline | TypeScript (30+ CLI tools) + Python |
 | Hardware | Apple M1 MacBook Air, 16 GB RAM + Lambda GH200 (training) |
 | Model storage | [HuggingFace FF-01/qwen3-4b-v14](https://huggingface.co/FF-01/qwen3-4b-v14) (private) |
@@ -750,21 +762,30 @@ Across 14 versions, 20+ models, and 9 prompt iterations:
 <summary><strong>Key commands</strong></summary>
 
 ```bash
-# Run production model (V14 4B Q6_K GGUF — Mac deployment)
-.venv/bin/python3 finetune/eval_student_v14_gguf.py \
-  --model ~/qwen3_4B_v14_Q6_K.gguf \
+# Run V12.1 1.5B (all-rounder — 98.3% hybrid, 839 MB, ~7s/job)
+.venv/bin/python3 finetune/eval_student_v7.py \
+  --model mlx-community/Qwen2.5-1.5B-Instruct-4bit \
+  --adapter finetune/adapters_v12/0002000_adapters.safetensors \
   --test-file data/v12/test_labeled_audited.jsonl \
-  --prompt prompts/student_v14.txt \
-  --output-dir eval_results/v14_gguf_Q6_K_mac
+  --prompt prompts/student_v7.txt \
+  --output-dir eval_results/v12_1/ --save-predictions
+
+# Run V14 4B MLX 6-bit (98.3% hybrid, ~3.1 GB, ~32s/job)
+.venv/bin/python3 finetune/eval_v14_exp1_no_think.py \
+  --output-dir eval_results/v14_mlx6bit/
+
+# Run V13 0.6B (97.5% hybrid, 335 MB, ~3s/job)
+.venv/bin/python3 finetune/eval_student_v7.py \
+  --model mlx-community/Qwen3-0.6B-4bit \
+  --adapter finetune/adapters_v13_0.6B/0001500_adapters.safetensors \
+  --test-file data/v12/test_labeled_audited.jsonl \
+  --prompt prompts/student_v13.txt \
+  --output-dir eval_results/v13/ --save-predictions
 
 # Hybrid accuracy (regex + model)
 .venv/bin/python3 finetune/compute_hybrid_v13_1.py \
   --test-file data/v12/test_labeled_audited.jsonl \
-  --predictions eval_results/v14_gguf_Q6_K_mac/predictions.jsonl --v12
-
-# Download production model from HuggingFace
-huggingface-cli download FF-01/qwen3-4b-v14 \
-  qwen3_4B_v14_Q6_K.gguf --local-dir ~/
+  --predictions <predictions.jsonl> --v12
 
 # Label new jobs with teacher
 npx tsx src/cli/label-jobs-v7.ts --input data/raw.jsonl --output data/labeled.jsonl
@@ -783,12 +804,16 @@ ai_eval_harness/
 │   ├── audit-training-data-v7.ts  # Pre/post-label quality checks
 │   └── format-for-mlx-v7.ts      # MLX format conversion
 ├── finetune/                      # Python ML scripts
-│   ├── eval_student_v7.py         # Model evaluation
-│   ├── compute_hybrid_v13.py      # Hybrid scoring (regex + model)
-│   ├── deterministic_baseline_v13.py # Regex classifiers
+│   ├── eval_student_v7.py         # MLX eval (V12.1, V13, V13.1 models)
+│   ├── eval_v14_exp1_no_think.py  # MLX eval for V14 4B 6-bit (no-think mode)
+│   ├── eval_student_v14_gguf.py   # GGUF eval (Lambda only — llama-cpp-python)
+│   ├── compute_hybrid_v13_1.py    # Hybrid scoring (V13.1 regex + model)
+│   ├── deterministic_baseline_v13_1.py # V13.1 regex classifiers
 │   ├── semantic_tokens_v7.py      # Token vocabulary & scoring
-│   └── adapters_v13_0.6B/        # Production adapter
-├── prompts/                       # 9 prompt versions
+│   ├── adapters_v12/             # V12.1 1.5B adapters (best: iter 2000)
+│   ├── adapters_v13_0.6B/        # V13 0.6B adapters (best: iter 1500)
+│   └── adapters_v14_4B/          # V14 4B adapters (best: checkpoint-800)
+├── prompts/                       # 14+ prompt versions
 ├── data/                          # Training & eval data
 ├── eval_results/                  # All sweep results
 └── docs/                          # Deep-dive documentation

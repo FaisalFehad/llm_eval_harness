@@ -1,0 +1,437 @@
+Output: eval_results/v14_exp2_think/fix5/baseline/2026-03-20_073317_test_labeled_audited_student_v14_exp2_fix5_qwen3_4B_v14_mlx6bit.txt
+Prompt: prompts/student_v14_exp2_fix5.txt
+No adapter (baseline)
+Model: /Users/faisal/qwen3_4B_v14_mlx6bit
+------------------------------------------------------------
+------------------------------------------------------------
+Running V7 eval on 239 jobs...
+
+[  1/239] ✗  14.4s  Staff Software Engineer                     bad_fit->good_fit       0%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech OOS->NODE,JS_TS,AI_ML ✗ | comp RANGE_75_99K->RANGE_75_99K ✓
+
+[  2/239] ✗  14.4s  Lead DevOps Architect                       bad_fit->good_fit       0%
+                    loc UK_OTHER->IN_LONDON ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech OOS->NODE,JS_TS,AI_ML ✗ | comp RANGE_75_99K->RANGE_75_99K ✓
+
+[  3/239] ✗  16.9s  Software Engineer - Backend                 bad_fit->maybe          0%
+                    loc UNK->REMOTE ✗ | arr UNK->REMOTE ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech OOS->NODE,JS_TS ✗ | comp NO_GBP->NO_GBP ✓
+
+[  4/239] ✓  18.9s  Full-Stack Developer                        bad_fit                25%
+[  5/239] ✓  13.9s  Planning Engineer                           bad_fit                40%
+[  6/239] ✓  18.4s  Head Of AI Engineering (strategy And Innov  bad_fit                50%
+[  7/239] ✓  16.7s  Software Engineer - Internship              bad_fit                57%
+[  8/239] ✓  23.3s  Senior Software Engineer                    bad_fit                62%
+[  9/239] ✓  17.7s  Software Engineer 1                         bad_fit                67%
+[ 10/239] ✓  18.0s  ATUM Deep-Tech Founder (technical) - Singa  bad_fit                70%
+[ 11/239] ✗  19.5s  Software Engineer - Backend                 bad_fit->maybe         64%
+                    loc UK_OTHER->IN_LONDON ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS->NODE,JS_TS ✓ | comp NO_GBP->NO_GBP ✓
+
+[ 12/239] ✗  12.7s  Software Engineer                           bad_fit->maybe         58%
+                    loc IN_LONDON->IN_LONDON ✓ | arr IN_OFFICE->IN_OFFICE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech OOS->NODE,REACT,JS_TS ✗ | comp NO_GBP->NO_GBP ✓
+
+[ 13/239] ✓  20.3s  Full Stack Engineer                         bad_fit                62%
+[ 14/239] ✓  20.6s  Full-Stack Engineer                         maybe                  64%
+[ 15/239] ✓  22.5s  Technical Director                          bad_fit                67%
+[ 16/239] ✓  17.6s  Senior Frontend Engineer                    maybe                  69%
+[ 17/239] ✓  20.1s  Founding Engineer (£240k+ )                 maybe                  71%
+[ 18/239] ✓  19.9s  Modern Workplace Tech Bar Lead              bad_fit                72%
+[ 19/239] ✓  17.3s  Human Resources Manager                     bad_fit                74%
+[ 20/239] ✓  19.9s  Junior Software Engineer (f/m/d)            bad_fit                75%
+[ 21/239] ✓  16.9s  Cyber Infrastructure Engineer               bad_fit                76%
+[ 22/239] ✗  20.5s  Senior Software Engineer (php/laravel)      bad_fit->maybe         73%
+                    loc UK_OTHER->IN_LONDON ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech OOS->JS_TS,REACT ✗ | comp RANGE_45_54K->RANGE_45_54K ✓
+
+[ 23/239] ✓  15.5s  Senior Software Developer, UK               maybe                  74%
+[ 24/239] ✓  17.5s  Full Stack Web Developer                    bad_fit                75%
+[ 25/239] ✗  23.9s  Software Engineer (swe/swe Ii), AI Platfor  bad_fit->good_fit      72%
+                    loc UNK->REMOTE ✗ | arr UNK->REMOTE ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech AI_ML->NODE,REACT,JS_TS,AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+
+[ 26/239] ✓  19.1s  Lead, Digital Applications                  bad_fit                73%
+[ 27/239] ✓  15.1s  Data Analyst / Data Scientist               bad_fit                74%
+[ 28/239] ✓  16.5s  Software Engineer (Back end)                bad_fit                75%
+[ 29/239] ✓  14.5s  Senior Full Stack Engineer                  good_fit               76%
+[ 30/239] ✓  16.1s  Customer Solutions Engineer                 bad_fit                77%
+[ 31/239] ✗  18.1s  Senior Software Engineer                    bad_fit->good_fit      74%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech OOS->NODE,JS_TS,AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+
+[ 32/239] ✓  16.9s  Software Engineer II-Backend                bad_fit                75%
+[ 33/239] ✓  16.4s  Senior Software Engineer, £70,000 To £85,0  good_fit               76%
+[ 34/239] ✓  15.1s  Senior Software Engineer                    bad_fit                76%
+[ 35/239] ✗  16.5s  Software Developer                          bad_fit->maybe         74%
+                    loc REMOTE->IN_LONDON ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech JS_TS->REACT,JS_TS ✗ | comp NO_GBP->NO_GBP ✓
+
+[ 36/239] ✗  15.5s  Data Engineer - £150k-£200k TC              bad_fit->maybe         72%
+                    loc IN_LONDON->IN_LONDON ✓ | arr UNK->REMOTE ✗ | sen LEVEL_2->LEVEL_3 ✗ | tech OOS->AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+
+[ 37/239] ✓  14.2s  Senior Product Manager                      bad_fit                73%
+[ 38/239] ✓  18.6s  Graduate Software Developer                 bad_fit                74%
+[ 39/239] ✗  22.2s  Senior / Lead Software Engineer             good_fit->maybe        72%
+                    loc IN_LONDON->IN_LONDON ✓ | arr UNK->IN_OFFICE ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,JS_TS,AI_ML->JS_TS ✗ | comp RANGE_55_74K->RANGE_55_74K ✓
+
+[ 40/239] ✓  20.9s  Software Engineer, New Grad (recent 2025 G  bad_fit                72%
+[ 41/239] ✓  12.9s  Senior Data Engineer                        maybe                  73%
+[ 42/239] ✓  15.4s  IT Support Engineer (2nd/3rd Line) - Centr  bad_fit                74%
+[ 43/239] ✗  17.9s  Data Engineer                               bad_fit->maybe         72%
+                    loc UK_OTHER->IN_LONDON ✗ | arr UNK->REMOTE ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE->NODE,JS_TS,AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+
+[ 44/239] ✗  16.8s  Data Engineer                               bad_fit->maybe         70%
+                    loc UK_OTHER->IN_LONDON ✗ | arr UNK->HYBRID ✗ | sen LEVEL_2->LEVEL_1 ✗ | tech AI_ML->AI_ML,REACT,JS_TS ✗ | comp RANGE_55_74K->RANGE_55_74K ✓
+
+[ 45/239] ✓  18.4s  Software Engineer                           bad_fit                71%
+[ 46/239] ✗  14.7s  Full Stack Developer                        bad_fit->maybe         70%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech REACT,JS_TS->NODE,REACT,JS_TS ✗ | comp RANGE_45_54K->RANGE_55_74K ✗
+
+[ 47/239] ✓  20.7s  Machine Learning Engineer                   bad_fit                70%
+[ 48/239] ✓  20.8s  Customer Success Manager                    bad_fit                71%
+[ 49/239] ✓  14.2s  Quality Assurance Tester                    bad_fit                71%
+[ 50/239] ✗  19.0s  Data Engineer                               bad_fit->maybe         70%
+                    loc UK_OTHER->IN_LONDON ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech OOS->AI_ML,JS_TS ✗ | comp RANGE_55_74K->RANGE_55_74K ✓
+
+[ 51/239] ✓  18.5s  Data Engineer                               bad_fit                71%
+[ 52/239] ✓  24.2s  DevOps Engineer                             bad_fit                71%
+[ 53/239] ✓  17.6s  Senior Electrical Design Engineer           bad_fit                72%
+[ 54/239] ✓  18.6s  AI Engineer                                 bad_fit                72%
+[ 55/239] ✓  21.5s  Senior Engineering Manager                  bad_fit                73%
+[ 56/239] ✓  17.9s  Software Engineer I                         bad_fit                73%
+[ 57/239] ✗  15.9s  Front End Developer (remote)                maybe->bad_fit         72%
+                    loc IN_LONDON->IN_LONDON ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_1 ✗ | tech NODE,REACT,JS_TS->REACT,JS_TS ✗ | comp NO_GBP->NO_GBP ✓
+
+[ 58/239] ✓  16.0s  Security Engineer                           bad_fit                72%
+[ 59/239] ✓  15.8s  Software Developer                          bad_fit                73%
+[ 60/239] ✓  17.0s  Software Engineer                           bad_fit                73%
+[ 61/239] ✓  57.1s  Senior DevOps Engineer                      bad_fit                74%
+[ 62/239] ✓  17.0s  AI Platform Engineer                        bad_fit                74%
+[ 63/239] ✗  15.0s  Founding Engineer (Series A)                bad_fit->good_fit      73%
+                    loc IN_LONDON->IN_LONDON ✓ | arr IN_OFFICE->IN_OFFICE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech OOS->NODE,REACT,JS_TS,AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+
+[ 64/239] ✗  14.5s  Head of Infrastructure                      maybe->good_fit        72%
+                    loc UK_OTHER->IN_LONDON ✗ | arr IN_OFFICE->IN_OFFICE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,JS_TS->NODE,JS_TS,AI_ML ✗ | comp RANGE_75_99K->NO_GBP ✗
+
+[ 65/239] ✗  16.6s  Senior Software Engineer                    good_fit->maybe        71%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech JS_TS,AI_ML->AI_ML ✗ | comp ABOVE_100K->NO_GBP ✗
+
+[ 66/239] ✗  13.1s  Senior Software Engineer, Strategy Platfor  maybe->good_fit        70%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech AI_ML->NODE,AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+
+[ 67/239] ✓  18.6s  Lead Frontend Engineer                      good_fit               70%
+[ 68/239] ✗  18.0s  Software Engineer | React & Python (full s  maybe->bad_fit         69%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_1 ✗ | tech REACT->REACT,NODE ✗ | comp RANGE_55_74K->NO_GBP ✗
+
+[ 69/239] ✓  17.7s  Fintech & Tech for Good | Profitable & Hyp  good_fit               70%
+[ 70/239] ✓  14.9s  Frontend Developer                          bad_fit                70%
+[ 71/239] ✗  16.2s  Staff Engineer                              good_fit->bad_fit      69%
+                    loc REMOTE->OUTSIDE_UK ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,AI_ML->NODE,AI_ML ✓ | comp RANGE_75_99K->RANGE_75_99K ✓
+
+[ 72/239] ✗  15.9s  Technical Writer                            good_fit->maybe        68%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_1 ✗ | tech NODE->NODE,JS_TS,AI_ML ✗ | comp ABOVE_100K->NO_GBP ✗
+
+[ 73/239] ✗  16.3s  Data Analyst                                good_fit->bad_fit      67%
+                    loc REMOTE->OUTSIDE_UK ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS,AI_ML->NODE,JS_TS,AI_ML ✓ | comp RANGE_75_99K->RANGE_75_99K ✓
+
+[ 74/239] ✓  16.1s  Full Stack Engineer                         maybe                  68%
+[ 75/239] ✓  16.4s  Junior Software Engineer                    bad_fit                68%
+[ 76/239] ✓  16.2s  Security Engineer                           good_fit               68%
+[ 77/239] ✗  16.1s  Developer                                   maybe->bad_fit         68%
+                    loc REMOTE->OUTSIDE_UK ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,AI_ML->NODE,AI_ML ✓ | comp RANGE_55_74K->RANGE_55_74K ✓
+
+[ 78/239] ✓  14.9s  Frontend Developer                          maybe                  68%
+[ 79/239] ✗  15.5s  IT Support Engineer                         good_fit->bad_fit      67%
+                    loc REMOTE->OUTSIDE_UK ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS->NODE,JS_TS ✓ | comp RANGE_75_99K->RANGE_75_99K ✓
+
+[ 80/239] ✓  14.8s  Trainee Engineer                            bad_fit                68%
+[ 81/239] ✓  15.0s  Frontend Developer                          maybe                  68%
+[ 82/239] ✗  15.4s  Lead Engineer                               maybe->bad_fit         67%
+                    loc UNK->OUTSIDE_UK ✗ | arr UNK->REMOTE ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,JS_TS->NODE,JS_TS ✓ | comp RANGE_75_99K->RANGE_75_99K ✓
+
+[ 83/239] ✗  15.6s  Security Engineer                           maybe->bad_fit         66%
+                    loc UNK->OUTSIDE_UK ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,AI_ML->NODE,AI_ML ✓ | comp RANGE_75_99K->RANGE_75_99K ✓
+
+[ 84/239] ✓  15.6s  Junior Software Engineer                    bad_fit                67%
+[ 85/239] ✓  15.4s  Junior Software Engineer                    maybe                  67%
+[ 86/239] ✓  15.6s  Engineering Manager                         good_fit               67%
+[ 87/239] ✓  15.0s  Backend Engineer                            bad_fit                68%
+[ 88/239] ✓  14.7s  IT Support Engineer                         maybe                  68%
+[ 89/239] ✓  14.6s  Security Engineer                           bad_fit                69%
+[ 90/239] ✗  15.5s  Scrum Master                                maybe->bad_fit         68%
+                    loc REMOTE->OUTSIDE_UK ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE->NODE ✓ | comp RANGE_75_99K->RANGE_75_99K ✓
+
+[ 91/239] ✓  14.9s  Database Administrator                      maybe                  68%
+[ 92/239] ✓  15.0s  Full Stack Engineer                         maybe                  68%
+[ 93/239] ✓  15.5s  Lead Engineer                               good_fit               69%
+[ 94/239] ✓  15.2s  Senior Software Engineer                    good_fit               69%
+[ 95/239] ✓  14.2s  Engineering Manager                         good_fit               69%
+[ 96/239] ✓  14.3s  Frontend Developer                          good_fit               70%
+[ 97/239] ✓  14.8s  Full Stack Engineer                         maybe                  70%
+[ 98/239] ✗  14.8s  Senior Developer                            good_fit->maybe        69%
+                    loc IN_LONDON->IN_LONDON ✓ | arr IN_OFFICE->IN_OFFICE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,AI_ML->NODE ✗ | comp RANGE_55_74K->RANGE_55_74K ✓
+
+[ 99/239] ✓  15.2s  Frontend Developer                          bad_fit                70%
+[100/239] ✗  15.0s  Project Manager                             good_fit->bad_fit      69%
+                    loc REMOTE->OUTSIDE_UK ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,AI_ML->NODE,AI_ML ✓ | comp RANGE_75_99K->RANGE_75_99K ✓
+
+[101/239] ✗  15.0s  Security Engineer                           good_fit->maybe        68%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS,AI_ML->NODE,JS_TS,AI_ML ✓ | comp RANGE_75_99K->NO_GBP ✗
+
+[102/239] ✓  15.0s  DevOps Engineer                             good_fit               69%
+[103/239] ✓  14.6s  Senior Software Engineer                    good_fit               69%
+[104/239] ✓  14.8s  Engineering Manager                         good_fit               69%
+[105/239] ✓  14.6s  Trainee Engineer                            maybe                  70%
+[106/239] ✗  15.1s  DevOps Engineer                             good_fit->maybe        69%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS,AI_ML->NODE,JS_TS,AI_ML ✓ | comp ABOVE_100K->NO_GBP ✗
+
+[107/239] ✓  15.0s  Senior Software Engineer                    good_fit               69%
+[108/239] ✓  14.8s  Full Stack Engineer                         good_fit               69%
+[109/239] ✓  14.8s  Engineering Manager                         good_fit               70%
+[110/239] ✓  14.1s  Business Analyst                            good_fit               70%
+[111/239] ✗  14.8s  UX Designer                                 good_fit->bad_fit      69%
+                    loc REMOTE->OUTSIDE_UK ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,AI_ML->NODE,AI_ML ✓ | comp RANGE_75_99K->RANGE_75_99K ✓
+
+[112/239] ✓  14.1s  Backend Engineer                            good_fit               70%
+[113/239] ✓  14.5s  Junior Software Engineer                    bad_fit                70%
+[114/239] ✓  13.9s  Junior Developer                            maybe                  70%
+[115/239] ✓  14.2s  Junior Developer                            bad_fit                70%
+[116/239] ✓  14.7s  IT Support Engineer                         good_fit               71%
+[117/239] ✗  14.6s  UX Designer                                 good_fit->maybe        70%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech JS_TS,AI_ML->JS_TS,AI_ML ✓ | comp ABOVE_100K->NO_GBP ✗
+
+[118/239] ✓  14.1s  DevOps Engineer                             bad_fit                70%
+[119/239] ✓  14.3s  Product Manager                             good_fit               71%
+[120/239] ✓  14.8s  UX Designer                                 maybe                  71%
+[121/239] ✗  14.7s  Principal Engineer                          maybe->bad_fit         70%
+                    loc REMOTE->OUTSIDE_UK ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE->NODE ✓ | comp RANGE_55_74K->RANGE_55_74K ✓
+
+[122/239] ✗  14.5s  UX Designer                                 good_fit->maybe        70%
+                    loc REMOTE->IN_LONDON ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS->NODE ✗ | comp RANGE_75_99K->RANGE_75_99K ✓
+
+[123/239] ✓  13.9s  Trainee Engineer                            bad_fit                70%
+[124/239] ✗  14.5s  Technical Writer                            maybe->bad_fit         69%
+                    loc REMOTE->OUTSIDE_UK ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE->NODE ✓ | comp RANGE_55_74K->RANGE_55_74K ✓
+
+[125/239] ✗  13.3s  Junior Developer                            maybe->bad_fit         69%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_1->LEVEL_1 ✓ | tech NODE->NODE,JS_TS ✗ | comp ABOVE_100K->NO_GBP ✗
+
+[126/239] ✓  15.1s  Technical Writer                            good_fit               69%
+[127/239] ✓  13.9s  Project Manager                             good_fit               69%
+[128/239] ✓  14.4s  Backend Engineer                            maybe                  70%
+[129/239] ✓  14.3s  Associate Developer                         bad_fit                70%
+[130/239] ✓  14.5s  Lead Engineer                               good_fit               70%
+[131/239] ✓  14.6s  Frontend Developer                          maybe                  70%
+[132/239] ✗  14.6s  IT Support Engineer                         good_fit->maybe        70%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS,AI_ML->NODE,JS_TS ✗ | comp RANGE_55_74K->RANGE_55_74K ✓
+
+[133/239] ✗  14.9s  Technical Writer                            maybe->good_fit        69%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE->NODE,JS_TS,AI_ML ✗ | comp RANGE_75_99K->RANGE_75_99K ✓
+
+[134/239] ✗  14.7s  Project Manager                             good_fit->bad_fit      69%
+                    loc REMOTE->OUTSIDE_UK ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,JS_TS->NODE,JS_TS ✓ | comp ABOVE_100K->ABOVE_100K ✓
+
+[135/239] ✓  14.0s  Developer                                   good_fit               69%
+[136/239] ✓  13.7s  QA Engineer                                 maybe                  69%
+[137/239] ✓  15.3s  Business Analyst                            good_fit               69%
+[138/239] ✓  14.4s  Scrum Master                                bad_fit                70%
+[139/239] ✗  15.2s  Product Manager                             maybe->bad_fit         69%
+                    loc UNK->OUTSIDE_UK ✗ | arr UNK->REMOTE ✗ | sen LEVEL_3->LEVEL_2 ✗ | tech NODE,JS_TS,AI_ML->NODE,JS_TS,AI_ML ✓ | comp RANGE_75_99K->RANGE_75_99K ✓
+
+[140/239] ✗  14.3s  Software Engineer                           bad_fit->good_fit      69%
+                    loc UNK->REMOTE ✗ | arr UNK->REMOTE ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS->NODE,JS_TS ✓ | comp RANGE_75_99K->RANGE_75_99K ✓
+
+[141/239] ✗  14.3s  Full Stack Engineer                         maybe->good_fit        68%
+                    loc REMOTE->REMOTE ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech NODE,AI_ML->NODE,AI_ML ✓ | comp RANGE_55_74K->RANGE_55_74K ✓
+
+[142/239] ✓  13.7s  Engineering Manager                         maybe                  68%
+[143/239] ✓  14.6s  QA Engineer                                 bad_fit                69%
+[144/239] ✓  28.3s  Software Developer                          bad_fit                69%
+[145/239] ✓  26.1s  Senior Software Developer                   bad_fit                69%
+[146/239] ✓  20.4s  Senior Technical Architect                  bad_fit                69%
+[147/239] ✓  19.4s  Software Engineer (Entry-Level)             bad_fit                69%
+[148/239] ✓  21.9s  Senior Software Engineer - Web (m/f/d)      bad_fit                70%
+[149/239] ✓  18.0s  Full Stack .NET Developer                   bad_fit                70%
+[150/239] ✓  15.7s  Senior Software Engineer                    bad_fit                70%
+[151/239] ✓  17.6s  Support Engineer                            bad_fit                70%
+[152/239] ✓  17.4s  Data Engineer                               bad_fit                70%
+[153/239] ✓  15.3s  Backend Engineer                            bad_fit                71%
+[154/239] ✓  17.0s  Freelance Full Stack Developer              bad_fit                71%
+[155/239] ✓  15.5s  Software Engineer (backend Focused)         bad_fit                71%
+[156/239] ✗  15.0s  Back End Developer                          good_fit->maybe        71%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,JS_TS->NODE,JS_TS ✓ | comp RANGE_75_99K->NO_GBP ✗
+
+[157/239] ✗  20.8s  Backend Engineer (ai Platform) - London     maybe->good_fit        70%
+                    loc IN_LONDON->IN_LONDON ✓ | arr IN_OFFICE->IN_OFFICE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech AI_ML->AI_ML,JS_TS ✗ | comp RANGE_75_99K->RANGE_75_99K ✓
+
+[158/239] ✓  19.8s  Backend Engineer                            maybe                  70%
+[159/239] ✓  20.5s  Creator Partnerships & Business Developmen  bad_fit                70%
+[160/239] ✓  23.4s  CRM +hubspot Technical Executive            bad_fit                71%
+[161/239] ✗  21.1s  Data Analyst                                maybe->bad_fit         70%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_1 ✗ | tech AI_ML->AI_ML ✓ | comp NO_GBP->NO_GBP ✓
+
+[162/239] ✗  18.7s  Data Scientist                              bad_fit->maybe         70%
+                    loc UK_OTHER->IN_LONDON ✗ | arr UNK->HYBRID ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech AI_ML->AI_ML ✓ | comp RANGE_45_54K->RANGE_45_54K ✓
+
+[163/239] ✓  14.1s  Ecommerce & Digital Marketing Manager - Up  bad_fit                70%
+[164/239] ✓  19.3s  Founding Engineer (£80k-£100k + Equity) At  good_fit               70%
+[165/239] ✓  21.6s  Frontend Developer (12-month Fixed-term Co  bad_fit                70%
+[166/239] ✓  14.7s  Frontend Developer                          maybe                  70%
+[167/239] ✓  14.1s  Frontend Developer                          bad_fit                71%
+[168/239] ✓  17.2s  Frontend Developer                          bad_fit                71%
+[169/239] ✗  22.3s  Frontend Platform Engineer                  maybe->bad_fit         70%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_1 ✗ | tech REACT,JS_TS->REACT,JS_TS,AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+
+[170/239] ✓  18.0s  Frontend Product Engineer | EU / UK         good_fit               71%
+[171/239] ✗  22.1s  Full Stack Developer                        good_fit->maybe        70%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,REACT,JS_TS,AI_ML->NODE,REACT,JS_TS ✗ | comp NO_GBP->NO_GBP ✓
+
+[172/239] ✓  16.7s  Full Stack Developer (Typescript/NodeJs)    maybe                  70%
+[173/239] ✗  19.3s  Full Stack Engineer (£60k-£80k + Equity) A  maybe->good_fit        70%
+                    loc IN_LONDON->IN_LONDON ✓ | arr UNK->REMOTE ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech AI_ML->NODE,REACT,JS_TS,AI_ML ✗ | comp RANGE_55_74K->RANGE_55_74K ✓
+
+[174/239] ✓  16.2s  Full Stack Engineer                         bad_fit                70%
+[175/239] ✓  16.1s  Full Stack Engineer                         good_fit               70%
+[176/239] ✓  15.9s  Full Stack Engineer (.net / Python / Types  bad_fit                70%
+[177/239] ✗  21.9s  Fullstack Web Developer – Humanitarian Ope  bad_fit->good_fit      70%
+                    loc UK_OTHER->IN_LONDON ✗ | arr IN_OFFICE->IN_OFFICE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,REACT,JS_TS,AI_ML->NODE,REACT,JS_TS,AI_ML ✓ | comp BELOW_45K->NO_GBP ✗
+
+[178/239] ✓  18.0s  Graduate Frontend Engineer                  bad_fit                70%
+[179/239] ✓  23.5s  IT Support Associate                        bad_fit                70%
+[180/239] ✓  17.3s  IT Support Engineer                         bad_fit                71%
+[181/239] ✗  15.3s  Javascript Fullstack Engineer - Senior      maybe->good_fit        70%
+                    loc UK_OTHER->IN_LONDON ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT->NODE,REACT,JS_TS ✗ | comp NO_GBP->NO_GBP ✓
+
+[182/239] ✓  14.1s  Junior Data Engineer                        bad_fit                70%
+[183/239] ✓  17.3s  Junior Developer                            bad_fit                70%
+[184/239] ✓  15.6s  Junior Front-End (react) Engineer - Up To   bad_fit                71%
+[185/239] ✓  20.5s  Junior Full Stack PHP Software Engineer     bad_fit                71%
+[186/239] ✓  16.1s  Junior Software Developer                   bad_fit                71%
+[187/239] ✓  18.9s  Junior Software Engineer At Stitch Health   bad_fit                71%
+[188/239] ✓  18.7s  Lead Software Engineer (full Stack)         good_fit               71%
+[189/239] ✗  16.6s  Lead Test Engineer                          bad_fit->maybe         71%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech REACT->REACT,JS_TS ✗ | comp RANGE_55_74K->RANGE_55_74K ✓
+
+[190/239] ✗  17.4s  QA Engineer                                 maybe->bad_fit         71%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_1 ✗ | tech AI_ML->AI_ML ✓ | comp UP_TO_ONLY->UP_TO_ONLY ✓
+
+[191/239] ✓  17.3s  QA Engineer                                 bad_fit                71%
+[192/239] ✓  16.8s  Quality Engineer : Manual Software Testing  bad_fit                71%
+[193/239] ✗  22.2s  React Native Developer                      bad_fit->good_fit      70%
+                    loc UK_OTHER->IN_LONDON ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech REACT->REACT,JS_TS,NODE ✗ | comp RANGE_55_74K->RANGE_55_74K ✓
+
+[194/239] ✗  27.4s  Research Software Engineer                  bad_fit->maybe         70%
+                    loc UK_OTHER->UK_OTHER ✓ | arr IN_OFFICE->IN_OFFICE ✓ | sen LEVEL_2->LEVEL_3 ✗ | tech AI_ML->AI_ML ✓ | comp RANGE_45_54K->RANGE_55_74K ✗
+
+[195/239] ✓  20.0s  Senior Back End Software Engineer           maybe                  70%
+[196/239] ✗  16.9s  Senior Backend Developer                    bad_fit->maybe         70%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech OOS->AI_ML ✗ | comp RANGE_75_99K->NO_GBP ✗
+
+[197/239] ✓  17.2s  Senior Data Engineer AWS - Finance Consult  bad_fit                70%
+[198/239] ✗  15.5s  Senior DevOps Engineer                      maybe->good_fit        70%
+                    loc UK_OTHER->IN_LONDON ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech AI_ML->NODE,AI_ML ✗ | comp RANGE_55_74K->RANGE_55_74K ✓
+
+[199/239] ✓  16.5s  Senior Frontend Developer                   good_fit               70%
+[200/239] ✗  15.8s  Senior Full Stack Engineer                  maybe->good_fit        70%
+                    loc UK_OTHER->IN_LONDON ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT,JS_TS->NODE,REACT,JS_TS ✓ | comp UP_TO_ONLY->UP_TO_ONLY ✓
+
+[201/239] ✓  22.3s  Senior Full Stack Software Developer (uk)   maybe                  70%
+[202/239] ✓  19.4s  Senior Full-Stack Software Engineer         good_fit               70%
+[203/239] ✗  15.2s  Senior Games Developer - PixiJS             bad_fit->maybe         69%
+                    loc UK_OTHER->IN_LONDON ✗ | arr HYBRID->REMOTE ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech JS_TS->JS_TS,REACT ✗ | comp RANGE_55_74K->RANGE_55_74K ✓
+
+[204/239] ✗  17.3s  Senior JavaScript Developer Vue 3           bad_fit->good_fit      69%
+                    loc UK_OTHER->IN_LONDON ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech JS_TS->JS_TS ✓ | comp UP_TO_ONLY->RANGE_75_99K ✗
+
+[205/239] ✓  18.8s  Senior Machine Learning Engineer            good_fit               69%
+[206/239] ✓  28.3s  Senior Product Engineer (TS/NodeJS/Vue)     good_fit               69%
+[207/239] ✓  16.8s  Senior Software Engineer                    good_fit               70%
+[208/239] ✓  21.2s  Senior Software Engineer                    maybe                  70%
+[209/239] ✗  38.4s  Senior Software Engineer                    good_fit->maybe        69%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,JS_TS->NODE ✗ | comp RANGE_55_74K->RANGE_55_74K ✓
+
+[210/239] ✗  20.4s  Senior Software Engineer                    maybe->good_fit        69%
+                    loc UK_OTHER->IN_LONDON ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech REACT,JS_TS,AI_ML->NODE,JS_TS,AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+
+[211/239] ✗  19.7s  Senior Software Engineer                    maybe->good_fit        69%
+                    loc UK_OTHER->IN_LONDON ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT,JS_TS,AI_ML->NODE,REACT,JS_TS,AI_ML ✓ | comp UP_TO_ONLY->UP_TO_ONLY ✓
+
+[212/239] ✓  19.8s  Senior Software Engineer - Backend AI Nati  good_fit               69%
+[213/239] ✓  22.4s  Senior Software Engineer, Backend           good_fit               69%
+[214/239] ✓  21.4s  Senior Software Engineer (backend)          good_fit               69%
+[215/239] ✓  19.0s  Senior Software Engineer, Full Stack, Lear  maybe                  69%
+[216/239] ✓  17.4s  Senior Software Engineer - Ts, React, Node  good_fit               69%
+[217/239] ✓  14.6s  Senior Software/Founding Engineer - Health  good_fit               70%
+[218/239] ✓  18.9s  Software Engineer                           maybe                  70%
+[219/239] ✗  17.6s  Software Engineer                           bad_fit->maybe         69%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,REACT,JS_TS->NODE,REACT,JS_TS ✓ | comp BELOW_45K->NO_GBP ✗
+
+[220/239] ✓  19.7s  Software Engineer                           bad_fit                70%
+[221/239] ✓  16.1s  Software Engineer                           maybe                  70%
+[222/239] ✓  18.4s  Software Engineer                           bad_fit                70%
+[223/239] ✓  19.0s  Software Engineer, Front End                bad_fit                70%
+[224/239] ✓  21.5s  Software Engineer Intern                    bad_fit                70%
+[225/239] ✗  20.9s  Software/ Platform Engineer                 maybe->good_fit        70%
+                    loc IN_LONDON->IN_LONDON ✓ | arr IN_OFFICE->IN_OFFICE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech AI_ML->NODE,JS_TS,AI_ML ✗ | comp RANGE_55_74K->RANGE_55_74K ✓
+
+[226/239] ✓  19.4s  Trainee Telematics & CCTV Installation Eng  bad_fit                70%
+[227/239] ✓  18.2s  Unity 3D Developer                          bad_fit                70%
+[228/239] ✓  19.4s  Backend Developer                           bad_fit                70%
+[229/239] ✓  24.3s  Backend Software Development Engineer - Mi  bad_fit                70%
+[230/239] ✓  17.7s  Founding Software Engineer                  bad_fit                70%
+[231/239] ✓  16.1s  Full-Stack Engineer                         bad_fit                71%
+[232/239] ✓  21.4s  Full-Stack Software Engineer                bad_fit                71%
+[233/239] ✓  26.3s  Jr. Front-End Engineer                      bad_fit                71%
+[234/239] ✓  19.5s  Software Engineer - Full Stack              bad_fit                71%
+[235/239] ✓  19.1s  Software Engineer I                         bad_fit                71%
+[236/239] ✓  21.3s  Software Engineer - New Grad                bad_fit                71%
+[237/239] ✗  17.0s  Senior DevOps Engineer - AWS Infrastructur  bad_fit->good_fit      71%
+                    loc REMOTE->REMOTE ✓ | arr HYBRID->REMOTE ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech OOS->NODE,REACT,JS_TS,AI_ML ✗ | comp RANGE_55_74K->RANGE_75_99K ✗
+
+[238/239] ✓  20.7s  Junior DevOps Engineer                      bad_fit                71%
+[239/239] ✗  16.6s  Senior Software Engineer                    bad_fit->maybe         71%
+                    loc REMOTE->IN_LONDON ✗ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech OOS->NODE,JS_TS ✗ | comp NO_GBP->NO_GBP ✓
+
+
+========================================================================
+  V7 EVAL  baseline  iter qwen3_4B_v14_mlx6bit
+  eval set: test_labeled_audited  |  prompt: student_v14_exp2_fix5  |  n=239
+========================================================================
+  Parse failures: 0   Invalid tokens: 0   Fuzzy corrections: 6   Valid: 239/239
+
+  Speed:  total=69.8min  avg=17.5s/job  hardware=Mac M1 MLX 6-bit thinking
+
+  Label accuracy:  169/239 = 70.7%   NOT MET  (target >=90%)
+  True accuracy:   169/239 = 70.7%  (parse fails counted as wrong — use for cross-experiment comparison)
+  Score accuracy:  107/239 = 44.8%
+
+  Fit accuracy (macro):  67.0%  NOT MET   gf=68%  maybe=54%  bad=79%
+
+  Field token accuracy:
+    loc            ##############......  174/239  72.8%
+    arr            ###############.....  183/239  76.6%
+    sen            ###############.....  191/239  79.9%
+    tech           ###########.........  140/239  58.6%
+    comp           ###############.....  185/239  77.4%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    good_fit          39      57     68%
+    maybe             29      54     54%  !
+    bad_fit          101     128     79%
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit          [39]        12         6
+    maybe               12      [29]        13
+    bad_fit             10        17     [101]
+
+  Field error transitions (top per field):
+    loc           : UK_OTHER->IN_LONDON:31  REMOTE->OUTSIDE_UK:10  UNK->OUTSIDE_UK:8  REMOTE->IN_LONDON:8
+    arr           : UNK->REMOTE:29  HYBRID->REMOTE:9  HYBRID->IN_OFFICE:7  UNK->IN_OFFICE:6
+    sen           : LEVEL_2->LEVEL_1:29  LEVEL_2->LEVEL_3:11  LEVEL_3->LEVEL_1:5  LEVEL_3->LEVEL_2:3
+    tech          : NODE->JS_TS,NODE:5  AI_ML,JS_TS,NODE->JS_TS,NODE:4  JS_TS,REACT->JS_TS,NODE,REACT:4  OOS->AI_ML,JS_TS,NODE:3
+    comp          : BELOW_45K->NO_GBP:13  RANGE_75_99K->NO_GBP:9  ABOVE_100K->NO_GBP:9  RANGE_55_74K->NO_GBP:6
+
+  Error direction:  over-scoring 27  |  under-scoring 19
+
+------------------------------------------------------------------------
+  baseline/qwen3_4B_v14_mlx6bit  label=70.7%  loc=72.8%  role=79.9%  tech=58.6%  comp=77.4%  wa=76.6%  gf=68%  maybe=54%  bad=79%
+========================================================================
+
+Predictions: eval_results/v14_exp2_think/fix5/baseline/2026-03-20_073317_test_labeled_audited_student_v14_exp2_fix5_qwen3_4B_v14_mlx6bit.predictions.jsonl
+Summary: eval_results/v14_exp2_think/fix5/baseline/2026-03-20_073317_test_labeled_audited_student_v14_exp2_fix5_qwen3_4B_v14_mlx6bit.summary.json

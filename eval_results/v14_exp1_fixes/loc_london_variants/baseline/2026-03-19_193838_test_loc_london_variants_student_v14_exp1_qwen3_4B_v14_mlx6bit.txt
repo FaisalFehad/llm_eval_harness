@@ -1,0 +1,63 @@
+Output: eval_results/v14_exp1_fixes/loc_london_variants/baseline/2026-03-19_193838_test_loc_london_variants_student_v14_exp1_qwen3_4B_v14_mlx6bit.txt
+Prompt: prompts/student_v14_exp1.txt
+No adapter (baseline)
+Model: /Users/faisal/qwen3_4B_v14_mlx6bit
+------------------------------------------------------------
+------------------------------------------------------------
+Running V7 eval on 6 jobs...
+
+[  1/6] ✓  35.9s  Senior Software Engineer, £70,000 To £85,0  good_fit              100%
+[  2/6] ✓  31.6s  Front End Developer (remote)                maybe                 100%
+[  3/6] ✓  39.1s  Founding Engineer (£80k-£100k + Equity) At  good_fit              100%
+[  4/6] ✓  52.8s  Frontend Platform Engineer                  maybe                 100%
+[  5/6] ✓  39.2s  Junior Full Stack PHP Software Engineer     bad_fit               100%
+[  6/6] ✓  34.3s  Senior Software Engineer                    good_fit              100%
+
+========================================================================
+  V7 EVAL  baseline  iter qwen3_4B_v14_mlx6bit
+  eval set: test_loc_london_variants  |  prompt: student_v14_exp1  |  n=6
+========================================================================
+  Parse failures: 0   Invalid tokens: 0   Fuzzy corrections: 0   Valid: 6/6
+
+  Speed:  total=3.9min  avg=38.8s/job  hardware=Mac M1 MLX 6-bit
+
+  Label accuracy:  6/6 = 100.0%   MET  (target >=90%)
+  True accuracy:   6/6 = 100.0%  (parse fails counted as wrong — use for cross-experiment comparison)
+  Score accuracy:  1/6 = 16.7%
+
+  Fit accuracy (macro):  100.0%  MET   gf=100%  maybe=100%  bad=100%
+
+  Field token accuracy:
+    loc            ####################    6/6  100.0%
+    arr            ################....    5/6  83.3%
+    sen            #############.......    4/6  66.7%
+    tech           ###.................    1/6  16.7%
+    comp           ################....    5/6  83.3%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    good_fit           3       3    100%
+    maybe              2       2    100%
+    bad_fit            1       1    100%
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [3]         0         0
+    maybe                0       [2]         0
+    bad_fit              0         0       [1]
+
+  Field error transitions (top per field):
+    arr           : REMOTE->UNK:1
+    sen           : LEVEL_2->LEVEL_1:1  LEVEL_3->LEVEL_2:1
+    tech          : AI_ML,JS_TS,NODE->JS_TS,NODE:1  JS_TS,NODE,REACT->AI_ML,JS_TS,NODE,REACT:1  AI_ML,REACT->AI_ML,JS_TS,REACT:1  JS_TS,REACT->AI_ML,JS_TS,REACT:1
+    comp          : RANGE_55_74K->RANGE_75_99K:1
+
+  Error direction:  over-scoring 0  |  under-scoring 0
+
+------------------------------------------------------------------------
+  baseline/qwen3_4B_v14_mlx6bit  label=100.0%  loc=100.0%  role=66.7%  tech=16.7%  comp=83.3%  wa=83.3%  gf=100%  maybe=100%  bad=100%
+========================================================================
+
+Predictions: eval_results/v14_exp1_fixes/loc_london_variants/baseline/2026-03-19_193838_test_loc_london_variants_student_v14_exp1_qwen3_4B_v14_mlx6bit.predictions.jsonl
+Summary: eval_results/v14_exp1_fixes/loc_london_variants/baseline/2026-03-19_193838_test_loc_london_variants_student_v14_exp1_qwen3_4B_v14_mlx6bit.summary.json

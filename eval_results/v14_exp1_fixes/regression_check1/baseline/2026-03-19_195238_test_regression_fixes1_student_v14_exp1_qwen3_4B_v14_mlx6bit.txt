@@ -1,0 +1,82 @@
+Output: eval_results/v14_exp1_fixes/regression_check1/baseline/2026-03-19_195238_test_regression_fixes1_student_v14_exp1_qwen3_4B_v14_mlx6bit.txt
+Prompt: prompts/student_v14_exp1.txt
+No adapter (baseline)
+Model: /Users/faisal/qwen3_4B_v14_mlx6bit
+------------------------------------------------------------
+------------------------------------------------------------
+Running V7 eval on 13 jobs...
+
+[  1/13] ✗  37.0s  Full-Stack Developer                        bad_fit->maybe          0%
+                   loc OUTSIDE_UK->REMOTE ✗ | arr REMOTE->UNK ✗ | sen LEVEL_2->LEVEL_2 ✓ | tech REACT,JS_TS->REACT,JS_TS ✓ | comp NO_GBP->NO_GBP ✓
+                   Paris, Île-de-France, France (Remote) | Full-Stack Developer | TypeScript, React, MongoDB, tRPC, Emotion, Vite, Kubernetes (GKE), Terraform, ArgoCD, Vitest, Playwright, Cucumber, m
+
+[  2/13] ✓  27.1s  Planning Engineer                           bad_fit                50%
+[  3/13] ✓  38.8s  Software Engineer - Internship              bad_fit                67%
+[  4/13] ✓  22.1s  Software Engineer                           bad_fit                75%
+[  5/13] ✗  48.6s  Full-Stack Engineer                         maybe->good_fit        60%
+                   loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,REACT,JS_TS,AI_ML->REACT,JS_TS,AI_ML ✗ | comp NO_GBP->ABOVE_100K ✗
+                   Greater Manchester, England, United Kingdom | This role is based in our Manchester, UK office and follows a hybrid work model. Team members are expected to be in the office at leas
+
+[  6/13] ✓  49.0s  Junior Software Engineer (f/m/d)            bad_fit                67%
+[  7/13] ✓  35.4s  Senior Software Engineer, £70,000 To £85,0  good_fit               71%
+[  8/13] ✓  33.5s  IT Support Engineer (2nd/3rd Line) - Centr  bad_fit                75%
+[  9/13] ✗  29.2s  Front End Developer (remote)                maybe->good_fit        67%
+                   loc IN_LONDON->IN_LONDON ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,REACT,JS_TS->NODE,REACT,JS_TS,AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+                   Greater London Area | remote working | Front End Developer (remote) | React.js, Typescript, Node.js, ES6, JavaScript, AI | Competitive Salary
+
+[ 10/13] ✓  24.8s  Scrum Master                                maybe                  70%
+[ 11/13] ✓  23.6s  Technical Writer                            maybe                  73%
+[ 12/13] ✓  26.8s  Javascript Fullstack Engineer - Senior      maybe                  75%
+[ 13/13] ✗  27.1s  Senior DevOps Engineer                      maybe->bad_fit         69%
+                   loc UK_OTHER->IN_LONDON ✗ | arr REMOTE->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech AI_ML->OOS ✗ | comp RANGE_55_74K->RANGE_55_74K ✓
+                   Little London, England, United Kingdom | Senior DevOps Engineer | AWS, GCP, Kubernetes, GitHub Actions, Terraform | £60k 90k
+
+
+========================================================================
+  V7 EVAL  baseline  iter qwen3_4B_v14_mlx6bit
+  eval set: test_regression_fixes1  |  prompt: student_v14_exp1  |  n=13
+========================================================================
+  Parse failures: 0   Invalid tokens: 0   Fuzzy corrections: 0   Valid: 13/13
+
+  Speed:  total=7.1min  avg=32.5s/job  hardware=Mac M1 MLX 6-bit
+
+  Label accuracy:  9/13 = 69.2%   NOT MET  (target >=90%)
+  True accuracy:   9/13 = 69.2%  (parse fails counted as wrong — use for cross-experiment comparison)
+  Score accuracy:  5/13 = 38.5%
+
+  Fit accuracy (macro):  77.8%  NOT MET   gf=100%  maybe=50%  bad=83%
+
+  Field token accuracy:
+    loc            ################....   11/13  84.6%
+    arr            ###############.....   10/13  76.9%
+    sen            ####################   13/13  100.0%
+    tech           ############........    8/13  61.5%
+    comp           #############.......    9/13  69.2%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    good_fit           1       1    100%
+    maybe              3       6     50%  !
+    bad_fit            5       6     83%
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [1]         0         0
+    maybe                2       [3]         1
+    bad_fit              0         1       [5]
+
+  Field error transitions (top per field):
+    loc           : OUTSIDE_UK->REMOTE:1  UK_OTHER->IN_LONDON:1
+    arr           : REMOTE->UNK:2  HYBRID->UNK:1
+    tech          : AI_ML,JS_TS,NODE,REACT->AI_ML,JS_TS,REACT:1  AI_ML,JS_TS,NODE->JS_TS,NODE:1  JS_TS,NODE,REACT->AI_ML,JS_TS,NODE,REACT:1  NODE,REACT->JS_TS,NODE,REACT:1
+    comp          : RANGE_55_74K->RANGE_45_54K:1  NO_GBP->ABOVE_100K:1  RANGE_45_54K->BELOW_45K:1  NO_GBP->UP_TO_ONLY:1
+
+  Error direction:  over-scoring 1  |  under-scoring 1
+
+------------------------------------------------------------------------
+  baseline/qwen3_4B_v14_mlx6bit  label=69.2%  loc=84.6%  role=100.0%  tech=61.5%  comp=69.2%  wa=76.9%  gf=100%  maybe=50%  bad=83%
+========================================================================
+
+Predictions: eval_results/v14_exp1_fixes/regression_check1/baseline/2026-03-19_195238_test_regression_fixes1_student_v14_exp1_qwen3_4B_v14_mlx6bit.predictions.jsonl
+Summary: eval_results/v14_exp1_fixes/regression_check1/baseline/2026-03-19_195238_test_regression_fixes1_student_v14_exp1_qwen3_4B_v14_mlx6bit.summary.json

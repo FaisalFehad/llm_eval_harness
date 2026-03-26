@@ -1,18 +1,35 @@
 #!/usr/bin/env python3
 """
-V14 Experiment 1 — No-Think eval (copy of eval_student_v7.py, minimal changes).
+V14 Experiment 2 — Thinking-mode eval (derived from eval_v14_exp1_no_think.py).
 
-Changes from base:
-  - Fix {{ pre-fill bug: never pre-fill '{' for Qwen3 models (prompt already
-    instructs model to begin with '{', pre-fill causes '{{' double-brace)
-  - Defensive <think> strip even with --no-think (stray tag guard)
-  - mx.metal.clear_cache() between jobs (reduces inter-job GPU latency)
-  - true_accuracy = label_correct / n_total added to summary + summary JSON
-  - avg_speed_s and total_time_s added to summary JSON
-  - Fix single-quote JSON (R2): "key':'value' and 'key':'value' patterns
-    repaired before json.loads() — rescues ~18 parse fails from no-think mode
+Experiment goal: Can thinking mode compensate for removing _raw fields?
+- Thinking ON: model uses <think>...</think> block as internal chain-of-thought
+- Prompt: student_v14_exp2_no_raw.txt (no _raw fields in output — 5 fields only)
+- Compact JSON output (~80-100 tokens) leaves room for thinking within token budget
+- MAX_TOKENS=1500: ~1400 for thinking + ~100 for JSON (vs 1200 for no-think+_raw)
 
-Run with: --no-think --max-tokens 600
+Changes from exp1_no_think:
+  - Thinking mode ON (no enable_thinking=False override, no --no-think flag)
+  - <think>...</think> strip is now ACTIVE (not just defensive)
+  - MAX_TOKENS bumped 1200→1500 (thinking needs more budget than no-think)
+  - --no-think flag removed (exp2 always uses thinking)
+  - experiment tag: "exp2_think"
+
+Inherits from exp1:
+  - Fix {{ pre-fill bug (never pre-fill '{' for Qwen3)
+  - mx.metal.clear_cache() between jobs
+  - true_accuracy metric
+  - Single-quote JSON repair (R2)
+  - --job flag saves .subset.predictions.jsonl
+
+Run with: (no --no-think flag)
+  .venv/bin/python3 finetune/eval_v14_exp2_think.py \\
+    --model ~/qwen3_4B_v14_mlx6bit \\
+    --test-file data/v12/test_labeled_audited.jsonl \\
+    --prompt prompts/student_v14_exp2_no_raw.txt \\
+    --output-dir eval_results/v14_exp2_think \\
+    --save-predictions
+
 DO NOT MODIFY eval_student_v7.py — this is the experiment copy.
 
 Original docstring:
@@ -93,7 +110,7 @@ def greedy_sampler(logits: mx.array) -> mx.array:
 MODEL_ID = "mlx-community/Qwen2.5-0.5B-Instruct-4bit"
 DEFAULT_TEST_FILE = "data/v7/eval_golden.jsonl"
 DEFAULT_PROMPT = "prompts/student_v7.txt"
-MAX_TOKENS = 1200
+MAX_TOKENS = 1500
 
 # V7 token fields — 5 fields
 TOKEN_FIELDS = ("loc", "arr", "sen", "tech", "comp")
@@ -130,6 +147,10 @@ def parse_json_output(text: str) -> dict | None:
     text = re.sub(r":\s*'([^'\"]*)'", r': "\1"', text)      # :'value' → :"value"
     text = re.sub(r":\s*'([^'\"]+)\"", r': "\1"', text)     # :'value" (mixed close) → :"value"
     text = re.sub(r"'([A-Z_0-9]+)'", r'"\1"', text)         # 'LEVEL_3' → "LEVEL_3" (in arrays)
+
+    # Fix unquoted scalar values (R3): "field":VALUE → "field":"VALUE"
+    # Only for known single-value fields (loc, arr, sen, comp) — not tech (array).
+    text = re.sub(r'"(loc|arr|sen|comp)"\s*:\s*([A-Z_][A-Z_0-9]*)', r'"\1": "\2"', text)
 
     # Attempt 1: Direct load
     try:
@@ -249,9 +270,6 @@ def main():
                         help="Custom system message (default: 'Respond with JSON only.')")
     parser.add_argument("--preprocess", action="store_true",
                         help="Apply JD preprocessing (V12: must match training)")
-    parser.add_argument("--no-think", action="store_true",
-                        help="Qwen3: disable thinking mode (enable_thinking=False). "
-                             "Faster, eliminates thinking-overflow parse failures.")
     parser.add_argument("--max-tokens", type=int, default=MAX_TOKENS,
                         help=f"Max tokens to generate (default: {MAX_TOKENS}). "
                              "Increase to 3000+ to give thinking mode more budget.")
@@ -369,10 +387,10 @@ def main():
             {"role": "user", "content": prompt_text},
         ]
 
-        no_think = args.no_think if is_qwen3 else False
-        chat_kwargs = {"enable_thinking": False} if no_think else {}
+        # EXP2: Thinking mode always ON — no enable_thinking override.
+        # Qwen3 will emit <think>...</think> before the JSON output.
         formatted = tokenizer.apply_chat_template(
-            messages, tokenize=False, add_generation_prompt=True, **chat_kwargs)
+            messages, tokenize=False, add_generation_prompt=True)
 
         # EXP1 FIX: Never pre-fill '{' for Qwen3 — the prompt already instructs
         # the model to "Begin your response with {". Pre-filling causes '{{'.
@@ -396,9 +414,13 @@ def main():
             # Add the brace back since the model continues after it
             response = "{" + response
         else:
-            # Strip <think>...</think> tags (defensive — catches stray tags even
-            # with --no-think, in case model partially enters thinking mode)
-            response = re.sub(r"<think>.*?</think>\s*", "", response, flags=re.DOTALL)
+            # EXP2: Strip <think>...</think> block (ACTIVE — thinking is ON).
+            # If the think block is truncated (no </think>), strip from <think>
+            # to the end — the JSON was never emitted, so this becomes a parse fail.
+            if "<think>" in response and "</think>" not in response:
+                response = ""  # truncated mid-think → parse fail
+            else:
+                response = re.sub(r"<think>.*?</think>\s*", "", response, flags=re.DOTALL)
 
         parsed = parse_json_output(response)
 
@@ -414,6 +436,54 @@ def main():
                 "parse_fail": True, "raw_output": response[:500],
             })
             continue
+
+        # R4: Normalize invented comp range tokens (e.g. RANGE_60_80K → RANGE_55_74K)
+        # Thinking mode sometimes creates descriptive tokens not in vocabulary.
+        _comp = parsed.get("comp", "")
+        if _comp and _comp not in ("NO_GBP", "UP_TO_ONLY", "BELOW_45K",
+                                    "RANGE_45_54K", "RANGE_55_74K",
+                                    "RANGE_75_99K", "ABOVE_100K"):
+            import re as _re
+            m = _re.match(r"RANGE_(\d+)_(\d+)K?", _comp)
+            if m:
+                lower = int(m.group(1))
+                if lower < 45:
+                    parsed["comp"] = "BELOW_45K"
+                elif lower < 55:
+                    parsed["comp"] = "RANGE_45_54K"
+                elif lower < 75:
+                    parsed["comp"] = "RANGE_55_74K"
+                else:
+                    parsed["comp"] = "RANGE_75_99K"
+
+        # R5: Normalize abbreviated sen tokens (L3/L2/L1 → LEVEL_3/LEVEL_2/LEVEL_1)
+        _sen = parsed.get("sen", "")
+        _sen_map = {"L3": "LEVEL_3", "L2": "LEVEL_2", "L1": "LEVEL_1"}
+        if _sen in _sen_map:
+            parsed["sen"] = _sen_map[_sen]
+
+        # R6: Normalize invalid tech tokens → ["OOS"]
+        # Thinking mode sometimes outputs real tech names (PHP, Python, Go, etc.).
+        # Any tech array containing a non-vocabulary token becomes ["OOS"].
+        _VALID_TECH = {"NODE", "REACT", "JS_TS", "AI_ML", "OOS"}
+        _tech = parsed.get("tech", [])
+        if isinstance(_tech, list) and any(t not in _VALID_TECH for t in _tech):
+            parsed["tech"] = ["OOS"]
+
+        # R7: Normalize invalid arr tokens → nearest valid token
+        # Thinking mode sometimes outputs descriptive tokens (ON_SITE, OFFICE_FLEX, etc.).
+        _VALID_ARR = {"REMOTE", "HYBRID", "IN_OFFICE", "UNK"}
+        _arr = parsed.get("arr", "")
+        if _arr and _arr not in _VALID_ARR:
+            _arr_lower = _arr.lower()
+            if "remote" in _arr_lower:
+                parsed["arr"] = "REMOTE"
+            elif "hybrid" in _arr_lower or "flex" in _arr_lower or "mix" in _arr_lower:
+                parsed["arr"] = "HYBRID"
+            elif "office" in _arr_lower or "site" in _arr_lower or "onsite" in _arr_lower:
+                parsed["arr"] = "IN_OFFICE"
+            else:
+                parsed["arr"] = "UNK"
 
         # Score with V7 semantic token system
         scored = score_v7_result(parsed, job)
@@ -515,7 +585,7 @@ def main():
 
     # EXP1: Speed summary
     avg_speed = total_gen_time / n if n > 0 else 0.0
-    print(f"  Speed:  total={total_gen_time/60:.1f}min  avg={avg_speed:.1f}s/job  hardware=Mac M1 MLX 6-bit\n")
+    print(f"  Speed:  total={total_gen_time/60:.1f}min  avg={avg_speed:.1f}s/job  hardware=Mac M1 MLX 6-bit thinking\n")
 
     if valid:
         pct = label_correct / len(valid) * 100
@@ -679,7 +749,7 @@ def main():
             "avg_speed_s": round(avg_speed, 1),
             "total_time_s": round(total_gen_time, 1),
             "hardware": "Mac M1 16GB MLX 6-bit",
-            "experiment": "exp1_no_think",
+            "experiment": "exp2_think",
         }
         with open(summary_file, "w") as sf:
             json.dump(summary, sf, indent=2)

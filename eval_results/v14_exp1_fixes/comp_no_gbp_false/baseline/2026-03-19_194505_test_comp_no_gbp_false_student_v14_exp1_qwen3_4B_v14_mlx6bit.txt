@@ -1,0 +1,62 @@
+Output: eval_results/v14_exp1_fixes/comp_no_gbp_false/baseline/2026-03-19_194505_test_comp_no_gbp_false_student_v14_exp1_qwen3_4B_v14_mlx6bit.txt
+Prompt: prompts/student_v14_exp1.txt
+No adapter (baseline)
+Model: /Users/faisal/qwen3_4B_v14_mlx6bit
+------------------------------------------------------------
+------------------------------------------------------------
+Running V7 eval on 4 jobs...
+
+[  1/4] ✓  39.5s  Full-Stack Engineer                         maybe                 100%
+[  2/4] ✓  26.1s  Founding Engineer (£240k+ )                 maybe                 100%
+[  3/4] ✓  19.3s  Frontend Developer                          bad_fit               100%
+[  4/4] ✗  19.3s  Javascript Fullstack Engineer - Senior      maybe->bad_fit         75%
+                  loc UK_OTHER->UK_OTHER ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_2 ✗ | tech NODE,REACT->NODE,REACT,JS_TS ✗ | comp NO_GBP->UP_TO_ONLY ✗
+                  Greater Bristol Area, United Kingdom | Fully remote | Javascript Fullstack Engineer - Senior | React, Node, Express, Mongo, SQL | Up to £100k
+
+
+========================================================================
+  V7 EVAL  baseline  iter qwen3_4B_v14_mlx6bit
+  eval set: test_comp_no_gbp_false  |  prompt: student_v14_exp1  |  n=4
+========================================================================
+  Parse failures: 0   Invalid tokens: 0   Fuzzy corrections: 0   Valid: 4/4
+
+  Speed:  total=1.7min  avg=26.1s/job  hardware=Mac M1 MLX 6-bit
+
+  Label accuracy:  3/4 = 75.0%   NOT MET  (target >=90%)
+  True accuracy:   3/4 = 75.0%  (parse fails counted as wrong — use for cross-experiment comparison)
+  Score accuracy:  2/4 = 50.0%
+
+  Fit accuracy (macro):  55.6%  NOT MET   gf=0%  maybe=67%  bad=100%
+
+  Field token accuracy:
+    loc            ####################    4/4  100.0%
+    arr            ####################    4/4  100.0%
+    sen            ###############.....    3/4  75.0%
+    tech           ##########..........    2/4  50.0%
+    comp           ....................    0/4  0.0%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    maybe              2       3     67%
+    bad_fit            1       1    100%
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [0]         0         0
+    maybe                0       [2]         1
+    bad_fit              0         0       [1]
+
+  Field error transitions (top per field):
+    sen           : LEVEL_3->LEVEL_2:1
+    tech          : AI_ML,JS_TS,NODE,REACT->AI_ML,JS_TS,REACT:1  NODE,REACT->JS_TS,NODE,REACT:1
+    comp          : NO_GBP->UP_TO_ONLY:3  NO_GBP->RANGE_75_99K:1
+
+  Error direction:  over-scoring 0  |  under-scoring 1
+
+------------------------------------------------------------------------
+  baseline/qwen3_4B_v14_mlx6bit  label=75.0%  loc=100.0%  role=75.0%  tech=50.0%  comp=0.0%  wa=100.0%  gf=0%  maybe=67%  bad=100%
+========================================================================
+
+Predictions: eval_results/v14_exp1_fixes/comp_no_gbp_false/baseline/2026-03-19_194505_test_comp_no_gbp_false_student_v14_exp1_qwen3_4B_v14_mlx6bit.predictions.jsonl
+Summary: eval_results/v14_exp1_fixes/comp_no_gbp_false/baseline/2026-03-19_194505_test_comp_no_gbp_false_student_v14_exp1_qwen3_4B_v14_mlx6bit.summary.json

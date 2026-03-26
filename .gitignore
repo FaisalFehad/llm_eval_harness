@@ -4,6 +4,9 @@ dist
 .env
 .DS_Store
 .claude
+CLAUDE.md
+tokenizer.json
+imatrix.dat
 
 # Large model files (download separately)
 models/

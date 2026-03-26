@@ -1,0 +1,32 @@
+{
+  "timestamp": "2026-03-20_050105",
+  "adapter": "baseline",
+  "checkpoint": "qwen3_4B_v14_mlx6bit",
+  "model": "/Users/faisal/qwen3_4B_v14_mlx6bit",
+  "prompt": "prompts/student_v14_exp2_fix3.txt",
+  "test_file": "data/v12/test_labeled_audited.jsonl",
+  "n_total": 239,
+  "n_valid": 239,
+  "parse_failures": 0,
+  "invalid_tokens": 0,
+  "fuzzy_corrections": 4,
+  "label_accuracy": 68.6,
+  "true_accuracy": 68.6,
+  "score_accuracy": 44.4,
+  "field_accuracy": {
+    "loc": 71.1,
+    "arr": 76.2,
+    "sen": 79.5,
+    "tech": 57.3,
+    "comp": 74.1
+  },
+  "per_label": {
+    "good_fit": 66.7,
+    "maybe": 53.7,
+    "bad_fit": 75.8
+  },
+  "avg_speed_s": 17.4,
+  "total_time_s": 4148.2,
+  "hardware": "Mac M1 16GB MLX 6-bit",
+  "experiment": "exp2_think"
+}

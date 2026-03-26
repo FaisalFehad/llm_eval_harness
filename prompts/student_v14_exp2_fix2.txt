@@ -1,7 +1,7 @@
-Classify this job. Respond with exactly one JSON object, no extra text.
+Classify this job. Respond with exactly one JSON object containing ONLY these 5 fields: loc, arr, sen, tech, comp. No _raw fields. No extra text.
 
 loc: IN_LONDON | REMOTE | UK_OTHER | OUTSIDE_UK | UNK
-  Location field only. Ignore any location hints in the description.
+  Use the "Location:" field ONLY. NEVER use location hints from the job description text.
   "Fully Remote" or "Remote" or "Anywhere" → REMOTE.
   Any non-UK country → OUTSIDE_UK (even if "Remote" appears). E.g. "Paris, France (Remote)" → OUTSIDE_UK. "Singapore (Remote)" → OUTSIDE_UK.
   "Greater London", "London Area", "London, England" → IN_LONDON. E.g. "Greater London, England, United Kingdom" → IN_LONDON. "Greater Manchester" → UK_OTHER.
@@ -16,21 +16,27 @@ arr: REMOTE | HYBRID | IN_OFFICE | UNK
   UNK: arrangement not specified.
 
 sen: LEVEL_3 | LEVEL_2 | LEVEL_1
-  Decide using the job TITLE only. Ignore experience language in the description.
-  L3: senior, lead, staff, principal, head, director, VP, CTO, founding, distinguished, sr, III, manager, mid-senior, mid/senior. Any title containing "manager" → L3 (e.g. Project Manager, Product Manager, Engineering Manager, Customer Success Manager).
-  L1: junior, jr, graduate, intern, trainee, apprentice, associate, I (roman numeral), internship.
-  L2: everything else, including II. E.g. "Technical Writer" → LEVEL_2 (no L1/L3 keyword).
+  Decide using the job TITLE only. NEVER use experience requirements, years mentioned, or compensation from the description to determine seniority — TITLE ONLY.
+  LEVEL_3 if title contains: senior, lead, staff, principal, head, director, VP, CTO, founding, distinguished, sr, III, manager, mid-senior, mid/senior. Any title containing "manager" → LEVEL_3 (e.g. Project Manager, Engineering Manager). E.g. "Founding Engineer" → LEVEL_3, "Lead Developer" → LEVEL_3.
+  LEVEL_1 if title contains: junior, jr, graduate, intern, trainee, apprentice, associate, internship. E.g. "Associate Developer" → LEVEL_1, "Junior Engineer" → LEVEL_1.
+  LEVEL_2 for everything else, including II. E.g. "Software Engineer" → LEVEL_2, "Developer" → LEVEL_2, "Full Stack Engineer" → LEVEL_2, "Engineer II" → LEVEL_2.
+  CRITICAL: Even if the description says "senior level required" or "8+ years experience", if the TITLE has no LEVEL_3 keyword → LEVEL_2. E.g. title "Software Engineer" → LEVEL_2, even if the description says "we need a senior engineer".
+  Always write the full token name: LEVEL_3, LEVEL_2, or LEVEL_1. Never write L3, L2, or L1.
 
-tech: subset of [NODE, REACT, JS_TS, AI_ML], or exactly ["OOS"] when none apply. Never mix "OOS" with other tokens. Never use empty strings ([""] is invalid — use ["OOS"]). Use exact token names: AI_ML not ML, AI, or "machine learning".
+tech: subset of [NODE, REACT, JS_TS, AI_ML], or exactly ["OOS"] when none apply. Never mix "OOS" with other tokens. Never use empty strings.
+  IMPORTANT: Only these 5 exact strings are valid output tokens: NODE, REACT, JS_TS, AI_ML, OOS. Never output real technology names like "Python", "Go", "PHP", "Java", "Terraform", "Docker", "Kubernetes", "PyTorch", "SQL", "SPARK", ".NET", "AZURE", or any other technology string — use OOS instead.
 
 comp: NO_GBP | UP_TO_ONLY | BELOW_45K | RANGE_45_54K | RANGE_55_74K | RANGE_75_99K | ABOVE_100K
   NO_GBP: no salaries in GBP (£ or explicit GBP). Non-GBP salary (USD, EUR, CAD, AUD, etc.) → NO_GBP. E.g. "$90,000" → NO_GBP. "$85,000 CAD" → NO_GBP. Only £ or "GBP" counts as British salary.
   UP_TO_ONLY: salary stated as "up to £X" with no lower bound. "Between £X and £Y" is a range, not UP_TO_ONLY.
   £60k–£80k (e.g. "between £60,000 and £80,000", "£60,000-£80,000") → RANGE_55_74K. £75k–£100k → RANGE_75_99K. RANGE_75_99K requires the salary to reach or exceed £75k.
   If multiple salary bands are listed (e.g. Junior £40-50k, Mid £50-80k, Senior £80-100k) use the lowest applicable band → RANGE_45_54K.
+  Use only the 7 exact token names listed above — never create new tokens like RANGE_60_80K.
 
 Title: {{job_title}}
 Location: {{job_location}}
 Description: {{jd_text}}
 
+Output exactly one JSON object with all values as quoted strings. Example:
+{"loc": "IN_LONDON", "arr": "HYBRID", "sen": "LEVEL_3", "tech": ["NODE", "REACT"], "comp": "RANGE_55_74K"}
 Begin your response with {
