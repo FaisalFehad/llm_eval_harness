@@ -1,10 +1,10 @@
 # AI Eval Harness
 
-**Can a model 8,000× smaller than GPT-4 score jobs better than GPT-4 — running locally on a £999 MacBook Air?**
+**Can a model 8,000× smaller than GPT-4 score jobs better than GPT-4 — running locally on M1 MacBook Air?**
 
 Yes. **98.3% accuracy.** Three models from 335 MB to 3.1 GB, running locally on Apple Silicon via MLX — beating commercial LLM quality at zero inference cost.
 
-This project is my journey through LLM knowledge distillation — from hand-labeling 103 jobs to building a production-grade hybrid pipeline that outperforms the teacher it learned from. Every technique was learned by doing, every decision driven by data, and every setback turned into a better solution.
+This project is my journey through LLM knowledge distillation — from hand-labeling 103 jobs to building a production-grade hybrid pipeline that outperforms the teacher it learned from. Every technique was learned by doing, every decision driven by data, and every setback turned into a better solution. I am documenting every step of the journey.
 
 ---
 
@@ -47,7 +47,7 @@ Each row is a phase of the project. Click any phase to jump to its story.
 | 11 | [Semantic tokens](#phase-11--the-architectural-pivot) | 83.9% | Stopped predicting numbers. Classification > regression. |
 | 11½ | [V6–V11 gauntlet](#the-v6v11-training-gauntlet) | 75.3% | 8 experiments, most failed. Regex beats model on mechanical tasks. |
 | 12 | [Hybrid pipeline](#phase-12--the-hybrid-breakthrough) | 97.5% | Model + regex, each doing what it does best. |
-| 13 | [Final push](#phase-13--the-final-push) | **97.9%** vs ~91% GPT-4.1 | Contrastive training, surgical fixes. Hit the 0.6B ceiling. |
+| 13 | [Final push (As I thought) ](#phase-13--the-final-push) | **97.9%** vs ~91% GPT-4.1 | Contrastive training, surgical fixes. Hit the 0.6B ceiling. |
 | 14 | [V13.1 — still pushing](#whats-next) | 97.5% | 1.5B trained. Bigger ≠ better — parse failures dragged it below the 0.6B. |
 | 15 | [V14 — cloud GPU breakthrough](#phase-15--v14-cloud-gpu-breakthrough) | **98.7%** (full precision) | 4B model on Lambda GH200. 98.3% on Mac via MLX. New all-time record. |
 
