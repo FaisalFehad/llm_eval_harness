@@ -1,0 +1,57 @@
+Output: eval_results/v12_1_reeval/adapters_v12/2026-03-27_164739_test_labeled_audited_student_v7_final_chunk39of64.txt
+Prompt: prompts/student_v7.txt
+Adapter: finetune/adapters_v12
+Model: mlx-community/Qwen2.5-1.5B-Instruct-4bit
+------------------------------------------------------------
+------------------------------------------------------------
+Chunk 39/64: jobs 153–156
+Running V7 eval on 4 jobs...
+
+[153/239] ✓  10.1s  Backend Engineer                            bad_fit               100%
+[154/239] ✓  12.0s  Freelance Full Stack Developer              bad_fit               100%
+[155/239] ✓  10.5s  Software Engineer (backend Focused)         bad_fit               100%
+[156/239] ✓  11.0s  Back End Developer                          good_fit              100%
+
+========================================================================
+  V7 EVAL  adapters_v12  iter final
+  eval set: test_labeled_audited  |  prompt: student_v7  |  n=4
+========================================================================
+  Parse failures: 0   Invalid tokens: 0   Fuzzy corrections: 0   Valid: 4/4
+
+  Label accuracy:  4/4 = 100.0%   MET  (target >=90%)
+  Score accuracy:  3/4 = 75.0%
+
+  Fit accuracy (macro):  66.7%  NOT MET   gf=100%  maybe=0%  bad=100%
+
+  Field token accuracy:
+    loc            ####################    4/4  100.0%
+    arr            ####################    4/4  100.0%
+    sen            ###############.....    3/4  75.0%
+    tech           ##########..........    2/4  50.0%
+    comp           ###############.....    3/4  75.0%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    good_fit           1       1    100%
+    bad_fit            3       3    100%
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [1]         0         0
+    maybe                0       [0]         0
+    bad_fit              0         0       [3]
+
+  Field error transitions (top per field):
+    sen           : LEVEL_2->LEVEL_1:1
+    tech          : JS_TS,NODE->AI_ML,JS_TS,NODE:1  JS_TS,NODE,REACT->JS_TS,NODE:1
+    comp          : RANGE_75_99K->ABOVE_100K:1
+
+  Error direction:  over-scoring 0  |  under-scoring 0
+
+------------------------------------------------------------------------
+  adapters_v12/final  label=100.0%  loc=100.0%  role=75.0%  tech=50.0%  comp=75.0%  wa=100.0%  gf=100%  maybe=0%  bad=100%
+========================================================================
+
+Predictions: eval_results/v12_1_reeval/adapters_v12/2026-03-27_164739_test_labeled_audited_student_v7_final_chunk39of64.predictions.jsonl
+Summary: eval_results/v12_1_reeval/adapters_v12/2026-03-27_164739_test_labeled_audited_student_v7_final_chunk39of64.summary.json

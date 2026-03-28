@@ -1,0 +1,57 @@
+Output: eval_results/v12_1_reeval/adapters_v12/2026-03-27_164739_test_labeled_audited_student_v7_final_chunk38of64.txt
+Prompt: prompts/student_v7.txt
+Adapter: finetune/adapters_v12
+Model: mlx-community/Qwen2.5-1.5B-Instruct-4bit
+------------------------------------------------------------
+------------------------------------------------------------
+Chunk 38/64: jobs 149–152
+Running V7 eval on 4 jobs...
+
+[149/239] ✓  15.3s  Full Stack .NET Developer                   bad_fit               100%
+[150/239] ✓  11.8s  Senior Software Engineer                    bad_fit               100%
+[151/239] ✓   8.6s  Support Engineer                            bad_fit               100%
+[152/239] ✓   8.3s  Data Engineer                               bad_fit               100%
+
+========================================================================
+  V7 EVAL  adapters_v12  iter final
+  eval set: test_labeled_audited  |  prompt: student_v7  |  n=4
+========================================================================
+  Parse failures: 0   Invalid tokens: 0   Fuzzy corrections: 0   Valid: 4/4
+
+  Label accuracy:  4/4 = 100.0%   MET  (target >=90%)
+  Score accuracy:  1/4 = 25.0%
+
+  Fit accuracy (macro):  33.3%  NOT MET   gf=0%  maybe=0%  bad=100%
+
+  Field token accuracy:
+    loc            #####...............    1/4  25.0%
+    arr            ###############.....    3/4  75.0%
+    sen            ####################    4/4  100.0%
+    tech           #####...............    1/4  25.0%
+    comp           ###############.....    3/4  75.0%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    bad_fit            4       4    100%
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [0]         0         0
+    maybe                0       [0]         0
+    bad_fit              0         0       [4]
+
+  Field error transitions (top per field):
+    loc           : OUTSIDE_UK->UK_OTHER:3
+    arr           : HYBRID->IN_OFFICE:1
+    tech          : NODE,REACT->JS_TS,REACT:1  AI_ML->OOS:1  AI_ML,JS_TS->JS_TS:1
+    comp          : NO_GBP->BELOW_45K:1
+
+  Error direction:  over-scoring 0  |  under-scoring 0
+
+------------------------------------------------------------------------
+  adapters_v12/final  label=100.0%  loc=25.0%  role=100.0%  tech=25.0%  comp=75.0%  wa=75.0%  gf=0%  maybe=0%  bad=100%
+========================================================================
+
+Predictions: eval_results/v12_1_reeval/adapters_v12/2026-03-27_164739_test_labeled_audited_student_v7_final_chunk38of64.predictions.jsonl
+Summary: eval_results/v12_1_reeval/adapters_v12/2026-03-27_164739_test_labeled_audited_student_v7_final_chunk38of64.summary.json

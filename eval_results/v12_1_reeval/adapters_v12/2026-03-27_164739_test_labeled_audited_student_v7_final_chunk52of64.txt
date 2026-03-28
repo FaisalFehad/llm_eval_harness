@@ -1,0 +1,59 @@
+Output: eval_results/v12_1_reeval/adapters_v12/2026-03-27_164739_test_labeled_audited_student_v7_final_chunk52of64.txt
+Prompt: prompts/student_v7.txt
+Adapter: finetune/adapters_v12
+Model: mlx-community/Qwen2.5-1.5B-Instruct-4bit
+------------------------------------------------------------
+------------------------------------------------------------
+Chunk 52/64: jobs 205–208
+Running V7 eval on 4 jobs...
+
+[205/239] ✓  20.7s  Senior Machine Learning Engineer            good_fit              100%
+[206/239] ✓  13.1s  Senior Product Engineer (TS/NodeJS/Vue)     good_fit              100%
+[207/239] ✓  12.7s  Senior Software Engineer                    good_fit              100%
+[208/239] ✗   4.2s  Senior Software Engineer                    maybe->good_fit        75%
+                    loc IN_LONDON->IN_LONDON ✓ | arr UNK->UNK ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE->NODE,REACT,JS_TS,AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+                    London, England, United Kingdom | Senior Software Engineer | Java, node.js JUnit, Mockito, testcontainers Micronaut, GraphQL, gRPC Azure Cloud, Kubernetes GitHub Actions, Dynatrace
+
+
+========================================================================
+  V7 EVAL  adapters_v12  iter final
+  eval set: test_labeled_audited  |  prompt: student_v7  |  n=4
+========================================================================
+  Parse failures: 0   Invalid tokens: 0   Fuzzy corrections: 0   Valid: 4/4
+
+  Label accuracy:  3/4 = 75.0%   NOT MET  (target >=90%)
+  Score accuracy:  1/4 = 25.0%
+
+  Fit accuracy (macro):  33.3%  NOT MET   gf=100%  maybe=0%  bad=0%
+
+  Field token accuracy:
+    loc            ####################    4/4  100.0%
+    arr            ####################    4/4  100.0%
+    sen            ####################    4/4  100.0%
+    tech           ##########..........    2/4  50.0%
+    comp           ###############.....    3/4  75.0%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    good_fit           3       3    100%
+    maybe              0       1      0%  !
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [3]         0         0
+    maybe                1       [0]         0
+    bad_fit              0         0       [0]
+
+  Field error transitions (top per field):
+    tech          : AI_ML,JS_TS->AI_ML:1  NODE->AI_ML,JS_TS,NODE,REACT:1
+    comp          : RANGE_55_74K->RANGE_75_99K:1
+
+  Error direction:  over-scoring 0  |  under-scoring 0
+
+------------------------------------------------------------------------
+  adapters_v12/final  label=75.0%  loc=100.0%  role=100.0%  tech=50.0%  comp=75.0%  wa=100.0%  gf=100%  maybe=0%  bad=0%
+========================================================================
+
+Predictions: eval_results/v12_1_reeval/adapters_v12/2026-03-27_164739_test_labeled_audited_student_v7_final_chunk52of64.predictions.jsonl
+Summary: eval_results/v12_1_reeval/adapters_v12/2026-03-27_164739_test_labeled_audited_student_v7_final_chunk52of64.summary.json

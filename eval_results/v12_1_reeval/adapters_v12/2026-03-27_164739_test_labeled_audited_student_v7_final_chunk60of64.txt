@@ -1,0 +1,58 @@
+Output: eval_results/v12_1_reeval/adapters_v12/2026-03-27_164739_test_labeled_audited_student_v7_final_chunk60of64.txt
+Prompt: prompts/student_v7.txt
+Adapter: finetune/adapters_v12
+Model: mlx-community/Qwen2.5-1.5B-Instruct-4bit
+------------------------------------------------------------
+------------------------------------------------------------
+Chunk 60/64: jobs 237–239
+Running V7 eval on 3 jobs...
+
+[237/239] ✗  14.3s  Senior DevOps Engineer - AWS Infrastructur  bad_fit->maybe          0%
+                    loc REMOTE->REMOTE ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech OOS->OOS ✓ | comp RANGE_55_74K->ABOVE_100K ✗
+                    Remote UK | Minimum of 4 days a week on-site is required for deep collaboration, strategic planning, and essential on-site presence during major deployments or outages | Senior Dev
+
+[238/239] ✓   9.6s  Junior DevOps Engineer                      bad_fit                50%
+[239/239] ✓   8.1s  Senior Software Engineer                    bad_fit                67%
+
+========================================================================
+  V7 EVAL  adapters_v12  iter final
+  eval set: test_labeled_audited  |  prompt: student_v7  |  n=3
+========================================================================
+  Parse failures: 0   Invalid tokens: 0   Fuzzy corrections: 0   Valid: 3/3
+
+  Label accuracy:  2/3 = 66.7%   NOT MET  (target >=90%)
+  Score accuracy:  1/3 = 33.3%
+
+  Fit accuracy (macro):  22.2%  NOT MET   gf=0%  maybe=0%  bad=67%
+
+  Field token accuracy:
+    loc            #############.......    2/3  66.7%
+    arr            #############.......    2/3  66.7%
+    sen            ####################    3/3  100.0%
+    tech           ####################    3/3  100.0%
+    comp           ######..............    1/3  33.3%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    bad_fit            2       3     67%
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [0]         0         0
+    maybe                0       [0]         0
+    bad_fit              0         1       [2]
+
+  Field error transitions (top per field):
+    loc           : REMOTE->IN_LONDON:1
+    arr           : HYBRID->REMOTE:1
+    comp          : RANGE_55_74K->ABOVE_100K:1  RANGE_75_99K->BELOW_45K:1
+
+  Error direction:  over-scoring 1  |  under-scoring 0
+
+------------------------------------------------------------------------
+  adapters_v12/final  label=66.7%  loc=66.7%  role=100.0%  tech=100.0%  comp=33.3%  wa=66.7%  gf=0%  maybe=0%  bad=67%
+========================================================================
+
+Predictions: eval_results/v12_1_reeval/adapters_v12/2026-03-27_164739_test_labeled_audited_student_v7_final_chunk60of64.predictions.jsonl
+Summary: eval_results/v12_1_reeval/adapters_v12/2026-03-27_164739_test_labeled_audited_student_v7_final_chunk60of64.summary.json

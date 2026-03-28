@@ -1,0 +1,66 @@
+Output: eval_results/v12_1_reeval/adapters_v12/2026-03-27_164739_test_labeled_audited_student_v7_final_chunk43of64.txt
+Prompt: prompts/student_v7.txt
+Adapter: finetune/adapters_v12
+Model: mlx-community/Qwen2.5-1.5B-Instruct-4bit
+------------------------------------------------------------
+------------------------------------------------------------
+Chunk 43/64: jobs 169–172
+Running V7 eval on 4 jobs...
+
+[169/239] ✓   9.6s  Frontend Platform Engineer                  maybe                 100%
+[170/239] ✗  13.8s  Frontend Product Engineer | EU / UK         good_fit->bad_fit      50%
+                    loc UK_OTHER->UK_OTHER ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech JS_TS,AI_ML->JS_TS,AI_ML ✓ | comp ABOVE_100K->BELOW_45K ✗
+                    Bristol, England, United Kingdom | Remote (GMT-5 to GMT+1) | Mid-Senior£100,000 – £200,000 + meaningful equity | Next.js, TypeScript, AI | £100k–£200k base
+
+[171/239] ✗  15.8s  Full Stack Developer                        good_fit->maybe        33%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,REACT,JS_TS,AI_ML->REACT,JS_TS,AI_ML ✗ | comp NO_GBP->NO_GBP ✓
+                    London, England, United Kingdom | 3 days in the office, 2 from home | Full Stack Developer | HTML, CSS, JavaScript/TypeScript, PHP, Node.js, React, Preact, Solid, Vue, WordPress, P
+
+[172/239] ✗   9.0s  Full Stack Developer (Typescript/NodeJs)    maybe->bad_fit         25%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,REACT,JS_TS,AI_ML->NODE,REACT,JS_TS,AI_ML ✓ | comp RANGE_45_54K->BELOW_45K ✗
+                    City Of Bristol, England, United Kingdom | Hybrid working | Node.js, React/React Native, MySQL / PostgreSQL, Typescript, Serverless / Lambda, Git, AWS cloud / CDK, Jest, HTML / CSS
+
+
+========================================================================
+  V7 EVAL  adapters_v12  iter final
+  eval set: test_labeled_audited  |  prompt: student_v7  |  n=4
+========================================================================
+  Parse failures: 0   Invalid tokens: 0   Fuzzy corrections: 0   Valid: 4/4
+
+  Label accuracy:  1/4 = 25.0%   NOT MET  (target >=90%)
+  Score accuracy:  0/4 = 0.0%
+
+  Fit accuracy (macro):  16.7%  NOT MET   gf=0%  maybe=50%  bad=0%
+
+  Field token accuracy:
+    loc            ####################    4/4  100.0%
+    arr            ####################    4/4  100.0%
+    sen            ###############.....    3/4  75.0%
+    tech           ###############.....    3/4  75.0%
+    comp           ##########..........    2/4  50.0%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    good_fit           0       2      0%  !
+    maybe              1       2     50%  !
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [0]         1         1
+    maybe                0       [1]         1
+    bad_fit              0         0       [0]
+
+  Field error transitions (top per field):
+    sen           : LEVEL_3->LEVEL_2:1
+    tech          : AI_ML,JS_TS,NODE,REACT->AI_ML,JS_TS,REACT:1
+    comp          : ABOVE_100K->BELOW_45K:1  RANGE_45_54K->BELOW_45K:1
+
+  Error direction:  over-scoring 0  |  under-scoring 2
+
+------------------------------------------------------------------------
+  adapters_v12/final  label=25.0%  loc=100.0%  role=75.0%  tech=75.0%  comp=50.0%  wa=100.0%  gf=0%  maybe=50%  bad=0%
+========================================================================
+
+Predictions: eval_results/v12_1_reeval/adapters_v12/2026-03-27_164739_test_labeled_audited_student_v7_final_chunk43of64.predictions.jsonl
+Summary: eval_results/v12_1_reeval/adapters_v12/2026-03-27_164739_test_labeled_audited_student_v7_final_chunk43of64.summary.json

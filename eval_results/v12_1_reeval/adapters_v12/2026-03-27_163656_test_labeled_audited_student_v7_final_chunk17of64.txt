@@ -1,0 +1,62 @@
+Output: eval_results/v12_1_reeval/adapters_v12/2026-03-27_163656_test_labeled_audited_student_v7_final_chunk17of64.txt
+Prompt: prompts/student_v7.txt
+Adapter: finetune/adapters_v12
+Model: mlx-community/Qwen2.5-1.5B-Instruct-4bit
+------------------------------------------------------------
+------------------------------------------------------------
+Chunk 17/64: jobs 65–68
+Running V7 eval on 4 jobs...
+
+[ 65/239] ✗   7.0s  Senior Software Engineer                    good_fit->maybe         0%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech JS_TS,AI_ML->OOS ✗ | comp ABOVE_100K->ABOVE_100K ✓
+                    London Area, United Kingdom | Hybrid- London | Senior Software Engineer | Python, Go, Rust, Typescript, ML, LLM | £100,000–£135,000 + Generous Equity + Strong Package
+
+[ 66/239] ✓   4.6s  Senior Software Engineer, Strategy Platfor  maybe                  50%
+[ 67/239] !   9.9s  Lead Frontend Engineer                      INVALID TOKEN: ['Invalid tech token: "CI"', 'Invalid tech token: "CD"', 'Invalid tech token: "NEXT.JS"']
+[ 68/239] ✗   2.1s  Software Engineer | React & Python (full s  maybe->bad_fit         25%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech REACT->REACT,JS_TS ✗ | comp RANGE_55_74K->BELOW_45K ✗
+                    London Area, United Kingdom (Hybrid) | Hybrid (London, Oxford or Cambridge) | Software Engineer | React & Python | £60,000 to £70,000 plus benefits
+
+
+========================================================================
+  V7 EVAL  adapters_v12  iter final
+  eval set: test_labeled_audited  |  prompt: student_v7  |  n=4
+========================================================================
+  Parse failures: 0   Invalid tokens: 1   Fuzzy corrections: 0   Valid: 3/4
+
+  Label accuracy:  1/3 = 33.3%   NOT MET  (target >=90%)
+  Score accuracy:  1/3 = 33.3%
+
+  Fit accuracy (macro):  16.7%  NOT MET   gf=0%  maybe=50%  bad=0%
+
+  Field token accuracy:
+    loc            ####################    3/3  100.0%
+    arr            ####################    3/3  100.0%
+    sen            ####################    3/3  100.0%
+    tech           ######..............    1/3  33.3%
+    comp           #############.......    2/3  66.7%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    good_fit           0       1      0%  !
+    maybe              1       2     50%  !
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [0]         1         0
+    maybe                0       [1]         1
+    bad_fit              0         0       [0]
+
+  Field error transitions (top per field):
+    tech          : AI_ML,JS_TS->OOS:1  REACT->JS_TS,REACT:1
+    comp          : RANGE_55_74K->BELOW_45K:1
+
+  Error direction:  over-scoring 0  |  under-scoring 1
+
+------------------------------------------------------------------------
+  adapters_v12/final  label=33.3%  loc=100.0%  role=100.0%  tech=33.3%  comp=66.7%  wa=100.0%  gf=0%  maybe=50%  bad=0%
+========================================================================
+
+Predictions: eval_results/v12_1_reeval/adapters_v12/2026-03-27_163656_test_labeled_audited_student_v7_final_chunk17of64.predictions.jsonl
+Summary: eval_results/v12_1_reeval/adapters_v12/2026-03-27_163656_test_labeled_audited_student_v7_final_chunk17of64.summary.json

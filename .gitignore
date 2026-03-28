@@ -43,6 +43,10 @@ sweep_v14_1.5B.log
 *.partial
 *.log
 
+# Master eval — results and pre-copied adapters (regenerate with server_eval.py)
+master_eval/adapters/
+master_eval/__pycache__/
+
 # PhotoRec data recovery files
 photorec.se2
 photorec.ses

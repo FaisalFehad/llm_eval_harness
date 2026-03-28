@@ -33,6 +33,7 @@ Usage:
 import argparse
 import datetime
 import json
+import math
 import re
 import sys
 import time
@@ -232,6 +233,10 @@ def main():
     parser.add_argument("--max-tokens", type=int, default=MAX_TOKENS,
                         help=f"Max tokens to generate (default: {MAX_TOKENS}). "
                              "Increase to 3000+ to give thinking mode more budget.")
+    parser.add_argument("--chunk", type=int, default=None,
+                        help="Which chunk to process (1-indexed). Use with --num-chunks.")
+    parser.add_argument("--num-chunks", type=int, default=None,
+                        help="Total number of chunks for parallel eval (e.g. 4).")
     args = parser.parse_args()
 
     # Output file setup — timestamped for history (never overwrites)
@@ -241,18 +246,20 @@ def main():
     prompt_stem = Path(args.prompt).stem
     model_stem = args.model.split("/")[-1]
 
+    chunk_suffix = f"_chunk{args.chunk}of{args.num_chunks}" if args.chunk else ""
+
     if args.adapter:
         p = Path(args.adapter)
         adapter_folder = p.parent.name if (p.is_file() or p.suffix == ".safetensors") else p.name
         checkpoint_stem = p.stem if p.is_file() and p.suffix == ".safetensors" else "final"
         checkpoint_stem = checkpoint_stem.replace("_adapters", "")
         output_dir = Path(args.output_dir) / adapter_folder
-        output_file = output_dir / f"{timestamp}_{test_stem}_{prompt_stem}_{checkpoint_stem}.txt"
+        output_file = output_dir / f"{timestamp}_{test_stem}_{prompt_stem}_{checkpoint_stem}{chunk_suffix}.txt"
     else:
         adapter_folder = "baseline"
         checkpoint_stem = model_stem
         output_dir = Path(args.output_dir) / "baseline"
-        output_file = output_dir / f"{timestamp}_{test_stem}_{prompt_stem}_{model_stem}.txt"
+        output_file = output_dir / f"{timestamp}_{test_stem}_{prompt_stem}_{model_stem}{chunk_suffix}.txt"
 
     output_dir.mkdir(parents=True, exist_ok=True)
     partial_file = output_file.with_suffix(".txt.partial")
@@ -311,6 +318,15 @@ def main():
         test_examples = [(i, all_examples[i - 1]) for i in sorted(job_indices)]
     else:
         test_examples = [(i + 1, job) for i, job in enumerate(all_examples)]
+
+    if args.chunk and args.num_chunks:
+        chunk_size = math.ceil(len(test_examples) / args.num_chunks)
+        start = (args.chunk - 1) * chunk_size
+        test_examples = test_examples[start:start + chunk_size]
+        if not test_examples:
+            print(f"Chunk {args.chunk}/{args.num_chunks}: no jobs (dataset too small for this many chunks). Exiting.")
+            return
+        print(f"Chunk {args.chunk}/{args.num_chunks}: jobs {test_examples[0][0]}–{test_examples[-1][0]}")
 
     print(f"Running V7 eval on {len(test_examples)} jobs...\n")
 
@@ -396,6 +412,11 @@ def main():
             scored["parse_fail"] = False
             scored["invalid_token"] = True
             results.append(scored)
+            predictions.append({
+                "job_index": orig_idx, "title": job["title"],
+                "parse_fail": False, "invalid_token": True,
+                "raw_output": response[:500], "errors": scored.get("errors"),
+            })
             print(f"[{orig_idx:3d}/{len(all_examples)}] !  {elapsed:4.1f}s  "
                   f"{job['title'][:42]:<42}  INVALID TOKEN: {scored['errors']}")
             continue

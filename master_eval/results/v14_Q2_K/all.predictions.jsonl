@@ -1,0 +1,239 @@
+{"job_index": 1, "title": "Staff Software Engineer", "parse_fail": true, "raw_output": "<think>\n\n"}
+{"job_index": 2, "title": "Lead DevOps Architect", "parse_fail": true, "raw_output": "<think>\n\n"}
+{"job_index": 3, "title": "Software Engineer - Backend", "parse_fail": true, "raw_output": ""}
+{"job_index": 4, "title": "Full-Stack Developer", "parse_fail": true, "raw_output": ""}
+{"job_index": 5, "title": "Planning Engineer", "parse_fail": true, "raw_output": "</think>\n\nKeySpec: IN_OFFICE | REMOTE | UNK\n  No hybrid or remote-first, but some remote-friendly (e.g. 2\u20133 days in the office). Unk: no explicit location, but some with in-person work. Unk: no explicit location, but some with in-person work, and no UK/UK/non-UK/remote/city/region/country/region/region/region/region/region/region/region/region/region/region/region/region/region/region/region/region/region/region/region/region/region/region/region/region/region/region/region/region/region/region/"}
+{"job_index": 6, "title": "Head Of AI Engineering (strategy And Innovation)", "parse_fail": true, "raw_output": "#CLASSIFICATION#\r\n#arr_type#\r\n#sen_level#\r\n#comp_level#\r\n#tech_keywords#\r\n#comp_national_scope#\r\n#sen_national_scope#"}
+{"job_index": 7, "title": "Software Engineer - Internship", "parse_fail": true, "raw_output": ""}
+{"job_index": 8, "title": "Senior Software Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 9, "title": "Software Engineer 1", "parse_fail": true, "raw_output": ""}
+{"job_index": 10, "title": "ATUM Deep-Tech Founder (technical) - Singapore", "parse_fail": true, "raw_output": "</think>\n\n  \"AT\" or \"A\" or \"The\" or \"This\" or \"This/this\" - never use. Never use \"a\" or \"the\". Always use \"The\". Always use \"The\". Always use \"The\". Always use \"The\". Always use \"The\". Always use \"The\". Always use \"The\". Always use \"The\". Always use \"The\". Always use \"The\". Always use \"The\". Always use \"The\". Always use \"The\". Always use \"The\". Always use \"The\". Always use \"The\". Always use \"The\". Always use \"The\". Always use \"The\". Always use \"The\". Always use \"The\". Always use \"The\". Always us"}
+{"job_index": 11, "title": "Software Engineer - Backend", "parse_fail": true, "raw_output": ""}
+{"job_index": 12, "title": "Software Engineer", "parse_fail": true, "invalid_token": true, "raw_output": "{\n  \"job_title\": \"Software Engineer\",\n  \"job_description_and_place_keywords_and_location_and_arrival_and_comp_and_n_1\": \"Begin your response with a { and end with a } in this space and no other text. Your response must be a single JSON object with exactly the following keys and no additional fields. If you need to respond with a JSON object that has no keys, respond with an empty object. If you need to respond with a JSON object that has no keys, respond with an empty object. If you need to resp", "errors": ["Missing field: loc", "Missing field: arr", "Missing field: sen", "Missing field: tech", "Missing field: comp"]}
+{"job_index": 13, "title": "Full Stack Engineer", "parse_fail": true, "raw_output": "Wales, England, or Scotland, or UK-based or remote: All valid. No specific location or time constraints. No salary or benefits mentioned. No specific skills or technologies described. No clear role or team. No clear role or team. No clear role or team. No clear role or team. No clear role or role. No clear role or role. No clear role or role. No clear role or role. No clear role or role. No clear role or role. No clear role or role. No clear role or role. No clear role or role. No clear role or "}
+{"job_index": 14, "title": "Full-Stack Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 15, "title": "Technical Director", "parse_fail": true, "raw_output": ""}
+{"job_index": 16, "title": "Senior Frontend Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 17, "title": "Founding Engineer (\u00a3240k+ )", "parse_fail": true, "raw_output": ".jobs.response\n\n{\n  \"job_type\": \"REMOVER\",\n  \"one_line_title\": \"Lead, Data & Design Engineer\",\n  \"one_line_job_title\": \"Lead, Data & Design Engineer\",\n  \"one_line_location\": \"London\",\n  \"one_line_country\": \"UK_OTHER\",\n  \"one_line_arr\": \"REMOVER\",\n  \"one_line_arr_comp\": \"REMOVER\",\n  \"one_line_comp_type\": \"NO_GBP\",\n  \"one_line_comp_currency\": \"UNK\",\n  \"one_line_comp_salary_range\": \"NO_GBP\",\n  \"one_line_comp_currency_and_currency_type\": \"NO_GBP\",\n  \"one_line_comp_currency_and_currency_type_and_curr"}
+{"job_index": 18, "title": "Modern Workplace Tech Bar Lead", "parse_fail": true, "raw_output": ""}
+{"job_index": 19, "title": "Human Resources Manager", "parse_fail": true, "raw_output": "respond: {\n  \"job_title\": \"Human Resources Manager\"\n  \"location_title_code\": \"UK_OTHER\"\n  \"senior_level_code\": \"LEVEL_2\"\n  \"technology_code\": \"AI_ML\"\n  \"classification\": \"SOFTWARE_DEVELOPER\"\n}"}
+{"job_index": 20, "title": "Junior Software Engineer (f/m/d)", "parse_fail": true, "raw_output": "<think>\n\n"}
+{"job_index": 21, "title": "Cyber Infrastructure Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 22, "title": "Senior Software Engineer (php/laravel)", "parse_fail": true, "raw_output": "<think>\n\n</think>\n\n"}
+{"job_index": 23, "title": "Senior Software Developer, UK", "parse_fail": true, "raw_output": ""}
+{"job_index": 24, "title": "Full Stack Web Developer", "parse_fail": true, "raw_output": "Respond with exactly one JSON object, no extra text. Respond with exactly one JSON object, no extra text. Respond with exactly one JSON object, no extra text. Respond with exactly one JSON object, no extra text. Respond with exactly one JSON object, no extra text. Respond with exactly one JSON object, no extra text. Respond with exactly one JSON object, no extra text."}
+{"job_index": 25, "title": "Software Engineer (swe/swe Ii), AI Platform- Slack", "parse_fail": true, "raw_output": ""}
+{"job_index": 26, "title": "Lead, Digital Applications", "parse_fail": true, "raw_output": ""}
+{"job_index": 27, "title": "Data Analyst / Data Scientist", "parse_fail": true, "raw_output": "<think>\n\n</think>\n\n  \n "}
+{"job_index": 28, "title": "Software Engineer (Back end)", "parse_fail": true, "raw_output": ""}
+{"job_index": 29, "title": "Senior Full Stack Engineer", "parse_fail": true, "raw_output": "</think>\n\n"}
+{"job_index": 30, "title": "Customer Solutions Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 31, "title": "Senior Software Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 32, "title": "Software Engineer II-Backend", "parse_fail": true, "raw_output": "<think>\n\n"}
+{"job_index": 33, "title": "Senior Software Engineer, \u00a370,000 To \u00a385,000, UK", "parse_fail": true, "raw_output": ""}
+{"job_index": 34, "title": "Senior Software Engineer", "parse_fail": true, "raw_output": "<think>\n\n  \n"}
+{"job_index": 35, "title": "Software Developer", "parse_fail": true, "raw_output": ""}
+{"job_index": 36, "title": "Data Engineer - \u00a3150k-\u00a3200k TC", "parse_fail": true, "invalid_token": true, "raw_output": "{\n    \"comp\": \"UNKNOWN\"\n  }", "errors": ["Missing field: loc", "Missing field: arr", "Missing field: sen", "Missing field: tech"]}
+{"job_index": 37, "title": "Senior Product Manager", "parse_fail": true, "raw_output": ""}
+{"job_index": 38, "title": "Graduate Software Developer", "parse_fail": true, "raw_output": "<think>\n</think>\n\n"}
+{"job_index": 39, "title": "Senior / Lead Software Engineer", "parse_fail": true, "raw_output": "<think>\n\n"}
+{"job_index": 40, "title": "Software Engineer, New Grad (recent 2025 Grads)", "parse_fail": true, "raw_output": ""}
+{"job_index": 41, "title": "Senior Data Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 42, "title": "IT Support Engineer (2nd/3rd Line) - Central Glasgow Or London Hybrid \u2013 Circa 45K Plus Bonus", "parse_fail": true, "invalid_token": true, "raw_output": "{\n  \"arr\": \"REMARK\",\n  \"sen\": \"LEVEL_2\",\n  \"comp\": \"UP_TO_ONLY\",\n  \"location\": {\n    \"IN_LONDON\": true\n  },\n  \"sen_json\": {\n    \"LABEL\": \"L2\"\n  }\n}", "errors": ["Missing field: loc", "Missing field: tech"]}
+{"job_index": 43, "title": "Data Engineer", "parse_fail": true, "raw_output": "\"loc\"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"   \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  \"  "}
+{"job_index": 44, "title": "Data Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 45, "title": "Software Engineer", "parse_fail": true, "raw_output": "\"Salary: Circa \u00a364,000 depending on experience. No salary mentioned. Response: NO_GBP/NO_GBP | Up_To_ONLY | RANGE_45_74K | RANGE_75_99K | ABOVE_100K | ABOVE_100K.  Title: Software Engineer  Location: Bristol, England, United Kingdom  Description: About The JobAn exciting opportunity to work as a Software Engineer improving reliability and reducing technical debt in our Simulation Software Department. You will be working in an agile manner, close to your customers and in a key position to learn a"}
+{"job_index": 46, "title": "Full Stack Developer", "parse_fail": true, "raw_output": "<think>\n</think>\n\n"}
+{"job_index": 47, "title": "Machine Learning Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 48, "title": "Customer Success Manager", "parse_fail": true, "raw_output": "({\r\n  \"arr\": \"REREMOTE\", // REM: includes remote-first with no in-office days\r\n  \"sen\": \"LEVEL_2\",    // L2: no clear manager/managerial role\r\n  \"comp\": \"NO_GBP\",    // No salary in GBP or explicit range; no explicit currency\r\n  \"keywords\": [\r\n    \"AI, AI, AI, machine, machine, machine, machine, machine, machine, machine, machine, machine, machine, machine, machine, machine, machine, machine, machine, machine, machine, machine, machine, machine, machine, machine, machine, machine, machine, machi"}
+{"job_index": 49, "title": "Quality Assurance Tester", "parse_fail": true, "raw_output": ""}
+{"job_index": 50, "title": "Data Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 51, "title": "Data Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 52, "title": "DevOps Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 53, "title": "Senior Electrical Design Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 54, "title": "AI Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 55, "title": "Senior Engineering Manager", "parse_fail": true, "raw_output": ""}
+{"job_index": 56, "title": "Software Engineer I", "parse_fail": true, "raw_output": ""}
+{"job_index": 57, "title": "Front End Developer (remote)", "parse_fail": true, "raw_output": "{\"arr\": \"UNK\",\"comp\": \"WAVE_GDL\",\"sen\": \"LEVEL_2\",\"comp_fortwo_only|inout|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|outof|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out0|out"}
+{"job_index": 58, "title": "Security Engineer", "parse_fail": true, "raw_output": "\"Title: Security Engineer\"  \"Location: London, England, United Kingdom\"  \"Description: Security Engineer\"  \"Location: London, England, United Kingdom\"  \"Location: London, England, United Kingdom\"  \"Location: London, England, United Kingdom\"  \"Location: London, England, United Kingdom\"  \"Location: London, England, United Kingdom\"  \"Location: London, England, United Kingdom\"  \"Location: London, England, United Kingdom\"  \"Location: London, England, United Kingdom\"  \"Location: London, England, Unite"}
+{"job_index": 59, "title": "Software Developer", "parse_fail": true, "raw_output": ""}
+{"job_index": 60, "title": "Software Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 61, "title": "Senior DevOps Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 62, "title": "AI Platform Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 63, "title": "Founding Engineer (Series A)", "parse_fail": true, "raw_output": ""}
+{"job_index": 64, "title": "Head of Infrastructure", "parse_fail": true, "raw_output": ""}
+{"job_index": 65, "title": "Senior Software Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 66, "title": "Senior Software Engineer, Strategy Platform", "parse_fail": true, "raw_output": ""}
+{"job_index": 67, "title": "Lead Frontend Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 68, "title": "Software Engineer | React & Python (full stack)", "parse_fail": true, "raw_output": ""}
+{"job_index": 69, "title": "Fintech & Tech for Good | Profitable & Hyper-Growth Start-Up | Senior/Staff/Principal | Up to \u00a3150K | 3 Days Per Week LDN", "parse_fail": true, "raw_output": ""}
+{"job_index": 70, "title": "Frontend Developer", "parse_fail": true, "raw_output": ""}
+{"job_index": 71, "title": "Staff Engineer", "parse_fail": true, "invalid_token": true, "raw_output": "{\"arr\":\"REMOTE\",\"comp\":\"UNK\",\"sen\":\"LEVEL_2\",\"tech\":\"NODE_ONLY\",\"sen_2\":\"IN_OFFICE\",\"sen_3\":\"NO_GBP\",\"sen_4\":\"UNK\",\"sen_5\":\"UNK\",\"sen_6\":\"UNK\",\"sen_7\":\"UNK\",\"sen_8\":\"UNK\",\"sen_9\":\"UNK\",\"sen_10\":\"UNK\",\"sen_11\":\"UNK\",\"sen_12\":\"UNK\",\"sen_13\":\"UNK\",\"sen_14\":\"UNK\",\"sen_15\":\"UNK\",\"sen_16\":\"UNK\",\"sen_17\":\"UNK\",\"sen_18\":\"UNK\",\"sen_ (19)\":\"UNK\",\"sen_20\":\"UNK\",\"sen_21\":\"UNK\",\"sen_22\":\"UNK\",\"sen_23\":\"UNK\",\"sen_24\":\"UNK\",\"sen_25\":\"UNK\",\"sen_26\":\"UNK\",\"sen_27\":\"UNK\",\"sen_28\":\"UNK\",\"sen_29\":\"UNK\",\"sen_30\":\"UN", "errors": ["Missing field: loc"]}
+{"job_index": 72, "title": "Technical Writer", "parse_fail": true, "raw_output": "</think>\n\n{\n  \"arr\"\": \"UNK\",\n  \"comp\": \"UNK\"\n}"}
+{"job_index": 73, "title": "Data Analyst", "parse_fail": true, "raw_output": "Assistant\nAssistant\n"}
+{"job_index": 74, "title": "Full Stack Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 75, "title": "Junior Software Engineer", "parse_fail": true, "invalid_token": true, "raw_output": "{\n      \"location_comp\": \"OUTSIDE_UK\",\n      \"arr_comp\": \"REMOTE\",\n      \"sen_comp\": \"LEVEL_3\",\n      \"t_comp\": \"NO_O_S\",\n      \"comp\": {\n        \"location_comp\": \"UK_OTHER\",\n        \"sen_comp\": \"PREFER_S\"\n      }\n    }\n  ]", "errors": ["Missing field: loc", "Missing field: arr", "Missing field: sen", "Missing field: tech"]}
+{"job_index": 76, "title": "Security Engineer", "parse_fail": true, "invalid_token": true, "raw_output": "[\n  {\n    \"_original_tags\": [],\n    \"_original_position_title\": \"Security Engineer\",\n    \"arr\": \"REMOTE_NOT_APPLICABLE\",\n    \"comp\": \"NO_GBP\",\n    \"sen\": \"LEVEL_2\",\n    \"location\": \"UK_REMOTE_NOT_APPLICABLE\",\n    \"sen_major_key\": \"LEVEL_2\",\n    \"one_or_two_major_key\": \"ONE_OR_BOTH_2_3_4_5_6_7_8_9_10_11_12_13_14_15_16_17_18_19_20_21_22_23_24_25_26_27_28_29_30_31_32_33_34_35_36_37_38_39_40_41_42_43_44_45_46_47_48_49_50_51_52_53_54_55_56_57_58_59_60_61_62_63_64_65_66_67_68_69_70_71_72_73_74_75_76_7", "errors": ["Missing field: loc", "Missing field: tech"]}
+{"job_index": 77, "title": "Developer", "parse_fail": true, "raw_output": ""}
+{"job_index": 78, "title": "Frontend Developer", "parse_fail": true, "raw_output": "<think>\n</think>\n\n"}
+{"job_index": 79, "title": "IT Support Engineer", "parse_fail": true, "raw_output": "<think>\n</think>\n\n"}
+{"job_index": 80, "title": "Trainee Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 81, "title": "Frontend Developer", "parse_fail": true, "raw_output": ""}
+{"job_index": 82, "title": "Lead Engineer", "parse_fail": true, "raw_output": "<think>\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n    \r\n"}
+{"job_index": 83, "title": "Security Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 84, "title": "Junior Software Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 85, "title": "Junior Software Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 86, "title": "Engineering Manager", "parse_fail": true, "raw_output": "<think>\n</think>\n\n"}
+{"job_index": 87, "title": "Backend Engineer", "parse_fail": true, "raw_output": "</think>\n\n  \n  \"Title: DataNinja Corp\"  \"Location: Dublin, Ireland\"  \"Description: DataNinja Corp is a data analytics company specializing in transforming raw data into actionable insights. Our innovative approach sets us apart in a competitive market.\"  \"**Responsibilities:**\"  \"  - Develop and maintain server-side logic using nodejs and javascript/typescript.\"  \"  - Collaborate with front-end developers to integrate user-facing elements.\"  \"  - Ensure high performance and responsiveness to req"}
+{"job_index": 88, "title": "IT Support Engineer", "parse_fail": true, "invalid_token": true, "raw_output": "{\n    \"mode\": \"BASICS\",\n    \"comp\": \"UP_TO_ONLY\"\n  }", "errors": ["Missing field: loc", "Missing field: arr", "Missing field: sen", "Missing field: tech"]}
+{"job_index": 89, "title": "Security Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 90, "title": "Scrum Master", "parse_fail": true, "raw_output": ""}
+{"job_index": 91, "title": "Database Administrator", "parse_fail": true, "raw_output": "</think>\n\n  \n  1. 100% remote working opportunity. \n  1. 100% remote working opportunity. \n  1. 100% remote working opportunity. \n\n  1. 100% remote working opportunity. \n  1. 100% remote working opportunity. \n  1. 10 100% remote working opportunity. \n\n  1. 100% remote working opportunity. \n  1. 100% remote working opportunity. \n  1. 100% remote working opportunity. \n\n  1. 100% remote working opportunity. \n  1. 100% remote working opportunity. \n  1. 100% remote working opportunity. \n\n  1. 100% re"}
+{"job_index": 92, "title": "Full Stack Engineer", "parse_fail": true, "invalid_token": true, "raw_output": "{\"arr\": \"UNK\",\"comp\": \"NO_GBP\", \"sen\": \"LEVEL_2\", \"tech\": \"REACT_JS_TS_OOS\"}", "errors": ["Missing field: loc"]}
+{"job_index": 93, "title": "Lead Engineer", "parse_fail": true, "raw_output": "{\n  \"arr\"\": \"UNK\",\n  \"comp\": \"UNK\",\n  \"sen\"\": \"UNK\"\n}\nBegin your response with\n) {"}
+{"job_index": 94, "title": "Senior Software Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 95, "title": "Engineering Manager", "parse_fail": true, "raw_output": ""}
+{"job_index": 96, "title": "Frontend Developer", "parse_fail": true, "raw_output": "{\"arr\": \"RE\", \"comp\": \"UNK\", \"sen\": \"LEVEL_2\", \"sen_comp\": \"NO_SALARY\", \"sen_title\": \"NO_SALARIES\", \"sen_title_comp\": \"NO_SALARIES\", \"sen_title_comp\": \"NO_SALARIES\", \"sen_title_comp\": \"NO_SALARIES\", \"sen_title_comp\": \"NO_SALARIES\", \"sen_title_comp\": \"NO_SALARIES\", \"sen_title_comp\": \"NO_SALARIES\", \"sen_title_comp\": \"NO_SALARIES\", \"sen_title_comp\": \"NO_SALARIES\", \"sen_title_comp\": \"NO_SALARIES\", \"sen_title_comp\": \"NO_SALARIES\", \"sen_title_comp\": \"NO_SALARIES\", \"sen_title_comp\": \"NO_SALARIES\", \"sen"}
+{"job_index": 97, "title": "Full Stack Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 98, "title": "Senior Developer", "parse_fail": true, "raw_output": ""}
+{"job_index": 99, "title": "Frontend Developer", "parse_fail": true, "raw_output": "</think>\n\n{\n  \"arr\"\": \"REMOVER\",\n  \"comp\": \"UNK\",\n  \"sen\": \"LEVEL_2\",\n  \"dsc\": \"The job description contains no explicit 'arr' or 'comp' indicators. The 'arr' field is determined by the most relevant clue in the job title or description. The 'comp' field is determined by the most relevant clue in the job title or description that corresponds to the most relevant category. The 'sen' field is determined by the most relevant clue in the job title or description that corresponds to the most relevant"}
+{"job_index": 100, "title": "Project Manager", "parse_fail": true, "raw_output": ""}
+{"job_index": 101, "title": "Security Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 102, "title": "DevOps Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 103, "title": "Senior Software Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 104, "title": "Engineering Manager", "parse_fail": true, "raw_output": "Future Tech Solutions is dedicated to building cutting-edge software products that empower businesses. We are looking for an Engineering Manager to lead our talented team of engineers. \n\n** What You'll Do: \n- Oversee engineering projects and manage team performance. \n- Collaborate with stakeholders to define technical requirements. \n- Implement best practices in software development. \n- Lead initiatives in AI/ML integration. \n\n** What You'll Need: \n- Proven experience as an Engineering Manager. "}
+{"job_index": 105, "title": "Trainee Engineer", "parse_fail": true, "raw_output": "respond_with: {\n  loc: \"UK_OTHER\",  // No specific UK city mentioned\n  arr: \"REMOVERE\",  // Fully remote with no required in-person days\n  sen: \"LEVEL_2\",  // Not a clear-cut, explicit \"trainee\" role\n  comp: \"UN_K\",  // No clear subset of \"AI_M\" or \"AI_M\" not explicitly mentioned\n  response: {\n    loc: \"UK_OTHER\",  // No specific city; \"Future\" and \"remote\" imply no fixed location\n    arr: \"REMOVERE\",  // \"Fully remote\" with no in-person days explicitly stated\n    sen: \"LEVEL_2\",  // \"Trainee\" i"}
+{"job_index": 106, "title": "DevOps Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 107, "title": "Senior Software Engineer", "parse_fail": true, "raw_output": "responded with a single JSON object, no extra text."}
+{"job_index": 108, "title": "Full Stack Engineer", "parse_fail": true, "raw_output": "Assistant\n</think>\n\nAssistant\n</think>\n\n\nAssistant\n</think>\n\nAssistant\n"}
+{"job_index": 109, "title": "Engineering Manager", "parse_fail": true, "raw_output": ""}
+{"job_index": 110, "title": "Business Analyst", "parse_fail": true, "raw_output": "{\"arr:'', \"sen:'', \"sen_comp:''\", \"comp:''\", \"loc_comp:''\", \"sen_comp:''\", \"comp_comp:''\"}"}
+{"job_index": 111, "title": "UX Designer", "parse_fail": true, "raw_output": "</think>\n\n{\n  \"arr\" : \"UNK\",    // UNK: no explicit arrangement indicated\n  \"sen\" : \"LEVEL_2\",  //  L2: no \"senior\" or \"manager\" in title\n  \"comp\" : \"UN\"        //  No \"OOS\" or \"AI/ML\" or \"AI\" or \"Machine\" or \"Learning\" or \"M\" in title\n}"}
+{"job_index": 112, "title": "Backend Engineer", "parse_fail": true, "raw_output": "Assistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssistant.\nAssis"}
+{"job_index": 113, "title": "Junior Software Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 114, "title": "Junior Developer", "parse_fail": true, "raw_output": "<think>\n</think>\n\n"}
+{"job_index": 115, "title": "Junior Developer", "parse_fail": true, "raw_output": ""}
+{"job_index": 116, "title": "IT Support Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 117, "title": "UX Designer", "parse_fail": true, "raw_output": ""}
+{"job_index": 118, "title": "DevOps Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 119, "title": "Product Manager", "parse_fail": true, "raw_output": ""}
+{"job_index": 120, "title": "UX Designer", "parse_fail": true, "raw_output": ""}
+{"job_index": 121, "title": "Principal Engineer", "parse_fail": true, "invalid_token": true, "raw_output": "</think>\n\n{\n  \"arr\" : \"UNK\",\n  \"comp\" : \"UNN\",\n  \"sen\" : \"LEVEL_2\",\n  \"sen_t\" : \"unqualified\",\n  \"sen_t\" : \"unqualified\",\n  \"sen_t\" : \"unqualified\"\n}", "errors": ["Missing field: loc", "Missing field: tech"]}
+{"job_index": 122, "title": "UX Designer", "parse_fail": true, "raw_output": "Assistant\n<think>\n\u00a0\n\nAssistant\n</think>\n\nAssistant\n</think>\n\n```@Json\n{\n  \"_id\": {\n    \"$_id\": \"5r8\"\n  },\n  \"_source\": {\n    \"$_source\": \"1\"\n  },\n  \"_isource\": {\n    \"$_isource\": \"1\"\n  },\n  \"_a\": {\n    \"$_a\": \"1\"\n  },\n  \"_t\": {\n    \"$_t\": \"1\"\n  },\n  \"_r\": {\n    \"$_r\": \"1\"\n  },\n  \"_s\": {\n    \"$_s\": \"1\"\n  },\n  \"_e\": {\n    \"$_e\": \"1\"\n  },\n  \"_c\": {\n    \"$_c\": \"1\"\n  },\n  \"_k\": {\n    \"$_k\": \"1\"\n  },\n  \"_m\": {\n    \"$_m\": \"1\"\n  },\n  \"_l\": {\n    \"$_l\": \"1\"\n  },\n  \"_p\": {\n    \"$_p\": \"1\"\n  },\n  \"_z\": {\n  "}
+{"job_index": 123, "title": "Trainee Engineer", "parse_fail": true, "raw_output": "<think>\n</think>\n\n"}
+{"job_index": 124, "title": "Technical Writer", "parse_fail": true, "raw_output": ""}
+{"job_index": 125, "title": "Junior Developer", "parse_fail": true, "raw_output": ""}
+{"job_index": 126, "title": "Technical Writer", "parse_fail": true, "raw_output": "<think>\n</think>\n\n"}
+{"job_index": 127, "title": "Project Manager", "parse_fail": true, "raw_output": ""}
+{"job_index": 128, "title": "Backend Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 129, "title": "Associate Developer", "parse_fail": true, "raw_output": "</think>\n\n# LOCATION COMPETITION\n\n# COMPETITION\n\n# TITLE COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETITION\n\n# COMPETIT"}
+{"job_index": 130, "title": "Lead Engineer", "parse_fail": true, "invalid_token": true, "raw_output": "</think>\n\n{\"arr\": \"REMOVER\", \"comp\": \"NO_GBP\", \"sen\": \"LEVEL_3\", \"title\": \"Lead Engineer\", \"tech\": \"NODE_JS, REACT, AI_M\"}", "errors": ["Missing field: loc"]}
+{"job_index": 131, "title": "Frontend Developer", "parse_fail": true, "raw_output": ""}
+{"job_index": 132, "title": "IT Support Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 133, "title": "Technical Writer", "parse_fail": true, "raw_output": ""}
+{"job_index": 134, "title": "Project Manager", "parse_fail": true, "invalid_token": true, "raw_output": "{\n  \"comp\": \"UNK\"\n}", "errors": ["Missing field: loc", "Missing field: arr", "Missing field: sen", "Missing field: tech"]}
+{"job_index": 135, "title": "Developer", "parse_fail": true, "raw_output": "<think>\n</think>\n\n"}
+{"job_index": 136, "title": "QA Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 137, "title": "Business Analyst", "parse_fail": true, "raw_output": ""}
+{"job_index": 138, "title": "Scrum Master", "parse_fail": true, "raw_output": "{\"arr\": \"REMOVER | HYBRID | IN_OFFICE | UNK\")\n\"comp\": \"NO_GBP | UP_To_ONLY | ABOVE_100K\"respond_with_only_a_json_object_that_contains_all_of_the_following_keys_and_values_in_the_correct_order_and_no_other_keys_or_values\"respond_with_only_a_json_object_that_contains_all_of_the_following_keys_and_values_in_the_correct_order_and_no_other_keys_or_values\""}
+{"job_index": 139, "title": "Product Manager", "parse_fail": true, "raw_output": ""}
+{"job_index": 140, "title": "Software Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 141, "title": "Full Stack Engineer", "parse_fail": true, "raw_output": "<think>\n</think>\n\n "}
+{"job_index": 142, "title": "Engineering Manager", "parse_fail": true, "raw_output": ""}
+{"job_index": 143, "title": "QA Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 144, "title": "Software Developer", "parse_fail": true, "raw_output": ""}
+{"job_index": 145, "title": "Senior Software Developer", "parse_fail": true, "raw_output": ""}
+{"job_index": 146, "title": "Senior Technical Architect", "parse_fail": true, "raw_output": ""}
+{"job_index": 147, "title": "Software Engineer (Entry-Level)", "parse_fail": true, "raw_output": "Assistant: \nOkay, I need to analyze the job description provided and classify it using the specified criteria. Let me start by breaking down the information step by step.\n\n**Location Classification:**\nThe job is in Vancouver, British Columbia, but the location field in the job posting is \"Vancouver, British Columbia, Canada\". The \"Location\" field should be classified as \"IN_LONDON\" only if the job is explicitly remote or the location is explicitly in London. Since the job is in Vancouver, which "}
+{"job_index": 148, "title": "Senior Software Engineer - Web (m/f/d)", "parse_fail": true, "raw_output": ""}
+{"job_index": 149, "title": "Full Stack .NET Developer", "parse_fail": true, "raw_output": "<think>\n\n  \n"}
+{"job_index": 150, "title": "Senior Software Engineer", "parse_fail": true, "raw_output": "{\r\n  \"arr\": \"UNK\",    \"comp\": \"UNK\",    \"sen\": \"UNK\",    \"sen\": \"UNK\",    \"sen\": \"UNK\",    \"sen\": \"UNK\",    \"sen\": \"UNK\",    \"sen\": \"UNK\",    \"sen\": \"UNK\",    \"sen\": \"UNK\",    \"sen\": \"UNK\",    \"sen\": \"UNK\",    \"sen\": \"UNK\",    \"sen\": \"UNK\",    \"sen\": ( \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" | \"UNK\" |"}
+{"job_index": 151, "title": "Support Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 152, "title": "Data Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 153, "title": "Backend Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 154, "title": "Freelance Full Stack Developer", "parse_fail": true, "raw_output": "<think>\n\n"}
+{"job_index": 155, "title": "Software Engineer (backend Focused)", "parse_fail": true, "raw_output": "{\"sen\": \"LEVEL_2\", \"comp\": \"NO_GBP\", \"sen\": \"LEVEL_2\", \"comp\": \"NO_GBP\", \"sen\": \"LEVEL_2\", \"sen\": \"LEVEL_2\", \"sen\": \"LEVEL_2\", \"sen\": \"LEVEL_2\", \"sen\": \"LEVEL_2\", \"sen\": \"LEVEL_2\", \"sen\": \"LEVEL_2\", \"sen\": \"LEVEL_2\", \"sen\": \"LEVEL_2\", \"sen\": \"LEVEL_2\", \"sen\": \"LEVEL_2\", \"sen\": \"LEVEL_2\", \"sen\": \"LEVEL_2\", \"sen\": \"LEVEL_2\", \"sen\": \"LEVEL_2\", \"sen\": \"LEVEL_2\", \"sen\": \"LEVEL_2\", \"sen\": \"LEVEL_2\", \"sen\": \"LEVEL_2\", \"sen\": \"LEVEL_2\", \"sen\": \"LEVEL_2\", \"sen\": ([\"comp\", \"sen\", \"loc\", \"arr\", \"sen\", \"sen"}
+{"job_index": 156, "title": "Back End Developer", "parse_fail": true, "raw_output": ""}
+{"job_index": 157, "title": "Backend Engineer (ai Platform) - London", "parse_fail": true, "raw_output": "<think>\n\n"}
+{"job_index": 158, "title": "Backend Engineer", "parse_fail": true, "raw_output": "<think>\n\n"}
+{"job_index": 159, "title": "Creator Partnerships & Business Development Executive", "parse_fail": true, "raw_output": "<think>\n\n"}
+{"job_index": 160, "title": "CRM +hubspot Technical Executive", "parse_fail": true, "raw_output": "<think>\n\n</think>\n\n"}
+{"job_index": 161, "title": "Data Analyst", "parse_fail": true, "raw_output": ""}
+{"job_index": 162, "title": "Data Scientist", "parse_fail": true, "raw_output": ""}
+{"job_index": 163, "title": "Ecommerce & Digital Marketing Manager - Up To \u00a370,000", "parse_fail": true, "raw_output": ""}
+{"job_index": 164, "title": "Founding Engineer (\u00a380k-\u00a3100k + Equity) At Chalkie AI", "parse_fail": true, "raw_output": ""}
+{"job_index": 165, "title": "Frontend Developer (12-month Fixed-term Contract)", "parse_fail": true, "raw_output": ""}
+{"job_index": 166, "title": "Frontend Developer", "parse_fail": true, "raw_output": "{\"arr\": \"REMIT\", \"comp\": \"NO_GBP\", \"sen\": \"LEVEL_2\", \"sen_comp\": \"NO_GBP\", \"loc\": \"IN_LONDON\", \"title\": \"Front-End Engineer\", \"description\": \"Location: London Area, United Kingdom\", \"sen_comp\": \"NO_GBP\", \"sen_arr\": \"REMIT\")"}
+{"job_index": 167, "title": "Frontend Developer", "parse_fail": true, "raw_output": "<think>\n\n</think>\n\n"}
+{"job_index": 168, "title": "Frontend Developer", "parse_fail": true, "raw_output": ""}
+{"job_index": 169, "title": "Frontend Platform Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 170, "title": "Frontend Product Engineer | EU / UK", "parse_fail": true, "raw_output": "<think>\n\n"}
+{"job_index": 171, "title": "Full Stack Developer", "parse_fail": true, "raw_output": "<think>\n\n  \n</think>\n\n"}
+{"job_index": 172, "title": "Full Stack Developer (Typescript/NodeJs)", "parse_fail": true, "raw_output": "respond with a JSON object, no extra text."}
+{"job_index": 173, "title": "Full Stack Engineer (\u00a360k-\u00a380k + Equity) At Vitruehealth.com", "parse_fail": true, "raw_output": ""}
+{"job_index": 174, "title": "Full Stack Engineer", "parse_fail": true, "raw_output": "<think>\n\n</think>\n\n "}
+{"job_index": 175, "title": "Full Stack Engineer", "parse_fail": true, "raw_output": "<think>\n\n  \n</think>\n\n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n  \n "}
+{"job_index": 176, "title": "Full Stack Engineer (.net / Python / Typescript / Angular) - F1 Racing Team - 12-24 Month FTC", "parse_fail": true, "raw_output": "</think>\n\n"}
+{"job_index": 177, "title": "Fullstack Web Developer \u2013 Humanitarian Operations", "parse_fail": true, "raw_output": ""}
+{"job_index": 178, "title": "Graduate Frontend Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 179, "title": "IT Support Associate", "parse_fail": true, "raw_output": "<think>\n\n</think>\n\n"}
+{"job_index": 180, "title": "IT Support Engineer", "parse_fail": true, "raw_output": "{\"location_country_code_only\":\"IN_LONDON\",\"arr_type\":\"UNK\",\"sen_type\":\"UNK\",\"comp_category\":\"ONS\",\"title_key\":\"IT%20Support%20Engineer\",\"title_key_2\":\"IT%20Support%20Engineer\",\"title_3_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2_2"}
+{"job_index": 181, "title": "Javascript Fullstack Engineer - Senior", "parse_fail": true, "raw_output": "\"Title: JavaScript Fullstack Engineer - Senior\"  \n  \"javascript fullstack engineer - senior\"  \n  \"javascript fullstack engineer - senior\"  \n  \"javascript fullstack engineer - senior\"  \n  \"javascript fullstack engineer - senior\"  \n  \"javascript fullstack engineer - senior\"  \n  \"javascript fullstack engineer - senior\"  \n  \"javascript fullstack engineer - senior\"  \n  \"javascript fullstack engineer - senior\"  \n  \"javascript fullstack engineer - senior\"  \n  \"javascript fullstack engineer - senior\"  \n"}
+{"job_index": 182, "title": "Junior Data Engineer", "parse_fail": true, "raw_output": "{\n  \"arr\": \"REMOVER\",  \"comp\": \"NO_GBP\",  \"sen\": \"LEVEL_2\",  \"sen_comp\": \"DATA_ENGINEER\",  \"sen_comp_ni\": \"DATA_ENGINEER\",  \"sen_comp_ni_ni\": \"DATA_ENGINEER\",  \"sen_comp_ni_ni_ni\": \"DATA_ENGINEER\",  \"sen_comp_ni_ni_ni_n_i\": \"DATA_ENGINEER\",  \"sen_comp_n_i_n_i_n_i_n_i\": \"DATA_ENGINEER\",  \"sen_comp_n_i_n_i_n_i_n_i_n\": \"DATA_ENGINEER\",  \"sen_comp_n_i_n_i_n_i_n_i_n_i\": \"DATA_ENGINEER\",  \"sen_comp_n_i_n_i_n_i_n_i_n_i_n\": \"DATA_ENGINEER\",  \"sen_comp_n_i_n_i_n_i_n_i_n_i_n_i\": \"DATA_ENGINEER\",  \"sen_com"}
+{"job_index": 183, "title": "Junior Developer", "parse_fail": true, "raw_output": "<think>\n\n  \n</think>\n\n"}
+{"job_index": 184, "title": "Junior Front-End (react) Engineer - Up To \u00a3100,000 P/A + Bonus", "parse_fail": true, "raw_output": "<think>\n\n  \n</think>\n\n"}
+{"job_index": 185, "title": "Junior Full Stack PHP Software Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 186, "title": "Junior Software Developer", "parse_fail": true, "raw_output": ""}
+{"job_index": 187, "title": "Junior Software Engineer At Stitch Health", "parse_fail": true, "raw_output": "<think>\n\n  \n"}
+{"job_index": 188, "title": "Lead Software Engineer (full Stack)", "parse_fail": true, "raw_output": ""}
+{"job_index": 189, "title": "Lead Test Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 190, "title": "QA Engineer", "parse_fail": true, "raw_output": "<think>\n\n</think>\n\n"}
+{"job_index": 191, "title": "QA Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 192, "title": "Quality Engineer : Manual Software Testing (hybrid)", "parse_fail": true, "raw_output": "<think>\n\n"}
+{"job_index": 193, "title": "React Native Developer", "parse_fail": true, "raw_output": ""}
+{"job_index": 194, "title": "Research Software Engineer", "parse_fail": true, "raw_output": "<think>\n\n"}
+{"job_index": 195, "title": "Senior Back End Software Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 196, "title": "Senior Backend Developer", "parse_fail": true, "invalid_token": true, "raw_output": "{\"arr\": \"REMO_NA_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_12 (123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123_123", "errors": ["Missing field: loc", "Missing field: sen", "Missing field: tech", "Missing field: comp"]}
+{"job_index": 197, "title": "Senior Data Engineer AWS - Finance Consultancy", "parse_fail": true, "raw_output": ""}
+{"job_index": 198, "title": "Senior DevOps Engineer", "parse_fail": true, "raw_output": "<think>\n\n"}
+{"job_index": 199, "title": "Senior Frontend Developer", "parse_fail": true, "raw_output": "{\n    \"arr\" => \"REMOVERHYBRIS\",\n  \"comp\" => \"NO_GBP\",\n  \"sen\" => \"LEVEL_2\",\n  \"location\" => \"NO_GBP\",\n  \"sen\" => \"LEVEL_2\",\n  \"comp\" => \"NO_GBP\",\n  \"sen\" => \"LEVEL_2\",\n  \"sen\" => \"LEVEL_2\",\n  \"sen\" => \"LEVEL_2\",\n  \"sen\" => \"LEVEL_2\",\n  \"sen\" => \"LEVEL_2\",\n  \"sen\" => \"LEVEL_2\",\n  \"sen\" => \"LEVEL_2\",\n  \"sen\" (1) => \"NO_GBP\",\n  \"sen\" (2) => \"NO_GBP\",\n  \"sen\" (3) => \"NO_GBP\",\n  \"sen\" (4) => \"NO_GBP\",\n  \"sen\" (5) => \"NO_GBP\",\n  \"sen\" (6) => \"NO_GBP\",\n  \"sen\" (7) => \"NO_GBP\",\n  \"sen\" (8) => \"NO_GBP\",\n"}
+{"job_index": 200, "title": "Senior Full Stack Engineer", "parse_fail": true, "raw_output": "respond with a JSON object, no extra text."}
+{"job_index": 201, "title": "Senior Full Stack Software Developer (uk)", "parse_fail": true, "raw_output": "<think>\n\n"}
+{"job_index": 202, "title": "Senior Full-Stack Software Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 203, "title": "Senior Games Developer - PixiJS", "parse_fail": true, "raw_output": "<think>\n\n</think>\n\n"}
+{"job_index": 204, "title": "Senior JavaScript Developer Vue 3", "parse_fail": true, "invalid_token": true, "raw_output": "{\n  \"_original_arrival_policy\": {\n    \"arr\": \"REMOVER\"\n  },\n  \"sen\": \"LEVEL_2\",\n  \"comp\": \"REMOVER\"\n}", "errors": ["Missing field: loc", "Missing field: arr", "Missing field: tech"]}
+{"job_index": 205, "title": "Senior Machine Learning Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 206, "title": "Senior Product Engineer (TS/NodeJS/Vue)", "parse_fail": true, "raw_output": "<think>\n</think>\n\n"}
+{"job_index": 207, "title": "Senior Software Engineer", "parse_fail": true, "raw_output": "{\"arr\": \"REMOVER\", \"comp\": \"NO_GBP\", \"sen\": \"LEVEL_3\", \"sen_tech\": \"SWE\", \"sen_tech_tone\": \"P1\", \"sen_tech_tone_tone\": \"P1\", \"comp_tone\": \"P1\", \"comp_tone_tone\": \"P1\", \"comp_tone_tone_tone\": \"P1\", \"location_tone\": \"P1\", \"location_tone_tone\": \"P1\", \"location_tone_tone_tone\": \"P1\", \"location_tone_tone_tone_tone\": \"P1\", \"location_tone_tone_tone_tone_tone\": \"P1\", \"location_tone_tone_tone_tone_tone_tone\": \"P1\", \"location_tone_tone_tone_tone_tone_tone_tone\": \"P1\", \"location_tone_tone_tone_tone_tone_to"}
+{"job_index": 208, "title": "Senior Software Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 209, "title": "Senior Software Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 210, "title": "Senior Software Engineer", "parse_fail": true, "invalid_token": true, "raw_output": "{\"arr\": \"UNK\",\"sen\": \"LEVEL_2\",\"comp\": \"NO_GBP\",\"ti\": \"NO_GBP\",\"ts\": \"NO_GBP\",\"user\": \"user\",\"location\": \"IN_LONDON\"}", "errors": ["Missing field: loc", "Missing field: tech"]}
+{"job_index": 211, "title": "Senior Software Engineer", "parse_fail": true, "raw_output": "<think>\n\n"}
+{"job_index": 212, "title": "Senior Software Engineer - Backend AI Native", "parse_fail": true, "raw_output": ""}
+{"job_index": 213, "title": "Senior Software Engineer, Backend", "parse_fail": true, "raw_output": "<think>\n\n"}
+{"job_index": 214, "title": "Senior Software Engineer (backend)", "parse_fail": true, "raw_output": ""}
+{"job_index": 215, "title": "Senior Software Engineer, Full Stack, Learning Platforms", "parse_fail": true, "raw_output": ""}
+{"job_index": 216, "title": "Senior Software Engineer - Ts, React, Node - \u00a3110K", "parse_fail": true, "raw_output": ""}
+{"job_index": 217, "title": "Senior Software/Founding Engineer - HealthTech AI Start Up - \u00a3120k - 5 Days Onsite", "parse_fail": true, "raw_output": ""}
+{"job_index": 218, "title": "Software Engineer", "parse_fail": true, "invalid_token": true, "raw_output": "{\n  \"arr\": \"REMOVAL\",\n  \"sen\": \"LEVEL_3\",\n  \"comp\": \"NO_GBP\",\n  \"location\": \"IN_LONDON\",\n  \"title\": \"SOFTWARE_ENGINEER\"\n}", "errors": ["Missing field: loc", "Missing field: tech"]}
+{"job_index": 219, "title": "Software Engineer", "parse_fail": true, "raw_output": "<think>\n\n"}
+{"job_index": 220, "title": "Software Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 221, "title": "Software Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 222, "title": "Software Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 223, "title": "Software Engineer, Front End", "parse_fail": true, "raw_output": ""}
+{"job_index": 224, "title": "Software Engineer Intern", "parse_fail": true, "raw_output": ""}
+{"job_index": 225, "title": "Software/ Platform Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 226, "title": "Trainee Telematics & CCTV Installation Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 227, "title": "Unity 3D Developer", "parse_fail": true, "raw_output": "{\"arr\": \"UNK\", \"comp\": \"NO_GBP\", \"sen\": \"LEVEL_2\", \"title\": \"JOB TITLE\", \"123\": \"123\", \"456\": \"456\", \"789\": \"789\", \"abc\": \"ABC\", \"def\": \"DEF\", \"ghi\": \"GHI\", \"hij\": \"HIJ\", \"klm\": \"KLM\", \"nop\": \"NOP\", \"rstu\": \"RSTu\", \"xyz\": \"XYZ\", \"012\": \"012\", \"345\": \"345\", \"678\": \"678\", \"cba\": \"CBA\", \"ijl\": \"IJL\", \"mno\": \"MNO\", \"pqr\": \"PQR\", \"rst\": \"RST\", \"uvw\": \"UVW\", \"def\": \"DEF\", \"klm\": \"KLM\", \"nop\": \"NOP\", \"rstu\": \"RSTU\", \"xyz\": \"XYZ\")"}
+{"job_index": 228, "title": "Backend Developer", "parse_fail": true, "raw_output": "<think>\n\n"}
+{"job_index": 229, "title": "Backend Software Development Engineer - Mid/Senior/Lead/Principal", "parse_fail": true, "raw_output": "{\n  \"arr\": \"REMIT\", \"comp\": \"LON\", \"sen\": \"LEVEL_1\", \"comp\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": \"LON\", \"sen\": ( \"LON\", \"LON\", \"LON\", \"LON\", \"LON\", \"LON\", \"LON\", \"LON\", \"LO"}
+{"job_index": 230, "title": "Founding Software Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 231, "title": "Full-Stack Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 232, "title": "Full-Stack Software Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 233, "title": "Jr. Front-End Engineer", "parse_fail": true, "raw_output": ""}
+{"job_index": 234, "title": "Software Engineer - Full Stack", "parse_fail": true, "raw_output": ""}
+{"job_index": 235, "title": "Software Engineer I", "parse_fail": true, "raw_output": "<think>\n\n"}
+{"job_index": 236, "title": "Software Engineer - New Grad", "parse_fail": true, "raw_output": ""}
+{"job_index": 237, "title": "Senior DevOps Engineer - AWS Infrastructure Architect", "parse_fail": true, "raw_output": ""}
+{"job_index": 238, "title": "Junior DevOps Engineer", "parse_fail": true, "raw_output": "<think>\n\n"}
+{"job_index": 239, "title": "Senior Software Engineer", "parse_fail": true, "invalid_token": true, "raw_output": "{\"arr\": \"REMOVER\", \"comp\": \"NO_GBP\", \"location\": \"IN_LONDON\", \"sen\": \"LEVEL_3\"}", "errors": ["Missing field: loc", "Missing field: tech"]}

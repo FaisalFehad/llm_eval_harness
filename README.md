@@ -1,8 +1,8 @@
 # AI Eval Harness
 
-**Can a model 8,000× smaller than GPT-4 score jobs better than GPT-4 — running locally on M1 MacBook Air?**
+**Can a model 8,000× smaller than GPT-4 score jobs better than GPT-4 — running locally on a personal notebook M1 Mac?**
 
-Yes. **98.3% accuracy.** Three models from 335 MB to 3.1 GB, running locally on Apple Silicon via MLX — beating commercial LLM quality at zero inference cost.
+Yes. **98.7% accuracy.** 15 models from 250 MB to 8 GB tested — the best scoring 236/239 jobs correctly, running locally on Apple Silicon at zero inference cost.
 
 This project is my journey through LLM knowledge distillation — from hand-labeling 103 jobs to building a production-grade hybrid pipeline that outperforms the teacher it learned from. Every technique was learned by doing, every decision driven by data, and every setback turned into a better solution. I am documenting every step of the journey.
 
@@ -12,19 +12,21 @@ This project is my journey through LLM knowledge distillation — from hand-labe
 
 ```text
 GPT-4.1-mini (teacher)     → labels 860 jobs         → 95%+ accuracy, ~£0.08/batch
-Student models (3 sizes)   → trained via LoRA         → 98.3% hybrid accuracy
-                              335 MB – 3.1 GB MLX       0 cost per inference
-                              runs on M1 16 GB           ~3–7 sec/job
+Student models (15 tested)  → trained via LoRA         → 98.7% hybrid accuracy
+                              250 MB – 8 GB              0 cost per inference
+                              MLX + GGUF on M1 Mac           ~3-7/job
 ```
 
 The student surpassed the teacher. Not by being smarter — by combining distilled models with surgical regex rules, each handling what it does best.
 
 | What | Number |
 |------|--------|
-| Final accuracy | **98.3%** (235/239 test jobs) |
-| Models | 3 sizes: 335 MB, 839 MB, 3.1 GB — all MLX on Mac |
-| Inference | ~3–7s/job on Mac M1, **£0.00**/job |
-| Training | 860 jobs, 14 versions, 25+ models tested |
+| Best accuracy | **98.7%** (236/239 test jobs) — V12.1 1.5B, V14 Q6_K, V14 F16 |
+| Best model-only | **91.1%** — V14 4B HF bfloat16 (no regex needed) |
+| Models tested | 15 models across 4 generations (V7→V14), 3 regex versions |
+| Smallest at 98.3% | **V7 0.5B — 250 MB** |
+| Training | 860 jobs, 14 versions, Qwen 0.5B → 4B |
+| Full results | **[master_eval/RESULTS.md](master_eval/RESULTS.md)** |
 
 ---
 
@@ -504,6 +506,26 @@ The regex classifiers aren't simple string matches — they're production-grade 
 | + regex refinement (V12.1) | **97.1%** |
 
 92.9% → 97.1% with zero retraining — purely better rules.
+
+### Master eval (15 models, 3 regex versions)
+
+A comprehensive evaluation of all 15 trained models across 239 audited test jobs, scored against 3 regex versions (V12, V13, V13.1) for 45 total combinations:
+
+| Rank | Model | Size | Hybrid | Model-only |
+|------|-------|------|--------|-----------|
+| 1 | **V14 4B HF** bfloat16 | 8.0 GB | 98.3% | **91.1%** |
+| 2 | **V14 Q6_K** GGUF | 3.1 GB | **98.7%** | 90.2% |
+| 3 | **V14 F16** GGUF | 6.3 GB | **98.7%** | 89.8% |
+| 4 | **V12.1 1.5B** MLX | 0.84 GB | **98.7%** | 78.4% |
+| 5 | V7 0.5B MLX | 0.25 GB | 98.3% | 84.8% |
+
+Key findings:
+- **V12.1 1.5B (0.84 GB) ties V14 4B (6.3 GB) on hybrid** — 7.5× smaller, same 98.7%
+- **V13 regex beats V13.1** for 14 of 15 models — the "improvements" introduced error interdependencies
+- **Thinking mode hurts** — -0.8pp hybrid, -10.9pp model-only vs no-think
+- **Q6_K is the quantization floor** — below 6 bits, fine-tuned JSON schema breaks
+
+Full results, quantization ladder, error analysis, and deployment recommendations: **[master_eval/RESULTS.md](master_eval/RESULTS.md)**
 
 ### Three student models: finding the Goldilocks size
 

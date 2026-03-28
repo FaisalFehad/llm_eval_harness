@@ -1,0 +1,94 @@
+{
+  "model_only": {
+    "correct": 178,
+    "total": 227,
+    "accuracy_pct": 78.4,
+    "parse_fail": 12,
+    "field_accuracy": {
+      "loc": 93.8,
+      "arr": 88.5,
+      "sen": 92.5,
+      "tech": 64.8,
+      "comp": 71.4
+    }
+  },
+  "regex_only": {
+    "correct": 226,
+    "total": 239,
+    "accuracy_pct": 94.6,
+    "parse_fail": 0,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 77.4,
+      "sen": 79.9,
+      "tech": 90.4,
+      "comp": 96.2
+    }
+  },
+  "hybrid_A": {
+    "correct": 225,
+    "total": 239,
+    "accuracy_pct": 94.1,
+    "parse_fail": 12,
+    "field_accuracy": {
+      "loc": 89.1,
+      "arr": 84.1,
+      "sen": 87.9,
+      "tech": 85.8,
+      "comp": 91.2
+    }
+  },
+  "v12_hybrid": {
+    "correct": 236,
+    "total": 239,
+    "accuracy_pct": 98.7,
+    "parse_fail": 12,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 88.7,
+      "sen": 92.9,
+      "tech": 90.4,
+      "comp": 96.2
+    }
+  },
+  "v12_errors": [
+    {
+      "job_index": 14,
+      "golden": "maybe",
+      "predicted": "bad_fit",
+      "diffs": [
+        "tech:['NODE', 'REACT', 'JS_TS', 'AI_ML']->['REACT', 'JS_TS', 'AI_ML']"
+      ]
+    },
+    {
+      "job_index": 129,
+      "golden": "bad_fit",
+      "predicted": "maybe",
+      "diffs": [
+        "sen:LEVEL_1->LEVEL_2"
+      ]
+    },
+    {
+      "job_index": 141,
+      "golden": "maybe",
+      "predicted": "good_fit",
+      "diffs": [
+        "sen:LEVEL_2->LEVEL_3"
+      ]
+    }
+  ],
+  "v12_per_label": {
+    "good_fit": {
+      "correct": 57,
+      "total": 57
+    },
+    "maybe": {
+      "correct": 52,
+      "total": 54
+    },
+    "bad_fit": {
+      "correct": 127,
+      "total": 128
+    }
+  }
+}

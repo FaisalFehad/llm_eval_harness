@@ -1,0 +1,52 @@
+Output: eval_results/v12_1_reeval/adapters_v12/2026-03-27_163656_test_labeled_audited_student_v7_final_chunk23of64.txt
+Prompt: prompts/student_v7.txt
+Adapter: finetune/adapters_v12
+Model: mlx-community/Qwen2.5-1.5B-Instruct-4bit
+------------------------------------------------------------
+------------------------------------------------------------
+Chunk 23/64: jobs 89–92
+Running V7 eval on 4 jobs...
+
+[ 89/239] ✓   4.8s  Security Engineer                           bad_fit               100%
+[ 90/239] ✓   5.8s  Scrum Master                                maybe                 100%
+[ 91/239] ✓   5.1s  Database Administrator                      maybe                 100%
+[ 92/239] ✓   5.5s  Full Stack Engineer                         maybe                 100%
+
+========================================================================
+  V7 EVAL  adapters_v12  iter final
+  eval set: test_labeled_audited  |  prompt: student_v7  |  n=4
+========================================================================
+  Parse failures: 0   Invalid tokens: 0   Fuzzy corrections: 1   Valid: 4/4
+
+  Label accuracy:  4/4 = 100.0%   MET  (target >=90%)
+  Score accuracy:  4/4 = 100.0%
+
+  Fit accuracy (macro):  66.7%  NOT MET   gf=0%  maybe=100%  bad=100%
+
+  Field token accuracy:
+    loc            ####################    4/4  100.0%
+    arr            ####################    4/4  100.0%
+    sen            ####################    4/4  100.0%
+    tech           ####################    4/4  100.0%
+    comp           ####################    4/4  100.0%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    maybe              3       3    100%
+    bad_fit            1       1    100%
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [0]         0         0
+    maybe                0       [3]         0
+    bad_fit              0         0       [1]
+
+  Error direction:  over-scoring 0  |  under-scoring 0
+
+------------------------------------------------------------------------
+  adapters_v12/final  label=100.0%  loc=100.0%  role=100.0%  tech=100.0%  comp=100.0%  wa=100.0%  gf=0%  maybe=100%  bad=100%
+========================================================================
+
+Predictions: eval_results/v12_1_reeval/adapters_v12/2026-03-27_163656_test_labeled_audited_student_v7_final_chunk23of64.predictions.jsonl
+Summary: eval_results/v12_1_reeval/adapters_v12/2026-03-27_163656_test_labeled_audited_student_v7_final_chunk23of64.summary.json

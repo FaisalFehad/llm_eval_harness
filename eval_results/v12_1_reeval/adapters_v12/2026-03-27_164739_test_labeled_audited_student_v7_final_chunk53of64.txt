@@ -1,0 +1,62 @@
+Output: eval_results/v12_1_reeval/adapters_v12/2026-03-27_164739_test_labeled_audited_student_v7_final_chunk53of64.txt
+Prompt: prompts/student_v7.txt
+Adapter: finetune/adapters_v12
+Model: mlx-community/Qwen2.5-1.5B-Instruct-4bit
+------------------------------------------------------------
+------------------------------------------------------------
+Chunk 53/64: jobs 209–212
+Running V7 eval on 4 jobs...
+
+[209/239] ✓  18.5s  Senior Software Engineer                    good_fit              100%
+[210/239] ✗  17.3s  Senior Software Engineer                    maybe->bad_fit         50%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech REACT,JS_TS,AI_ML->REACT,JS_TS ✗ | comp NO_GBP->NO_GBP ✓
+                    Manchester, England, United Kingdom | Remote, hybrid and site based working opportunities, dependant on your needs and the requirements of the role. | Senior Software Engineer | Ja
+
+[211/239] !  12.4s  Senior Software Engineer                    INVALID TOKEN: ['Invalid loc token: "UK RemoteAWS Cloud"']
+[212/239] ✗   2.6s  Senior Software Engineer - Backend AI Nati  good_fit->maybe        25%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT,JS_TS,AI_ML->REACT,JS_TS ✗ | comp RANGE_55_74K->RANGE_55_74K ✓
+                    Glasgow, Scotland, United Kingdom | Hybrid | Senior Software Engineer - Backend AI Native | TypeScript/Node.js (Preferred), Python, Java, Go, React/Next.js | £65,000-80,000
+
+
+========================================================================
+  V7 EVAL  adapters_v12  iter final
+  eval set: test_labeled_audited  |  prompt: student_v7  |  n=4
+========================================================================
+  Parse failures: 0   Invalid tokens: 1   Fuzzy corrections: 0   Valid: 3/4
+
+  Label accuracy:  1/3 = 33.3%   NOT MET  (target >=90%)
+  Score accuracy:  0/3 = 0.0%
+
+  Fit accuracy (macro):  16.7%  NOT MET   gf=50%  maybe=0%  bad=0%
+
+  Field token accuracy:
+    loc            ####################    3/3  100.0%
+    arr            #############.......    2/3  66.7%
+    sen            ####################    3/3  100.0%
+    tech           ....................    0/3  0.0%
+    comp           ####################    3/3  100.0%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    good_fit           1       2     50%  !
+    maybe              0       1      0%  !
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [1]         1         0
+    maybe                0       [0]         1
+    bad_fit              0         0       [0]
+
+  Field error transitions (top per field):
+    arr           : HYBRID->UNK:1
+    tech          : JS_TS,NODE->AI_ML,JS_TS,NODE:1  AI_ML,JS_TS,REACT->JS_TS,REACT:1  AI_ML,JS_TS,NODE,REACT->JS_TS,REACT:1
+
+  Error direction:  over-scoring 0  |  under-scoring 1
+
+------------------------------------------------------------------------
+  adapters_v12/final  label=33.3%  loc=100.0%  role=100.0%  tech=0.0%  comp=100.0%  wa=66.7%  gf=50%  maybe=0%  bad=0%
+========================================================================
+
+Predictions: eval_results/v12_1_reeval/adapters_v12/2026-03-27_164739_test_labeled_audited_student_v7_final_chunk53of64.predictions.jsonl
+Summary: eval_results/v12_1_reeval/adapters_v12/2026-03-27_164739_test_labeled_audited_student_v7_final_chunk53of64.summary.json

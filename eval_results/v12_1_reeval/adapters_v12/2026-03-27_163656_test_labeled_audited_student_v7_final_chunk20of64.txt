@@ -1,0 +1,63 @@
+Output: eval_results/v12_1_reeval/adapters_v12/2026-03-27_163656_test_labeled_audited_student_v7_final_chunk20of64.txt
+Prompt: prompts/student_v7.txt
+Adapter: finetune/adapters_v12
+Model: mlx-community/Qwen2.5-1.5B-Instruct-4bit
+------------------------------------------------------------
+------------------------------------------------------------
+Chunk 20/64: jobs 77–80
+Running V7 eval on 4 jobs...
+
+[ 77/239] ✗   5.8s  Developer                                   maybe->bad_fit          0%
+                    loc REMOTE->UNK ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,AI_ML->NODE,AI_ML ✓ | comp RANGE_55_74K->RANGE_55_74K ✓
+                    Anywhere | 100% remote working environment | nodejs, AI/ML | Salary between £60,000 and £80,000
+
+[ 78/239] ✗   5.4s  Frontend Developer                          maybe->bad_fit          0%
+                    loc REMOTE->UNK ✗ | arr REMOTE->REMOTE ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,JS_TS,AI_ML->NODE,JS_TS,AI_ML ✓ | comp UP_TO_ONLY->UP_TO_ONLY ✓
+                    Anywhere | 100% remote, work from anywhere. | javascript, Typescript, Node.js, AI/ML | Up to £85,000 salary.
+
+[ 79/239] ✓   5.6s  IT Support Engineer                         good_fit               33%
+[ 80/239] ✓   5.9s  Trainee Engineer                            bad_fit                50%
+
+========================================================================
+  V7 EVAL  adapters_v12  iter final
+  eval set: test_labeled_audited  |  prompt: student_v7  |  n=4
+========================================================================
+  Parse failures: 0   Invalid tokens: 0   Fuzzy corrections: 0   Valid: 4/4
+
+  Label accuracy:  2/4 = 50.0%   NOT MET  (target >=90%)
+  Score accuracy:  2/4 = 50.0%
+
+  Fit accuracy (macro):  66.7%  NOT MET   gf=100%  maybe=0%  bad=100%
+
+  Field token accuracy:
+    loc            ##########..........    2/4  50.0%
+    arr            ###############.....    3/4  75.0%
+    sen            ####################    4/4  100.0%
+    tech           ####################    4/4  100.0%
+    comp           ####################    4/4  100.0%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    good_fit           1       1    100%
+    maybe              0       2      0%  !
+    bad_fit            1       1    100%
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [1]         0         0
+    maybe                0       [0]         2
+    bad_fit              0         0       [1]
+
+  Field error transitions (top per field):
+    loc           : REMOTE->UNK:2
+    arr           : UNK->HYBRID:1
+
+  Error direction:  over-scoring 0  |  under-scoring 2
+
+------------------------------------------------------------------------
+  adapters_v12/final  label=50.0%  loc=50.0%  role=100.0%  tech=100.0%  comp=100.0%  wa=75.0%  gf=100%  maybe=0%  bad=100%
+========================================================================
+
+Predictions: eval_results/v12_1_reeval/adapters_v12/2026-03-27_163656_test_labeled_audited_student_v7_final_chunk20of64.predictions.jsonl
+Summary: eval_results/v12_1_reeval/adapters_v12/2026-03-27_163656_test_labeled_audited_student_v7_final_chunk20of64.summary.json

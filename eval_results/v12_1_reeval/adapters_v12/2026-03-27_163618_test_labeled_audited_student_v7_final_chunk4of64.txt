@@ -1,0 +1,63 @@
+Output: eval_results/v12_1_reeval/adapters_v12/2026-03-27_163618_test_labeled_audited_student_v7_final_chunk4of64.txt
+Prompt: prompts/student_v7.txt
+Adapter: finetune/adapters_v12
+Model: mlx-community/Qwen2.5-1.5B-Instruct-4bit
+------------------------------------------------------------
+------------------------------------------------------------
+Chunk 4/64: jobs 13–16
+Running V7 eval on 4 jobs...
+
+[ 13/239] ✓   8.4s  Full Stack Engineer                         bad_fit               100%
+[ 14/239] ✗   6.1s  Full-Stack Engineer                         maybe->bad_fit         50%
+                    loc UK_OTHER->UK_OTHER ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_2->LEVEL_2 ✓ | tech NODE,REACT,JS_TS,AI_ML->JS_TS,REACT ✗ | comp NO_GBP->BELOW_45K ✗
+                    Greater Manchester, England, United Kingdom | hybrid | Java, Javascript, TypeScript + React, and MySQL | £92k
+
+[ 15/239] ✗  13.3s  Technical Director                          bad_fit->maybe         33%
+                    loc UNK->UNK ✓ | arr REMOTE->REMOTE ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech NODE,REACT,JS_TS->REACT,JS_TS,AI_ML ✗ | comp NO_GBP->RANGE_55_74K ✗
+                    This role has been categorized as a Remote position. "Remote" employees do not have a permanent corporate office workplace and, instead, work from a physical location of their choi
+
+[ 16/239] ✓   3.2s  Senior Frontend Engineer                    maybe                  50%
+
+========================================================================
+  V7 EVAL  adapters_v12  iter final
+  eval set: test_labeled_audited  |  prompt: student_v7  |  n=4
+========================================================================
+  Parse failures: 0   Invalid tokens: 0   Fuzzy corrections: 0   Valid: 4/4
+
+  Label accuracy:  2/4 = 50.0%   NOT MET  (target >=90%)
+  Score accuracy:  1/4 = 25.0%
+
+  Fit accuracy (macro):  33.3%  NOT MET   gf=0%  maybe=50%  bad=50%
+
+  Field token accuracy:
+    loc            ####################    4/4  100.0%
+    arr            ####################    4/4  100.0%
+    sen            ###############.....    3/4  75.0%
+    tech           #####...............    1/4  25.0%
+    comp           #####...............    1/4  25.0%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    maybe              1       2     50%  !
+    bad_fit            1       2     50%  !
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [0]         0         0
+    maybe                0       [1]         1
+    bad_fit              0         1       [1]
+
+  Field error transitions (top per field):
+    sen           : LEVEL_2->LEVEL_3:1
+    tech          : JS_TS,NODE,REACT->AI_ML,JS_TS,NODE,REACT:1  AI_ML,JS_TS,NODE,REACT->JS_TS,REACT:1  JS_TS,NODE,REACT->AI_ML,JS_TS,REACT:1
+    comp          : RANGE_45_54K->BELOW_45K:1  NO_GBP->BELOW_45K:1  NO_GBP->RANGE_55_74K:1
+
+  Error direction:  over-scoring 1  |  under-scoring 1
+
+------------------------------------------------------------------------
+  adapters_v12/final  label=50.0%  loc=100.0%  role=75.0%  tech=25.0%  comp=25.0%  wa=100.0%  gf=0%  maybe=50%  bad=50%
+========================================================================
+
+Predictions: eval_results/v12_1_reeval/adapters_v12/2026-03-27_163618_test_labeled_audited_student_v7_final_chunk4of64.predictions.jsonl
+Summary: eval_results/v12_1_reeval/adapters_v12/2026-03-27_163618_test_labeled_audited_student_v7_final_chunk4of64.summary.json

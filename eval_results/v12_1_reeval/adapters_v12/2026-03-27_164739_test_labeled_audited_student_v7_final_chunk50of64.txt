@@ -1,0 +1,64 @@
+Output: eval_results/v12_1_reeval/adapters_v12/2026-03-27_164739_test_labeled_audited_student_v7_final_chunk50of64.txt
+Prompt: prompts/student_v7.txt
+Adapter: finetune/adapters_v12
+Model: mlx-community/Qwen2.5-1.5B-Instruct-4bit
+------------------------------------------------------------
+------------------------------------------------------------
+Chunk 50/64: jobs 197–200
+Running V7 eval on 4 jobs...
+
+[197/239] ✓   8.7s  Senior Data Engineer AWS - Finance Consult  bad_fit               100%
+[198/239] ✗  10.4s  Senior DevOps Engineer                      maybe->bad_fit         50%
+                    loc UK_OTHER->UK_OTHER ✓ | arr REMOTE->UNK ✗ | sen LEVEL_3->LEVEL_3 ✓ | tech AI_ML->OOS ✗ | comp RANGE_55_74K->RANGE_45_54K ✗
+                    Little London, England, United Kingdom | Senior DevOps Engineer | AWS, GCP, Kubernetes, Terraform, GitHub Actions, Crypto/Web3 | £60k 90k
+
+[199/239] ✗  15.3s  Senior Frontend Developer                   good_fit->bad_fit      33%
+                    loc IN_LONDON->IN_LONDON ✓ | arr HYBRID->HYBRID ✓ | sen LEVEL_3->LEVEL_3 ✓ | tech REACT,JS_TS->REACT,JS_TS ✓ | comp RANGE_75_99K->BELOW_45K ✗
+                    London Area, United Kingdom | hybrid; 2 days in the office per week | Senior Frontend Developer | Vue / .Net, JavaScript, TypeScript, React, .Net core, Dapper, Entity Framework, MS
+
+[200/239] !  10.8s  Senior Full Stack Engineer                  INVALID TOKEN: ['Invalid tech token: "EXPRESS"', 'Invalid tech token: "NESTJS"']
+
+========================================================================
+  V7 EVAL  adapters_v12  iter final
+  eval set: test_labeled_audited  |  prompt: student_v7  |  n=4
+========================================================================
+  Parse failures: 0   Invalid tokens: 1   Fuzzy corrections: 0   Valid: 3/4
+
+  Label accuracy:  1/3 = 33.3%   NOT MET  (target >=90%)
+  Score accuracy:  1/3 = 33.3%
+
+  Fit accuracy (macro):  33.3%  NOT MET   gf=0%  maybe=0%  bad=100%
+
+  Field token accuracy:
+    loc            ####################    3/3  100.0%
+    arr            #############.......    2/3  66.7%
+    sen            ####################    3/3  100.0%
+    tech           #############.......    2/3  66.7%
+    comp           ######..............    1/3  33.3%
+
+  Per-label breakdown:
+    Label        Correct   Total     Acc
+    ----------  --------  ------  ------
+    good_fit           0       1      0%  !
+    maybe              0       1      0%  !
+    bad_fit            1       1    100%
+
+  Confusion Matrix (row=golden, col=predicted):
+                  good_fit     maybe   bad_fit
+    good_fit           [0]         0         1
+    maybe                0       [0]         1
+    bad_fit              0         0       [1]
+
+  Field error transitions (top per field):
+    arr           : REMOTE->UNK:1
+    tech          : AI_ML->OOS:1
+    comp          : RANGE_55_74K->RANGE_45_54K:1  RANGE_75_99K->BELOW_45K:1
+
+  Error direction:  over-scoring 0  |  under-scoring 2
+
+------------------------------------------------------------------------
+  adapters_v12/final  label=33.3%  loc=100.0%  role=100.0%  tech=66.7%  comp=33.3%  wa=66.7%  gf=0%  maybe=0%  bad=100%
+========================================================================
+
+Predictions: eval_results/v12_1_reeval/adapters_v12/2026-03-27_164739_test_labeled_audited_student_v7_final_chunk50of64.predictions.jsonl
+Summary: eval_results/v12_1_reeval/adapters_v12/2026-03-27_164739_test_labeled_audited_student_v7_final_chunk50of64.summary.json
