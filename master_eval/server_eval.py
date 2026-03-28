@@ -225,19 +225,140 @@ MODELS: list[ModelConfig] = [
 ]
 
 
-# ── Availability check ──────────────────────────────────────────────────────
+# ── HuggingFace auto-download ────────────────────────────────────────────────
+# Adapters: FF-01/eval-harness-adapters/{name}/adapters.safetensors
+# V14 GGUFs: FF-01/qwen3-4b-v14/{filename}.gguf
+# V14 MLX 6-bit: FF-01/qwen3-4b-v14/mlx_6bit/
+# V14 HF bfloat16: FF-01/qwen3-4b-v14/merged_v14_4B/
+
+HF_ADAPTER_REPO = "FF-01/eval-harness-adapters"
+HF_V14_REPO = "FF-01/qwen3-4b-v14"
+
+# Map model name → HF download info for adapters
+HF_ADAPTER_MAP = {
+    "v7_0.5B":     "v7_0.5B",
+    "v7_1.5B":     "v7_1.5B",
+    "v12_0.6B":    "v12_0.6B",
+    "v12_1_1.5B":  "v12_1_1.5B",
+    "v13_0.6B":    "v13_0.6B",
+    "v13_1_0.6B":  "v13_1_0.6B",
+    "v13_1_1.5B":  "v13_1_1.5B",
+}
+
+# Map model name → HF download info for local models
+HF_MODEL_MAP = {
+    "v14_4B_hf":           ("merged_v14_4B", "~/merged_v14_4B"),
+    "v14_4B_mlx6bit":      ("mlx_6bit", "~/qwen3_4B_v14_mlx6bit"),
+    "v14_4B_mlx6bit_think":("mlx_6bit", "~/qwen3_4B_v14_mlx6bit"),
+    "v14_f16_gguf":        ("qwen3_4B_v14_f16.gguf", "~/qwen3_4B_v14_f16.gguf"),
+    "v14_Q6_K":            ("qwen3_4B_v14_Q6_K.gguf", "~/qwen3_4B_v14_Q6_K.gguf"),
+    "v14_Q4_K_M":          ("qwen3_4B_v14_Q4_K_M.gguf", "~/qwen3_4B_v14_Q4_K_M.gguf"),
+    "v14_Q2_K":            ("qwen3_4B_v14_Q2_K.gguf", "~/qwen3_4B_v14_Q2_K.gguf"),
+    "v14_IQ2_XXS":         ("qwen3_4B_v14_IQ2_XXS.gguf", "~/qwen3_4B_v14_IQ2_XXS.gguf"),
+}
+
+
+def _download_adapter(m: ModelConfig) -> bool:
+    """Download adapter from HF if missing locally. Returns True if available after."""
+    hf_name = HF_ADAPTER_MAP.get(m.name)
+    if not hf_name:
+        return False
+
+    ap = Path(_res(m.adapter))
+    # For .safetensors file paths, check the parent dir for adapters.safetensors
+    if ap.suffix == ".safetensors":
+        target_dir = ap.parent
+        target_file = target_dir / "adapters.safetensors"
+    else:
+        target_dir = ap
+        target_file = ap / "adapters.safetensors"
+
+    if target_file.exists():
+        return True
+
+    try:
+        from huggingface_hub import hf_hub_download
+        print(f"  [DOWNLOAD] {m.name} adapter from {HF_ADAPTER_REPO}...", end="", flush=True)
+        target_dir.mkdir(parents=True, exist_ok=True)
+
+        # Download adapters.safetensors
+        hf_hub_download(HF_ADAPTER_REPO, f"{hf_name}/adapters.safetensors",
+                        local_dir=str(target_dir.parent),
+                        local_dir_use_symlinks=False)
+        # Download adapter_config.json
+        try:
+            hf_hub_download(HF_ADAPTER_REPO, f"{hf_name}/adapter_config.json",
+                            local_dir=str(target_dir.parent),
+                            local_dir_use_symlinks=False)
+        except Exception:
+            pass  # config is optional
+
+        print(f" done")
+        return target_file.exists() or (target_dir / hf_name / "adapters.safetensors").exists()
+    except Exception as e:
+        print(f" failed: {e}")
+        return False
+
+
+def _download_model(m: ModelConfig) -> bool:
+    """Download V14 model from HF if missing locally. Returns True if available after."""
+    info = HF_MODEL_MAP.get(m.name)
+    if not info:
+        return False
+
+    hf_path, local_path = info
+    local = Path(local_path).expanduser()
+
+    if local.exists():
+        return True
+
+    try:
+        from huggingface_hub import hf_hub_download, snapshot_download
+        print(f"  [DOWNLOAD] {m.name} from {HF_V14_REPO}/{hf_path}...", flush=True)
+
+        if hf_path.endswith(".gguf"):
+            # Single file download
+            hf_hub_download(HF_V14_REPO, hf_path,
+                            local_dir=str(local.parent),
+                            local_dir_use_symlinks=False)
+        else:
+            # Directory download (merged_v14_4B or mlx_6bit)
+            snapshot_download(HF_V14_REPO, allow_patterns=f"{hf_path}/*",
+                              local_dir=str(local.parent),
+                              local_dir_use_symlinks=False)
+            # snapshot_download puts files in local.parent/hf_path/
+            # Rename to expected path if needed
+            downloaded = local.parent / hf_path
+            if downloaded.exists() and not local.exists():
+                downloaded.rename(local)
+
+        print(f"  [DOWNLOAD] {m.name} complete ({local})")
+        return local.exists()
+    except Exception as e:
+        print(f"  [DOWNLOAD] {m.name} failed: {e}")
+        return False
+
 
 def check_available(m: ModelConfig) -> tuple[bool, str]:
+    """Check if model files exist locally. Auto-downloads from HF if missing."""
+    # Check prompt first (always local, never downloaded)
+    if not (REPO / m.prompt).exists():
+        return False, f"prompt missing: {m.prompt}"
+
+    # Check adapter — download if missing
     if m.adapter:
         ap = Path(_res(m.adapter))
         if not ap.exists():
-            return False, f"adapter missing: {ap}"
+            if not _download_adapter(m):
+                return False, f"adapter missing: {ap}"
+
+    # Check local model — download if missing
     if m.model.startswith("~"):
         mp = Path(m.model).expanduser()
         if not mp.exists():
-            return False, f"model missing: {mp}"
-    if not (REPO / m.prompt).exists():
-        return False, f"prompt missing: {m.prompt}"
+            if not _download_model(m):
+                return False, f"model missing: {mp}"
+
     return True, "ok"
 
 

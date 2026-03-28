@@ -527,6 +527,30 @@ Key findings:
 
 Full results, quantization ladder, error analysis, and deployment recommendations: **[master_eval/RESULTS.md](master_eval/RESULTS.md)**
 
+#### Running the master eval
+
+```bash
+# 1. Setup (one-time)
+python3 -m venv .venv && source .venv/bin/activate
+pip install mlx mlx-lm huggingface-hub
+brew install llama.cpp          # for GGUF models
+
+# 2. Run — models download automatically from HuggingFace on first use
+.venv/bin/python3 master_eval/server_eval.py
+
+# 3. Options
+--only v14_Q6_K v12_1_1.5B     # run specific models
+--skip v14_Q2_K v14_IQ2_XXS    # skip broken models
+--reuse                         # re-print report from cached results
+```
+
+Models and adapters are pulled from HuggingFace as needed:
+- **Base models** (Qwen2.5/Qwen3) — auto-downloaded by `mlx_lm` from `mlx-community/`
+- **LoRA adapters** (V7–V13.1) — auto-downloaded from [`FF-01/eval-harness-adapters`](https://huggingface.co/FF-01/eval-harness-adapters)
+- **V14 models** (GGUFs, MLX 6-bit, HF bfloat16) — auto-downloaded from [`FF-01/qwen3-4b-v14`](https://huggingface.co/FF-01/qwen3-4b-v14)
+
+Nothing to download manually. ~30 min on M5 Pro Max 128 GB, ~7 hours on M1 16 GB.
+
 ### Three student models: finding the Goldilocks size
 
 The 0.5B and 1.5B weren't just experiments — they validated the pipeline. If both sizes have the same error patterns (they did — tech was ~70% for both), the problem is training data, not model capacity. That finding justified spending months on data curation instead of chasing bigger models.
