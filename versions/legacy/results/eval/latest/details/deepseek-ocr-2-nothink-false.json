@@ -1,0 +1,35 @@
+{
+  "model_id": "node-llama-cpp:deepseek-ocr-2-nothink-false",
+  "label_accuracy_pct": 0,
+  "parse_fail_pct": 100,
+  "score_mae": 0,
+  "score_bias": 0,
+  "avg_seconds": 0,
+  "total_tests": 0,
+  "passed": false,
+  "fail_reasons": [
+    "Model load failed: Cannot get quantization \"latest\" for model \"hf:deepseek-ai/DeepSeek-OCR-2\" or it does not exist"
+  ],
+  "early_exit": true,
+  "confusion_matrix": {
+    "good_fit": {
+      "good_fit": 0,
+      "maybe": 0,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "maybe": {
+      "good_fit": 0,
+      "maybe": 0,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "bad_fit": {
+      "good_fit": 0,
+      "maybe": 0,
+      "bad_fit": 0,
+      "parse_fail": 0
+    }
+  },
+  "job_results": []
+}

@@ -1,0 +1,166 @@
+{
+  "model_id": "node-llama-cpp:qwen3-4b-instruct-2507",
+  "label_accuracy_pct": 50,
+  "parse_fail_pct": 0,
+  "score_mae": 35,
+  "score_bias": 35,
+  "avg_seconds": 16.8,
+  "total_tests": 10,
+  "passed": false,
+  "fail_reasons": [
+    "score_mae=35.0 > 30"
+  ],
+  "early_exit": false,
+  "confusion_matrix": {
+    "good_fit": {
+      "good_fit": 4,
+      "maybe": 0,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "maybe": {
+      "good_fit": 2,
+      "maybe": 1,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "bad_fit": {
+      "good_fit": 1,
+      "maybe": 2,
+      "bad_fit": 0,
+      "parse_fail": 0
+    }
+  },
+  "job_results": [
+    {
+      "job_description": "2448773367 | Lead DevOps Architect @ Zulauf - McCullough",
+      "expected_label": "good_fit",
+      "expected_score": 70,
+      "predicted_label": "good_fit",
+      "predicted_score": 95,
+      "predicted_reasoning": "The role is a Lead DevOps Architect, which aligns with Senior/Lead software engineering seniority (25 pts). The job emphasizes Python, PyTorch, and LLM fine-tuning, which qualifies under AI/ML/LLM experience (10 pts). It offers hybrid work in Manchester, UK, which is within the UK and acceptable (25 pts). The salary range of £100,000+ meets the target (25 pts). Total: 95/100.",
+      "label_correct": true,
+      "score_error": 25,
+      "latency_ms": 15713,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"good_fit\", \"score\": 95, \"reasoning\": \"The role is a Lead DevOps Architect, which aligns with Senior/Lead software engineering seniority (25 pts). The job emphasizes Python, PyTorch, and LLM fine-tuning, which qualifies under AI/ML/LLM experience (10 pts). It offers hybrid work in Manchester, UK, which is within the UK and acceptable (25 pts). The salary range of £100,000+ meets the target (25 pts). Total: 95/100.\"}"
+    },
+    {
+      "job_description": "4371308941 | Senior Backend Engineer @ ScaleXP",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "maybe",
+      "predicted_score": 65,
+      "predicted_reasoning": "The role is Senior-level with strong backend focus, but uses Python instead of Node.js/TypeScript, and lacks explicit AI/ML/LLM mention. It offers hybrid London work, which is acceptable but not fully remote. Salary is not specified, so compensation points are capped at 5. Overall, it aligns partially with the candidate's interests but misses key tech and compensation preferences.",
+      "label_correct": true,
+      "score_error": 15,
+      "latency_ms": 17446,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"maybe\", \"score\": 65, \"reasoning\": \"The role is Senior-level with strong backend focus, but uses Python instead of Node.js/TypeScript, and lacks explicit AI/ML/LLM mention. It offers hybrid London work, which is acceptable but not fully remote. Salary is not specified, so compensation points are capped at 5. Overall, it aligns partially with the candidate's interests but misses key tech and compensation preferences.\"}"
+    },
+    {
+      "job_description": "4374147500 | Senior Backend Engineer @ Happl",
+      "expected_label": "maybe",
+      "expected_score": 65,
+      "predicted_label": "good_fit",
+      "predicted_score": 95,
+      "predicted_reasoning": "The role is a Senior Backend Engineer with clear ownership and technical depth, explicitly requiring TypeScript and AI tool usage. It is based in London with a hybrid work arrangement, which aligns with the candidate's preferences. The salary is not explicitly stated, but given the role's seniority and AI focus, it is likely to meet the £75k+ target. The tech stack (TypeScript, backend systems, AI tools) and domain (AI-first benefits platform) strongly match the candidate's interests and requirements.",
+      "label_correct": false,
+      "score_error": 30,
+      "latency_ms": 24537,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"good_fit\", \"score\": 95, \"reasoning\": \"The role is a Senior Backend Engineer with clear ownership and technical depth, explicitly requiring TypeScript and AI tool usage. It is based in London with a hybrid work arrangement, which aligns with the candidate's preferences. The salary is not explicitly stated, but given the role's seniority and AI focus, it is likely to meet the £75k+ target. The tech stack (TypeScript, backend systems, AI tools) and domain (AI-first benefits platform) strongly match the candidate's interests and requirements.\"}"
+    },
+    {
+      "job_description": "1785765898 | Senior Product Engineer @ Jenkins - Zboncak",
+      "expected_label": "good_fit",
+      "expected_score": 75,
+      "predicted_label": "good_fit",
+      "predicted_score": 95,
+      "predicted_reasoning": "The role is Senior-level with a strong focus on backend systems and scalability, matching the candidate's interest in AI/ML/LLM and high-performance engineering. The tech stack includes Rust and WASM, which are not explicitly aligned with Node.js/TypeScript, but the role's seniority, remote UK location, and £120k+ salary strongly align with the target profile. The score is capped at 25 for tech stack due to lack of Node.js/TypeScript/ML/LLM mention, but overall fit is excellent due to seniority, location, and compensation.",
+      "label_correct": true,
+      "score_error": 20,
+      "latency_ms": 22996,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"good_fit\", \"score\": 95, \"reasoning\": \"The role is Senior-level with a strong focus on backend systems and scalability, matching the candidate's interest in AI/ML/LLM and high-performance engineering. The tech stack includes Rust and WASM, which are not explicitly aligned with Node.js/TypeScript, but the role's seniority, remote UK location, and £120k+ salary strongly align with the target profile. The score is capped at 25 for tech stack due to lack of Node.js/TypeScript/ML/LLM mention, but overall fit is excellent due to seniority, location, and compensation.\"}"
+    },
+    {
+      "job_description": "4364768645 | Senior Software Engineer @ Maxwell Bond",
+      "expected_label": "good_fit",
+      "expected_score": 90,
+      "predicted_label": "good_fit",
+      "predicted_score": 95,
+      "predicted_reasoning": "The role is Senior Software Engineer with a focus on full-stack development, explicitly using TypeScript and Node.js, and includes AI/LLM experience as advantageous. It is hybrid in London, within the UK, and offers a salary range of £70,000–£85,000, meeting the salary target of £75,000+.",
+      "label_correct": true,
+      "score_error": 5,
+      "latency_ms": 13612,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"good_fit\", \"score\": 95, \"reasoning\": \"The role is Senior Software Engineer with a focus on full-stack development, explicitly using TypeScript and Node.js, and includes AI/LLM experience as advantageous. It is hybrid in London, within the UK, and offers a salary range of £70,000–£85,000, meeting the salary target of £75,000+.\"}"
+    },
+    {
+      "job_description": "7820757944 | Backend Systems Developer @ Spencer Inc",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "good_fit",
+      "predicted_score": 95,
+      "predicted_reasoning": "The role is Senior-level with strong backend focus, explicitly requires Node.js and TypeScript, and offers a £120k+ salary with hybrid work in Bristol (UK), meeting all key criteria.",
+      "label_correct": false,
+      "score_error": 45,
+      "latency_ms": 9536,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"good_fit\", \"score\": 95, \"reasoning\": \"The role is Senior-level with strong backend focus, explicitly requires Node.js and TypeScript, and offers a £120k+ salary with hybrid work in Bristol (UK), meeting all key criteria.\"}"
+    },
+    {
+      "job_description": "4374501376 | Front End Software Develper @ Oracle",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": "maybe",
+      "predicted_score": 65,
+      "predicted_reasoning": "The role is full-stack with strong frontend focus, including TypeScript, React, and modern frontend practices, but lacks explicit mention of Node.js or backend AI/ML/LLM experience. It is hybrid or remote in location (implied by US-based but not UK-specific), and the salary range is in USD, with a minimum of $79,800, which translates to ~£65k–£80k in GBP, below the target of £75k+. This results in a partial fit with moderate alignment on tech and compensation.",
+      "label_correct": false,
+      "score_error": 65,
+      "latency_ms": 22668,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"maybe\", \"score\": 65, \"reasoning\": \"The role is full-stack with strong frontend focus, including TypeScript, React, and modern frontend practices, but lacks explicit mention of Node.js or backend AI/ML/LLM experience. It is hybrid or remote in location (implied by US-based but not UK-specific), and the salary range is in USD, with a minimum of $79,800, which translates to ~£65k–£80k in GBP, below the target of £75k+. This results in a partial fit with moderate alignment on tech and compensation.\"}"
+    },
+    {
+      "job_description": "4374122289 | Fintech & Tech for Good | Profitable & Hyper-Growth Start-Up | Senior/Staff/Principal | Up to £150K | 3 Days Per Week LDN @ Owen Thomas | Pending B Corp™",
+      "expected_label": "bad_fit",
+      "expected_score": 25,
+      "predicted_label": "good_fit",
+      "predicted_score": 95,
+      "predicted_reasoning": "The role is Senior/Staff/Principal level, explicitly requires TypeScript and Node.js, and offers a base salary up to £170K, well above the £75k target. It is hybrid in London, which aligns with the candidate's location preferences, and includes AI/ML-related fintech infrastructure with strong engineering ownership.",
+      "label_correct": false,
+      "score_error": 70,
+      "latency_ms": 13347,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"good_fit\", \"score\": 95, \"reasoning\": \"The role is Senior/Staff/Principal level, explicitly requires TypeScript and Node.js, and offers a base salary up to £170K, well above the £75k target. It is hybrid in London, which aligns with the candidate's location preferences, and includes AI/ML-related fintech infrastructure with strong engineering ownership.\"}"
+    },
+    {
+      "job_description": "4373815463 | Senior Software Engineer @ Tact",
+      "expected_label": "good_fit",
+      "expected_score": 80,
+      "predicted_label": "good_fit",
+      "predicted_score": 90,
+      "predicted_reasoning": "The role is Senior-level with strong system design and architecture requirements, matching the candidate's target seniority. It explicitly requires TypeScript and Node.js, and includes frontend development with React, though the AI/ML focus is missing. The hybrid location in Waterloo (UK) is acceptable, and the salary of £85,000 meets the target range. Overall, it aligns well with the candidate's profile despite minor gaps in AI/ML and frontend bias.",
+      "label_correct": true,
+      "score_error": 10,
+      "latency_ms": 14226,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"good_fit\", \"score\": 90, \"reasoning\": \"The role is Senior-level with strong system design and architecture requirements, matching the candidate's target seniority. It explicitly requires TypeScript and Node.js, and includes frontend development with React, though the AI/ML focus is missing. The hybrid location in Waterloo (UK) is acceptable, and the salary of £85,000 meets the target range. Overall, it aligns well with the candidate's profile despite minor gaps in AI/ML and frontend bias.\"}"
+    },
+    {
+      "job_description": "4375738047 | Full Stack Engineer @ Quikr",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": "maybe",
+      "predicted_score": 65,
+      "predicted_reasoning": "The role is full-stack with Node.js and TypeScript mentioned, aligning well with tech preferences, and offers remote work but based in the US, which is outside the UK. Salary is not explicitly stated but implied to be competitive, falling within the £75k+ target. Seniority is not explicitly stated, limiting the score in role seniority.",
+      "label_correct": false,
+      "score_error": 65,
+      "latency_ms": 14114,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"maybe\", \"score\": 65, \"reasoning\": \"The role is full-stack with Node.js and TypeScript mentioned, aligning well with tech preferences, and offers remote work but based in the US, which is outside the UK. Salary is not explicitly stated but implied to be competitive, falling within the £75k+ target. Seniority is not explicitly stated, limiting the score in role seniority.\"}"
+    }
+  ]
+}

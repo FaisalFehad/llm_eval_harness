@@ -1,0 +1,101 @@
+{
+  "model_id": "node-llama-cpp:wizardlm-2-7b",
+  "label_accuracy_pct": 60,
+  "parse_fail_pct": 0,
+  "score_mae": 20,
+  "score_bias": 20,
+  "avg_seconds": 23,
+  "total_tests": 5,
+  "passed": false,
+  "fail_reasons": [
+    "yes-man: all 5 predictions are \"good_fit\""
+  ],
+  "early_exit": true,
+  "confusion_matrix": {
+    "good_fit": {
+      "good_fit": 3,
+      "maybe": 0,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "maybe": {
+      "good_fit": 2,
+      "maybe": 0,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "bad_fit": {
+      "good_fit": 0,
+      "maybe": 0,
+      "bad_fit": 0,
+      "parse_fail": 0
+    }
+  },
+  "job_results": [
+    {
+      "job_description": "2448773367 | Lead DevOps Architect @ Zulauf - McCullough",
+      "expected_label": "good_fit",
+      "expected_score": 70,
+      "predicted_label": "good_fit",
+      "predicted_score": 90,
+      "predicted_reasoning": "Lead DevOps Architect in Manchester with Python, PyTorch, and LLM experience, £100,000-£115,000 salary.",
+      "label_correct": true,
+      "score_error": 20,
+      "latency_ms": 22671,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":15,\"comp\":25,\"score\":90,\"label\":\"good_fit\",\"reasoning\":\"Lead DevOps Architect in Manchester with Python, PyTorch, and LLM experience, £100,000-£115,000 salary.\"}"
+    },
+    {
+      "job_description": "4371308941 | Senior Backend Engineer @ ScaleXP",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "good_fit",
+      "predicted_score": 90,
+      "predicted_reasoning": "Senior role in London with Node.js/TS and £100k midpoint salary.",
+      "label_correct": false,
+      "score_error": 40,
+      "latency_ms": 23579,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":15,\"comp\":25,\"score\":90,\"label\":\"good_fit\",\"reasoning\":\"Senior role in London with Node.js/TS and £100k midpoint salary.\"}"
+    },
+    {
+      "job_description": "4374147500 | Senior Backend Engineer @ Happl",
+      "expected_label": "maybe",
+      "expected_score": 65,
+      "predicted_label": "good_fit",
+      "predicted_score": 90,
+      "predicted_reasoning": "Senior role in London with Node.js/TS and £100k midpoint salary.",
+      "label_correct": false,
+      "score_error": 25,
+      "latency_ms": 26708,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":15,\"comp\":25,\"score\":90,\"label\":\"good_fit\",\"reasoning\":\"Senior role in London with Node.js/TS and £100k midpoint salary.\"}"
+    },
+    {
+      "job_description": "1785765898 | Senior Product Engineer @ Jenkins - Zboncak",
+      "expected_label": "good_fit",
+      "expected_score": 75,
+      "predicted_label": "good_fit",
+      "predicted_score": 90,
+      "predicted_reasoning": "Senior role in London with Rust and £100k midpoint salary.",
+      "label_correct": true,
+      "score_error": 15,
+      "latency_ms": 20298,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":15,\"comp\":25,\"score\":90,\"label\":\"good_fit\",\"reasoning\":\"Senior role in London with Rust and £100k midpoint salary.\"}"
+    },
+    {
+      "job_description": "4364768645 | Senior Software Engineer @ Maxwell Bond",
+      "expected_label": "good_fit",
+      "expected_score": 90,
+      "predicted_label": "good_fit",
+      "predicted_score": 90,
+      "predicted_reasoning": "Senior role in London with Node.js/TS and £100k midpoint salary.",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 21932,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":15,\"comp\":25,\"score\":90,\"label\":\"good_fit\",\"reasoning\":\"Senior role in London with Node.js/TS and £100k midpoint salary.\"}"
+    }
+  ]
+}

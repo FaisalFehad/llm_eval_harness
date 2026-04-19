@@ -1,0 +1,88 @@
+{
+  "model_id": "node-llama-cpp:gemma-3-4b-it",
+  "label_accuracy_pct": 50,
+  "parse_fail_pct": 25,
+  "score_mae": 6.7,
+  "score_bias": 3.3,
+  "avg_seconds": 128.1,
+  "total_tests": 4,
+  "passed": false,
+  "fail_reasons": [
+    "TIMEOUT on job 4 (>420s)"
+  ],
+  "early_exit": true,
+  "confusion_matrix": {
+    "good_fit": {
+      "good_fit": 0,
+      "maybe": 1,
+      "bad_fit": 0,
+      "parse_fail": 1
+    },
+    "maybe": {
+      "good_fit": 0,
+      "maybe": 2,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "bad_fit": {
+      "good_fit": 0,
+      "maybe": 0,
+      "bad_fit": 0,
+      "parse_fail": 0
+    }
+  },
+  "job_results": [
+    {
+      "job_description": "2448773367 | Lead DevOps Architect @ Zulauf - McCullough",
+      "expected_label": "good_fit",
+      "expected_score": 70,
+      "predicted_label": "maybe",
+      "predicted_score": 65,
+      "predicted_reasoning": "Role & Seniority: 15 points (Lead DevOps Architect implies senior level). Tech Stack & Domain: 15 points (Python, PyTorch, LLMs). Location & Work Arrangement: 10 points (Hybrid in Manchester, UK). Compensation: 15 points (Salary £100k - £115k).",
+      "label_correct": false,
+      "score_error": -5,
+      "latency_ms": 30874,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"maybe\",\"score\":65,\"reasoning\":\"Role & Seniority: 15 points (Lead DevOps Architect implies senior level). Tech Stack & Domain: 15 points (Python, PyTorch, LLMs). Location & Work Arrangement: 10 points (Hybrid in Manchester, UK). Compensation: 15 points (Salary £100k - £115k).\"}"
+    },
+    {
+      "job_description": "4371308941 | Senior Backend Engineer @ ScaleXP",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "maybe",
+      "predicted_score": 55,
+      "predicted_reasoning": "Role & Seniority: 15 points - The job description lists 5+ years of BE experience, but doesn't explicitly state a senior level. Tech Stack & Domain: 10 points - Python is listed, but Node.js is not. 10 points - NLP and ELT tasks are mentioned, hinting at AI/ML, but not explicitly. 0 points - The primary stack is Python and SQL, not Node.js or TypeScript. Location & Work Arrangement: 10 points - Hybrid in London is stated, but occasional work from abroad is allowed. -5 points - Hybrid outside London is possible, but not the primary arrangement. Compensation: 0 points - Salary is not listed.",
+      "label_correct": true,
+      "score_error": 5,
+      "latency_ms": 41353,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"maybe\",\"score\":55,\"reasoning\":\"Role & Seniority: 15 points - The job description lists 5+ years of BE experience, but doesn't explicitly state a senior level. Tech Stack & Domain: 10 points - Python is listed, but Node.js is not. 10 points - NLP and ELT tasks are mentioned, hinting at AI/ML, but not explicitly. 0 points - The primary stack is Python and SQL, not Node.js or TypeScript. Location & Work Arrangement: 10 points - Hybrid in London is stated, but occasional work from abroad is allowed. -5 points - Hybrid outside London is possible, but not the primary arrangement. Compensation: 0 points - Salary is not listed.\"}"
+    },
+    {
+      "job_description": "4374147500 | Senior Backend Engineer @ Happl",
+      "expected_label": "maybe",
+      "expected_score": 65,
+      "predicted_label": "maybe",
+      "predicted_score": 75,
+      "predicted_reasoning": "Role & Seniority: +15 (Senior Engineer role) Tech Stack & Domain: +15 (TypeScript, SQL, AI/ML experience) Location & Work Arrangement: +10 (Hybrid in London) Compensation: 0 (Salary not listed).",
+      "label_correct": true,
+      "score_error": 10,
+      "latency_ms": 19978,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"maybe\",\"score\":75,\"reasoning\":\"Role & Seniority: +15 (Senior Engineer role) Tech Stack & Domain: +15 (TypeScript, SQL, AI/ML experience) Location & Work Arrangement: +10 (Hybrid in London) Compensation: 0 (Salary not listed).\"}"
+    },
+    {
+      "job_description": "1785765898 | Senior Product Engineer @ Jenkins - Zboncak",
+      "expected_label": "good_fit",
+      "expected_score": 75,
+      "predicted_label": null,
+      "predicted_score": null,
+      "predicted_reasoning": null,
+      "label_correct": false,
+      "score_error": null,
+      "latency_ms": 420303,
+      "parse_failed": true,
+      "raw_output": "TIMEOUT"
+    }
+  ]
+}

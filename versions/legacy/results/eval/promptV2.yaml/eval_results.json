@@ -1,0 +1,46 @@
+{
+  "tag": "promptV2.yaml",
+  "timestamp": "2026-02-27T17:39:59.956Z",
+  "thresholds": {
+    "job_count": 103,
+    "max_parse_fail_pct": 10,
+    "min_label_accuracy_pct": 40,
+    "max_avg_seconds": 120,
+    "max_score_mae": 30
+  },
+  "models": [
+    {
+      "model_id": "node-llama-cpp:gemma-3-4b-it",
+      "label_accuracy_pct": 66.7,
+      "parse_fail_pct": 0,
+      "score_mae": 20.3,
+      "score_bias": 17.7,
+      "avg_seconds": 20.4,
+      "total_tests": 15,
+      "passed": true,
+      "fail_reasons": [],
+      "early_exit": false,
+      "confusion_matrix": {
+        "good_fit": {
+          "good_fit": 4,
+          "maybe": 0,
+          "bad_fit": 0,
+          "parse_fail": 0
+        },
+        "maybe": {
+          "good_fit": 2,
+          "maybe": 3,
+          "bad_fit": 0,
+          "parse_fail": 0
+        },
+        "bad_fit": {
+          "good_fit": 1,
+          "maybe": 2,
+          "bad_fit": 3,
+          "parse_fail": 0
+        }
+      },
+      "job_results": []
+    }
+  ]
+}

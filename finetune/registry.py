@@ -55,10 +55,10 @@ PIPELINES: dict[str, Pipeline] = {
     # ── V15 — peak accuracy (bf16 + iter 700 + fix4) ────────────
     "v15": Pipeline(
         model="mlx-community/Qwen3-4B-bf16",
-        adapter="finetune/adapters_v15_4B/0000700_adapters.safetensors",
-        prompt="prompts/student_v15_fix4.txt",
-        sweep_script="finetune/sweep_v15.py",
-        lora_config="finetune/lora_config_v15_4B.yaml",
+        adapter="versions/v15/adapters/0000700_adapters.safetensors",
+        prompt="versions/v15/prompts/student.fix4.txt",
+        sweep_script="versions/v15/scripts/sweep.py",
+        lora_config="versions/v15/configs/lora.yaml",
         base_model_hf="mlx-community/Qwen3-4B-bf16",
         description="V15 peak — 91.4% model-only / 99.6% hybrid (bf16 + iter 700 + fix4)",
     ),
@@ -66,19 +66,19 @@ PIPELINES: dict[str, Pipeline] = {
     # ── V15 deployment variants (share v15's scripts) ────────────
     "v15-oq6": Pipeline(
         model="~/MLX Models/qwen3_4B_v15_oQ6",
-        prompt="prompts/student_v15_fix4.txt",
+        prompt="versions/v15/prompts/student.fix4.txt",
         base_version="v15",
         description="V15 Mac deployment — MLX 6-bit, merged, ~3.1 GB",
     ),
     "v15-mlx6": Pipeline(
         model="~/qwen3_4B_v15_mlx6bit",
-        prompt="prompts/student_v15_fix4.txt",
+        prompt="versions/v15/prompts/student.fix4.txt",
         base_version="v15",
         description="V15 MLX 6-bit alternate (pre-oQ6 build)",
     ),
     "v15-gguf": Pipeline(
         model="~/qwen3_4B_v15_Q6_K.gguf",
-        prompt="prompts/student_v15_fix4.txt",
+        prompt="versions/v15/prompts/student.fix4.txt",
         backend="gguf",
         base_version="v15",
         description="V15 GGUF Q6_K for llama-cpp-python",
@@ -87,8 +87,8 @@ PIPELINES: dict[str, Pipeline] = {
     # ── V14 — needs rehydration (use `harness convert from-hf-adapter`) ─
     "v14": Pipeline(
         model="~/qwen3_4B_v14_mlx6bit",
-        prompt="prompts/student_v14_exp1.txt",
-        sweep_script="finetune/sweep_v14.py",
+        prompt="versions/v14/experiments/exp1/prompts/student.txt",
+        sweep_script="versions/v14/scripts/sweep.py",
         base_model_hf="Qwen/Qwen3-4B-Instruct-2507",
         description="V14 4B (98.7% hybrid) — model MISSING, rehydrate via `harness convert from-hf-adapter --version v14`",
     ),
@@ -96,20 +96,20 @@ PIPELINES: dict[str, Pipeline] = {
     # ── V13.1 — 1.5B reference ──────────────────────────────────
     "v13_1": Pipeline(
         model="mlx-community/Qwen2.5-1.5B-Instruct-4bit",
-        adapter="finetune/adapters_v13_1_1.5B/0001800_adapters.safetensors",
-        prompt="prompts/student_v13_1.txt",
-        sweep_script="finetune/sweep_v13_1_1.5B.py",
-        lora_config="finetune/lora_config_v13_1_1.5B.yaml",
+        adapter="versions/v13_1/adapters/1.5B/0001800_adapters.safetensors",
+        prompt="versions/v13_1/prompts/student.txt",
+        sweep_script="versions/v13_1/scripts/sweep_1.5B.py",
+        lora_config="versions/v13_1/configs/lora_1.5B.yaml",
         description="V13.1 1.5B reference — 97.5% hybrid (iter 1800)",
     ),
 
     # ── V13 — 0.6B production (lowest latency) ──────────────────
     "v13": Pipeline(
         model="mlx-community/Qwen3-0.6B-4bit",
-        adapter="finetune/adapters_v13_0.6B/0001500_adapters.safetensors",
-        prompt="prompts/student_v13.txt",
-        sweep_script="finetune/sweep_v13.py",
-        lora_config="finetune/lora_config_v13_0.6B.yaml",
+        adapter="versions/v13/adapters/0001500_adapters.safetensors",
+        prompt="versions/v13/prompts/student.txt",
+        sweep_script="versions/v13/scripts/sweep.py",
+        lora_config="versions/v13/configs/lora.yaml",
         description="V13 0.6B production — 97.9% hybrid (iter 1500, fastest)",
     ),
 }

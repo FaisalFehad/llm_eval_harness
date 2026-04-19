@@ -1,0 +1,166 @@
+{
+  "model_id": "node-llama-cpp:mistral-7b-instruct-nothink-true",
+  "label_accuracy_pct": 10,
+  "parse_fail_pct": 0,
+  "score_mae": 22.8,
+  "score_bias": 5.2,
+  "avg_seconds": 16.7,
+  "total_tests": 10,
+  "passed": false,
+  "fail_reasons": [
+    "label_acc=10% < 40%"
+  ],
+  "early_exit": false,
+  "confusion_matrix": {
+    "good_fit": {
+      "good_fit": 0,
+      "maybe": 2,
+      "bad_fit": 2,
+      "parse_fail": 0
+    },
+    "maybe": {
+      "good_fit": 2,
+      "maybe": 0,
+      "bad_fit": 1,
+      "parse_fail": 0
+    },
+    "bad_fit": {
+      "good_fit": 2,
+      "maybe": 0,
+      "bad_fit": 1,
+      "parse_fail": 0
+    }
+  },
+  "job_results": [
+    {
+      "job_description": "2448773367 | Lead DevOps Architect @ Zulauf - McCullough",
+      "expected_label": "good_fit",
+      "expected_score": 70,
+      "predicted_label": "bad_fit",
+      "predicted_score": 49,
+      "predicted_reasoning": "The job description does not meet the requirements for a good fit. The job is hybrid, but the salary is below £100k, and the tech stack does not include Node.js or TypeScript. Additionally, the job does not specify a remote or global work arrangement.",
+      "label_correct": false,
+      "score_error": -21,
+      "latency_ms": 15277,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"bad_fit\", \"score\": 49, \"reasoning\": \"The job description does not meet the requirements for a good fit. The job is hybrid, but the salary is below £100k, and the tech stack does not include Node.js or TypeScript. Additionally, the job does not specify a remote or global work arrangement.\"}"
+    },
+    {
+      "job_description": "4371308941 | Senior Backend Engineer @ ScaleXP",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "good_fit",
+      "predicted_score": 70,
+      "predicted_reasoning": "The job description indicates a senior role, the preferred tech stack (Node.js, TypeScript, JavaScript), and the location is hybrid in London, which is a good fit for a senior software engineer.",
+      "label_correct": false,
+      "score_error": 20,
+      "latency_ms": 15930,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"good_fit\", \"score\": 70, \"reasoning\": \"The job description indicates a senior role, the preferred tech stack (Node.js, TypeScript, JavaScript), and the location is hybrid in London, which is a good fit for a senior software engineer.\"}"
+    },
+    {
+      "job_description": "4374147500 | Senior Backend Engineer @ Happl",
+      "expected_label": "maybe",
+      "expected_score": 65,
+      "predicted_label": "good_fit",
+      "predicted_score": 70,
+      "predicted_reasoning": "The job description aligns with the candidate's profile, with a focus on backend development, AI/ML/LLM roles, and the preferred tech stack. The compensation is also within the range. The role is hybrid, and the location is London, which is a plus for the candidate.",
+      "label_correct": false,
+      "score_error": 5,
+      "latency_ms": 21015,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"good_fit\", \"score\": 70, \"reasoning\": \"The job description aligns with the candidate's profile, with a focus on backend development, AI/ML/LLM roles, and the preferred tech stack. The compensation is also within the range. The role is hybrid, and the location is London, which is a plus for the candidate.\"}"
+    },
+    {
+      "job_description": "1785765898 | Senior Product Engineer @ Jenkins - Zboncak",
+      "expected_label": "good_fit",
+      "expected_score": 75,
+      "predicted_label": "bad_fit",
+      "predicted_score": 49,
+      "predicted_reasoning": "The job description does not meet the required criteria for a senior software engineer role. The job does not specify the technology stack, and the salary is below the minimum requirement.",
+      "label_correct": false,
+      "score_error": -26,
+      "latency_ms": 13123,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"bad_fit\", \"score\": 49, \"reasoning\": \"The job description does not meet the required criteria for a senior software engineer role. The job does not specify the technology stack, and the salary is below the minimum requirement.\"}"
+    },
+    {
+      "job_description": "4364768645 | Senior Software Engineer @ Maxwell Bond",
+      "expected_label": "good_fit",
+      "expected_score": 90,
+      "predicted_label": "maybe",
+      "predicted_score": 65,
+      "predicted_reasoning": "The job description indicates a focus on frontend development using Typescript and Node.js, and the use of AI/ML/LLM is mentioned. However, the salary is not explicitly stated, and the location is hybrid in London, which is a positive, but the experience required is not clearly defined.",
+      "label_correct": false,
+      "score_error": -25,
+      "latency_ms": 16177,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"maybe\", \"score\": 65, \"reasoning\": \"The job description indicates a focus on frontend development using Typescript and Node.js, and the use of AI/ML/LLM is mentioned. However, the salary is not explicitly stated, and the location is hybrid in London, which is a positive, but the experience required is not clearly defined.\"}"
+    },
+    {
+      "job_description": "7820757944 | Backend Systems Developer @ Spencer Inc",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "bad_fit",
+      "predicted_score": 49,
+      "predicted_reasoning": "The job description does not meet the required criteria for a senior software engineer role, as it lacks specific details about the role and the preferred stack. Additionally, the salary is below the desired range.",
+      "label_correct": false,
+      "score_error": -1,
+      "latency_ms": 13470,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"bad_fit\", \"score\": 49, \"reasoning\": \"The job description does not meet the required criteria for a senior software engineer role, as it lacks specific details about the role and the preferred stack. Additionally, the salary is below the desired range.\"}"
+    },
+    {
+      "job_description": "4374501376 | Front End Software Develper @ Oracle",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": "good_fit",
+      "predicted_score": 70,
+      "predicted_reasoning": "The job description matches the candidate's profile, including the required tech stack, location, and seniority level. The job also offers a comprehensive benefits package, including medical, dental, and vision insurance, and the salary is within the preferred range.",
+      "label_correct": false,
+      "score_error": 70,
+      "latency_ms": 24706,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"good_fit\", \"score\": 70, \"reasoning\": \"The job description matches the candidate's profile, including the required tech stack, location, and seniority level. The job also offers a comprehensive benefits package, including medical, dental, and vision insurance, and the salary is within the preferred range.\"}"
+    },
+    {
+      "job_description": "4374122289 | Fintech & Tech for Good | Profitable & Hyper-Growth Start-Up | Senior/Staff/Principal | Up to £150K | 3 Days Per Week LDN @ Owen Thomas | Pending B Corp™",
+      "expected_label": "bad_fit",
+      "expected_score": 25,
+      "predicted_label": "good_fit",
+      "predicted_score": 70,
+      "predicted_reasoning": "The job meets the requirements for a Senior, Staff, Principal, or Lead software engineer, and the preferred stack is Node.js, TypeScript, and JavaScript. The location is remote or hybrid in London/major UK cities, and the salary is above £150k.",
+      "label_correct": false,
+      "score_error": 45,
+      "latency_ms": 17422,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"good_fit\", \"score\": 70, \"reasoning\": \"The job meets the requirements for a Senior, Staff, Principal, or Lead software engineer, and the preferred stack is Node.js, TypeScript, and JavaScript. The location is remote or hybrid in London/major UK cities, and the salary is above £150k.\"}"
+    },
+    {
+      "job_description": "4373815463 | Senior Software Engineer @ Tact",
+      "expected_label": "good_fit",
+      "expected_score": 80,
+      "predicted_label": "maybe",
+      "predicted_score": 65,
+      "predicted_reasoning": "The job description indicates a senior-level position with experience in TypeScript and Node.js, and a strong frontend focus. However, the job does not explicitly state the AI/ML/LLM domain, and the location is hybrid in London.",
+      "label_correct": false,
+      "score_error": -15,
+      "latency_ms": 15108,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"maybe\", \"score\": 65, \"reasoning\": \"The job description indicates a senior-level position with experience in TypeScript and Node.js, and a strong frontend focus. However, the job does not explicitly state the AI/ML/LLM domain, and the location is hybrid in London.\"}"
+    },
+    {
+      "job_description": "4375738047 | Full Stack Engineer @ Quikr",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": "bad_fit",
+      "predicted_score": 0,
+      "predicted_reasoning": "The job is not based in the UK, and the candidate is not interested in on-site roles outside the UK.",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 15077,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"bad_fit\", \"score\": 0, \"reasoning\": \"The job is not based in the UK, and the candidate is not interested in on-site roles outside the UK.\"}"
+    }
+  ]
+}

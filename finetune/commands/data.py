@@ -21,7 +21,7 @@ def generate(
 ):
     """Generate synthetic job descriptions (v15: generate_v15_data.py)."""
     key = base_key(version)
-    script = REPO / f"finetune/generate_{key}_data.py"
+    script = REPO / f"versions/{key}/scripts/generate_data.py"
     if not script.exists():
         typer.echo(f"\u2717 No generator for version={version} ({script})", err=True)
         raise typer.Exit(1)
@@ -57,13 +57,13 @@ def audit(
 def merge(version: str = typer.Option(None, "--version", "-v",
     help=f"Training version. Default: ${{HARNESS_VERSION:-{default_version()}}}")):
     """Merge data sources (v15: merge_v15_data.py)."""
-    script = REPO / f"finetune/merge_{base_key(version)}_data.py"
+    script = REPO / f"versions/{base_key(version)}/scripts/merge_data.py"
     subprocess.run([PY, str(script)], check=True)
 
 
 @app.command()
 def downsample(version: str = typer.Option(None, "--version", "-v",
     help=f"Training version. Default: ${{HARNESS_VERSION:-{default_version()}}}")):
-    """Downsample OOS examples to balance the dataset (v15: downsample_oos_v15.py)."""
-    script = REPO / f"finetune/downsample_oos_{base_key(version)}.py"
+    """Downsample OOS examples to balance the dataset."""
+    script = REPO / f"versions/{base_key(version)}/scripts/downsample_oos.py"
     subprocess.run([PY, str(script)], check=True)

@@ -30,7 +30,7 @@ def to_mlx(
 @app.command("oq-fix")
 def oq_fix():
     """Run quantize_oq_fix.py (V15 OQ quantization fix script)."""
-    subprocess.run([PY, str(REPO / "finetune/quantize_oq_fix.py")], check=True)
+    subprocess.run([PY, str(REPO / "versions/v15/scripts/quantize_oq.py")], check=True)
 
 
 @app.command("from-hf-adapter")

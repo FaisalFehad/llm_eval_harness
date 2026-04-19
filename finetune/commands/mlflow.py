@@ -15,8 +15,8 @@ PY = str(REPO / ".venv" / "bin" / "python3")
 @app.command()
 def log(version: Optional[str] = typer.Option(None, "--version", "-v",
     help=f"Training version. Default: ${{HARNESS_VERSION:-{default_version()}}}")):
-    """Log an eval run to MLflow (mlflow_eval_<version>.py)."""
-    script = REPO / f"finetune/mlflow_eval_{base_key(version)}.py"
+    """Log an eval run to MLflow."""
+    script = REPO / f"versions/{base_key(version)}/scripts/mlflow_eval.py"
     if not script.exists():
         typer.echo(f"\u2717 MLflow log script not found: {script}", err=True)
         raise typer.Exit(1)
@@ -26,8 +26,8 @@ def log(version: Optional[str] = typer.Option(None, "--version", "-v",
 @app.command()
 def model(version: Optional[str] = typer.Option(None, "--version", "-v",
     help=f"Training version. Default: ${{HARNESS_VERSION:-{default_version()}}}")):
-    """Register a model in the MLflow registry (mlflow_model_<version>.py)."""
-    script = REPO / f"finetune/mlflow_model_{base_key(version)}.py"
+    """Register a model in the MLflow registry."""
+    script = REPO / f"versions/{base_key(version)}/scripts/mlflow_model.py"
     if not script.exists():
         typer.echo(f"\u2717 MLflow model script not found: {script}", err=True)
         raise typer.Exit(1)

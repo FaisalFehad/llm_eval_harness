@@ -1,0 +1,164 @@
+{
+  "model_id": "node-llama-cpp:gemma-3-4b-it",
+  "label_accuracy_pct": 40,
+  "parse_fail_pct": 0,
+  "score_mae": 25,
+  "score_bias": 10,
+  "avg_seconds": 32.4,
+  "total_tests": 10,
+  "passed": true,
+  "fail_reasons": [],
+  "early_exit": false,
+  "confusion_matrix": {
+    "good_fit": {
+      "good_fit": 3,
+      "maybe": 1,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "maybe": {
+      "good_fit": 1,
+      "maybe": 1,
+      "bad_fit": 1,
+      "parse_fail": 0
+    },
+    "bad_fit": {
+      "good_fit": 1,
+      "maybe": 2,
+      "bad_fit": 0,
+      "parse_fail": 0
+    }
+  },
+  "job_results": [
+    {
+      "job_description": "2448773367 | Lead DevOps Architect @ Zulauf - McCullough",
+      "expected_label": "good_fit",
+      "expected_score": 70,
+      "predicted_label": "maybe",
+      "predicted_score": 45,
+      "predicted_reasoning": "Manchester (+10), no seniority keyword (0), AI/ML experience required (+10), midpoint £105,000 (+25) = 45.",
+      "label_correct": false,
+      "score_error": -25,
+      "latency_ms": 27106,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":10,\"role\":0,\"tech\":10,\"comp\":25,\"score\":45,\"label\":\"maybe\",\"reasoning\":\"Manchester (+10), no seniority keyword (0), AI/ML experience required (+10), midpoint £105,000 (+25) = 45.\"}"
+    },
+    {
+      "job_description": "4371308941 | Senior Backend Engineer @ ScaleXP",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "bad_fit",
+      "predicted_score": 0,
+      "predicted_reasoning": "Hybrid London (+25), no Senior/Staff/Lead keywords (0), no tech stack identified (0), no GBP salary stated (0).",
+      "label_correct": false,
+      "score_error": -50,
+      "latency_ms": 29690,
+      "parse_failed": false,
+      "raw_output": "{\"loc\": 25, \"role\": 0, \"tech\": 0, \"comp\": 0, \"score\": 0, \"label\": \"bad_fit\", \"reasoning\": \"Hybrid London (+25), no Senior/Staff/Lead keywords (0), no tech stack identified (0), no GBP salary stated (0).\"}"
+    },
+    {
+      "job_description": "4374147500 | Senior Backend Engineer @ Happl",
+      "expected_label": "maybe",
+      "expected_score": 65,
+      "predicted_label": "good_fit",
+      "predicted_score": 75,
+      "predicted_reasoning": "Hybrid London (+25), Senior (+25), AI/ML experience required (+25) = 75",
+      "label_correct": false,
+      "score_error": 10,
+      "latency_ms": 27900,
+      "parse_failed": false,
+      "raw_output": "{\"loc\": 25, \"role\": 25, \"tech\": 25, \"comp\": 0, \"score\": 75, \"label\": \"good_fit\", \"reasoning\": \"Hybrid London (+25), Senior (+25), AI/ML experience required (+25) = 75\"}"
+    },
+    {
+      "job_description": "1785765898 | Senior Product Engineer @ Jenkins - Zboncak",
+      "expected_label": "good_fit",
+      "expected_score": 75,
+      "predicted_label": "good_fit",
+      "predicted_score": 75,
+      "predicted_reasoning": "Remote (UK) (+25), no Senior keywords (0), Rust/WASM (+25), salary £120,000-£140,000 midpoint £130,000 (+25) = 75.",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 34971,
+      "parse_failed": false,
+      "raw_output": "{\"loc\": 25, \"role\": 0, \"tech\": 25, \"comp\": 25, \"score\": 75, \"label\": \"good_fit\", \"reasoning\": \"Remote (UK) (+25), no Senior keywords (0), Rust/WASM (+25), salary £120,000-£140,000 midpoint £130,000 (+25) = 75.\"}"
+    },
+    {
+      "job_description": "4364768645 | Senior Software Engineer @ Maxwell Bond",
+      "expected_label": "good_fit",
+      "expected_score": 90,
+      "predicted_label": "good_fit",
+      "predicted_score": 90,
+      "predicted_reasoning": "London (+25), Senior (+25), Node.js/TS (+15), midpoint £100,000 (+25) = 90.",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 30625,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":15,\"comp\":25,\"score\":90,\"label\":\"good_fit\",\"reasoning\":\"London (+25), Senior (+25), Node.js/TS (+15), midpoint £100,000 (+25) = 90.\"}"
+    },
+    {
+      "job_description": "7820757944 | Backend Systems Developer @ Spencer Inc",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "maybe",
+      "predicted_score": 50,
+      "predicted_reasoning": "Bristol (+10), no seniority keyword (0), Node.js/TS (+15), midpoint £125,000 (+25) = 50.",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 28622,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":10,\"role\":0,\"tech\":15,\"comp\":25,\"score\":50,\"label\":\"maybe\",\"reasoning\":\"Bristol (+10), no seniority keyword (0), Node.js/TS (+15), midpoint £125,000 (+25) = 50.\"}"
+    },
+    {
+      "job_description": "4374501376 | Front End Software Develper @ Oracle",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": "maybe",
+      "predicted_score": 50,
+      "predicted_reasoning": "Location: United States (+50), Role: No Seniority Keywords (0), Tech: React (0), Compensation: No GBP Salary (0). Total: 50.",
+      "label_correct": false,
+      "score_error": 50,
+      "latency_ms": 41339,
+      "parse_failed": false,
+      "raw_output": "{\"loc\": 25, \"role\": 0, \"tech\": 25, \"comp\": 0, \"score\": 50, \"label\": \"maybe\", \"reasoning\": \"Location: United States (+50), Role: No Seniority Keywords (0), Tech: React (0), Compensation: No GBP Salary (0). Total: 50.\"}"
+    },
+    {
+      "job_description": "4374122289 | Fintech & Tech for Good | Profitable & Hyper-Growth Start-Up | Senior/Staff/Principal | Up to £150K | 3 Days Per Week LDN @ Owen Thomas | Pending B Corp™",
+      "expected_label": "bad_fit",
+      "expected_score": 25,
+      "predicted_label": "good_fit",
+      "predicted_score": 70,
+      "predicted_reasoning": "Hybrid London (+25), Senior keywords present (+15), Node.js (+10), TypeScript (+5), Midpoint salary £170,000 >= £100,000 (+25) = 70",
+      "label_correct": false,
+      "score_error": 45,
+      "latency_ms": 35843,
+      "parse_failed": false,
+      "raw_output": "{\"loc\": 25, \"role\": 0, \"tech\": 20, \"comp\": 25, \"score\": 70, \"label\": \"good_fit\", \"reasoning\": \"Hybrid London (+25), Senior keywords present (+15), Node.js (+10), TypeScript (+5), Midpoint salary £170,000 >= £100,000 (+25) = 70\"}"
+    },
+    {
+      "job_description": "4373815463 | Senior Software Engineer @ Tact",
+      "expected_label": "good_fit",
+      "expected_score": 80,
+      "predicted_label": "good_fit",
+      "predicted_score": 90,
+      "predicted_reasoning": "London (+25), Senior (+25), Node.js/TS (+15), midpoint £100,000 (+25) = 90.",
+      "label_correct": true,
+      "score_error": 10,
+      "latency_ms": 32351,
+      "parse_failed": false,
+      "raw_output": "{\"loc\": 25, \"role\": 25, \"tech\": 15, \"comp\": 25, \"score\": 90, \"label\": \"good_fit\", \"reasoning\": \"London (+25), Senior (+25), Node.js/TS (+15), midpoint £100,000 (+25) = 90.\"}"
+    },
+    {
+      "job_description": "4375738047 | Full Stack Engineer @ Quikr",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": "maybe",
+      "predicted_score": 60,
+      "predicted_reasoning": "Remote (United States) (+25), Full Stack (+15), Node.js (+10), TypeScript (+5), no GBP salary (0) = 60.",
+      "label_correct": false,
+      "score_error": 60,
+      "latency_ms": 35209,
+      "parse_failed": false,
+      "raw_output": "{\"loc\": 25, \"role\": 15, \"tech\": 20, \"comp\": 0, \"score\": 60, \"label\": \"maybe\", \"reasoning\": \"Remote (United States) (+25), Full Stack (+15), Node.js (+10), TypeScript (+5), no GBP salary (0) = 60.\"}"
+    }
+  ]
+}

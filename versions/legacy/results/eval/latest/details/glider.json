@@ -1,0 +1,167 @@
+{
+  "model_id": "node-llama-cpp:glider",
+  "label_accuracy_pct": 30,
+  "parse_fail_pct": 0,
+  "score_mae": 31.6,
+  "score_bias": 23.4,
+  "avg_seconds": 29.7,
+  "total_tests": 10,
+  "passed": false,
+  "fail_reasons": [
+    "label_acc=30% < 40%",
+    "score_mae=31.6 > 30"
+  ],
+  "early_exit": false,
+  "confusion_matrix": {
+    "good_fit": {
+      "good_fit": 2,
+      "maybe": 2,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "maybe": {
+      "good_fit": 2,
+      "maybe": 1,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "bad_fit": {
+      "good_fit": 0,
+      "maybe": 3,
+      "bad_fit": 0,
+      "parse_fail": 0
+    }
+  },
+  "job_results": [
+    {
+      "job_description": "2448773367 | Lead DevOps Architect @ Zulauf - McCullough",
+      "expected_label": "good_fit",
+      "expected_score": 70,
+      "predicted_label": "good_fit",
+      "predicted_score": 100,
+      "predicted_reasoning": "The candidate meets the role and seniority requirements as a Lead DevOps Architect. The preferred tech stack includes Node.js, TypeScript, and JavaScript, which aligns with the job description. The location is hybrid in Manchester, UK, which matches the job's location criteria. The salary target of £100,000 - £115,000 is within the specified range, and the benefits package is comprehensive. The candidate's interest in AI/ML/LLM roles is explicitly mentioned, fulfilling the tech stack and domain requirements.",
+      "label_correct": true,
+      "score_error": 30,
+      "latency_ms": 33504,
+      "parse_failed": false,
+      "raw_output": "{\n    \"label\": \"good_fit\",\n    \"score\": 100,\n    \"reasoning\": \"The candidate meets the role and seniority requirements as a Lead DevOps Architect. The preferred tech stack includes Node.js, TypeScript, and JavaScript, which aligns with the job description. The location is hybrid in Manchester, UK, which matches the job's location criteria. The salary target of £100,000 - £115,000 is within the specified range, and the benefits package is comprehensive. The candidate's interest in AI/ML/LLM roles is explicitly mentioned, fulfilling the tech stack and domain requirements.\"\n}"
+    },
+    {
+      "job_description": "4371308941 | Senior Backend Engineer @ ScaleXP",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "maybe",
+      "predicted_score": 50,
+      "predicted_reasoning": "The candidate profile aligns with the job description in terms of preferred tech stack and location, but there is a mismatch in the desired role level. The job description requires a Senior, Staff, Principal, or Lead Engineer, while the candidate is targeting Staff, Principal, or Lead roles. Additionally, the candidate's salary expectation of £75,000+ GBP is not explicitly mentioned in the job description, which could lead to potential discrepancies.",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 29925,
+      "parse_failed": false,
+      "raw_output": "{\n    \"label\": \"maybe\",\n    \"score\": 50,\n    \"reasoning\": \"The candidate profile aligns with the job description in terms of preferred tech stack and location, but there is a mismatch in the desired role level. The job description requires a Senior, Staff, Principal, or Lead Engineer, while the candidate is targeting Staff, Principal, or Lead roles. Additionally, the candidate's salary expectation of £75,000+ GBP is not explicitly mentioned in the job description, which could lead to potential discrepancies.\"\n}"
+    },
+    {
+      "job_description": "4374147500 | Senior Backend Engineer @ Happl",
+      "expected_label": "maybe",
+      "expected_score": 65,
+      "predicted_label": "good_fit",
+      "predicted_score": 100,
+      "predicted_reasoning": "The candidate profile matches the job description for a Senior Backend Engineer at Happl, with a focus on Node.js, TypeScript, and JavaScript, which are explicitly required. The candidate's interest in AI/ML/LLM roles aligns with the job's emphasis on AI-first benefits platform. The preferred salary target of £75,000+ GBP is within the job's specified range. The candidate's location in the UK and openness to hybrid roles in London/major UK cities meet the job's location and work arrangement requirements. The candidate's experience and skills align well with the role's requirements, making this a good fit.",
+      "label_correct": false,
+      "score_error": 35,
+      "latency_ms": 39546,
+      "parse_failed": false,
+      "raw_output": "{\n    \"label\": \"good_fit\",\n    \"score\": 100,\n    \"reasoning\": \"The candidate profile matches the job description for a Senior Backend Engineer at Happl, with a focus on Node.js, TypeScript, and JavaScript, which are explicitly required. The candidate's interest in AI/ML/LLM roles aligns with the job's emphasis on AI-first benefits platform. The preferred salary target of £75,000+ GBP is within the job's specified range. The candidate's location in the UK and openness to hybrid roles in London/major UK cities meet the job's location and work arrangement requirements. The candidate's experience and skills align well with the role's requirements, making this a good fit.\"\n}"
+    },
+    {
+      "job_description": "1785765898 | Senior Product Engineer @ Jenkins - Zboncak",
+      "expected_label": "good_fit",
+      "expected_score": 75,
+      "predicted_label": "good_fit",
+      "predicted_score": 100,
+      "predicted_reasoning": "The candidate meets the seniority requirement as a Senior Product Engineer. The preferred tech stack includes Node.js, TypeScript, and JavaScript, which aligns with the job description. The location is fully remote in the UK, which matches the candidate's preferences. The salary target of £120,000 - £140,000 exceeds the minimum requirement of £75,000, making it a good fit. The candidate's interest in AI/ML/LLM roles is also relevant to the job description.",
+      "label_correct": true,
+      "score_error": 25,
+      "latency_ms": 27461,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"good_fit\", \"score\": 100, \"reasoning\": \"The candidate meets the seniority requirement as a Senior Product Engineer. The preferred tech stack includes Node.js, TypeScript, and JavaScript, which aligns with the job description. The location is fully remote in the UK, which matches the candidate's preferences. The salary target of £120,000 - £140,000 exceeds the minimum requirement of £75,000, making it a good fit. The candidate's interest in AI/ML/LLM roles is also relevant to the job description.\"}"
+    },
+    {
+      "job_description": "4364768645 | Senior Software Engineer @ Maxwell Bond",
+      "expected_label": "good_fit",
+      "expected_score": 90,
+      "predicted_label": "maybe",
+      "predicted_score": 69,
+      "predicted_reasoning": "The candidate meets some of the preferred tech stack requirements (JavaScript/TypeScript explicitly required) and has a salary target within the desired range (£75,000+ GBP). However, the role does not explicitly require Node.js, which is a key part of the preferred stack. The location is partially met (hybrid in London), but the candidate is open to global roles, which slightly affects the score. The role does not align perfectly with the preferred stack and location, hence the score of 69.",
+      "label_correct": false,
+      "score_error": -21,
+      "latency_ms": 28186,
+      "parse_failed": false,
+      "raw_output": "{\n    \"label\": \"maybe\",\n    \"score\": 69,\n    \"reasoning\": \"The candidate meets some of the preferred tech stack requirements (JavaScript/TypeScript explicitly required) and has a salary target within the desired range (£75,000+ GBP). However, the role does not explicitly require Node.js, which is a key part of the preferred stack. The location is partially met (hybrid in London), but the candidate is open to global roles, which slightly affects the score. The role does not align perfectly with the preferred stack and location, hence the score of 69.\"\n}"
+    },
+    {
+      "job_description": "7820757944 | Backend Systems Developer @ Spencer Inc",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "good_fit",
+      "predicted_score": 100,
+      "predicted_reasoning": "The candidate profile aligns perfectly with the job description, as it specifies a preference for Node.js, TypeScript, and JavaScript, which are explicitly required. The candidate is open to hybrid roles in London, matching the job's location and work arrangement requirements. The salary target of £75,000+ GBP is within the specified range, and the candidate's interest in AI/ML/LLM roles is explicitly mentioned, fulfilling the tech stack and domain criteria. The candidate's seniority level is appropriate for the role, and the location preference is suitable for the job's location.",
+      "label_correct": false,
+      "score_error": 50,
+      "latency_ms": 30869,
+      "parse_failed": false,
+      "raw_output": "{\n    \"label\": \"good_fit\",\n    \"score\": 100,\n    \"reasoning\": \"The candidate profile aligns perfectly with the job description, as it specifies a preference for Node.js, TypeScript, and JavaScript, which are explicitly required. The candidate is open to hybrid roles in London, matching the job's location and work arrangement requirements. The salary target of £75,000+ GBP is within the specified range, and the candidate's interest in AI/ML/LLM roles is explicitly mentioned, fulfilling the tech stack and domain criteria. The candidate's seniority level is appropriate for the role, and the location preference is suitable for the job's location.\"\n}"
+    },
+    {
+      "job_description": "4374501376 | Front End Software Develper @ Oracle",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": "maybe",
+      "predicted_score": 50,
+      "predicted_reasoning": "The candidate profile shows interest in AI/ML/LLM roles and has a preferred tech stack that includes Node.js and JavaScript, which aligns with the job description. However, the candidate's location preference for UK-based or global roles does not fully match the job's requirement for a hybrid or on-site role in London. The salary target is within the acceptable range, but the location preference is a significant mismatch.",
+      "label_correct": false,
+      "score_error": 50,
+      "latency_ms": 32259,
+      "parse_failed": false,
+      "raw_output": "{\n    \"label\": \"maybe\",\n    \"score\": 50,\n    \"reasoning\": \"The candidate profile shows interest in AI/ML/LLM roles and has a preferred tech stack that includes Node.js and JavaScript, which aligns with the job description. However, the candidate's location preference for UK-based or global roles does not fully match the job's requirement for a hybrid or on-site role in London. The salary target is within the acceptable range, but the location preference is a significant mismatch.\"\n}"
+    },
+    {
+      "job_description": "4374122289 | Fintech & Tech for Good | Profitable & Hyper-Growth Start-Up | Senior/Staff/Principal | Up to £150K | 3 Days Per Week LDN @ Owen Thomas | Pending B Corp™",
+      "expected_label": "bad_fit",
+      "expected_score": 25,
+      "predicted_label": "maybe",
+      "predicted_score": 60,
+      "predicted_reasoning": "The candidate profile aligns with the role in terms of preferred tech stack and location, but the score is not a perfect 100 due to the lack of explicit mention of Node.js or TypeScript in the job description. The candidate's interest in AI/ML/LLM roles is partially met, as the job description mentions building financial infrastructure, which could imply AI/ML involvement. However, the description does not explicitly state AI/ML/LLM experience, which is a requirement for a higher score.",
+      "label_correct": false,
+      "score_error": 35,
+      "latency_ms": 29510,
+      "parse_failed": false,
+      "raw_output": "{\n    \"label\": \"maybe\",\n    \"score\": 60,\n    \"reasoning\": \"The candidate profile aligns with the role in terms of preferred tech stack and location, but the score is not a perfect 100 due to the lack of explicit mention of Node.js or TypeScript in the job description. The candidate's interest in AI/ML/LLM roles is partially met, as the job description mentions building financial infrastructure, which could imply AI/ML involvement. However, the description does not explicitly state AI/ML/LLM experience, which is a requirement for a higher score.\"\n}"
+    },
+    {
+      "job_description": "4373815463 | Senior Software Engineer @ Tact",
+      "expected_label": "good_fit",
+      "expected_score": 80,
+      "predicted_label": "maybe",
+      "predicted_score": 60,
+      "predicted_reasoning": "The candidate meets some of the requirements, such as preferred tech stack and location, but lacks explicit mention of Node.js or AI/ML/LLM experience. The salary target is partially met, but the role does not specify if it's fully remote or hybrid in London, which affects the score.",
+      "label_correct": false,
+      "score_error": -20,
+      "latency_ms": 21673,
+      "parse_failed": false,
+      "raw_output": "{\n    \"label\": \"maybe\",\n    \"score\": 60,\n    \"reasoning\": \"The candidate meets some of the requirements, such as preferred tech stack and location, but lacks explicit mention of Node.js or AI/ML/LLM experience. The salary target is partially met, but the role does not specify if it's fully remote or hybrid in London, which affects the score.\"\n}"
+    },
+    {
+      "job_description": "4375738047 | Full Stack Engineer @ Quikr",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": "maybe",
+      "predicted_score": 50,
+      "predicted_reasoning": "The candidate profile aligns with the preferred tech stack and domain, as it mentions Node.js and JavaScript, which are part of the preferred stack. However, the location is not explicitly stated, which affects the score. The candidate is open to remote roles, which matches the location requirement, but the lack of specificity in location prevents a higher score.",
+      "label_correct": false,
+      "score_error": 50,
+      "latency_ms": 24323,
+      "parse_failed": false,
+      "raw_output": "{\n    \"label\": \"maybe\",\n    \"score\": 50,\n    \"reasoning\": \"The candidate profile aligns with the preferred tech stack and domain, as it mentions Node.js and JavaScript, which are part of the preferred stack. However, the location is not explicitly stated, which affects the score. The candidate is open to remote roles, which matches the location requirement, but the lack of specificity in location prevents a higher score.\"\n}"
+    }
+  ]
+}

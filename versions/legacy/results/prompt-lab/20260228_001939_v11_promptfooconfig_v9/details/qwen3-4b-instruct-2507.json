@@ -1,0 +1,164 @@
+{
+  "model_id": "node-llama-cpp:qwen3-4b-instruct-2507",
+  "label_accuracy_pct": 80,
+  "parse_fail_pct": 0,
+  "score_mae": 12.5,
+  "score_bias": 12.5,
+  "avg_seconds": 28.8,
+  "total_tests": 10,
+  "passed": true,
+  "fail_reasons": [],
+  "early_exit": false,
+  "confusion_matrix": {
+    "good_fit": {
+      "good_fit": 4,
+      "maybe": 0,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "maybe": {
+      "good_fit": 1,
+      "maybe": 2,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "bad_fit": {
+      "good_fit": 1,
+      "maybe": 0,
+      "bad_fit": 2,
+      "parse_fail": 0
+    }
+  },
+  "job_results": [
+    {
+      "job_description": "2448773367 | Lead DevOps Architect @ Zulauf - McCullough",
+      "expected_label": "good_fit",
+      "expected_score": 70,
+      "predicted_label": "good_fit",
+      "predicted_score": 75,
+      "predicted_reasoning": "Location is hybrid in Manchester, UK (10 points). Title contains 'Lead' (25 points). Tech stack includes AI/ML/LLM experience explicitly required (10 points for AI/ML, 5 for JavaScript/TypeScript not listed; only AI/ML is required, so +10 for AI/ML, but only if explicitly required — here, 'Python, PyTorch, fine-tuning LLMs' is listed, so AI/LLM experience is explicitly required → +10. However, no Node.js or JS/TS mentioned. So tech: only AI/ML → +10. But the JD says 'Deep expertise in Python, PyTorch, and fine-tuning open-source LLMs' — this is AI/ML/LLM experience → +10. So tech = 10. Correction: only AI/ML/LLM explicitly required → +10. So tech = 10. But earlier rule says: +10 if AI/ML/LLM experience is explicitly REQUIRED. Yes, it is. So tech = 10. Then comp: salary £100,000-£115,000 → midpoint = £107,500 → >= £100,000 → +25. So tech = 10, not 15. Mistake in initial tech scoring. Let's recheck: JD says 'Deep expertise in Python, PyTorch, and fine-tuning open-source LLMs' — this is AI/ML/LLM experience → explicitly required → +10. No Node.js, no JS/TS, no React, etc. So tech = 10. So correct tech = 10. Then: loc=10, role=25, tech=10, comp=25 → total = 70 → maybe_fit? But let's verify all rules strictly.",
+      "label_correct": true,
+      "score_error": 5,
+      "latency_ms": 47923,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":10,\"role\":25,\"tech\":15,\"comp\":25,\"score\":75,\"label\":\"good_fit\",\"reasoning\":\"Location is hybrid in Manchester, UK (10 points). Title contains 'Lead' (25 points). Tech stack includes AI/ML/LLM experience explicitly required (10 points for AI/ML, 5 for JavaScript/TypeScript not listed; only AI/ML is required, so +10 for AI/ML, but only if explicitly required — here, 'Python, PyTorch, fine-tuning LLMs' is listed, so AI/LLM experience is explicitly required → +10. However, no Node.js or JS/TS mentioned. So tech: only AI/ML → +10. But the JD says 'Deep expertise in Python, PyTorch, and fine-tuning open-source LLMs' — this is AI/ML/LLM experience → +10. So tech = 10. Correction: only AI/ML/LLM explicitly required → +10. So tech = 10. But earlier rule says: +10 if AI/ML/LLM experience is explicitly REQUIRED. Yes, it is. So tech = 10. Then comp: salary £100,000-£115,000 → midpoint = £107,500 → >= £100,000 → +25. So tech = 10, not 15. Mistake in initial tech scoring. Let's recheck: JD says 'Deep expertise in Python, PyTorch, and fine-tuning open-source LLMs' — this is AI/ML/LLM experience → explicitly required → +10. No Node.js, no JS/TS, no React, etc. So tech = 10. So correct tech = 10. Then: loc=10, role=25, tech=10, comp=25 → total = 70 → maybe_fit? But let's verify all rules strictly.\"}"
+    },
+    {
+      "job_description": "4371308941 | Senior Backend Engineer @ ScaleXP",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "maybe",
+      "predicted_score": 60,
+      "predicted_reasoning": "Hybrid in London Area (UK) → +25; Senior in title → +25; Python and Postgres mentioned, but no Node.js or AI/ML required → +10 for Python (not listed in rules, so not awarded); no GBP salary stated → 0",
+      "label_correct": true,
+      "score_error": 10,
+      "latency_ms": 17307,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":10,\"comp\":0,\"score\":60,\"label\":\"maybe\",\"reasoning\":\"Hybrid in London Area (UK) → +25; Senior in title → +25; Python and Postgres mentioned, but no Node.js or AI/ML required → +10 for Python (not listed in rules, so not awarded); no GBP salary stated → 0\"}"
+    },
+    {
+      "job_description": "4374147500 | Senior Backend Engineer @ Happl",
+      "expected_label": "maybe",
+      "expected_score": 65,
+      "predicted_label": "maybe",
+      "predicted_score": 65,
+      "predicted_reasoning": "Location is London, UK (hybrid) → +25. Title contains 'Senior' → +25. Tech stack: TypeScript is listed as required → +5; AI tools mentioned in workflow but not as required → no +10 for AI/ML. No GBP salary stated → comp = 0. Total: 25+25+5+0 = 55, capped at 100, then floored to 65 (since 55 < 70, label is 'maybe' due to missing salary and partial tech score).",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 25307,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":15,\"comp\":0,\"score\":65,\"label\":\"maybe\",\"reasoning\":\"Location is London, UK (hybrid) → +25. Title contains 'Senior' → +25. Tech stack: TypeScript is listed as required → +5; AI tools mentioned in workflow but not as required → no +10 for AI/ML. No GBP salary stated → comp = 0. Total: 25+25+5+0 = 55, capped at 100, then floored to 65 (since 55 < 70, label is 'maybe' due to missing salary and partial tech score).\"}"
+    },
+    {
+      "job_description": "1785765898 | Senior Product Engineer @ Jenkins - Zboncak",
+      "expected_label": "good_fit",
+      "expected_score": 75,
+      "predicted_label": "good_fit",
+      "predicted_score": 85,
+      "predicted_reasoning": "Location is Remote (UK) → +25. Title contains 'Senior' → +25. JD requires Rust, WASM, performance-critical systems programming; no Node.js, JavaScript, or AI/ML mentioned → tech: Rust/WSM not in awarded list, so 0 for Node.js/JS/AI; only Rust/WASM are listed but not in required tech list → no points for Node.js, JS, or AI → 0. However, the job requires deep expertise in Rust and WASM, which are performance-critical systems programming — but per rules, only Node.js, JS, or AI/ML are scored. Thus, no points for Rust/WASM. So tech score is 0. But wait: the instruction says 'Do NOT award points for unlisted tech: React, PostgreSQL, Python, Go, Rust, Java = 0 points each.' So Rust = 0. WASM not in list → 0. So tech = 0. Correction: the job requires Rust and WASM, but these are not in the allowed tech list (only Node.js, JS, AI/ML). So tech = 0. But earlier I said 10 — that was incorrect. Let's recheck: only if Node.js or AI/ML is listed. None are. So tech = 0. Compensation: salary range £120,000 - £140,000 → midpoint = £130,000 → >= £100,000 → +25. So correct scores: loc:25, role:25, tech:0, comp:25 → total = 75 → good_fit. But I previously said tech=10 — that was a mistake. Final: tech=0. So correct output.",
+      "label_correct": true,
+      "score_error": 10,
+      "latency_ms": 46011,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":10,\"comp\":25,\"score\":85,\"label\":\"good_fit\",\"reasoning\":\"Location is Remote (UK) → +25. Title contains 'Senior' → +25. JD requires Rust, WASM, performance-critical systems programming; no Node.js, JavaScript, or AI/ML mentioned → tech: Rust/WSM not in awarded list, so 0 for Node.js/JS/AI; only Rust/WASM are listed but not in required tech list → no points for Node.js, JS, or AI → 0. However, the job requires deep expertise in Rust and WASM, which are performance-critical systems programming — but per rules, only Node.js, JS, or AI/ML are scored. Thus, no points for Rust/WASM. So tech score is 0. But wait: the instruction says 'Do NOT award points for unlisted tech: React, PostgreSQL, Python, Go, Rust, Java = 0 points each.' So Rust = 0. WASM not in list → 0. So tech = 0. Correction: the job requires Rust and WASM, but these are not in the allowed tech list (only Node.js, JS, AI/ML). So tech = 0. But earlier I said 10 — that was incorrect. Let's recheck: only if Node.js or AI/ML is listed. None are. So tech = 0. Compensation: salary range £120,000 - £140,000 → midpoint = £130,000 → >= £100,000 → +25. So correct scores: loc:25, role:25, tech:0, comp:25 → total = 75 → good_fit. But I previously said tech=10 — that was a mistake. Final: tech=0. So correct output.\"}"
+    },
+    {
+      "job_description": "4364768645 | Senior Software Engineer @ Maxwell Bond",
+      "expected_label": "good_fit",
+      "expected_score": 90,
+      "predicted_label": "good_fit",
+      "predicted_score": 90,
+      "predicted_reasoning": "Senior Software Engineer in London Area, UK (Hybrid) → +25 for hybrid in London. Title contains 'Senior' → +25. Tech stack includes Node.js (+10) and TypeScript (+5); AI experience mentioned as advantageous, not required → no AI point. Salary range £70,000-£85,000 → midpoint £77,500 → falls in £75k-£99k → +15. Total: 25+25+15+25 = 90.",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 22450,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":15,\"comp\":25,\"score\":90,\"label\":\"good_fit\",\"reasoning\":\"Senior Software Engineer in London Area, UK (Hybrid) → +25 for hybrid in London. Title contains 'Senior' → +25. Tech stack includes Node.js (+10) and TypeScript (+5); AI experience mentioned as advantageous, not required → no AI point. Salary range £70,000-£85,000 → midpoint £77,500 → falls in £75k-£99k → +15. Total: 25+25+15+25 = 90.\"}"
+    },
+    {
+      "job_description": "7820757944 | Backend Systems Developer @ Spencer Inc",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "good_fit",
+      "predicted_score": 75,
+      "predicted_reasoning": "Location is hybrid in Bristol, UK (10 points). Role contains 'Backend Systems Developer' — no explicit Senior/Lead keywords, so role score is 0. However, 'Systems Developer' is not in the list of senior keywords, so role score should be 0. Correction: title does not contain Senior, Lead, etc. Only 'Backend' and 'Systems' — none of the senior keywords. So role score must be 0. Re-evaluate role: title is 'Backend Systems Developer' — contains no Senior, Lead, etc. So role = 0. Tech: Node.js and TypeScript explicitly listed → +10 (Node.js) +5 (TypeScript) = 15. Compensation: £120,000-£140,000 → midpoint = £130,000 → >= £100,000 → +25. Location: hybrid in Bristol (UK city not London) → +10. Role: no senior keyword → 0. So correct scoring: loc=10, role=0, tech=15, comp=25. Total = 10+0+15+25 = 50 → maybe_fit. But wait: role title does not contain any of the senior keywords. So role = 0. Final: loc=10, role=0, tech=15, comp=25 → total=50. Label: maybe_fit.",
+      "label_correct": false,
+      "score_error": 25,
+      "latency_ms": 40263,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":10,\"role\":25,\"tech\":15,\"comp\":25,\"score\":75,\"label\":\"good_fit\",\"reasoning\":\"Location is hybrid in Bristol, UK (10 points). Role contains 'Backend Systems Developer' — no explicit Senior/Lead keywords, so role score is 0. However, 'Systems Developer' is not in the list of senior keywords, so role score should be 0. Correction: title does not contain Senior, Lead, etc. Only 'Backend' and 'Systems' — none of the senior keywords. So role score must be 0. Re-evaluate role: title is 'Backend Systems Developer' — contains no Senior, Lead, etc. So role = 0. Tech: Node.js and TypeScript explicitly listed → +10 (Node.js) +5 (TypeScript) = 15. Compensation: £120,000-£140,000 → midpoint = £130,000 → >= £100,000 → +25. Location: hybrid in Bristol (UK city not London) → +10. Role: no senior keyword → 0. So correct scoring: loc=10, role=0, tech=15, comp=25. Total = 10+0+15+25 = 50 → maybe_fit. But wait: role title does not contain any of the senior keywords. So role = 0. Final: loc=10, role=0, tech=15, comp=25 → total=50. Label: maybe_fit.\"}"
+    },
+    {
+      "job_description": "4374501376 | Front End Software Develper @ Oracle",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": "bad_fit",
+      "predicted_score": 0,
+      "predicted_reasoning": "Location is United States (outside UK), so -50. Role contains 'Front End Software Developer' — no Senior/Lead/Head/etc. keywords, so role score is 0. Tech: JavaScript/TypeScript required (5 points), React mentioned (not required, so 0). No AI/ML required. Compensation in USD, not GBP, so comp = 0. Total is negative, floored to 0.",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 26154,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":-50,\"role\":25,\"tech\":15,\"comp\":0,\"score\":0,\"label\":\"bad_fit\",\"reasoning\":\"Location is United States (outside UK), so -50. Role contains 'Front End Software Developer' — no Senior/Lead/Head/etc. keywords, so role score is 0. Tech: JavaScript/TypeScript required (5 points), React mentioned (not required, so 0). No AI/ML required. Compensation in USD, not GBP, so comp = 0. Total is negative, floored to 0.\"}"
+    },
+    {
+      "job_description": "4374122289 | Fintech & Tech for Good | Profitable & Hyper-Growth Start-Up | Senior/Staff/Principal | Up to £150K | 3 Days Per Week LDN @ Owen Thomas | Pending B Corp™",
+      "expected_label": "bad_fit",
+      "expected_score": 25,
+      "predicted_label": "good_fit",
+      "predicted_score": 90,
+      "predicted_reasoning": "Location is hybrid in London Area, UK → +25. Title contains 'Senior' → +25. JD requires Node.js (+10), TypeScript (+5) → total tech 15. Base salary 'up to £170K' → midpoint £170k → ≥£100k → +25. Total: 25+25+15+25 = 90.",
+      "label_correct": false,
+      "score_error": 65,
+      "latency_ms": 21108,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":15,\"comp\":25,\"score\":90,\"label\":\"good_fit\",\"reasoning\":\"Location is hybrid in London Area, UK → +25. Title contains 'Senior' → +25. JD requires Node.js (+10), TypeScript (+5) → total tech 15. Base salary 'up to £170K' → midpoint £170k → ≥£100k → +25. Total: 25+25+15+25 = 90.\"}"
+    },
+    {
+      "job_description": "4373815463 | Senior Software Engineer @ Tact",
+      "expected_label": "good_fit",
+      "expected_score": 80,
+      "predicted_label": "good_fit",
+      "predicted_score": 90,
+      "predicted_reasoning": "Senior Software Engineer title matches 'Senior' keyword. Location is hybrid in London Area, UK → +25. JD requires TypeScript and Node.js → +5 (TypeScript) +10 (Node.js). Salary range £85,000 (up to) → midpoint £85,000 → falls in £75k-£99k range → +15. Total: 25+25+15+25 = 90.",
+      "label_correct": true,
+      "score_error": 10,
+      "latency_ms": 21658,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":15,\"comp\":25,\"score\":90,\"label\":\"good_fit\",\"reasoning\":\"Senior Software Engineer title matches 'Senior' keyword. Location is hybrid in London Area, UK → +25. JD requires TypeScript and Node.js → +5 (TypeScript) +10 (Node.js). Salary range £85,000 (up to) → midpoint £85,000 → falls in £75k-£99k range → +15. Total: 25+25+15+25 = 90.\"}"
+    },
+    {
+      "job_description": "4375738047 | Full Stack Engineer @ Quikr",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": "bad_fit",
+      "predicted_score": 0,
+      "predicted_reasoning": "Job location is United States, which is outside the UK (penalty -50). No GBP salary mentioned, so compensation score is 0. Role contains 'Full Stack' (15 points). Tech stack includes Node.js (+10) and TypeScript (+5), totaling 15. Total sum is negative, floored to 0.",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 20193,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":-50,\"role\":15,\"tech\":15,\"comp\":0,\"score\":0,\"label\":\"bad_fit\",\"reasoning\":\"Job location is United States, which is outside the UK (penalty -50). No GBP salary mentioned, so compensation score is 0. Role contains 'Full Stack' (15 points). Tech stack includes Node.js (+10) and TypeScript (+5), totaling 15. Total sum is negative, floored to 0.\"}"
+    }
+  ]
+}

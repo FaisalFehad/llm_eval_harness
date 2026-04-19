@@ -1,0 +1,41 @@
+{
+  "version": "v15",
+  "status": "complete",
+  "date": "2026-04-13",
+  "base_model": {
+    "hf_repo": "mlx-community/Qwen3-4B-bf16",
+    "type": "mlx",
+    "size_params": "4B",
+    "dtype": "bf16"
+  },
+  "adapter_hf": "FF-01/qwen3-4b-v15",
+  "adapter_hf_status": "TODO — see docs/HF_PUSH_TODO.md",
+  "champion_checkpoint": "iter_700",
+  "champion_prompt": "student_v15_fix4.txt",
+  "prompt_sha": "TODO",
+  "data_sha": "TODO",
+  "test_set": {
+    "path": "data/v12/test_labeled_audited.jsonl",
+    "note": "shared across versions, chmod 444"
+  },
+  "metrics": {
+    "hybrid_accuracy": 0.996,
+    "hybrid_errors": 1,
+    "parse_failures": 17,
+    "model_only_label_accuracy": 0.914,
+    "sweep_iter_700_hybrid": 0.992,
+    "sweep_iter_700_model_only": 0.862,
+    "notes": "Champion eval uses fix4 prompt (production run). Sweep uses base student_v15.txt. Fix4 adds +0.4pp hybrid / +5.2pp model-only."
+  },
+  "metric_source": {
+    "hybrid": "eval_results/v15_production/adapters_v15_4B/hybrid_summary.json (recomputed 2026-04-19 via compute_hybrid_v13_1.py --v12)",
+    "model_only": "eval_results/v15_production/adapters_v15_4B/*.summary.json (label_accuracy field)",
+    "sweep": "eval_results/v15_sweep_4B/sweep_analysis.json"
+  },
+  "eval_harness": "promptfoo + compute_hybrid_v13_1.py",
+  "training_platform": "local MLX on M5 Max 128GB",
+  "training_cmd": "harness train lora --version v15",
+  "eval_cmd": "harness eval run --version v15",
+  "git_sha": "8c322d0",
+  "git_tag": "pre-reorg-2026-04-19"
+}

@@ -1,0 +1,164 @@
+{
+  "model_id": "node-llama-cpp:meta-llama-3.1-8b-instruct",
+  "label_accuracy_pct": 60,
+  "parse_fail_pct": 0,
+  "score_mae": 15.5,
+  "score_bias": -15.5,
+  "avg_seconds": 23.1,
+  "total_tests": 10,
+  "passed": true,
+  "fail_reasons": [],
+  "early_exit": false,
+  "confusion_matrix": {
+    "good_fit": {
+      "good_fit": 1,
+      "maybe": 3,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "maybe": {
+      "good_fit": 0,
+      "maybe": 2,
+      "bad_fit": 1,
+      "parse_fail": 0
+    },
+    "bad_fit": {
+      "good_fit": 0,
+      "maybe": 0,
+      "bad_fit": 3,
+      "parse_fail": 0
+    }
+  },
+  "job_results": [
+    {
+      "job_description": "2448773367 | Lead DevOps Architect @ Zulauf - McCullough",
+      "expected_label": "good_fit",
+      "expected_score": 70,
+      "predicted_label": "maybe",
+      "predicted_score": 35,
+      "predicted_reasoning": "Hybrid location in Manchester, UK, but no seniority keywords in job title, no tech stack points, and £100,000-£115,000 midpoint salary.",
+      "label_correct": false,
+      "score_error": -35,
+      "latency_ms": 20807,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":10,\"role\":0,\"tech\":0,\"comp\":25,\"score\":35,\"label\":\"maybe\",\"reasoning\":\"Hybrid location in Manchester, UK, but no seniority keywords in job title, no tech stack points, and £100,000-£115,000 midpoint salary.\"}"
+    },
+    {
+      "job_description": "4371308941 | Senior Backend Engineer @ ScaleXP",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "bad_fit",
+      "predicted_score": 0,
+      "predicted_reasoning": "London Area, United Kingdom (Hybrid) is a hybrid/on-site in London location, but job title does not contain any of the required keywords for role and seniority, and job description does not mention any of the required tech stack or compensation.",
+      "label_correct": false,
+      "score_error": -50,
+      "latency_ms": 25737,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":0,\"tech\":0,\"comp\":0,\"score\":0,\"label\":\"bad_fit\",\"reasoning\":\"London Area, United Kingdom (Hybrid) is a hybrid/on-site in London location, but job title does not contain any of the required keywords for role and seniority, and job description does not mention any of the required tech stack or compensation.\"}"
+    },
+    {
+      "job_description": "4374147500 | Senior Backend Engineer @ Happl",
+      "expected_label": "maybe",
+      "expected_score": 65,
+      "predicted_label": "maybe",
+      "predicted_score": 50,
+      "predicted_reasoning": "London, UK location with Senior role, but no tech stack or compensation details.",
+      "label_correct": true,
+      "score_error": -15,
+      "latency_ms": 23143,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":0,\"comp\":0,\"score\":50,\"label\":\"maybe\",\"reasoning\":\"London, UK location with Senior role, but no tech stack or compensation details.\"}"
+    },
+    {
+      "job_description": "1785765898 | Senior Product Engineer @ Jenkins - Zboncak",
+      "expected_label": "good_fit",
+      "expected_score": 75,
+      "predicted_label": "maybe",
+      "predicted_score": 65,
+      "predicted_reasoning": "Remote (UK) location, Senior Product Engineer role, but no tech stack points awarded, and compensation midpoint is £95,000.",
+      "label_correct": false,
+      "score_error": -10,
+      "latency_ms": 19943,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":0,\"comp\":15,\"score\":65,\"label\":\"maybe\",\"reasoning\":\"Remote (UK) location, Senior Product Engineer role, but no tech stack points awarded, and compensation midpoint is £95,000.\"}"
+    },
+    {
+      "job_description": "4364768645 | Senior Software Engineer @ Maxwell Bond",
+      "expected_label": "good_fit",
+      "expected_score": 90,
+      "predicted_label": "good_fit",
+      "predicted_score": 90,
+      "predicted_reasoning": "Senior role in London with Node.js/TS and £100k midpoint salary.",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 19465,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":15,\"comp\":25,\"score\":90,\"label\":\"good_fit\",\"reasoning\":\"Senior role in London with Node.js/TS and £100k midpoint salary.\"}"
+    },
+    {
+      "job_description": "7820757944 | Backend Systems Developer @ Spencer Inc",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "maybe",
+      "predicted_score": 35,
+      "predicted_reasoning": "Hybrid location in Bristol, UK, but no senior or lead keywords in job title, and no AI/ML/LLM experience required, and salary range £120,000-£140,000.",
+      "label_correct": true,
+      "score_error": -15,
+      "latency_ms": 21882,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":10,\"role\":0,\"tech\":0,\"comp\":15,\"score\":35,\"label\":\"maybe\",\"reasoning\":\"Hybrid location in Bristol, UK, but no senior or lead keywords in job title, and no AI/ML/LLM experience required, and salary range £120,000-£140,000.\"}"
+    },
+    {
+      "job_description": "4374501376 | Front End Software Develper @ Oracle",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": "bad_fit",
+      "predicted_score": 0,
+      "predicted_reasoning": "US location (-50) makes total negative, floored to 0.",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 28358,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":-50,\"role\":0,\"tech\":0,\"comp\":0,\"score\":0,\"label\":\"bad_fit\",\"reasoning\":\"US location (-50) makes total negative, floored to 0.\"}"
+    },
+    {
+      "job_description": "4374122289 | Fintech & Tech for Good | Profitable & Hyper-Growth Start-Up | Senior/Staff/Principal | Up to £150K | 3 Days Per Week LDN @ Owen Thomas | Pending B Corp™",
+      "expected_label": "bad_fit",
+      "expected_score": 25,
+      "predicted_label": "bad_fit",
+      "predicted_score": 0,
+      "predicted_reasoning": "London Area, United Kingdom (Hybrid) location is correct, but no relevant keywords found in job_title for role and seniority, and no relevant tech stack or compensation details found in jd_text.",
+      "label_correct": true,
+      "score_error": -25,
+      "latency_ms": 25192,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":0,\"tech\":0,\"comp\":0,\"score\":0,\"label\":\"bad_fit\",\"reasoning\":\"London Area, United Kingdom (Hybrid) location is correct, but no relevant keywords found in job_title for role and seniority, and no relevant tech stack or compensation details found in jd_text.\"}"
+    },
+    {
+      "job_description": "4373815463 | Senior Software Engineer @ Tact",
+      "expected_label": "good_fit",
+      "expected_score": 80,
+      "predicted_label": "maybe",
+      "predicted_score": 75,
+      "predicted_reasoning": "Hybrid London role with Senior title and £85,000 salary, but no explicit tech stack mentioned.",
+      "label_correct": false,
+      "score_error": -5,
+      "latency_ms": 20207,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":0,\"comp\":25,\"score\":75,\"label\":\"maybe\",\"reasoning\":\"Hybrid London role with Senior title and £85,000 salary, but no explicit tech stack mentioned.\"}"
+    },
+    {
+      "job_description": "4375738047 | Full Stack Engineer @ Quikr",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": "bad_fit",
+      "predicted_score": 0,
+      "predicted_reasoning": "US location (-50) makes total negative, floored to 0.",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 26460,
+      "parse_failed": false,
+      "raw_output": "{\n    \"loc\": -50,\n    \"role\": 15,\n    \"tech\": 15,\n    \"comp\": 0,\n    \"score\": 0,\n    \"label\": \"bad_fit\",\n    \"reasoning\": \"US location (-50) makes total negative, floored to 0.\"\n}"
+    }
+  ]
+}

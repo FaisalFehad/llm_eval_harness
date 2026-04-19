@@ -7,9 +7,9 @@
 set -euo pipefail
 cd "$(dirname "$0")"
 
-CONFIG="configs/promptfooconfig_v15_master.yaml"
-WRAP="configs/wrap_prompt.cjs"
-OUTPUT="eval_results/v15_master.json"
+CONFIG="versions/v15/configs/promptfoo.yaml"
+WRAP="versions/v15/configs/wrap_prompt.cjs"
+OUTPUT="versions/v15/eval_results/master.json"
 
 # Langfuse env vars (auto-set for hooks)
 export LANGFUSE_PUBLIC_KEY="${LANGFUSE_PUBLIC_KEY:-pk-lf-eval-harness-local}"
