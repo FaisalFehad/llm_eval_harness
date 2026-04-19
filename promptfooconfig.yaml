@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+#
+# Default eval config — runs from project root with: npx promptfoo eval
+#
+# This is the root-level default. For full options see:
+#   configs/promptfooconfig_v15.yaml          — single-prompt eval
+#   configs/promptfooconfig_v15_master.yaml   — multi-prompt comparison + tracing
+#   ./eval.sh help                            — CLI wrapper
+
+description: "V15 Student Model — default eval"
+
+prompts:
+  - id: file://configs/wrap_prompt.cjs:v15_production
+    label: "v15-production"
+
+providers:
+  - id: openai:chat:qwen3_4B_v15_oQ6
+    label: "V15-4B-oQ6-MLX"
+    config:
+      apiBaseUrl: http://127.0.0.1:8000/v1
+      apiKey: "not-needed"
+      temperature: 0
+      max_tokens: 500
+
+tests: file://configs/v15_tests.jsonl
+
+defaultTest:
+  assert:
+    - type: python
+      value: file://configs/v15_scorer.py
+      metric: "hybrid_accuracy"
+    - type: is-json
+      weight: 0.1
+      metric: "valid_json"
+
+extensions:
+  - file://configs/v15_hooks.py:after_all
+
+outputPath:
+  - eval_results/v15_default.json
+  - eval_results/v15_default.csv
+
+maxConcurrency: 1
+
+commandLineOptions:
+  tableCellMaxLength: 200

@@ -34,8 +34,11 @@ import argparse
 import datetime
 import json
 import math
+import os
 import re
+import shutil
 import sys
+import tempfile
 import time
 from pathlib import Path
 
@@ -62,8 +65,6 @@ class Tee:
         for s in self.streams:
             s.flush()
 
-
-import shutil
 
 import mlx.core as mx
 from mlx_lm import load, generate
@@ -276,12 +277,19 @@ def main():
 
     # Load model
     adapter_path = None
+    _tmp_adapter_dir = None  # Track temp dir for cleanup
     if args.adapter:
         p = Path(args.adapter)
         if p.is_file() and p.name != "adapters.safetensors":
-            shutil.copy2(p, p.parent / "adapters.safetensors")
-            adapter_path = str(p.parent)
-            print(f"Adapter: {args.adapter} -> {adapter_path}/adapters.safetensors")
+            # Copy to a temp directory to avoid overwriting the live adapters.safetensors
+            _tmp_adapter_dir = tempfile.mkdtemp(prefix="mlx_adapter_")
+            # Copy adapter config (needed by mlx_lm.load)
+            config_src = p.parent / "adapter_config.json"
+            if config_src.exists():
+                shutil.copy2(config_src, Path(_tmp_adapter_dir) / "adapter_config.json")
+            shutil.copy2(p, Path(_tmp_adapter_dir) / "adapters.safetensors")
+            adapter_path = _tmp_adapter_dir
+            print(f"Adapter: {args.adapter} -> {adapter_path}/adapters.safetensors (temp)")
         else:
             adapter_path = str(p.parent) if p.is_file() else str(p)
             print(f"Adapter: {adapter_path}")
@@ -342,6 +350,8 @@ def main():
         from preprocess_jd import preprocess_jd
         preprocess_fn = preprocess_jd
         print("JD preprocessing: ENABLED")
+
+    eval_start_time = time.time()
 
     for seq, (orig_idx, job) in enumerate(test_examples, 1):
         # V7 golden data stores raw location as job_location
@@ -662,6 +672,16 @@ def main():
             partial_file.rename(output_file)
         print(f"\nSaved: {output_file}")
 
+    # Print total duration
+    eval_duration = time.time() - eval_start_time
+    mins, secs = divmod(int(eval_duration), 60)
+    avg_per_job = eval_duration / len(test_examples) if test_examples else 0
+    print(f"\nDuration: {mins}m {secs}s ({avg_per_job:.1f}s/job, {len(test_examples)} jobs)")
+
+    # Clean up temp adapter directory
+    if _tmp_adapter_dir and Path(_tmp_adapter_dir).exists():
+        shutil.rmtree(_tmp_adapter_dir, ignore_errors=True)
+
 
 if __name__ == "__main__":
     try:
@@ -671,4 +691,7 @@ if __name__ == "__main__":
         print("\n\nInterrupted.")
         for p in Path("eval_results").rglob("*.partial"):
             p.unlink(missing_ok=True)
+        # Clean up any leaked temp adapter dirs
+        for d in Path(tempfile.gettempdir()).glob("mlx_adapter_*"):
+            shutil.rmtree(d, ignore_errors=True)
         sys.exit(1)

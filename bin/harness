@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# Shell shim for the harness CLI.
+# Promote to a real entry point later via pyproject.toml [project.scripts].
+set -e
+REPO="$(cd "$(dirname "$0")/.." && pwd)"
+exec "$REPO/.venv/bin/python3" -m finetune.cli "$@"

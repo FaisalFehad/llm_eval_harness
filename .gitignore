@@ -10,6 +10,11 @@ imatrix.dat
 
 # Large model files (download separately)
 models/
+fused_model/
+
+# Python build artifacts
+ai_eval_harness.egg-info/
+**/__pycache__/
 
 # Results — JSON/HTML artifacts from eval runs (reports tracked as .md)
 results/**/*.json
@@ -50,3 +55,6 @@ master_eval/__pycache__/
 # PhotoRec data recovery files
 photorec.se2
 photorec.ses
+
+# Langfuse self-hosted secrets
+langfuse/.env

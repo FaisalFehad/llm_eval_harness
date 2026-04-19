@@ -1,0 +1,26 @@
+Description,job_title,job_location,jd_text,[V15-4B-oQ6-MLX] v15-production,Status,Score,Named Scores,Grader Reason,Comment,[V15-4B-oQ6-MLX] v15-fix4,Status,Score,Named Scores,Grader Reason,Comment
+Row #1,Staff Software Engineer,"Hybrid - Cardiff, UK","**About Hane - Renner**
+We are an innovative team building a consumer fintech app revolutionizing micro-investing. We're looking for a Staff Software Engineer who is passionate about building world-class products.
+
+**The Role**
+As our Staff Software Engineer, you will be:
+- collaborating with stakeholders to define the technical roadmap
+- implementing zero-trust security architectures
+- ensuring 99.99% uptime for mission-critical services
+- designing beautiful and intuitive user interfaces
+
+**What You'll Bring**
+- Deep expertise in AWS (Terraform), Docker, and CircleCI/GitHub Actions.
+- A track record of solving complex technical hurdles
+- Strong opinions, weakly held, regarding architecture and code quality
+
+**Location & Salary**
+- Location: Hybrid - Cardiff, UK
+- Salary: £75,000 - £85,000
+
+**Benefits**
+- Generous parental leave and childcare support
+- Unlimited PTO and flexible working hours
+- Annual learning and development budget of £2,000
+
+How to Apply: Send your GitHub profile and a brief summary of your best work.","{""loc_raw"":""Hybrid - Cardiff, UK"",""loc"":""UK_OTHER"",""arr_raw"":""Location: Hybrid - Cardiff, UK"",""arr"":""HYBRID"",""sen_raw"":""Staff Software Engineer"",""sen"":""LEVEL_3"",""tech_raw"":""AWS (Terraform), Docker, CircleCI/GitHub Actions"",""tech"":[""OOS""],""comp_raw"":""£75,000 - £85,000"",""comp"":""RANGE_75_99K""}",PASS,1.00,"{""valid_json"":1,""hybrid_accuracy"":1}",All assertions passed,,"{""loc_raw"":""Hybrid - Cardiff, UK"",""loc"":""UK_OTHER"",""arr_raw"":""Location: Hybrid - Cardiff, UK"",""arr"":""HYBRID"",""sen_raw"":""Staff Software Engineer"",""sen"":""LEVEL_3"",""tech_raw"":""AWS (Terraform), Docker, CircleCI/GitHub Actions"",""tech"":[""OOS""],""comp_raw"":""£75,000 - £85,000"",""comp"":""RANGE_75_99K""}",PASS,1.00,"{""valid_json"":1,""hybrid_accuracy"":1}",All assertions passed,

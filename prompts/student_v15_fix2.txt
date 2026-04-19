@@ -1,0 +1,44 @@
+Classify this job. Respond with exactly one JSON object, no extra text.
+
+loc: IN_LONDON | REMOTE | UK_OTHER | OUTSIDE_UK | UNK
+  Use the Location field only. Ignore location hints in the description.
+  "Anywhere" → REMOTE. "Fully Remote" or "Remote" → REMOTE.
+  Any non-UK country → OUTSIDE_UK (even if "Remote" appears). E.g. "Paris, France (Remote)" → OUTSIDE_UK.
+  "Greater London", "London Area", "London, England" → IN_LONDON. "Greater Manchester" → UK_OTHER. "Little London" → UK_OTHER.
+  UK cities: Manchester, Birmingham, Leeds, Bristol, Edinburgh, Glasgow, Cambridge, Oxford, Brighton, Sheffield, Liverpool, Newcastle, Nottingham, Cardiff, Belfast, Southampton, Reading, York, Bath, Coventry, Leicester, Aberdeen, Dundee, Swansea, Hull, Plymouth, Exeter, Norwich, Ipswich, Portsmouth, Bournemouth, Chester, Derby, Milton Keynes, Cheltenham, Basingstoke, Guildford, Warwick → UK_OTHER.
+  "United Kingdom" or "UK" or "England" or "Scotland" or "Wales" without a specific city → UK_OTHER.
+  No location → UNK.
+
+arr: REMOTE | HYBRID | IN_OFFICE | UNK
+  REMOTE: explicitly remote-only or remote-first, no required office days.
+  HYBRID: mix of office and remote (e.g. "hybrid", "2–3 days a week in office").
+  IN_OFFICE: clearly expects in-person work with no remote option.
+  UNK: arrangement not specified.
+
+sen: LEVEL_3 | LEVEL_2 | LEVEL_1
+  Decide using the job TITLE only. Ignore experience language in the description.
+  L3: senior, lead, staff, principal, head, director, VP, CTO, founding, distinguished, sr, III, manager, mid-senior, mid/senior. "Manager" → L3 unless preceded by junior, entry-level, associate, trainee, or Scrum.
+  L1: junior, jr, graduate, intern, trainee, apprentice, associate, I (roman numeral), internship. L1 keywords override L3 (e.g. "Entry-level Account Manager" → L1).
+  L2: everything else, including II. E.g. "Technical Writer" → LEVEL_2. "Scrum Master" → LEVEL_2.
+
+tech: subset of [NODE, REACT, JS_TS, AI_ML], or exactly ["OOS"] when none apply.
+  Include a token if that technology appears ANYWHERE in the JD, even as a secondary skill.
+  NODE = Node.js runtime only. Next.js is NOT Node.js → JS_TS. NestJS is NOT Node.js → JS_TS.
+  AI_ML = any mention of AI, ML, machine learning, LLM, generative AI, deep learning. Exclude company descriptions ("AI-powered platform"), hiring process ("we use AI in recruitment"), and developer tools (Copilot, Cursor).
+  JS_TS = JavaScript or TypeScript mentioned in the tech stack.
+  REACT = React, React Native, or React.js.
+  ["OOS"] only when NONE of the above appear anywhere in the JD.
+  NEVER mix "OOS" with other tokens. NEVER use empty arrays or empty strings.
+
+comp: NO_GBP | UP_TO_ONLY | BELOW_45K | RANGE_45_54K | RANGE_55_74K | RANGE_75_99K | ABOVE_100K
+  ONLY £ or "GBP" counts. $, USD, EUR, CAD, AUD, daily rates → NO_GBP. OTE amounts → NO_GBP. TC, total compensation → NO_GBP.
+  No salary → NO_GBP.
+  "Up to £X" or "to £X" with no lower bound → UP_TO_ONLY.
+  For ranges: use the MIDPOINT. £60k–£80k → midpoint £70k → RANGE_55_74K. £75k–£100k → midpoint £87.5k → RANGE_75_99K. £40k–£75k → midpoint £57.5k → RANGE_55_74K. £70k–£75k → midpoint £72.5k → RANGE_55_74K.
+  Multiple bands listed → use the lowest band.
+
+Title: {{job_title}}
+Location: {{job_location}}
+Description: {{jd_text}}
+
+Begin your response with {

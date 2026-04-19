@@ -91,60 +91,76 @@ prompts:
       {"loc":0,"role":0,"tech":0,"comp":0,"score":0,"label":"bad_fit","reasoning":"brief"}
 
 # ---------------------------------------------------------------------------
-# Providers
+# Providers — MLX server (http://localhost:1235)
+# Start with: cd ~/Code/mlx-lm && .venv/bin/python3 mlx_server.py --port 1235
+# Server auto-switches models when a different model name is requested.
 # ---------------------------------------------------------------------------
 providers:
-  # Gemma 3 4B IT — primary test model
-  - id: "node-llama-cpp:gemma-3-4b-it"
+  - id: http://localhost:1235/v1/chat/completions
+    label: gemma-4-e4b-it-8bit
     config:
-      hf_model: "hf:bartowski/google_gemma-3-4b-it-GGUF"
-      temperature: 0
+      method: POST
+      headers:
+        Content-Type: application/json
+      body:
+        model: gemma-4-e4b
+        messages: "{{prompt}}"
+        temperature: 0
+        max_tokens: 1024
 
-  # Teacher model
-  - id: "node-llama-cpp:qwen3-8b"
+  - id: http://localhost:1235/v1/chat/completions
+    label: Qwen2.5-14B-Instruct-4bit
     config:
-      hf_model: "hf:Qwen/Qwen3-8B-GGUF:Q4_K_M"
-      temperature: 0
-      no_think: true
+      method: POST
+      headers:
+        Content-Type: application/json
+      body:
+        model: Qwen2.5-14B
+        messages: "{{prompt}}"
+        temperature: 0
+        max_tokens: 1024
 
-  - id: "node-llama-cpp:granite4-350m"
+  - id: http://localhost:1235/v1/chat/completions
+    label: Qwen2.5-32B-Instruct-4bit
     config:
-      hf_model: "hf:ibm-granite/granite-4.0-350m-GGUF"
-      temperature: 0
+      method: POST
+      headers:
+        Content-Type: application/json
+      body:
+        model: Qwen2.5-32B
+        messages: "{{prompt}}"
+        temperature: 0
+        max_tokens: 1024
 
-  - id: "node-llama-cpp:granite4-350m-warm"
+  - id: http://localhost:1235/v1/chat/completions
+    label: Meta-Llama-3.1-8B-Instruct-4bit
     config:
-      hf_model: "hf:ibm-granite/granite-4.0-350m-GGUF"
-      temperature: 0.5
+      method: POST
+      headers:
+        Content-Type: application/json
+      body:
+        model: Llama-3.1-8B
+        messages: "{{prompt}}"
+        temperature: 0
+        max_tokens: 1024
 
-  - id: "node-llama-cpp:jan-v3-4b"
+  - id: http://localhost:1235/v1/chat/completions
+    label: Qwen2.5-3B-Instruct-4bit
     config:
-      hf_model: "hf:janhq/Jan-v3-4B-base-instruct"
-      no_think: true
-      temperature: 0
+      method: POST
+      headers:
+        Content-Type: application/json
+      body:
+        model: Qwen2.5-3B
+        messages: "{{prompt}}"
+        temperature: 0
+        max_tokens: 1024
 
-  - id: "node-llama-cpp:qwen3-8b-official"
-    config:
-      hf_model: "hf:Qwen/Qwen3-8B-GGUF"
-      temperature: 0
-      no_think: true
-
-  - id: "node-llama-cpp:qwen3-4b-instruct-2507"
-    config:
-      hf_model: "hf:unsloth/Qwen3-4B-Instruct-2507-GGUF"
-      temperature: 0
-      no_think: true
-      context_size: 2048 #4096
-
-  - id: "node-llama-cpp:qwen2.5-7b-instruct"
-    config:
-      hf_model: "hf:bartowski/Qwen2.5-7B-Instruct-GGUF"
-      temperature: 0
-
-  - id: "node-llama-cpp:ministral-3-8b-2512"
-    config:
-      hf_model: "hf:unsloth/Ministral-3-8B-Instruct-2512-GGUF"
-      temperature: 0
+  # ---------------------------------------------------------------------------
+  # Old node-llama-cpp providers (no MLX equivalent available):
+  # - qwen3-8b, qwen3-4b-instruct-2507, granite4-350m, jan-v3-4b, ministral-3-8b
+  # To use these, convert to MLX: python -m mlx_lm convert --hf-path <model> -q
+  # ---------------------------------------------------------------------------
 
 tests:
   - file://data/promptfoo_tests.yaml

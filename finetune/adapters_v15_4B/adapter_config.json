@@ -1,0 +1,48 @@
+{
+    "adapter_path": "finetune/adapters_v15_4B",
+    "batch_size": 12,
+    "clear_cache_threshold": 0,
+    "config": "finetune/lora_config_v15_4B.yaml",
+    "data": "data/v15/mlx",
+    "fine_tune_type": "lora",
+    "grad_accumulation_steps": 1,
+    "grad_checkpoint": true,
+    "iters": 2500,
+    "learning_rate": 1e-05,
+    "lora_parameters": {
+        "rank": 16,
+        "alpha": 32,
+        "dropout": 0.05,
+        "scale": 1.0
+    },
+    "lr_schedule": {
+        "name": "cosine_decay",
+        "arguments": [
+            2e-05,
+            1600
+        ],
+        "warmup": 50,
+        "warmup_init": 0.0
+    },
+    "mask_prompt": true,
+    "max_seq_length": 5120,
+    "model": "mlx-community/Qwen3-4B-bf16",
+    "num_layers": 16,
+    "optimizer": "adamw",
+    "optimizer_config": {
+        "adamw": {
+            "weight_decay": 0.01
+        }
+    },
+    "project_name": null,
+    "report_to": null,
+    "resume_adapter_file": null,
+    "save_every": 100,
+    "seed": 0,
+    "steps_per_eval": 200,
+    "steps_per_report": 10,
+    "test": false,
+    "test_batches": 500,
+    "train": true,
+    "val_batches": 96
+}

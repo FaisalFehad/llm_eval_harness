@@ -1,0 +1,337 @@
+{
+  "evalId": "eval-Lpt-2026-04-15T16:09:37",
+  "results": {
+    "version": 3,
+    "timestamp": "2026-04-15T16:09:37.557Z",
+    "prompts": [
+      {
+        "raw": "function ({ vars }) {\n    if (!_cache[filename]) {\n      _cache[filename] = fs.readFileSync(filepath, \"utf-8\");\n    }\n    let text = _cache[filename];\n\n    // Substitute Nunjucks-style {{var}} placeholders with test case values\n    for (const [key, value] of Object.entries(vars)) {\n      text = text.replace(\n        new RegExp(`\\\\{\\\\{\\\\s*${key}\\\\s*\\\\}\\\\}`, \"g\"),\n        value || \"\"\n      );\n    }\n\n    return [\n      { role: \"system\", content: \"Respond with JSON only.\" },\n      { role: \"user\", content: text },\n    ];\n  }",
+        "label": "v15-production",
+        "config": {},
+        "id": "cf09b0921ea9486a56ffe6765cf6c1219322b31c2a11953763c728b09b88ec1e",
+        "provider": "V15-4B-oQ6-MLX",
+        "metrics": {
+          "score": 1,
+          "testPassCount": 1,
+          "testFailCount": 0,
+          "testErrorCount": 0,
+          "assertPassCount": 7,
+          "assertFailCount": 0,
+          "totalLatencyMs": 1682,
+          "tokenUsage": {
+            "prompt": 0,
+            "completion": 0,
+            "cached": 1267,
+            "total": 1267,
+            "numRequests": 1,
+            "completionDetails": {
+              "reasoning": 0,
+              "acceptedPrediction": 0,
+              "rejectedPrediction": 0
+            },
+            "assertions": {
+              "total": 0,
+              "prompt": 0,
+              "completion": 0,
+              "cached": 0,
+              "numRequests": 0,
+              "completionDetails": {
+                "reasoning": 0,
+                "acceptedPrediction": 0,
+                "rejectedPrediction": 0
+              }
+            }
+          },
+          "namedScores": {
+            "valid_json": 1,
+            "hybrid_accuracy": 1
+          },
+          "namedScoresCount": {
+            "valid_json": 1,
+            "hybrid_accuracy": 6
+          },
+          "cost": 0
+        }
+      }
+    ],
+    "results": [
+      {
+        "cost": 0,
+        "gradingResult": {
+          "pass": true,
+          "score": 1,
+          "reason": "All assertions passed",
+          "namedScores": {
+            "valid_json": 1,
+            "hybrid_accuracy": 1
+          },
+          "tokensUsed": {
+            "total": 0,
+            "prompt": 0,
+            "completion": 0,
+            "cached": 0,
+            "numRequests": 0
+          },
+          "componentResults": [
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Job 1: bad_fit(25pts) → bad_fit(25pts)\nALL FIELDS CORRECT\n\n✓ loc: expected=UK_OTHER got=UK_OTHER\n✓ arr: expected=HYBRID got=HYBRID\n✓ sen: expected=LEVEL_3 got=LEVEL_3\n✓ tech: expected=['OOS'] got=['OOS']\n✓ comp: expected=RANGE_75_99K got=RANGE_75_99K",
+              "componentResults": [
+                {
+                  "pass": true,
+                  "score": 1,
+                  "reason": "loc: expected=UK_OTHER got=UK_OTHER"
+                },
+                {
+                  "pass": true,
+                  "score": 1,
+                  "reason": "arr: expected=HYBRID got=HYBRID"
+                },
+                {
+                  "pass": true,
+                  "score": 1,
+                  "reason": "sen: expected=LEVEL_3 got=LEVEL_3"
+                },
+                {
+                  "pass": true,
+                  "score": 1,
+                  "reason": "tech: expected=['OOS'] got=['OOS']"
+                },
+                {
+                  "pass": true,
+                  "score": 1,
+                  "reason": "comp: expected=RANGE_75_99K got=RANGE_75_99K"
+                }
+              ],
+              "assertion": {
+                "type": "python",
+                "value": "file://configs/v15_scorer.py",
+                "metric": "hybrid_accuracy"
+              }
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "loc: expected=UK_OTHER got=UK_OTHER"
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "arr: expected=HYBRID got=HYBRID"
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "sen: expected=LEVEL_3 got=LEVEL_3"
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "tech: expected=['OOS'] got=['OOS']"
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "comp: expected=RANGE_75_99K got=RANGE_75_99K"
+            },
+            {
+              "pass": true,
+              "score": 1,
+              "reason": "Assertion passed",
+              "assertion": {
+                "type": "is-json",
+                "weight": 0.1,
+                "metric": "valid_json"
+              }
+            }
+          ]
+        },
+        "id": "717f66b7-76e5-405a-aa2d-682169b17329",
+        "latencyMs": 1682,
+        "namedScores": {
+          "valid_json": 1,
+          "hybrid_accuracy": 1
+        },
+        "prompt": {
+          "raw": "[\n  {\n    \"role\": \"system\",\n    \"content\": \"Respond with JSON only.\"\n  },\n  {\n    \"role\": \"user\",\n    \"content\": \"Classify this job. Respond with exactly one JSON object, no extra text.\\n\\nloc: IN_LONDON | REMOTE | UK_OTHER | OUTSIDE_UK | UNK\\n  Use the Location field only. Ignore location hints in the description.\\n  \\\"Anywhere\\\" → REMOTE. \\\"Fully Remote\\\" or \\\"Remote\\\" → REMOTE.\\n  Any non-UK country → OUTSIDE_UK (even if \\\"Remote\\\" appears). E.g. \\\"Paris, France (Remote)\\\" → OUTSIDE_UK.\\n  \\\"Greater London\\\", \\\"London Area\\\", \\\"London, England\\\" → IN_LONDON. \\\"Greater Manchester\\\" → UK_OTHER. \\\"Little London\\\" → UK_OTHER.\\n  UK cities: Manchester, Birmingham, Leeds, Bristol, Edinburgh, Glasgow, Cambridge, Oxford, Brighton, Sheffield, Liverpool, Newcastle, Nottingham, Cardiff, Belfast, Southampton, Reading, York, Bath, Coventry, Leicester, Aberdeen, Dundee, Swansea, Hull, Plymouth, Exeter, Norwich, Ipswich, Portsmouth, Bournemouth, Chester, Derby, Milton Keynes, Cheltenham, Basingstoke, Guildford, Warwick → UK_OTHER.\\n  \\\"United Kingdom\\\" or \\\"UK\\\" or \\\"England\\\" or \\\"Scotland\\\" or \\\"Wales\\\" without a specific city → UK_OTHER.\\n  No location → UNK.\\n\\narr: REMOTE | HYBRID | IN_OFFICE | UNK\\n  REMOTE: explicitly remote-only or remote-first, no required office days.\\n  HYBRID: mix of office and remote (e.g. \\\"hybrid\\\", \\\"2–3 days a week in office\\\").\\n  IN_OFFICE: clearly expects in-person work with no remote option.\\n  UNK: arrangement not specified.\\n\\nsen: LEVEL_3 | LEVEL_2 | LEVEL_1\\n  Decide using the job TITLE only. Ignore experience language in the description.\\n  L3: senior, lead, staff, principal, head, director, VP, CTO, founding, distinguished, sr, III, manager, mid-senior, mid/senior. \\\"Manager\\\" → L3 unless preceded by junior, entry-level, associate, or trainee. \\\"Scrum Master\\\" → L2.\\n  L1: junior, jr, graduate, intern, trainee, apprentice, associate, I (roman numeral), internship. L1 keywords override L3 (e.g. \\\"Entry-level Account Manager\\\" → L1).\\n  L2: everything else, including II. E.g. \\\"Technical Writer\\\" → LEVEL_2.\\n\\ntech: subset of [NODE, REACT, JS_TS, AI_ML], or exactly [\\\"OOS\\\"] when none apply.\\n  Include a token if that technology appears ANYWHERE in the JD, even as a secondary skill. tech_raw must quote verbatim from the Description — never add terms not found in the text.\\n  NODE = Node.js runtime only. Next.js is NOT Node.js → JS_TS. NestJS is NOT Node.js → JS_TS.\\n  AI_ML = any mention of AI, ML, machine learning, LLM, generative AI, deep learning.\\n  JS_TS = JavaScript or TypeScript mentioned in the tech stack.\\n  REACT = React, React Native, or React.js.\\n  [\\\"OOS\\\"] only when NONE of the above appear anywhere in the JD.\\n  NEVER mix \\\"OOS\\\" with other tokens. NEVER use empty arrays or empty strings.\\n\\ncomp: NO_GBP | UP_TO_ONLY | BELOW_45K | RANGE_45_54K | RANGE_55_74K | RANGE_75_99K | ABOVE_100K\\n  ONLY £ or \\\"GBP\\\" counts. $, USD, EUR, CAD, AUD, daily rates → NO_GBP. OTE amounts → NO_GBP.\\n  No salary → NO_GBP.\\n  \\\"Up to £X\\\" or \\\"to £X\\\" with no lower bound → UP_TO_ONLY.\\n  For ranges: use the MIDPOINT. £60k–£80k → midpoint £70k → RANGE_55_74K. £75k–£100k → midpoint £87.5k → RANGE_75_99K.\\n  Multiple bands listed → use the lowest band.\\n\\nTitle: Staff Software Engineer\\nLocation: Hybrid - Cardiff, UK\\nDescription: **About Hane - Renner**\\nWe are an innovative team building a consumer fintech app revolutionizing micro-investing. We're looking for a Staff Software Engineer who is passionate about building world-class products.\\n\\n**The Role**\\nAs our Staff Software Engineer, you will be:\\n- collaborating with stakeholders to define the technical roadmap\\n- implementing zero-trust security architectures\\n- ensuring 99.99% uptime for mission-critical services\\n- designing beautiful and intuitive user interfaces\\n\\n**What You'll Bring**\\n- Deep expertise in AWS (Terraform), Docker, and CircleCI/GitHub Actions.\\n- A track record of solving complex technical hurdles\\n- Strong opinions, weakly held, regarding architecture and code quality\\n\\n**Location & Salary**\\n- Location: Hybrid - Cardiff, UK\\n- Salary: £75,000 - £85,000\\n\\n**Benefits**\\n- Generous parental leave and childcare support\\n- Unlimited PTO and flexible working hours\\n- Annual learning and development budget of £2,000\\n\\nHow to Apply: Send your GitHub profile and a brief summary of your best work.\\n\\nBegin your response with {\\n\"\n  }\n]",
+          "label": "v15-production",
+          "config": {}
+        },
+        "promptId": "cf09b0921ea9486a56ffe6765cf6c1219322b31c2a11953763c728b09b88ec1e",
+        "promptIdx": 0,
+        "provider": {
+          "id": "openai:chat:qwen3_4B_v15_oQ6",
+          "label": "V15-4B-oQ6-MLX"
+        },
+        "response": {
+          "output": "{\"loc_raw\":\"Hybrid - Cardiff, UK\",\"loc\":\"UK_OTHER\",\"arr_raw\":\"Location: Hybrid - Cardiff, UK\",\"arr\":\"HYBRID\",\"sen_raw\":\"Staff Software Engineer\",\"sen\":\"LEVEL_3\",\"tech_raw\":\"AWS (Terraform), Docker, CircleCI/GitHub Actions\",\"tech\":[\"OOS\"],\"comp_raw\":\"£75,000 - £85,000\",\"comp\":\"RANGE_75_99K\"}",
+          "tokenUsage": {
+            "cached": 1267,
+            "total": 1267
+          },
+          "cached": true,
+          "latencyMs": 1682,
+          "finishReason": "stop",
+          "guardrails": {
+            "flagged": false
+          },
+          "metadata": {
+            "http": {
+              "status": 200,
+              "statusText": "OK",
+              "headers": {
+                "content-length": "899",
+                "content-type": "application/json",
+                "date": "Wed, 15 Apr 2026 14:05:45 GMT",
+                "server": "uvicorn"
+              }
+            }
+          }
+        },
+        "score": 1,
+        "success": true,
+        "testCase": {
+          "vars": {
+            "job_title": "Staff Software Engineer",
+            "job_location": "Hybrid - Cardiff, UK",
+            "jd_text": "**About Hane - Renner**\nWe are an innovative team building a consumer fintech app revolutionizing micro-investing. We're looking for a Staff Software Engineer who is passionate about building world-class products.\n\n**The Role**\nAs our Staff Software Engineer, you will be:\n- collaborating with stakeholders to define the technical roadmap\n- implementing zero-trust security architectures\n- ensuring 99.99% uptime for mission-critical services\n- designing beautiful and intuitive user interfaces\n\n**What You'll Bring**\n- Deep expertise in AWS (Terraform), Docker, and CircleCI/GitHub Actions.\n- A track record of solving complex technical hurdles\n- Strong opinions, weakly held, regarding architecture and code quality\n\n**Location & Salary**\n- Location: Hybrid - Cardiff, UK\n- Salary: £75,000 - £85,000\n\n**Benefits**\n- Generous parental leave and childcare support\n- Unlimited PTO and flexible working hours\n- Annual learning and development budget of £2,000\n\nHow to Apply: Send your GitHub profile and a brief summary of your best work."
+          },
+          "metadata": {
+            "job_index": 1,
+            "golden_loc": "UK_OTHER",
+            "golden_arr": "HYBRID",
+            "golden_sen": "LEVEL_3",
+            "golden_tech": "[\"OOS\"]",
+            "golden_comp": "RANGE_75_99K",
+            "golden_label": "bad_fit"
+          },
+          "description": "Row #1",
+          "assert": [
+            {
+              "type": "python",
+              "value": "file://configs/v15_scorer.py",
+              "metric": "hybrid_accuracy"
+            },
+            {
+              "type": "is-json",
+              "weight": 0.1,
+              "metric": "valid_json"
+            }
+          ],
+          "options": {}
+        },
+        "testIdx": 0,
+        "vars": {
+          "job_title": "Staff Software Engineer",
+          "job_location": "Hybrid - Cardiff, UK",
+          "jd_text": "**About Hane - Renner**\nWe are an innovative team building a consumer fintech app revolutionizing micro-investing. We're looking for a Staff Software Engineer who is passionate about building world-class products.\n\n**The Role**\nAs our Staff Software Engineer, you will be:\n- collaborating with stakeholders to define the technical roadmap\n- implementing zero-trust security architectures\n- ensuring 99.99% uptime for mission-critical services\n- designing beautiful and intuitive user interfaces\n\n**What You'll Bring**\n- Deep expertise in AWS (Terraform), Docker, and CircleCI/GitHub Actions.\n- A track record of solving complex technical hurdles\n- Strong opinions, weakly held, regarding architecture and code quality\n\n**Location & Salary**\n- Location: Hybrid - Cardiff, UK\n- Salary: £75,000 - £85,000\n\n**Benefits**\n- Generous parental leave and childcare support\n- Unlimited PTO and flexible working hours\n- Annual learning and development budget of £2,000\n\nHow to Apply: Send your GitHub profile and a brief summary of your best work."
+        },
+        "metadata": {
+          "job_index": 1,
+          "golden_loc": "UK_OTHER",
+          "golden_arr": "HYBRID",
+          "golden_sen": "LEVEL_3",
+          "golden_tech": "[\"OOS\"]",
+          "golden_comp": "RANGE_75_99K",
+          "golden_label": "bad_fit",
+          "http": {
+            "status": 200,
+            "statusText": "OK",
+            "headers": {
+              "content-length": "899",
+              "content-type": "application/json",
+              "date": "Wed, 15 Apr 2026 14:05:45 GMT",
+              "server": "uvicorn"
+            }
+          },
+          "_promptfooFileMetadata": {}
+        },
+        "failureReason": 0
+      }
+    ],
+    "stats": {
+      "successes": 1,
+      "failures": 0,
+      "errors": 0,
+      "tokenUsage": {
+        "prompt": 0,
+        "completion": 0,
+        "cached": 1267,
+        "total": 1267,
+        "numRequests": 1,
+        "completionDetails": {
+          "reasoning": 0,
+          "acceptedPrediction": 0,
+          "rejectedPrediction": 0
+        },
+        "assertions": {
+          "total": 0,
+          "prompt": 0,
+          "completion": 0,
+          "cached": 0,
+          "numRequests": 0,
+          "completionDetails": {
+            "reasoning": 0,
+            "acceptedPrediction": 0,
+            "rejectedPrediction": 0
+          }
+        }
+      },
+      "durationMs": 2529,
+      "evaluationDurationMs": 2529
+    }
+  },
+  "config": {
+    "description": "V15 Student Model — default eval",
+    "prompts": [
+      {
+        "id": "file://configs/wrap_prompt.cjs:v15_production",
+        "label": "v15-production"
+      }
+    ],
+    "providers": [
+      {
+        "id": "openai:chat:qwen3_4B_v15_oQ6",
+        "label": "V15-4B-oQ6-MLX",
+        "config": {
+          "apiBaseUrl": "http://127.0.0.1:8000/v1",
+          "apiKey": "not-needed",
+          "temperature": 0,
+          "max_tokens": 500
+        }
+      }
+    ],
+    "tests": "file://configs/v15_tests.jsonl",
+    "defaultTest": {
+      "assert": [
+        {
+          "type": "python",
+          "value": "file://configs/v15_scorer.py",
+          "metric": "hybrid_accuracy"
+        },
+        {
+          "type": "is-json",
+          "weight": 0.1,
+          "metric": "valid_json"
+        }
+      ]
+    },
+    "outputPath": [
+      "eval_results/v15_default.json",
+      "eval_results/v15_default.csv"
+    ],
+    "extensions": [
+      "file://configs/v15_hooks.py:after_all"
+    ]
+  },
+  "shareableUrl": null,
+  "metadata": {
+    "promptfooVersion": "0.120.25",
+    "nodeVersion": "v22.22.2",
+    "platform": "darwin",
+    "arch": "arm64",
+    "exportedAt": "2026-04-15T16:09:40.112Z",
+    "evaluationCreatedAt": "2026-04-15T16:09:37.557Z"
+  }
+}

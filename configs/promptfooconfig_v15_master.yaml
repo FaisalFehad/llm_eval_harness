@@ -1,0 +1,101 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+#
+# V15 Master Eval Config — multi-prompt, multi-model, Langfuse tracing
+#
+# Quick reference:
+#   npx promptfoo eval -c configs/promptfooconfig_v15_master.yaml            # full run
+#   npx promptfoo eval -c ... --filter-first-n 10                            # smoke test (10 jobs)
+#   npx promptfoo eval -c ... --filter-failing                               # re-run failures
+#   npx promptfoo eval -c ... --filter-metadata "golden_label=good_fit"      # subset by label
+#   npx promptfoo eval -c ... -p file://wrap_prompt.cjs:v15_fix4      # single prompt
+#   npx promptfoo view                                                       # open results UI
+
+description: "V15 Student Model — multi-prompt eval with Langfuse tracing"
+
+# ── Prompts ──────────────────────────────────────────────────────
+# Each wraps a .txt prompt file into [system, user] chat format.
+# To compare specific prompts, use -p flag on CLI.
+# To add a new prompt: add export in wrap_prompt.cjs, add entry here.
+prompts:
+  - id: file://wrap_prompt.cjs:v15_production
+    label: "v15-production"
+
+  - id: file://wrap_prompt.cjs:v15_fix4
+    label: "v15-fix4"
+
+  # Uncomment to include older variants in comparison:
+  # - id: file://wrap_prompt.cjs:v15_base
+  #   label: "v15-base"
+  # - id: file://wrap_prompt.cjs:v15_fix1
+  #   label: "v15-fix1"
+  # - id: file://wrap_prompt.cjs:v15_fix2
+  #   label: "v15-fix2"
+  # - id: file://wrap_prompt.cjs:v15_fix3
+  #   label: "v15-fix3"
+  # - id: file://wrap_prompt.cjs:v15_fix5
+  #   label: "v15-fix5"
+
+# ── Providers ────────────────────────────────────────────────────
+# MLX server must be running:
+#   .venv/bin/python3 -m mlx_lm server --model ~/MLX\ Models/qwen3_4B_v15_oQ6 --port 8000
+#
+# To add a model: start server on a different port, add provider entry below.
+providers:
+  - id: openai:chat:qwen3_4B_v15_oQ6
+    label: "V15-4B-oQ6-MLX"
+    config:
+      apiBaseUrl: http://127.0.0.1:8000/v1
+      apiKey: "not-needed"
+      temperature: 0
+      max_tokens: 500
+
+  # - id: openai:chat:qwen3-4b-v14-6bit
+  #   label: "V14-4B-6bit-MLX"
+  #   config:
+  #     apiBaseUrl: http://127.0.0.1:8001/v1
+  #     apiKey: "not-needed"
+  #     temperature: 0
+  #     max_tokens: 500
+
+# ── Test cases ───────────────────────────────────────────────────
+# 239 audited jobs — golden labels in metadata
+tests: file://v15_tests.jsonl
+
+# ── Scoring ──────────────────────────────────────────────────────
+defaultTest:
+  assert:
+    - type: python
+      value: file://v15_scorer.py
+      metric: "hybrid_accuracy"
+    - type: is-json
+      weight: 0.1
+      metric: "valid_json"
+
+# ── Tracing (OTEL) ───────────────────────────────────────────────
+# Sends spans to Langfuse (http://localhost:3000) when running.
+# Disable with --env PROMPTFOO_TRACING_ENABLED=false
+tracing:
+  enabled: true
+  otlp:
+    http:
+      enabled: true
+      port: 4318
+      acceptFormats:
+        - json
+
+# ── Extension hooks ──────────────────────────────────────────────
+# Logs summary after each run, sends scores to Langfuse
+extensions:
+  - file://v15_hooks.py:after_all
+
+# ── Output ───────────────────────────────────────────────────────
+outputPath:
+  - eval_results/v15_master.json
+  - eval_results/v15_master.csv
+
+# ── Execution ────────────────────────────────────────────────────
+# maxConcurrency 1 = one job at a time (MLX server is single-threaded)
+maxConcurrency: 1
+
+commandLineOptions:
+  tableCellMaxLength: 200
