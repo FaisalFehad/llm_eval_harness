@@ -53,11 +53,25 @@ SPECS = {
         "mlx": [],
     },
     "v14": {
-        "hf_repo": "FaisalFehad/qwen3-4b-v14",  # exists — augment
+        "hf_repo": "FaisalFehad/qwen3-4b-v14",
         "adapters_dir": REPO_ROOT / "versions/v14/adapters/4B",
-        "merged": REPO_ROOT / "fused_model",  # 7.5 GB merged HF
+        "merged": REPO_ROOT / "fused_model",
         "gguf": [],
         "mlx": [HOME / "qwen3_4B_v14_mlx6bit"],
+    },
+    "v14_0.6B": {
+        "hf_repo": "FaisalFehad/qwen3-0.6b-v14",
+        "adapters_dir": REPO_ROOT / "versions/v14/adapters/0.6B",
+        "merged": None,
+        "gguf": [],
+        "mlx": [],
+    },
+    "v14_1.5B": {
+        "hf_repo": "FaisalFehad/qwen2.5-1.5b-v14",
+        "adapters_dir": REPO_ROOT / "versions/v14/adapters/1.5B",
+        "merged": None,
+        "gguf": [],
+        "mlx": [],
     },
     "v15": {
         "hf_repo": "FaisalFehad/qwen3-4b-v15",
@@ -74,12 +88,35 @@ SPECS = {
 
 
 def push_adapters(api: HfApi, repo: str, adapters_dir: Path, dry_run: bool = False) -> None:
-    """Push each iter_NNN_adapters.safetensors as checkpoints/iter_N/."""
+    """Push checkpoints. Detects MLX (*_adapters.safetensors) vs HF (checkpoint-N/)."""
     if not adapters_dir.exists():
         print(f"  ✗ adapters_dir missing: {adapters_dir}")
         return
+
+    # Detect HF-style checkpoint-N subdirs
+    hf_ckpts = sorted(d for d in adapters_dir.iterdir() if d.is_dir() and d.name.startswith("checkpoint-"))
+    if hf_ckpts:
+        print(f"  Found {len(hf_ckpts)} HF checkpoints")
+        for ckpt in hf_ckpts:
+            m = re.match(r"checkpoint-(\d+)", ckpt.name)
+            if not m:
+                continue
+            iter_n = int(m.group(1))
+            sz = sum(f.stat().st_size for f in ckpt.rglob("*") if f.is_file()) / 1e9
+            print(f"    ↑ iter_{iter_n} ({sz:.2f} GB) → checkpoints/iter_{iter_n}/")
+            if dry_run:
+                continue
+            api.upload_folder(
+                folder_path=str(ckpt),
+                path_in_repo=f"checkpoints/iter_{iter_n}",
+                repo_id=repo,
+                ignore_patterns=["*.partial", ".DS_Store"],
+            )
+        return
+
+    # MLX-style: single-file adapters
     ckpts = sorted(adapters_dir.glob("*_adapters.safetensors"))
-    print(f"  Found {len(ckpts)} checkpoints")
+    print(f"  Found {len(ckpts)} MLX checkpoints")
     cfg = adapters_dir / "adapter_config.json"
 
     for ckpt in ckpts:
