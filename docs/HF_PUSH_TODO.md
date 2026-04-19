@@ -6,12 +6,12 @@
 
 ## Scope
 
-Push all custom-trained adapters + merged HF + GGUF variants per version, all sweep checkpoints, to `FF-01/` org on HuggingFace. Source of truth for local auto-download in `harness eval run --version vN`.
+Push all custom-trained adapters + merged HF + GGUF variants per version, all sweep checkpoints, to `FaisalFehad/` org on HuggingFace. Source of truth for local auto-download in `harness eval run --version vN`.
 
 ## Target repo layout (per-V)
 
 ```
-FF-01/qwen3-4b-v15/                 # one repo per version
+FaisalFehad/qwen3-4b-v15/                 # one repo per version
   checkpoints/
     iter_100/<adapter-files>
     iter_200/...
@@ -44,13 +44,13 @@ FF-01/qwen3-4b-v15/                 # one repo per version
 
 ## Per-V repo checklist
 
-- [ ] `FF-01/qwen3-0.6b-v13` — adapters only (no merged/gguf done)
-- [ ] `FF-01/qwen2.5-1.5b-v13.1` — adapters only
-- [ ] `FF-01/qwen3-0.6b-v13.1` — corrective adapters
-- [ ] `FF-01/qwen3-4b-v14` — **exists** (has GGUFs + merged_v14_4B). Add: all sweep ckpts + MLX 6bit. Restructure to `checkpoints/iter_N/` scheme.
-- [ ] `FF-01/qwen2.5-1.5b-v14`
-- [ ] `FF-01/qwen3-0.6b-v14`
-- [ ] `FF-01/qwen3-4b-v15` — **new**. All sweep ckpts + merged (need to build) + MLX 6bit + GGUFs (need to build).
+- [ ] `FaisalFehad/qwen3-0.6b-v13` — adapters only (no merged/gguf done)
+- [ ] `FaisalFehad/qwen2.5-1.5b-v13.1` — adapters only
+- [ ] `FaisalFehad/qwen3-0.6b-v13.1` — corrective adapters
+- [ ] `FaisalFehad/qwen3-4b-v14` — **exists** (has GGUFs + merged_v14_4B). Add: all sweep ckpts + MLX 6bit. Restructure to `checkpoints/iter_N/` scheme.
+- [ ] `FaisalFehad/qwen2.5-1.5b-v14`
+- [ ] `FaisalFehad/qwen3-0.6b-v14`
+- [ ] `FaisalFehad/qwen3-4b-v15` — **new**. All sweep ckpts + merged (need to build) + MLX 6bit + GGUFs (need to build).
 
 ## Push script skeleton
 
@@ -74,10 +74,10 @@ for v, spec in VERSIONS.items():
 
 1. `hf auth whoami` → confirm FaisalFehad
 2. Check HF Pro plan: `hf repos ls --format json | grep storage` — verify quota >50 GB private
-3. Dry-run one ckpt: `hf upload --dry-run FF-01/qwen3-4b-v15 finetune/adapters_v15_4B/adapter_config.json`
+3. Dry-run one ckpt: `hf upload --dry-run FaisalFehad/qwen3-4b-v15 finetune/adapters_v15_4B/adapter_config.json`
 4. Real run per-V, background + log to `logs/hf_push_vN.log`
-5. After push: verify `hf repos info FF-01/qwen3-4b-v15` shows expected tree
-6. Write `hf_repo: FF-01/qwen3-4b-v15` + `checkpoints: [iter_100, ...]` into `versions/v15/manifest.json`
+5. After push: verify `hf repos info FaisalFehad/qwen3-4b-v15` shows expected tree
+6. Write `hf_repo: FaisalFehad/qwen3-4b-v15` + `checkpoints: [iter_100, ...]` into `versions/v15/manifest.json`
 
 ## Only after push confirmed
 
@@ -88,4 +88,4 @@ for v, spec in VERSIONS.items():
 ## Rollback
 
 If push fails mid-way: local state intact. Just restart from last successful V.
-If push verified but then user wants local back: `hf download FF-01/qwen3-4b-v15 --local-dir ./models/adapters/v15`.
+If push verified but then user wants local back: `hf download FaisalFehad/qwen3-4b-v15 --local-dir ./models/adapters/v15`.

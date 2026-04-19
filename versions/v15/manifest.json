@@ -8,7 +8,7 @@
     "size_params": "4B",
     "dtype": "bf16"
   },
-  "adapter_hf": "FF-01/qwen3-4b-v15",
+  "adapter_hf": "FaisalFehad/qwen3-4b-v15",
   "adapter_hf_status": "TODO — see docs/HF_PUSH_TODO.md",
   "champion_checkpoint": "iter_700",
   "champion_prompt": "student_v15_fix4.txt",

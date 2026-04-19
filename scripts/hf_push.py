@@ -2,7 +2,7 @@
 """
 HF push for a single V's artifacts.
 
-Layout per repo (FF-01/qwen3-{size}-{v}):
+Layout per repo (FaisalFehad/qwen3-{size}-{v}):
   checkpoints/iter_{N}/<adapter-files>
   merged/<hf-files>
   gguf/{f16,Q6_K,Q4_K_M}.gguf
@@ -32,35 +32,35 @@ HOME = Path.home()
 # ── Per-V artifact registry ─────────────────────────────────────────
 SPECS = {
     "v13": {
-        "hf_repo": "FF-01/qwen3-0.6b-v13",
+        "hf_repo": "FaisalFehad/qwen3-0.6b-v13",
         "adapters_dir": REPO_ROOT / "versions/v13/adapters",
         "merged": None,
         "gguf": [],
         "mlx": [],
     },
     "v13_1_1.5B": {
-        "hf_repo": "FF-01/qwen2.5-1.5b-v13.1",
+        "hf_repo": "FaisalFehad/qwen2.5-1.5b-v13.1",
         "adapters_dir": REPO_ROOT / "versions/v13_1/adapters/1.5B",
         "merged": None,
         "gguf": [],
         "mlx": [],
     },
     "v13_1_0.6B": {
-        "hf_repo": "FF-01/qwen3-0.6b-v13.1",
+        "hf_repo": "FaisalFehad/qwen3-0.6b-v13.1",
         "adapters_dir": REPO_ROOT / "versions/v13_1/adapters/0.6B",
         "merged": None,
         "gguf": [],
         "mlx": [],
     },
     "v14": {
-        "hf_repo": "FF-01/qwen3-4b-v14",  # exists — augment
+        "hf_repo": "FaisalFehad/qwen3-4b-v14",  # exists — augment
         "adapters_dir": REPO_ROOT / "versions/v14/adapters/4B",
         "merged": REPO_ROOT / "fused_model",  # 7.5 GB merged HF
         "gguf": [],
         "mlx": [HOME / "qwen3_4B_v14_mlx6bit"],
     },
     "v15": {
-        "hf_repo": "FF-01/qwen3-4b-v15",
+        "hf_repo": "FaisalFehad/qwen3-4b-v15",
         "adapters_dir": REPO_ROOT / "versions/v15/adapters",
         "merged": HOME / "merged_v15_4B",
         "gguf": [HOME / "qwen3_4B_v15_f16.gguf", HOME / "qwen3_4B_v15_Q6_K.gguf"],

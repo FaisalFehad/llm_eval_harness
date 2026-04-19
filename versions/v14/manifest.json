@@ -7,7 +7,7 @@
     "type": "hf",
     "size_params": "4B"
   },
-  "adapter_hf": "FF-01/qwen3-4b-v14",
+  "adapter_hf": "FaisalFehad/qwen3-4b-v14",
   "adapter_hf_status": "exists — contains GGUFs + merged_v14_4B. Adapter sweep ckpts TODO (see docs/HF_PUSH_TODO.md)",
   "champion_checkpoint": "checkpoint-800",
   "champion_prompt": "student.txt (base V14 prompt — exp1 variant for Mac MLX use)",

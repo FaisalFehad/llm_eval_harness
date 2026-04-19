@@ -8,7 +8,7 @@
     "size_params": "0.6B",
     "dtype": "4bit"
   },
-  "adapter_hf": "FF-01/qwen3-0.6b-v13",
+  "adapter_hf": "FaisalFehad/qwen3-0.6b-v13",
   "adapter_hf_status": "TODO — see docs/HF_PUSH_TODO.md",
   "champion_checkpoint": "iter_1500",
   "test_set": {"path": "data/v12/test_labeled_audited.jsonl", "note": "shared, chmod 444"},
