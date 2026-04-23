@@ -7,13 +7,13 @@ Usage:
     harness results compare v14-4B v14-0.6B    # Side-by-side
 """
 import json
-from pathlib import Path
 from typing import List, Optional
 import typer
 
+from finetune.constants import REPO
+
 app = typer.Typer(no_args_is_help=True, help="View + compare eval results.")
 
-REPO = Path(__file__).resolve().parents[2]
 RESULTS_DIR = REPO / "versions/legacy/master_eval/results"
 
 
@@ -23,12 +23,12 @@ def show(
 ):
     """Show leaderboard from master eval."""
     results_file = RESULTS_DIR / "all_results.json"
-    if not results_file.exists():
+    try:
+        with open(results_file) as f:
+            data = json.load(f)
+    except FileNotFoundError:
         typer.echo("✗ No results found. Run `harness master-eval run` first.", err=True)
         raise typer.Exit(1)
-
-    with open(results_file) as f:
-        data = json.load(f)
 
     models = data.get("models", [])
     if model:
@@ -38,8 +38,9 @@ def show(
         typer.echo(f"✗ No models matching '{model}'", err=True)
         raise typer.Exit(1)
 
-    # Sort by hybrid desc
-    models.sort(key=lambda m: m.get("hybrid", 0), reverse=True)
+    # Sort by hybrid desc (skip if single model)
+    if len(models) > 1:
+        models.sort(key=lambda m: m.get("hybrid", 0), reverse=True)
 
     print("\n" + "=" * 110)
     print("  EVAL RESULTS" + (f" — filtered: {model}" if model else ""))
@@ -77,12 +78,12 @@ def compare(
 ):
     """Compare specific models side-by-side."""
     results_file = RESULTS_DIR / "all_results.json"
-    if not results_file.exists():
+    try:
+        with open(results_file) as f:
+            data = json.load(f)
+    except FileNotFoundError:
         typer.echo("✗ No results found. Run `harness master-eval run` first.", err=True)
         raise typer.Exit(1)
-
-    with open(results_file) as f:
-        data = json.load(f)
 
     all_models = {m["name"]: m for m in data.get("models", [])}
     selected = []

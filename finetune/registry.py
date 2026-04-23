@@ -16,6 +16,7 @@ backend) is always per-variant.
 from __future__ import annotations
 import os
 from dataclasses import dataclass, field
+from functools import lru_cache
 from typing import Optional
 
 
@@ -137,11 +138,13 @@ PIPELINES: dict[str, Pipeline] = {
 # Helpers — every command should use these instead of reading PIPELINES directly
 # ────────────────────────────────────────────────────────────────
 
+@lru_cache(maxsize=None)
 def default_version() -> str:
     """Return the current default pipeline key ($HARNESS_VERSION or DEFAULT_VERSION)."""
     return os.environ.get(ENV_VERSION, DEFAULT_VERSION)
 
 
+@lru_cache(maxsize=None)
 def get(version: Optional[str] = None) -> Pipeline:
     """Fetch a pipeline. Uses default_version() when None. Raises KeyError with a helpful message."""
     key = version or default_version()

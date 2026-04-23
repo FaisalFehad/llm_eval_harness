@@ -9,14 +9,13 @@ Usage:
 """
 import json
 import subprocess
-from pathlib import Path
 from typing import List, Optional
 import typer
 
+from finetune.constants import REPO, PYTHON
+
 app = typer.Typer(no_args_is_help=True, help="Multi-model eval + leaderboard.")
 
-REPO = Path(__file__).resolve().parents[2]
-PYTHON = str(REPO / ".venv/bin/python3")
 SCRIPT = REPO / "versions/legacy/master_eval/run_all.py"
 RESULTS_DIR = REPO / "versions/legacy/master_eval/results"
 
@@ -45,12 +44,12 @@ def run(
 def results():
     """Show leaderboard from last master eval."""
     results_file = RESULTS_DIR / "all_results.json"
-    if not results_file.exists():
+    try:
+        with open(results_file) as f:
+            data = json.load(f)
+    except FileNotFoundError:
         typer.echo("✗ No results found. Run `harness master-eval run` first.", err=True)
         raise typer.Exit(1)
-
-    with open(results_file) as f:
-        data = json.load(f)
 
     # Print leaderboard table
     print("\n" + "=" * 100)

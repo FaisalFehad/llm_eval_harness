@@ -13,7 +13,6 @@ Switch the default pipeline for a session:
 Each top-level verb lives in finetune/commands/<verb>.py as a Typer sub-app.
 Pipeline config is centralized in finetune/registry.py.
 """
-from pathlib import Path
 import subprocess
 from typing import Optional
 import typer
@@ -21,7 +20,7 @@ import typer
 from finetune.commands import (
     convert,
     data,
-    eval as eval_cmd,  # `eval` is a Python builtin
+    eval as eval_cmd,
     hybrid,
     master_eval,
     mlflow,
@@ -30,6 +29,7 @@ from finetune.commands import (
     sweep,
     train,
 )
+from finetune.constants import REPO, PYTHON
 from finetune.registry import PIPELINES, default_version
 
 app = typer.Typer(
@@ -71,9 +71,6 @@ app.add_typer(convert.app, name="convert", help="HF \u2194 MLX \u2194 GGUF model
 # harness v15 eval \u2192 harness eval run --version v15
 # harness v14 models \u2192 list models for v14
 
-REPO = Path(__file__).resolve().parents[2]
-PYTHON = str(REPO / ".venv/bin/python3")
-
 
 def _make_version_app(version_key: str, display: str, model_list: list[str]):
     """Create a Typer sub-app for a version with eval + models subcommands."""
@@ -106,12 +103,8 @@ def _make_version_app(version_key: str, display: str, model_list: list[str]):
         prompt: Optional[str] = typer.Option(None, "--prompt", "-p", help="Prompt override"),
     ):
         """Run evaluation \u2014 auto-writes to versions/vN/eval_results/."""
-        cmd = [PYTHON, "-m", "finetune.cli", "eval", "run", "--version", version_key]
-        if model:
-            cmd += ["--model", model]
-        if prompt:
-            cmd += ["--prompt", prompt]
-        subprocess.run(cmd, check=True)
+        from finetune.commands.eval import run as eval_run
+        eval_run(version=version_key, model=model, prompt=prompt)
 
     return version_app
 
