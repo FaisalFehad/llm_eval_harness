@@ -1,0 +1,44 @@
+{
+  "version": "v14",
+  "status": "reference",
+  "date": "2026-03-26",
+  "base_model": {
+    "hf_repo": "Qwen/Qwen3-4B-Instruct-2507",
+    "type": "hf",
+    "size_params": "4B"
+  },
+  "adapter_hf": "FaisalFehad/qwen3-4b-v14",
+  "adapter_hf_status": "exists — contains GGUFs + merged_v14_4B. Adapter sweep ckpts TODO (see docs/HF_PUSH_TODO.md)",
+  "champion_checkpoint": "checkpoint-800",
+  "champion_prompt": "student.txt (base V14 prompt — exp1 variant for Mac MLX use)",
+  "test_set": {
+    "path": "data/v12/test_labeled_audited.jsonl",
+    "note": "shared across versions, chmod 444"
+  },
+  "metrics": {
+    "hybrid_accuracy_4B_step800": 0.987,
+    "model_only_4B_step800": 0.862,
+    "hybrid_exp1_fix1": 0.983,
+    "model_only_exp1_fix1": 0.827,
+    "parse_failures_exp1_fix1": 13,
+    "hybrid_exp2_fix3_ceiling": 0.967,
+    "model_only_exp2_fix3": 0.686,
+    "gguf_Q6_K_hybrid": 0.983,
+    "gguf_Q4_K_M_hybrid": 0.979,
+    "notes": "V14 4B step 800 = full precision champion. Exp1/exp2 = post-training prompt experiments for Mac MLX 6-bit deployment. Exp1 fix1 = best Mac variant (no-think mode). Exp2 = thinking mode ceiling (worse than no-think)."
+  },
+  "metric_source": {
+    "step800_hybrid": "versions/v14/eval_results/sweep/4B_fixed/sweep_summary.json",
+    "exp1_fix1_hybrid": "versions/v14/experiments/exp1/fix1/baseline/hybrid_summary.json (recomputed 2026-04-19)",
+    "gguf_Q6_K": "versions/v14/eval_results/gguf/Q6_K/hybrid_summary.json"
+  },
+  "variants": {
+    "sizes": ["0.6B", "1.5B", "3.5_4B", "4B"],
+    "experiments": ["exp1 (no-think)", "exp2 (thinking)", "anyfix (abandoned)", "comp_midpoint", "targeted_issues"],
+    "formats": ["HF bfloat16", "GGUF F16/Q6_K/Q4_K_M", "MLX 6-bit"]
+  },
+  "eval_harness": "compute_hybrid_v13_1.py (regex + model)",
+  "training_platform": "Lambda GH200 (GPU) — repo deleted post-training, rehydrate via hf download",
+  "git_sha": "HEAD",
+  "git_tag": "v14 (planned)"
+}

@@ -1,0 +1,179 @@
+{
+  "model_id": "node-llama-cpp:gemma-3-4b-it",
+  "label_accuracy_pct": 54.5,
+  "parse_fail_pct": 9.1,
+  "score_mae": 20,
+  "score_bias": 19,
+  "avg_seconds": 53.5,
+  "total_tests": 11,
+  "passed": false,
+  "fail_reasons": [
+    "TIMEOUT on job 11 (>420s)"
+  ],
+  "early_exit": true,
+  "confusion_matrix": {
+    "good_fit": {
+      "good_fit": 1,
+      "maybe": 1,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "maybe": {
+      "good_fit": 0,
+      "maybe": 4,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "bad_fit": {
+      "good_fit": 1,
+      "maybe": 2,
+      "bad_fit": 1,
+      "parse_fail": 1
+    }
+  },
+  "job_results": [
+    {
+      "job_description": "4367475871 | Full Stack Engineer @ Ellipse",
+      "expected_label": "bad_fit",
+      "expected_score": 40,
+      "predicted_label": "maybe",
+      "predicted_score": 65,
+      "predicted_reasoning": "The candidate meets some requirements (Full Stack Engineer, React, Python, AWS, SQL), but the salary is not explicitly stated, and the AI/ML requirement is absent. The location is specified as Horse Racing, which is not a strong indicator of fit.",
+      "label_correct": false,
+      "score_error": 25,
+      "latency_ms": 18689,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"maybe\",\"score\":65,\"reasoning\":\"The candidate meets some requirements (Full Stack Engineer, React, Python, AWS, SQL), but the salary is not explicitly stated, and the AI/ML requirement is absent. The location is specified as Horse Racing, which is not a strong indicator of fit.\"}"
+    },
+    {
+      "job_description": "4372539086 | Full Stack Developer @ Abtrace",
+      "expected_label": "maybe",
+      "expected_score": 65,
+      "predicted_label": "maybe",
+      "predicted_score": 65,
+      "predicted_reasoning": "The role requires Full Stack development with React, Javascript/Typescript, Node.js, and Python, aligning with the candidate's preferences. However, the salary is not explicitly stated, and the location is London, which is hybrid, not fully remote, preventing a higher score.",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 19018,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"maybe\",\"score\":65,\"reasoning\":\"The role requires Full Stack development with React, Javascript/Typescript, Node.js, and Python, aligning with the candidate's preferences. However, the salary is not explicitly stated, and the location is London, which is hybrid, not fully remote, preventing a higher score.\"}"
+    },
+    {
+      "job_description": "2448773367 | Lead DevOps Architect @ Zulauf - McCullough",
+      "expected_label": "good_fit",
+      "expected_score": 70,
+      "predicted_label": "maybe",
+      "predicted_score": 65,
+      "predicted_reasoning": "The role is for a Lead DevOps Architect, which aligns with the candidate's interest in senior roles. However, the tech stack primarily focuses on Python and LLMs, not Node/React/TypeScript, and the location is Manchester, UK, not London, impacting the overall fit.",
+      "label_correct": false,
+      "score_error": -5,
+      "latency_ms": 18117,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"maybe\",\"score\":65,\"reasoning\":\"The role is for a Lead DevOps Architect, which aligns with the candidate's interest in senior roles. However, the tech stack primarily focuses on Python and LLMs, not Node/React/TypeScript, and the location is Manchester, UK, not London, impacting the overall fit.\"}"
+    },
+    {
+      "job_description": "4372524932 | Node.JS Engineer @ Digital Waffle",
+      "expected_label": "good_fit",
+      "expected_score": 70,
+      "predicted_label": "good_fit",
+      "predicted_score": 90,
+      "predicted_reasoning": "The role explicitly states 'Senior Backend Developer' and requires 'Strong commercial experience with NodeJS'. It also includes AI/LLM integration, and the salary range falls within the £75k–£99k bracket, aligning with the candidate's preferences.",
+      "label_correct": true,
+      "score_error": 20,
+      "latency_ms": 16000,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"good_fit\",\"score\":90,\"reasoning\":\"The role explicitly states 'Senior Backend Developer' and requires 'Strong commercial experience with NodeJS'. It also includes AI/LLM integration, and the salary range falls within the £75k–£99k bracket, aligning with the candidate's preferences.\"}"
+    },
+    {
+      "job_description": "2498313027 | Senior Systems Architect @ Abshire, Cartwright and Osinski",
+      "expected_label": "maybe",
+      "expected_score": 55,
+      "predicted_label": "maybe",
+      "predicted_score": 60,
+      "predicted_reasoning": "The role requires Node.js and TypeScript (10+10 points), and the salary range falls within the £75k–£99k bracket (15 points). However, the location is Sheffield, UK, not London, and the job description doesn't explicitly state Senior or Staff level.",
+      "label_correct": true,
+      "score_error": 5,
+      "latency_ms": 16569,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"maybe\",\"score\":60,\"reasoning\":\"The role requires Node.js and TypeScript (10+10 points), and the salary range falls within the £75k–£99k bracket (15 points). However, the location is Sheffield, UK, not London, and the job description doesn't explicitly state Senior or Staff level.\"}"
+    },
+    {
+      "job_description": "3899730754 | Principal Security Engineer @ Carroll Group",
+      "expected_label": "maybe",
+      "expected_score": 60,
+      "predicted_label": "maybe",
+      "predicted_score": 60,
+      "predicted_reasoning": "The role requires a Principal Security Engineer, which aligns with the candidate's desired seniority level. However, the tech stack focuses on Golang, gRPC, and Kubernetes, not Node/React/TypeScript or AI/ML, and the location is Newcastle, UK, not London, impacting the fit.",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 17230,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"maybe\",\"score\":60,\"reasoning\":\"The role requires a Principal Security Engineer, which aligns with the candidate's desired seniority level. However, the tech stack focuses on Golang, gRPC, and Kubernetes, not Node/React/TypeScript or AI/ML, and the location is Newcastle, UK, not London, impacting the fit.\"}"
+    },
+    {
+      "job_description": "4371949817 | Senior Full Stack Engineer @ Oliver Bernard",
+      "expected_label": "bad_fit",
+      "expected_score": 25,
+      "predicted_label": "good_fit",
+      "predicted_score": 85,
+      "predicted_reasoning": "The job description explicitly states requirements for React and TypeScript, and backend experience with Node.js (Nest/Express). The salary range midpoint falls within the £75k–£99k bracket, and the role is based in London with a 3-day work week.",
+      "label_correct": false,
+      "score_error": 60,
+      "latency_ms": 22741,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"good_fit\",\"score\":85,\"reasoning\":\"The job description explicitly states requirements for React and TypeScript, and backend experience with Node.js (Nest/Express). The salary range midpoint falls within the £75k–£99k bracket, and the role is based in London with a 3-day work week.\"}"
+    },
+    {
+      "job_description": "6260515524 | Principal Security Engineer @ Marvin - Langworth",
+      "expected_label": "maybe",
+      "expected_score": 60,
+      "predicted_label": "maybe",
+      "predicted_score": 60,
+      "predicted_reasoning": "The role requires a Principal Security Engineer, which aligns with the candidate's interest in senior roles. However, the job is on-site in Oxford, UK, which doesn't meet the candidate's preference for remote or hybrid in London, and the tech stack doesn't include Node/React/TypeScript or AI/ML.",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 14395,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"maybe\",\"score\":60,\"reasoning\":\"The role requires a Principal Security Engineer, which aligns with the candidate's interest in senior roles. However, the job is on-site in Oxford, UK, which doesn't meet the candidate's preference for remote or hybrid in London, and the tech stack doesn't include Node/React/TypeScript or AI/ML.\"}"
+    },
+    {
+      "job_description": "7010087404 | Frontend Developer @ Jast, Dach and Crist",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": "bad_fit",
+      "predicted_score": 20,
+      "predicted_reasoning": "The job description explicitly states the location is Amsterdam, Netherlands, which is outside the UK. The salary range is £55,000 - £65,000, falling below the candidate's target of £75k+.",
+      "label_correct": true,
+      "score_error": 20,
+      "latency_ms": 13070,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"bad_fit\",\"score\":20,\"reasoning\":\"The job description explicitly states the location is Amsterdam, Netherlands, which is outside the UK. The salary range is £55,000 - £65,000, falling below the candidate's target of £75k+.\"}"
+    },
+    {
+      "job_description": "4371992173 | Front-End Engineer (React) : Trading : £120-180k plus excellent bonus : London @ Hunter Bond",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": "maybe",
+      "predicted_score": 65,
+      "predicted_reasoning": "The role requires React and JavaScript/TypeScript, aligning with the candidate's preferences. However, it doesn't explicitly mention Node.js, AI/ML, or UK/global remote work, preventing a higher score.",
+      "label_correct": false,
+      "score_error": 65,
+      "latency_ms": 12090,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"maybe\",\"score\":65,\"reasoning\":\"The role requires React and JavaScript/TypeScript, aligning with the candidate's preferences. However, it doesn't explicitly mention Node.js, AI/ML, or UK/global remote work, preventing a higher score.\"}"
+    },
+    {
+      "job_description": "4374501376 | Front End Software Develper @ Oracle",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": null,
+      "predicted_score": null,
+      "predicted_reasoning": null,
+      "label_correct": false,
+      "score_error": null,
+      "latency_ms": 420179,
+      "parse_failed": true,
+      "raw_output": "TIMEOUT"
+    }
+  ]
+}

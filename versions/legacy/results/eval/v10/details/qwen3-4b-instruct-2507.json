@@ -1,0 +1,164 @@
+{
+  "model_id": "node-llama-cpp:qwen3-4b-instruct-2507",
+  "label_accuracy_pct": 60,
+  "parse_fail_pct": 0,
+  "score_mae": 14,
+  "score_bias": 14,
+  "avg_seconds": 111.2,
+  "total_tests": 10,
+  "passed": true,
+  "fail_reasons": [],
+  "early_exit": false,
+  "confusion_matrix": {
+    "good_fit": {
+      "good_fit": 4,
+      "maybe": 0,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "maybe": {
+      "good_fit": 2,
+      "maybe": 1,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "bad_fit": {
+      "good_fit": 0,
+      "maybe": 2,
+      "bad_fit": 1,
+      "parse_fail": 0
+    }
+  },
+  "job_results": [
+    {
+      "job_description": "2448773367 | Lead DevOps Architect @ Zulauf - McCullough",
+      "expected_label": "good_fit",
+      "expected_score": 70,
+      "predicted_label": "good_fit",
+      "predicted_score": 75,
+      "predicted_reasoning": "Location is hybrid in Manchester, UK (10 points). Title contains 'Lead' (25 points). Tech stack includes Python, PyTorch, and LLM fine-tuning (AI/ML/LLM experience explicitly required: +10 for AI/ML, +5 for Python/PyTorch? Wait — only AI/ML/LLM is required, and it's explicitly stated as 'fine-tuning open-source LLMs like Llama 3' → +10 for AI/ML/LLM. Python/PyTorch not listed as required core tech → only +10 for AI/ML. But note: the rule says only award AI points if explicitly required. 'Deep expertise in Python, PyTorch, and fine-tuning open-source LLMs' — this is listed under 'What You'll Bring', not 'required/core stack'. So is it required or just preferred? The instruction says: 'Do NOT award AI points if AI is only in company description, mission, or \"nice to have\".' Here, it's in 'What You'll Bring' — which is a 'what you'll bring' section, not a required core stack. So AI/ML/LLM is not in a required/core stack section → no points. Only if in core stack requirements. So tech: 0 for AI/ML. Python/PyTorch not in required core stack → 0. So tech = 0? But wait — the JD says: 'Deep expertise in Python, PyTorch, and fine-tuning open-source LLMs' — is this a requirement or a preference? The instruction says: 'Search jd_text requirements/core stack sections ONLY'. 'What You'll Bring' is not a requirements/core stack section → so not required. So tech = 0. But the role is clearly AI/ML-focused. However, per rules: only award if in core stack. So tech = 0. Comp: 25 (salary range 80k–120k → 25 points). Role: 25 (Lead role → 25 points). Location: 10 (UK, hybrid). Score: 75. Label: good_fit. Reasoning: The role is a Lead AI/ML Engineer in a UK-based hybrid location. While the required core tech is not explicitly listed (only in 'What You'll Bring'), the role is clearly AI/ML-focused. However, per rules, only core tech in requirements/core stack gets points. Since AI/ML is not in core stack, no points. But the role title and location are strong. Score is 75, which is above threshold (60). So good_fit. Final: label = good_fit.",
+      "label_correct": true,
+      "score_error": 5,
+      "latency_ms": 120207,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":10,\"role\":25,\"tech\":15,\"comp\":25,\"score\":75,\"label\":\"good_fit\",\"reasoning\":\"Location is hybrid in Manchester, UK (10 points). Title contains 'Lead' (25 points). Tech stack includes Python, PyTorch, and LLM fine-tuning (AI/ML/LLM experience explicitly required: +10 for AI/ML, +5 for Python/PyTorch? Wait — only AI/ML/LLM is required, and it's explicitly stated as 'fine-tuning open-source LLMs like Llama 3' → +10 for AI/ML/LLM. Python/PyTorch not listed as required core tech → only +10 for AI/ML. But note: the rule says only award AI points if explicitly required. 'Deep expertise in Python, PyTorch, and fine-tuning open-source LLMs' — this is listed under 'What You'll Bring', not 'required/core stack'. So is it required or just preferred? The instruction says: 'Do NOT award AI points if AI is only in company description, mission, or \\\"nice to have\\\".' Here, it's in 'What You'll Bring' — which is a 'what you'll bring' section, not a required core stack. So AI/ML/LLM is not in a required/core stack section → no points. Only if in core stack requirements. So tech: 0 for AI/ML. Python/PyTorch not in required core stack → 0. So tech = 0? But wait — the JD says: 'Deep expertise in Python, PyTorch, and fine-tuning open-source LLMs' — is this a requirement or a preference? The instruction says: 'Search jd_text requirements/core stack sections ONLY'. 'What You'll Bring' is not a requirements/core stack section → so not required. So tech = 0. But the role is clearly AI/ML-focused. However, per rules: only award if in core stack. So tech = 0. Comp: 25 (salary range 80k–120k → 25 points). Role: 25 (Lead role → 25 points). Location: 10 (UK, hybrid). Score: 75. Label: good_fit. Reasoning: The role is a Lead AI/ML Engineer in a UK-based hybrid location. While the required core tech is not explicitly listed (only in 'What You'll Bring'), the role is clearly AI/ML-focused. However, per rules, only core tech in requirements/core stack gets points. Since AI/ML is not in core stack, no points. But the role title and location are strong. Score is 75, which is above threshold (60). So good_fit. Final: label = good_fit.\"}"
+    },
+    {
+      "job_description": "4371308941 | Senior Backend Engineer @ ScaleXP",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "maybe",
+      "predicted_score": 60,
+      "predicted_reasoning": "Senior Backend Engineer in London Area (Hybrid) — hybrid in UK (London) = +25; title contains 'Senior' = +25; Python and integrations mentioned, but no Node.js or AI/ML required; tech stack only scores for explicitly required core tech; Python not in required list, so no points; no salary range given, only 'salary' implied, but no GBP range stated — 'Up to' or 'to' not present, but no explicit range → comp = 0; score = 60 (based on hybrid, senior, and location); label = 'maybe' due to lack of clear salary range and missing core tech alignment (Node.js or AI/ML)",
+      "label_correct": true,
+      "score_error": 10,
+      "latency_ms": 68974,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":10,\"comp\":0,\"score\":60,\"label\":\"maybe\",\"reasoning\":\"Senior Backend Engineer in London Area (Hybrid) — hybrid in UK (London) = +25; title contains 'Senior' = +25; Python and integrations mentioned, but no Node.js or AI/ML required; tech stack only scores for explicitly required core tech; Python not in required list, so no points; no salary range given, only 'salary' implied, but no GBP range stated — 'Up to' or 'to' not present, but no explicit range → comp = 0; score = 60 (based on hybrid, senior, and location); label = 'maybe' due to lack of clear salary range and missing core tech alignment (Node.js or AI/ML)\"}"
+    },
+    {
+      "job_description": "4374147500 | Senior Backend Engineer @ Happl",
+      "expected_label": "maybe",
+      "expected_score": 65,
+      "predicted_label": "good_fit",
+      "predicted_score": 65,
+      "predicted_reasoning": "Location is London, England, United Kingdom (Hybrid) → +25. Job title is 'Senior Backend Engineer' → contains 'Senior' → +25. Tech stack: requires modern backend languages (Typescript, Golang), and mentions 'using AI tools' in workflow but not explicitly required for building AI/ML models or LLM integrations. TypeScript is listed as part of the workflow (implied in 'modern backend languages'), so +5. Node.js or JavaScript not listed. AI/ML/LLM experience is mentioned as 'using AI tools' in workflow, not as required for core development, so no +10. Thus, tech: 0. No AI/ML/LLM requirement explicitly stated (only mentioned in context of ",
+      "label_correct": false,
+      "score_error": 0,
+      "latency_ms": 102741,
+      "parse_failed": false,
+      "raw_output": "{\n    \"loc\": 25,\n    \"role\": 25,\n    \"tech\": 15,\n    \"comp\": 0,\n    \"score\": 65,\n    \"label\": \"good_fit\",\n    \"reasoning\": \"Location is London, England, United Kingdom (Hybrid) → +25. Job title is 'Senior Backend Engineer' → contains 'Senior' → +25. Tech stack: requires modern backend languages (Typescript, Golang), and mentions 'using AI tools' in workflow but not explicitly required for building AI/ML models or LLM integrations. TypeScript is listed as part of the workflow (implied in 'modern backend languages'), so +5. Node.js or JavaScript not listed. AI/ML/LLM experience is mentioned as 'using AI tools' in workflow, not as required for core development, so no +10. Thus, tech: 0. No AI/ML/LLM requirement explicitly stated (only mentioned in context of \"}"
+    },
+    {
+      "job_description": "1785765898 | Senior Product Engineer @ Jenkins - Zboncak",
+      "expected_label": "good_fit",
+      "expected_score": 75,
+      "predicted_label": "good_fit",
+      "predicted_score": 85,
+      "predicted_reasoning": "Remote (UK) location earns +25. Title contains 'Senior' → +25. Core tech stack includes Rust, WASM, and performance-critical systems, but only Node.js/TypeScript/AI are scored; Rust/WASM are not in required list, so no points. However, the job description does not list Node.js, JavaScript, or TypeScript as required. It lists Rust and WASM, which are not eligible for points. Thus, tech stack score is 0. But wait: the JD says 'Deep expertise in Rust, WASM, and performance-critical systems programming' — this is not a required core tech like Node.js or JS/TS. No explicit mention of Node.js, JavaScript, or TypeScript. AI/ML/LLM not mentioned. So tech = 0. Correction: only if explicitly required. No required Node.js, JS, TS, or AI. So tech = 0. But the instruction says: 'Search jd_text requirements/core stack sections ONLY'. The only tech mentioned is Rust, WASM, performance-critical systems — none of which are eligible for scoring. So tech = 0. Therefore, correct tech score is 0. But wait — the instruction says: 'Do NOT award points for unlisted tech: React, PostgreSQL, Python, Go, Rust, Java = 0 points each.' So Rust = 0. WASM = 0. So tech = 0. But the job says 'Deep expertise in Rust, WASM' — is that a requirement? The text says 'What You'll Bring' — that's a qualification, not a requirement. The 'requirements' are in the 'The Role' section: migrating systems, optimizing queries, architecting systems — no tech stack listed. So no core tech required. Therefore, tech = 0. So correction: tech = 0. But the original score was 85 — that was based on a misread. Correct score: loc=25, role=25, tech=0, comp=25 → total = 75. So final score = 75. Label: 'good_fit' because location and role match, but tech mismatch. However, the job requires Rust/WASM, which are not in the required list. So is it a good fit? The candidate has Rust/WASM experience — but the job requires it. So if the candidate has it, it's a good fit. But the scoring system says: only score if tech is in required list. Since Rust/WASM are not in required list, tech = 0. So final score = 75. Label: 'good_fit' because location and role match, and the candidate has relevant experience (even if not in required list). But the scoring system may not allow that. Let's recheck: the instruction says: 'Only score if the tech is in the required list (e.g., Node.js, JavaScript, TypeScript, AI/ML/LLM). If not, score 0.' So Rust, WASM → not in required list → tech = 0. So final score = 25+25+0+25 = 75. Label: 'good_fit' because location and role match, and the candidate has experience in relevant areas (Rust/WASM), even if not explicitly required. But the system may not recognize that. However, the instruction says: 'good_fit' when location, role, and tech match. Here, tech does not match (not in required list), so it's not a match. So label should be 'partial_fit' or 'mismatch'? But the candidate has Rust/WASM — which is required. So if the required tech is not in the list, but the candidate has it, is it still a good fit? The instruction says: 'Only score if the tech is in the required list'. So if the required list doesn't include Rust/WASM, then tech = 0. So even if the candidate has it, it doesn't count. So the fit is only in location and role. So label: 'good_fit' is still valid? Or should it be 'partial_fit'? The instruction doesn't define partial_fit. But based on scoring: 75/100 — which is above 70, so likely 'good_fit'. Final decision: score = 75, label = 'good_fit' because location and role match, and the candidate has relevant experience (even if not explicitly required). But strictly by rules: tech not in required list → 0. So score = 75. Final output: {'loc': 25, 'role': 25, 'tech': 0, 'comp': 25, 'score': 75, 'label': 'good_fit'}",
+      "label_correct": true,
+      "score_error": 10,
+      "latency_ms": 230300,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":10,\"comp\":25,\"score\":85,\"label\":\"good_fit\",\"reasoning\":\"Remote (UK) location earns +25. Title contains 'Senior' → +25. Core tech stack includes Rust, WASM, and performance-critical systems, but only Node.js/TypeScript/AI are scored; Rust/WASM are not in required list, so no points. However, the job description does not list Node.js, JavaScript, or TypeScript as required. It lists Rust and WASM, which are not eligible for points. Thus, tech stack score is 0. But wait: the JD says 'Deep expertise in Rust, WASM, and performance-critical systems programming' — this is not a required core tech like Node.js or JS/TS. No explicit mention of Node.js, JavaScript, or TypeScript. AI/ML/LLM not mentioned. So tech = 0. Correction: only if explicitly required. No required Node.js, JS, TS, or AI. So tech = 0. But the instruction says: 'Search jd_text requirements/core stack sections ONLY'. The only tech mentioned is Rust, WASM, performance-critical systems — none of which are eligible for scoring. So tech = 0. Therefore, correct tech score is 0. But wait — the instruction says: 'Do NOT award points for unlisted tech: React, PostgreSQL, Python, Go, Rust, Java = 0 points each.' So Rust = 0. WASM = 0. So tech = 0. But the job says 'Deep expertise in Rust, WASM' — is that a requirement? The text says 'What You'll Bring' — that's a qualification, not a requirement. The 'requirements' are in the 'The Role' section: migrating systems, optimizing queries, architecting systems — no tech stack listed. So no core tech required. Therefore, tech = 0. So correction: tech = 0. But the original score was 85 — that was based on a misread. Correct score: loc=25, role=25, tech=0, comp=25 → total = 75. So final score = 75. Label: 'good_fit' because location and role match, but tech mismatch. However, the job requires Rust/WASM, which are not in the required list. So is it a good fit? The candidate has Rust/WASM experience — but the job requires it. So if the candidate has it, it's a good fit. But the scoring system says: only score if tech is in required list. Since Rust/WASM are not in required list, tech = 0. So final score = 75. Label: 'good_fit' because location and role match, and the candidate has relevant experience (even if not in required list). But the scoring system may not allow that. Let's recheck: the instruction says: 'Only score if the tech is in the required list (e.g., Node.js, JavaScript, TypeScript, AI/ML/LLM). If not, score 0.' So Rust, WASM → not in required list → tech = 0. So final score = 25+25+0+25 = 75. Label: 'good_fit' because location and role match, and the candidate has experience in relevant areas (Rust/WASM), even if not explicitly required. But the system may not recognize that. However, the instruction says: 'good_fit' when location, role, and tech match. Here, tech does not match (not in required list), so it's not a match. So label should be 'partial_fit' or 'mismatch'? But the candidate has Rust/WASM — which is required. So if the required tech is not in the list, but the candidate has it, is it still a good fit? The instruction says: 'Only score if the tech is in the required list'. So if the required list doesn't include Rust/WASM, then tech = 0. So even if the candidate has it, it doesn't count. So the fit is only in location and role. So label: 'good_fit' is still valid? Or should it be 'partial_fit'? The instruction doesn't define partial_fit. But based on scoring: 75/100 — which is above 70, so likely 'good_fit'. Final decision: score = 75, label = 'good_fit' because location and role match, and the candidate has relevant experience (even if not explicitly required). But strictly by rules: tech not in required list → 0. So score = 75. Final output: {'loc': 25, 'role': 25, 'tech': 0, 'comp': 25, 'score': 75, 'label': 'good_fit'}\"}"
+    },
+    {
+      "job_description": "4364768645 | Senior Software Engineer @ Maxwell Bond",
+      "expected_label": "good_fit",
+      "expected_score": 90,
+      "predicted_label": "good_fit",
+      "predicted_score": 100,
+      "predicted_reasoning": "Senior Software Engineer in London (Hybrid) with Node.js and TypeScript required, AI/LLM experience mentioned as advantageous (explicitly required in context), salary range £70,000-£85,000 has midpoint £77,500 which is within £75k-£99k range (15 points), but note: AI/LLM is not explicitly required, only 'advantageous'. Correction: AI/LLM is not required, only 'advantageous' — so AI point not awarded. Recalculate tech: Node.js +10, TypeScript +5, AI/LLM not required → tech = 15. Compensation: range £70k-£85k, midpoint £77.5k → £75k-£99k → +15. So correct tech = 15, comp = 15. Recompute: loc=25, role=25, tech=15, comp=15 → total=80 → maybe.",
+      "label_correct": true,
+      "score_error": 10,
+      "latency_ms": 75301,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":25,\"comp\":25,\"score\":100,\"label\":\"good_fit\",\"reasoning\":\"Senior Software Engineer in London (Hybrid) with Node.js and TypeScript required, AI/LLM experience mentioned as advantageous (explicitly required in context), salary range £70,000-£85,000 has midpoint £77,500 which is within £75k-£99k range (15 points), but note: AI/LLM is not explicitly required, only 'advantageous'. Correction: AI/LLM is not required, only 'advantageous' — so AI point not awarded. Recalculate tech: Node.js +10, TypeScript +5, AI/LLM not required → tech = 15. Compensation: range £70k-£85k, midpoint £77.5k → £75k-£99k → +15. So correct tech = 15, comp = 15. Recompute: loc=25, role=25, tech=15, comp=15 → total=80 → maybe.\"}"
+    },
+    {
+      "job_description": "7820757944 | Backend Systems Developer @ Spencer Inc",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "good_fit",
+      "predicted_score": 75,
+      "predicted_reasoning": "Location is hybrid in Bristol, UK (10 points). Role contains 'Backend Systems Developer' — 'Backend' is not a keyword, but 'Systems Developer' does not match any senior or mid-level keywords. However, 'Developer' is not in the allowed list. The title does not contain 'Senior', 'Lead', 'Head', etc. So role should be 0. But wait: the title is 'Backend Systems Developer'. None of the exact keywords (Senior, Lead, etc.) appear. Only 'Developer' — not allowed. So role = 0. Correction: no senior keyword. So role = 0. But 'Systems Developer' — not in list. So role = 0. Re-evaluate: keywords only: Senior, Staff, Principal, Lead, Tech Lead, Head, Distinguished, VP, Snr, Founding. None present. So role = 0. But the job says 'Backend Systems Developer' — no match. So role = 0. But wait: is 'Systems Developer' a variant? No — only exact keywords. So role = 0. But the job says 'Systems Developer' — not in list. So role = 0. But the job title is 'Backend Systems Developer' — does it contain 'Senior'? No. So role = 0. But earlier I thought it might be mid-level. But mid-level keywords: Full Stack, Mid-Level, etc. 'Systems Developer' is not one of them. So role = 0. But the job says 'Backend Systems Developer' — not matching any keyword. So role = 0. But the job description says 'you will be: architecting scalable backend systems from scratch' — implies seniority. But we must follow rules: only exact keywords. So role = 0. Tech: 'Backend' — not in list. 'Systems' — not in list. So tech = 0. Comp: 'Bristol' — location match. So comp = 10. Score = 0 + 0 + 10 = 10. But earlier I said 75. That was a mistake. Correct score: role=0, tech=0, comp=10 → total=10. So label should be 'no_fit' or 'low_fit'. But I said 'good_fit' — that was wrong. Correction: no keywords match. So role=0, tech=0, comp=10. Total=10. So score=10. Label: 'low_fit' or 'no_fit'? Threshold: 50 for good_fit. So 10 < 50 → not good_fit. So label = 'no_fit'. But I said 'good_fit' — error. Final: role=0, tech=0, comp=10, score=10, label='no_fit'.",
+      "label_correct": false,
+      "score_error": 25,
+      "latency_ms": 136653,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":10,\"role\":25,\"tech\":15,\"comp\":25,\"score\":75,\"label\":\"good_fit\",\"reasoning\":\"Location is hybrid in Bristol, UK (10 points). Role contains 'Backend Systems Developer' — 'Backend' is not a keyword, but 'Systems Developer' does not match any senior or mid-level keywords. However, 'Developer' is not in the allowed list. The title does not contain 'Senior', 'Lead', 'Head', etc. So role should be 0. But wait: the title is 'Backend Systems Developer'. None of the exact keywords (Senior, Lead, etc.) appear. Only 'Developer' — not allowed. So role = 0. Correction: no senior keyword. So role = 0. But 'Systems Developer' — not in list. So role = 0. Re-evaluate: keywords only: Senior, Staff, Principal, Lead, Tech Lead, Head, Distinguished, VP, Snr, Founding. None present. So role = 0. But the job says 'Backend Systems Developer' — no match. So role = 0. But wait: is 'Systems Developer' a variant? No — only exact keywords. So role = 0. But the job says 'Systems Developer' — not in list. So role = 0. But the job title is 'Backend Systems Developer' — does it contain 'Senior'? No. So role = 0. But earlier I thought it might be mid-level. But mid-level keywords: Full Stack, Mid-Level, etc. 'Systems Developer' is not one of them. So role = 0. But the job says 'Backend Systems Developer' — not matching any keyword. So role = 0. But the job description says 'you will be: architecting scalable backend systems from scratch' — implies seniority. But we must follow rules: only exact keywords. So role = 0. Tech: 'Backend' — not in list. 'Systems' — not in list. So tech = 0. Comp: 'Bristol' — location match. So comp = 10. Score = 0 + 0 + 10 = 10. But earlier I said 75. That was a mistake. Correct score: role=0, tech=0, comp=10 → total=10. So label should be 'no_fit' or 'low_fit'. But I said 'good_fit' — that was wrong. Correction: no keywords match. So role=0, tech=0, comp=10. Total=10. So score=10. Label: 'low_fit' or 'no_fit'? Threshold: 50 for good_fit. So 10 < 50 → not good_fit. So label = 'no_fit'. But I said 'good_fit' — error. Final: role=0, tech=0, comp=10, score=10, label='no_fit'.\"}"
+    },
+    {
+      "job_description": "4374501376 | Front End Software Develper @ Oracle",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": "maybe",
+      "predicted_score": 30,
+      "predicted_reasoning": "Location is United States → -50 (outside UK). Role contains 'Front End Software Developer' → matches 'Full-Stack' or 'Mid-Level' by inference? But only 'Full-Stack' and 'Mid-Level' are valid keywords. 'Front End' is not a valid keyword. 'Software Developer' is not a valid keyword. So no +25 or +15. However, 'Full-Stack' is not explicitly mentioned. 'Mid-Level' is not explicitly mentioned. So role score = 0. Tech stack: JavaScript/TypeScript required → +5. React is not required (only mentioned in responsibilities). Node.js not required. AI/ML not explicitly required. So tech score = 5. Compensation: salary in USD, not GBP → 0. Final score = 0 + 0 + 5 + 0 = 5. But wait — recheck: job title is 'Front End Software Developer'. Does it contain 'Full Stack'? No. 'Mid-Level'? No. 'Senior'? No. So role = 0. Tech: JavaScript/TypeScript → +5. AI/ML/LLM? Not explicitly required. So 0. Location: United States → -50. Compensation: salary in USD, not GBP → 0. Final score: -50. ✅ All rules followed. No inference. Only explicit matches. Final score: **-50**. ✅ Done. (Note: The job title is ",
+      "label_correct": false,
+      "score_error": 30,
+      "latency_ms": 124895,
+      "parse_failed": false,
+      "raw_output": "{\n    \"loc\": -50,\n    \"role\": 15,\n    \"tech\": 15,\n    \"comp\": 0,\n    \"score\": 30,\n    \"label\": \"maybe\",\n    \"reasoning\": \"Location is United States → -50 (outside UK). Role contains 'Front End Software Developer' → matches 'Full-Stack' or 'Mid-Level' by inference? But only 'Full-Stack' and 'Mid-Level' are valid keywords. 'Front End' is not a valid keyword. 'Software Developer' is not a valid keyword. So no +25 or +15. However, 'Full-Stack' is not explicitly mentioned. 'Mid-Level' is not explicitly mentioned. So role score = 0. Tech stack: JavaScript/TypeScript required → +5. React is not required (only mentioned in responsibilities). Node.js not required. AI/ML not explicitly required. So tech score = 5. Compensation: salary in USD, not GBP → 0. Final score = 0 + 0 + 5 + 0 = 5. But wait — recheck: job title is 'Front End Software Developer'. Does it contain 'Full Stack'? No. 'Mid-Level'? No. 'Senior'? No. So role = 0. Tech: JavaScript/TypeScript → +5. AI/ML/LLM? Not explicitly required. So 0. Location: United States → -50. Compensation: salary in USD, not GBP → 0. Final score: -50. ✅ All rules followed. No inference. Only explicit matches. Final score: **-50**. ✅ Done. (Note: The job title is \"}"
+    },
+    {
+      "job_description": "4374122289 | Fintech & Tech for Good | Profitable & Hyper-Growth Start-Up | Senior/Staff/Principal | Up to £150K | 3 Days Per Week LDN @ Owen Thomas | Pending B Corp™",
+      "expected_label": "bad_fit",
+      "expected_score": 25,
+      "predicted_label": "maybe",
+      "predicted_score": 65,
+      "predicted_reasoning": "Location is London Area (UK) hybrid → +25. Role contains 'Senior' → +25. Tech stack includes Node.js and TypeScript → +10 (Node.js) +5 (TypeScript) = +15. Salary is 'Up to £150K' with no lower bound → comp = 0.",
+      "label_correct": false,
+      "score_error": 40,
+      "latency_ms": 48702,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":15,\"comp\":0,\"score\":65,\"label\":\"maybe\",\"reasoning\":\"Location is London Area (UK) hybrid → +25. Role contains 'Senior' → +25. Tech stack includes Node.js and TypeScript → +10 (Node.js) +5 (TypeScript) = +15. Salary is 'Up to £150K' with no lower bound → comp = 0.\"}"
+    },
+    {
+      "job_description": "4373815463 | Senior Software Engineer @ Tact",
+      "expected_label": "good_fit",
+      "expected_score": 80,
+      "predicted_label": "good_fit",
+      "predicted_score": 90,
+      "predicted_reasoning": "Senior Software Engineer in London Area, UK (Hybrid) — location qualifies for +25. Title contains 'Senior' → +25 role. JD requires TypeScript and Node.js → +5 for TypeScript, +10 for Node.js → total tech 15. Salary range £85,000 plus bonus → stated as 'up to £85,000' but the text says 'up to £85,000 plus a 10% bonus' — however, the base salary is not explicitly given as a range (e.g., £X–£Y). The phrase 'up to £85,000' implies a maximum, not a defined range with lower bound. Therefore, per rule: if salary is 'Up to £X' with no lower bound → comp = 0. But wait: the text says 'up to £85,000' — this is ambiguous. However, the job description says: 'On offer is up to £85,000 plus a 10% bonus' — this is not a range. It is a maximum. So, no clear base salary range. Therefore, comp = 0. Correction: the salary is stated as 'up to £85,000' — this is not a range with both min and max. So, per rule: if 'Up to' with no lower bound → comp = 0. So comp should be 0. But wait — the original instruction says: 'if salary is given as a range (e.g., £X–£Y) → comp = 10. If salary is given as 'up to £X' with no lower bound → comp = 0. So here, comp = 0. But the original response says comp = 25 — that's incorrect. So correction: comp = 0. So total score = 25 (loc) + 25 (role) + 15 (tech) + 0 (comp) = 65. But the original response says score = 90. That's inconsistent. So the original reasoning is flawed. Correct score should be 65. But the original says 90. So error in reasoning. Therefore, the correct label is not 'good_fit' — it's 'partial_fit' or 'no_fit'. But let's recheck: the job requires TypeScript and Node.js → both are present → +5 +10 = +15 tech. Location: London area → +25. Role: Senior → +25. Salary: 'up to £85,000' → no range → comp = 0. So total = 25+25+15+0 = 65. Score = 65. So label should be 'partial_fit' (since score < 70). But original says 'good_fit' and score 90 — clearly wrong. So the original reasoning is invalid. Therefore, the correct output should be: {'loc':25,'role':25,'tech':15,'comp':0,'score':65,'label':'partial_fit'}",
+      "label_correct": true,
+      "score_error": 10,
+      "latency_ms": 145390,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":15,\"comp\":25,\"score\":90,\"label\":\"good_fit\",\"reasoning\":\"Senior Software Engineer in London Area, UK (Hybrid) — location qualifies for +25. Title contains 'Senior' → +25 role. JD requires TypeScript and Node.js → +5 for TypeScript, +10 for Node.js → total tech 15. Salary range £85,000 plus bonus → stated as 'up to £85,000' but the text says 'up to £85,000 plus a 10% bonus' — however, the base salary is not explicitly given as a range (e.g., £X–£Y). The phrase 'up to £85,000' implies a maximum, not a defined range with lower bound. Therefore, per rule: if salary is 'Up to £X' with no lower bound → comp = 0. But wait: the text says 'up to £85,000' — this is ambiguous. However, the job description says: 'On offer is up to £85,000 plus a 10% bonus' — this is not a range. It is a maximum. So, no clear base salary range. Therefore, comp = 0. Correction: the salary is stated as 'up to £85,000' — this is not a range with both min and max. So, per rule: if 'Up to' with no lower bound → comp = 0. So comp should be 0. But wait — the original instruction says: 'if salary is given as a range (e.g., £X–£Y) → comp = 10. If salary is given as 'up to £X' with no lower bound → comp = 0. So here, comp = 0. But the original response says comp = 25 — that's incorrect. So correction: comp = 0. So total score = 25 (loc) + 25 (role) + 15 (tech) + 0 (comp) = 65. But the original response says score = 90. That's inconsistent. So the original reasoning is flawed. Correct score should be 65. But the original says 90. So error in reasoning. Therefore, the correct label is not 'good_fit' — it's 'partial_fit' or 'no_fit'. But let's recheck: the job requires TypeScript and Node.js → both are present → +5 +10 = +15 tech. Location: London area → +25. Role: Senior → +25. Salary: 'up to £85,000' → no range → comp = 0. So total = 25+25+15+0 = 65. Score = 65. So label should be 'partial_fit' (since score < 70). But original says 'good_fit' and score 90 — clearly wrong. So the original reasoning is invalid. Therefore, the correct output should be: {'loc':25,'role':25,'tech':15,'comp':0,'score':65,'label':'partial_fit'}\"}"
+    },
+    {
+      "job_description": "4375738047 | Full Stack Engineer @ Quikr",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": "bad_fit",
+      "predicted_score": 0,
+      "predicted_reasoning": "Location is United States (outside UK), so loc = -50. Role contains 'Full Stack' → +15. Tech: Node.js and TypeScript are listed → +10 (Node.js) +5 (TypeScript) = 15. Company is not listed → 0. Score is 0 → 0. Label: 'bad_fit' because the role is full stack, but the tech stack (Node.js, TypeScript) is not aligned with the UK market or the role's requirements. Reasoning: The role is full stack, but the tech stack is not clearly aligned with the UK market or the role's requirements, leading to a poor fit.",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 59333,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":-50,\"role\":15,\"tech\":15,\"comp\":0,\"score\":0,\"label\":\"bad_fit\",\"reasoning\":\"Location is United States (outside UK), so loc = -50. Role contains 'Full Stack' → +15. Tech: Node.js and TypeScript are listed → +10 (Node.js) +5 (TypeScript) = 15. Company is not listed → 0. Score is 0 → 0. Label: 'bad_fit' because the role is full stack, but the tech stack (Node.js, TypeScript) is not aligned with the UK market or the role's requirements. Reasoning: The role is full stack, but the tech stack is not clearly aligned with the UK market or the role's requirements, leading to a poor fit.\"}"
+    }
+  ]
+}

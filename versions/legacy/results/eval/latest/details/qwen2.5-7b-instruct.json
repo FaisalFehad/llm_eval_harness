@@ -1,0 +1,167 @@
+{
+  "model_id": "node-llama-cpp:qwen2.5-7b-instruct",
+  "label_accuracy_pct": 30,
+  "parse_fail_pct": 0,
+  "score_mae": 30.4,
+  "score_bias": -2.6,
+  "avg_seconds": 16,
+  "total_tests": 10,
+  "passed": false,
+  "fail_reasons": [
+    "label_acc=30% < 40%",
+    "score_mae=30.4 > 30"
+  ],
+  "early_exit": false,
+  "confusion_matrix": {
+    "good_fit": {
+      "good_fit": 0,
+      "maybe": 2,
+      "bad_fit": 2,
+      "parse_fail": 0
+    },
+    "maybe": {
+      "good_fit": 0,
+      "maybe": 2,
+      "bad_fit": 1,
+      "parse_fail": 0
+    },
+    "bad_fit": {
+      "good_fit": 0,
+      "maybe": 2,
+      "bad_fit": 1,
+      "parse_fail": 0
+    }
+  },
+  "job_results": [
+    {
+      "job_description": "2448773367 | Lead DevOps Architect @ Zulauf - McCullough",
+      "expected_label": "good_fit",
+      "expected_score": 70,
+      "predicted_label": "bad_fit",
+      "predicted_score": 40,
+      "predicted_reasoning": "The role is not a software engineering position but a DevOps Architect role. It is also on-site in Manchester, UK, which does not align with the candidate's preferences.",
+      "label_correct": false,
+      "score_error": -30,
+      "latency_ms": 13201,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"bad_fit\", \"score\": 40, \"reasoning\": \"The role is not a software engineering position but a DevOps Architect role. It is also on-site in Manchester, UK, which does not align with the candidate's preferences.\"}"
+    },
+    {
+      "job_description": "4371308941 | Senior Backend Engineer @ ScaleXP",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "maybe",
+      "predicted_score": 63,
+      "predicted_reasoning": "The role is for a Senior Software Engineer with backend experience, which aligns well. However, the tech stack is primarily Python, which does not match the preferred stack of Node.js, TypeScript, or JavaScript. The location is hybrid in London, which is acceptable.",
+      "label_correct": true,
+      "score_error": 13,
+      "latency_ms": 17448,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"maybe\", \"score\": 63, \"reasoning\": \"The role is for a Senior Software Engineer with backend experience, which aligns well. However, the tech stack is primarily Python, which does not match the preferred stack of Node.js, TypeScript, or JavaScript. The location is hybrid in London, which is acceptable.\"}"
+    },
+    {
+      "job_description": "4374147500 | Senior Backend Engineer @ Happl",
+      "expected_label": "maybe",
+      "expected_score": 65,
+      "predicted_label": "maybe",
+      "predicted_score": 68,
+      "predicted_reasoning": "The role is a Senior Backend Engineer position, which is a good fit. The tech stack includes Node.js and experience with AI tools, and the location is in London with a hybrid work arrangement. The salary is not explicitly mentioned but is likely within the target range.",
+      "label_correct": true,
+      "score_error": 3,
+      "latency_ms": 19473,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"maybe\", \"score\": 68, \"reasoning\": \"The role is a Senior Backend Engineer position, which is a good fit. The tech stack includes Node.js and experience with AI tools, and the location is in London with a hybrid work arrangement. The salary is not explicitly mentioned but is likely within the target range.\"}"
+    },
+    {
+      "job_description": "1785765898 | Senior Product Engineer @ Jenkins - Zboncak",
+      "expected_label": "good_fit",
+      "expected_score": 75,
+      "predicted_label": "bad_fit",
+      "predicted_score": 15,
+      "predicted_reasoning": "The role requires Rust and WASM expertise, which does not match the candidate's preferred stack. The location is remote in the UK, which is acceptable, but the tech stack mismatch is significant.",
+      "label_correct": false,
+      "score_error": -60,
+      "latency_ms": 13381,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"bad_fit\", \"score\": 15, \"reasoning\": \"The role requires Rust and WASM expertise, which does not match the candidate's preferred stack. The location is remote in the UK, which is acceptable, but the tech stack mismatch is significant.\"}"
+    },
+    {
+      "job_description": "4364768645 | Senior Software Engineer @ Maxwell Bond",
+      "expected_label": "good_fit",
+      "expected_score": 90,
+      "predicted_label": "maybe",
+      "predicted_score": 65,
+      "predicted_reasoning": "The role is a Senior Software Engineer position with a focus on frontend development, which aligns with the candidate's experience. The tech stack includes TypeScript and Node.js, and there is an interest in AI/ML, though the location is on-site in London, which is not preferred by the candidate.",
+      "label_correct": false,
+      "score_error": -25,
+      "latency_ms": 16981,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"maybe\", \"score\": 65, \"reasoning\": \"The role is a Senior Software Engineer position with a focus on frontend development, which aligns with the candidate's experience. The tech stack includes TypeScript and Node.js, and there is an interest in AI/ML, though the location is on-site in London, which is not preferred by the candidate.\"}"
+    },
+    {
+      "job_description": "7820757944 | Backend Systems Developer @ Spencer Inc",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "bad_fit",
+      "predicted_score": 20,
+      "predicted_reasoning": "The role is on-site in Bristol, outside London, and the tech stack does not fully match the candidate's preferences.",
+      "label_correct": false,
+      "score_error": -30,
+      "latency_ms": 11916,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"bad_fit\", \"score\": 20, \"reasoning\": \"The role is on-site in Bristol, outside London, and the tech stack does not fully match the candidate's preferences.\"}"
+    },
+    {
+      "job_description": "4374501376 | Front End Software Develper @ Oracle",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": "maybe",
+      "predicted_score": 65,
+      "predicted_reasoning": "The role is senior-level and involves AI/ML, which aligns with the candidate's interests. However, it is on-site in the UK, which is not preferred by the candidate.",
+      "label_correct": false,
+      "score_error": 65,
+      "latency_ms": 22269,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"maybe\", \"score\": 65, \"reasoning\": \"The role is senior-level and involves AI/ML, which aligns with the candidate's interests. However, it is on-site in the UK, which is not preferred by the candidate.\"}"
+    },
+    {
+      "job_description": "4374122289 | Fintech & Tech for Good | Profitable & Hyper-Growth Start-Up | Senior/Staff/Principal | Up to £150K | 3 Days Per Week LDN @ Owen Thomas | Pending B Corp™",
+      "expected_label": "bad_fit",
+      "expected_score": 25,
+      "predicted_label": "maybe",
+      "predicted_score": 63,
+      "predicted_reasoning": "The role is at the desired seniority level and has a high salary, but the tech stack does not fully match the candidate's preferences. The location is in the UK, which is acceptable.",
+      "label_correct": false,
+      "score_error": 38,
+      "latency_ms": 15400,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"maybe\", \"score\": 63, \"reasoning\": \"The role is at the desired seniority level and has a high salary, but the tech stack does not fully match the candidate's preferences. The location is in the UK, which is acceptable.\"}"
+    },
+    {
+      "job_description": "4373815463 | Senior Software Engineer @ Tact",
+      "expected_label": "good_fit",
+      "expected_score": 80,
+      "predicted_label": "maybe",
+      "predicted_score": 60,
+      "predicted_reasoning": "The role is senior and aligns with the preferred stack, but the location is on-site in London, which is not preferred. The salary is above the target range.",
+      "label_correct": false,
+      "score_error": -20,
+      "latency_ms": 14061,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"maybe\", \"score\": 60, \"reasoning\": \"The role is senior and aligns with the preferred stack, but the location is on-site in London, which is not preferred. The salary is above the target range.\"}"
+    },
+    {
+      "job_description": "4375738047 | Full Stack Engineer @ Quikr",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": "bad_fit",
+      "predicted_score": 20,
+      "predicted_reasoning": "The role is not remote or hybrid in the UK, and the compensation is below the target range.",
+      "label_correct": true,
+      "score_error": 20,
+      "latency_ms": 15538,
+      "parse_failed": false,
+      "raw_output": "{\"label\": \"bad_fit\", \"score\": 20, \"reasoning\": \"The role is not remote or hybrid in the UK, and the compensation is below the target range.\"}"
+    }
+  ]
+}

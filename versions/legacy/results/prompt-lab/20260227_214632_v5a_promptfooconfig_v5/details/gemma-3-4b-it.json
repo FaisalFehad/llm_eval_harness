@@ -1,0 +1,164 @@
+{
+  "model_id": "node-llama-cpp:gemma-3-4b-it",
+  "label_accuracy_pct": 50,
+  "parse_fail_pct": 0,
+  "score_mae": 26,
+  "score_bias": 22,
+  "avg_seconds": 22.4,
+  "total_tests": 10,
+  "passed": true,
+  "fail_reasons": [],
+  "early_exit": false,
+  "confusion_matrix": {
+    "good_fit": {
+      "good_fit": 3,
+      "maybe": 1,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "maybe": {
+      "good_fit": 1,
+      "maybe": 2,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "bad_fit": {
+      "good_fit": 0,
+      "maybe": 3,
+      "bad_fit": 0,
+      "parse_fail": 0
+    }
+  },
+  "job_results": [
+    {
+      "job_description": "2448773367 | Lead DevOps Architect @ Zulauf - McCullough",
+      "expected_label": "good_fit",
+      "expected_score": 70,
+      "predicted_label": "good_fit",
+      "predicted_score": 90,
+      "predicted_reasoning": "The job title 'Lead DevOps Architect' indicates a senior role. The tech stack includes Python, PyTorch, and LLM experience. The salary range falls within the £100,000 - £115,000 bracket, indicating a good fit.",
+      "label_correct": true,
+      "score_error": 20,
+      "latency_ms": 17928,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"good_fit\",\"score\":90,\"reasoning\":\"The job title 'Lead DevOps Architect' indicates a senior role. The tech stack includes Python, PyTorch, and LLM experience. The salary range falls within the £100,000 - £115,000 bracket, indicating a good fit.\"}"
+    },
+    {
+      "job_description": "4371308941 | Senior Backend Engineer @ ScaleXP",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "maybe",
+      "predicted_score": 60,
+      "predicted_reasoning": "The candidate meets the minimum years of experience (5+ years BE), Python experience (2+ years), and relational database experience (2+ years). However, the job description emphasizes a startup environment and end-to-end ownership, and the tech stack is not fully detailed, making it a maybe fit.",
+      "label_correct": true,
+      "score_error": 10,
+      "latency_ms": 19833,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"maybe\",\"score\":60,\"reasoning\":\"The candidate meets the minimum years of experience (5+ years BE), Python experience (2+ years), and relational database experience (2+ years). However, the job description emphasizes a startup environment and end-to-end ownership, and the tech stack is not fully detailed, making it a maybe fit.\"}"
+    },
+    {
+      "job_description": "4374147500 | Senior Backend Engineer @ Happl",
+      "expected_label": "maybe",
+      "expected_score": 65,
+      "predicted_label": "maybe",
+      "predicted_score": 65,
+      "predicted_reasoning": "The candidate is a Senior Backend Engineer in London, which is a positive. They require experience with modern backend languages and frameworks, and database experience. However, the compensation details are not provided, and the job description mentions AI tools but doesn't explicitly state AI/ML experience, leading to a 'maybe' score.",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 22614,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"maybe\",\"score\":65,\"reasoning\":\"The candidate is a Senior Backend Engineer in London, which is a positive. They require experience with modern backend languages and frameworks, and database experience. However, the compensation details are not provided, and the job description mentions AI tools but doesn't explicitly state AI/ML experience, leading to a 'maybe' score.\"}"
+    },
+    {
+      "job_description": "1785765898 | Senior Product Engineer @ Jenkins - Zboncak",
+      "expected_label": "good_fit",
+      "expected_score": 75,
+      "predicted_label": "maybe",
+      "predicted_score": 60,
+      "predicted_reasoning": "The candidate is a Senior Product Engineer, working remotely in the UK. The job description highlights specific technical skills like Rust and database optimization, but the provided information doesn't fully assess their suitability, thus a 'maybe' score is appropriate.",
+      "label_correct": false,
+      "score_error": -15,
+      "latency_ms": 16293,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"maybe\",\"score\":60,\"reasoning\":\"The candidate is a Senior Product Engineer, working remotely in the UK. The job description highlights specific technical skills like Rust and database optimization, but the provided information doesn't fully assess their suitability, thus a 'maybe' score is appropriate.\"}"
+    },
+    {
+      "job_description": "4364768645 | Senior Software Engineer @ Maxwell Bond",
+      "expected_label": "good_fit",
+      "expected_score": 90,
+      "predicted_label": "good_fit",
+      "predicted_score": 85,
+      "predicted_reasoning": "The job title 'Senior Software Engineer' indicates a senior role. The tech stack includes Typescript and Node.js, and the location is London with a salary of up to £85,000, aligning with a strong fit.",
+      "label_correct": true,
+      "score_error": -5,
+      "latency_ms": 18766,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"good_fit\",\"score\":85,\"reasoning\":\"The job title 'Senior Software Engineer' indicates a senior role. The tech stack includes Typescript and Node.js, and the location is London with a salary of up to £85,000, aligning with a strong fit.\"}"
+    },
+    {
+      "job_description": "7820757944 | Backend Systems Developer @ Spencer Inc",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "good_fit",
+      "predicted_score": 85,
+      "predicted_reasoning": "The job title 'Backend Systems Developer' indicates a mid-level role. The tech stack includes Node.js, TypeScript, and PostgreSQL, earning 10, 5, and 10 points respectively. The location is Hybrid - Bristol, UK, earning 10 points. The salary range is £120,000 - £140,000, with a midpoint of £130,000, earning 25 points.",
+      "label_correct": false,
+      "score_error": 35,
+      "latency_ms": 25202,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"good_fit\",\"score\":85,\"reasoning\":\"The job title 'Backend Systems Developer' indicates a mid-level role. The tech stack includes Node.js, TypeScript, and PostgreSQL, earning 10, 5, and 10 points respectively. The location is Hybrid - Bristol, UK, earning 10 points. The salary range is £120,000 - £140,000, with a midpoint of £130,000, earning 25 points.\"}"
+    },
+    {
+      "job_description": "4374501376 | Front End Software Develper @ Oracle",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": "maybe",
+      "predicted_score": 65,
+      "predicted_reasoning": "The candidate is a Front End Software Developer located in the United States. The job description highlights experience with React, Redux, and frontend testing frameworks, aligning with the tech stack. However, the compensation range is in USD and doesn't provide a specific GBP figure, and the location is in the US, which is not a strong positive for a UK-based role. The role requires significant experience, suggesting a higher seniority level, but the scoring is capped at 25 for role/seniority.",
+      "label_correct": false,
+      "score_error": 65,
+      "latency_ms": 35746,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"maybe\",\"score\":65,\"reasoning\":\"The candidate is a Front End Software Developer located in the United States. The job description highlights experience with React, Redux, and frontend testing frameworks, aligning with the tech stack. However, the compensation range is in USD and doesn't provide a specific GBP figure, and the location is in the US, which is not a strong positive for a UK-based role. The role requires significant experience, suggesting a higher seniority level, but the scoring is capped at 25 for role/seniority.\"}"
+    },
+    {
+      "job_description": "4374122289 | Fintech & Tech for Good | Profitable & Hyper-Growth Start-Up | Senior/Staff/Principal | Up to £150K | 3 Days Per Week LDN @ Owen Thomas | Pending B Corp™",
+      "expected_label": "bad_fit",
+      "expected_score": 25,
+      "predicted_label": "maybe",
+      "predicted_score": 65,
+      "predicted_reasoning": "The candidate fits the Senior/Staff/Principal role and the tech stack requirements (React, TypeScript, Node.js, Next.js, Express, PostgreSQL). However, the salary is slightly above the upper limit (£150K) and the location is London, which is hybrid. A higher score would require a more precise salary match.",
+      "label_correct": false,
+      "score_error": 40,
+      "latency_ms": 22424,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"maybe\",\"score\":65,\"reasoning\":\"The candidate fits the Senior/Staff/Principal role and the tech stack requirements (React, TypeScript, Node.js, Next.js, Express, PostgreSQL). However, the salary is slightly above the upper limit (£150K) and the location is London, which is hybrid. A higher score would require a more precise salary match.\"}"
+    },
+    {
+      "job_description": "4373815463 | Senior Software Engineer @ Tact",
+      "expected_label": "good_fit",
+      "expected_score": 80,
+      "predicted_label": "good_fit",
+      "predicted_score": 85,
+      "predicted_reasoning": "The job title 'Senior Software Engineer' indicates a senior role. The location is London Area, United Kingdom (Hybrid), and the salary is up to £85,000, aligning with a good fit.",
+      "label_correct": true,
+      "score_error": 5,
+      "latency_ms": 18071,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"good_fit\",\"score\":85,\"reasoning\":\"The job title 'Senior Software Engineer' indicates a senior role. The location is London Area, United Kingdom (Hybrid), and the salary is up to £85,000, aligning with a good fit.\"}"
+    },
+    {
+      "job_description": "4375738047 | Full Stack Engineer @ Quikr",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": "maybe",
+      "predicted_score": 65,
+      "predicted_reasoning": "The job title is Full Stack Engineer, which scores 15 points. The job description mentions experience with Node.js, React, and RESTful APIs, earning 10+5 points. The location is Remote (United States), scoring 0 points. Compensation details are not provided, so it receives 0 points. Overall, it's a potentially good fit but lacks specific compensation information.",
+      "label_correct": false,
+      "score_error": 65,
+      "latency_ms": 26630,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"maybe\",\"score\":65,\"reasoning\":\"The job title is Full Stack Engineer, which scores 15 points. The job description mentions experience with Node.js, React, and RESTful APIs, earning 10+5 points. The location is Remote (United States), scoring 0 points. Compensation details are not provided, so it receives 0 points. Overall, it's a potentially good fit but lacks specific compensation information.\"}"
+    }
+  ]
+}

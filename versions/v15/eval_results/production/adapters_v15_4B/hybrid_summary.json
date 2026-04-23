@@ -1,0 +1,91 @@
+{
+  "model_only": {
+    "correct": 203,
+    "total": 222,
+    "accuracy_pct": 91.4,
+    "parse_fail": 17,
+    "field_accuracy": {
+      "loc": 98.6,
+      "arr": 89.6,
+      "sen": 96.8,
+      "tech": 75.7,
+      "comp": 92.3
+    }
+  },
+  "regex_only": {
+    "correct": 226,
+    "total": 239,
+    "accuracy_pct": 94.6,
+    "parse_fail": 0,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 77.4,
+      "sen": 79.9,
+      "tech": 90.4,
+      "comp": 96.2
+    }
+  },
+  "hybrid_A": {
+    "correct": 237,
+    "total": 239,
+    "accuracy_pct": 99.2,
+    "parse_fail": 17,
+    "field_accuracy": {
+      "loc": 91.6,
+      "arr": 83.3,
+      "sen": 90.0,
+      "tech": 83.3,
+      "comp": 90.0
+    }
+  },
+  "hybrid_B": {
+    "correct": 237,
+    "total": 239,
+    "accuracy_pct": 99.2,
+    "parse_fail": 17,
+    "field_accuracy": {
+      "loc": 0.0,
+      "arr": 0.0,
+      "sen": 0.0,
+      "tech": 0.0,
+      "comp": 0.0
+    }
+  },
+  "v12_hybrid": {
+    "correct": 238,
+    "total": 239,
+    "accuracy_pct": 99.6,
+    "parse_fail": 17,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 89.5,
+      "sen": 96.7,
+      "tech": 90.4,
+      "comp": 96.2
+    }
+  },
+  "v12_errors": [
+    {
+      "job_index": 14,
+      "golden": "maybe",
+      "predicted": "bad_fit",
+      "diffs": [
+        "tech:['NODE', 'REACT', 'JS_TS', 'AI_ML']->['REACT', 'JS_TS', 'AI_ML']"
+      ]
+    }
+  ],
+  "v12_per_label": {
+    "good_fit": {
+      "correct": 57,
+      "total": 57
+    },
+    "maybe": {
+      "correct": 53,
+      "total": 54
+    },
+    "bad_fit": {
+      "correct": 128,
+      "total": 128
+    }
+  }
+}

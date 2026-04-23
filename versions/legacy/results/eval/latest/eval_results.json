@@ -1,0 +1,83 @@
+{
+  "tag": "eval",
+  "timestamp": "2026-02-27T14:22:46.062Z",
+  "thresholds": {
+    "job_count": 10,
+    "max_parse_fail_pct": 10,
+    "min_label_accuracy_pct": 40,
+    "max_avg_seconds": 120,
+    "max_score_mae": 30
+  },
+  "models": [
+    {
+      "model_id": "node-llama-cpp:granite4-350m",
+      "label_accuracy_pct": 0,
+      "parse_fail_pct": 100,
+      "score_mae": 0,
+      "score_bias": 0,
+      "avg_seconds": 0,
+      "total_tests": 2,
+      "passed": false,
+      "fail_reasons": [
+        "Consecutive errors after 2 jobs"
+      ],
+      "early_exit": true,
+      "confusion_matrix": {
+        "good_fit": {
+          "good_fit": 0,
+          "maybe": 0,
+          "bad_fit": 0,
+          "parse_fail": 1
+        },
+        "maybe": {
+          "good_fit": 0,
+          "maybe": 0,
+          "bad_fit": 0,
+          "parse_fail": 1
+        },
+        "bad_fit": {
+          "good_fit": 0,
+          "maybe": 0,
+          "bad_fit": 0,
+          "parse_fail": 0
+        }
+      },
+      "job_results": []
+    },
+    {
+      "model_id": "node-llama-cpp:granite4-350m-warm",
+      "label_accuracy_pct": 0,
+      "parse_fail_pct": 100,
+      "score_mae": 0,
+      "score_bias": 0,
+      "avg_seconds": 0,
+      "total_tests": 2,
+      "passed": false,
+      "fail_reasons": [
+        "Consecutive errors after 2 jobs"
+      ],
+      "early_exit": true,
+      "confusion_matrix": {
+        "good_fit": {
+          "good_fit": 0,
+          "maybe": 0,
+          "bad_fit": 0,
+          "parse_fail": 1
+        },
+        "maybe": {
+          "good_fit": 0,
+          "maybe": 0,
+          "bad_fit": 0,
+          "parse_fail": 1
+        },
+        "bad_fit": {
+          "good_fit": 0,
+          "maybe": 0,
+          "bad_fit": 0,
+          "parse_fail": 0
+        }
+      },
+      "job_results": []
+    }
+  ]
+}

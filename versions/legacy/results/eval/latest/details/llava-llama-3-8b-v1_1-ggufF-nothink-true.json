@@ -1,0 +1,35 @@
+{
+  "model_id": "node-llama-cpp:llava-llama-3-8b-v1_1-ggufF-nothink-true",
+  "label_accuracy_pct": 0,
+  "parse_fail_pct": 100,
+  "score_mae": 0,
+  "score_bias": 0,
+  "avg_seconds": 0,
+  "total_tests": 0,
+  "passed": false,
+  "fail_reasons": [
+    "Model load failed: Failed to fetch manifest for \"hf:xtuner/llava-llama-3-8b-v1_1-ggufF\": 401 Unauthorized"
+  ],
+  "early_exit": true,
+  "confusion_matrix": {
+    "good_fit": {
+      "good_fit": 0,
+      "maybe": 0,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "maybe": {
+      "good_fit": 0,
+      "maybe": 0,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "bad_fit": {
+      "good_fit": 0,
+      "maybe": 0,
+      "bad_fit": 0,
+      "parse_fail": 0
+    }
+  },
+  "job_results": []
+}

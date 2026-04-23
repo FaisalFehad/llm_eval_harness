@@ -1,0 +1,48 @@
+{
+  "tag": "v6b",
+  "timestamp": "2026-02-27T22:13:38.031Z",
+  "thresholds": {
+    "job_count": 10,
+    "max_parse_fail_pct": 10,
+    "min_label_accuracy_pct": 40,
+    "max_avg_seconds": 120,
+    "max_score_mae": 30
+  },
+  "models": [
+    {
+      "model_id": "node-llama-cpp:gemma-3-4b-it",
+      "label_accuracy_pct": 0,
+      "parse_fail_pct": 0,
+      "score_mae": 70,
+      "score_bias": -70,
+      "avg_seconds": 24.4,
+      "total_tests": 5,
+      "passed": false,
+      "fail_reasons": [
+        "yes-man: all 5 predictions are \"bad_fit\""
+      ],
+      "early_exit": true,
+      "confusion_matrix": {
+        "good_fit": {
+          "good_fit": 0,
+          "maybe": 0,
+          "bad_fit": 3,
+          "parse_fail": 0
+        },
+        "maybe": {
+          "good_fit": 0,
+          "maybe": 0,
+          "bad_fit": 2,
+          "parse_fail": 0
+        },
+        "bad_fit": {
+          "good_fit": 0,
+          "maybe": 0,
+          "bad_fit": 0,
+          "parse_fail": 0
+        }
+      },
+      "job_results": []
+    }
+  ]
+}

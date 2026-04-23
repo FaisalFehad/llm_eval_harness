@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ai-eval-harness"
+version = "15.0.0"
+description = "Student model training + evaluation harness (V15)"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "typer>=0.24",
+    "mlx-lm>=0.31",
+    "transformers>=5.0",
+    "torch>=2.0",
+]
+
+[project.optional-dependencies]
+# Install with: pip install -e ".[gguf]" — needed only for GGUF inference
+gguf = ["llama-cpp-python>=0.3"]
+# Install with: pip install -e ".[hf-merge]" — needed for HF LoRA merge (V14 conversion)
+hf-merge = ["peft>=0.14"]
+# Install with: pip install -e ".[mlflow]"
+mlflow = ["mlflow>=3.0"]
+
+[project.scripts]
+harness = "finetune.cli:app"
+
+[tool.setuptools]
+# Only package the finetune/ tree (skip configs/, prompts/, data/, etc.)
+packages = ["finetune", "finetune.commands"]
+
+[tool.setuptools.package-data]
+finetune = ["*.yaml"]

@@ -7,9 +7,16 @@ dist
 CLAUDE.md
 tokenizer.json
 imatrix.dat
-
 # Large model files (download separately)
 models/
+fused_model/
+
+# Python build artifacts
+ai_eval_harness.egg-info/
+**/__pycache__/
+
+# Local-only holding zone for unclassified root artifacts (logs, orphan data)
+trash/
 
 # Results — JSON/HTML artifacts from eval runs (reports tracked as .md)
 results/**/*.json
@@ -19,18 +26,22 @@ results/**/*.html
 .venv
 finetune/__pycache__
 
-# LoRA adapter weights + HF training artifacts (too large for git)
-# Covers both root-level and checkpoint subdirectories
-finetune/adapters*/*.safetensors
-finetune/adapters*/**/*.safetensors
-finetune/adapters*/optimizer.pt
-finetune/adapters*/scheduler.pt
-finetune/adapters*/rng_state.pth
-finetune/adapters*/training_args.bin
-finetune/adapters*/checkpoint-*/optimizer.pt
-finetune/adapters*/checkpoint-*/scheduler.pt
-finetune/adapters*/checkpoint-*/rng_state.pth
-finetune/adapters*/checkpoint-*/training_args.bin
+# LoRA adapter weights + HF training artifacts (too large for git; push to HF)
+# Covers ALL paths: root-level, versions/, legacy/, experiments/, checkpoints.
+**/*.safetensors
+**/*.pt
+**/*.pth
+**/*.bin
+**/optimizer.pt
+**/scheduler.pt
+**/rng_state.pth
+**/training_args.bin
+**/pytorch_model.bin
+# Large model tokenizers (HF ships with model, don't duplicate in repo)
+**/tokenizer.json
+
+# GGUF quantized models (too large; push to HF)
+**/*.gguf
 
 # Intermediate/generated data
 data/promptfoo_tests_eval.yaml
@@ -50,3 +61,6 @@ master_eval/__pycache__/
 # PhotoRec data recovery files
 photorec.se2
 photorec.ses
+
+# Langfuse self-hosted secrets
+langfuse/.env

@@ -141,7 +141,7 @@ def main():
         # Model prediction for this job
         job_idx = i + 1  # predictions are 1-indexed
         mp = pred_by_idx.get(job_idx)
-        has_model = mp is not None and not mp.get("parse_fail", False)
+        has_model = mp is not None and not mp.get("parse_fail", False) and "pred_tokens" in mp
 
         # ── Regex only ───────────────────────────────────────────────
         regex_result = compute_label(regex["loc"], regex["sen"], regex["tech"], regex["comp"])

@@ -1,0 +1,48 @@
+{
+  "tag": "v10",
+  "timestamp": "2026-02-27T23:42:04.771Z",
+  "thresholds": {
+    "job_count": 10,
+    "max_parse_fail_pct": 10,
+    "min_label_accuracy_pct": 40,
+    "max_avg_seconds": 120,
+    "max_score_mae": 30
+  },
+  "models": [
+    {
+      "model_id": "node-llama-cpp:qwen3-4b-instruct-2507",
+      "label_accuracy_pct": 83.3,
+      "parse_fail_pct": 16.7,
+      "score_mae": 7,
+      "score_bias": 7,
+      "avg_seconds": 181.6,
+      "total_tests": 6,
+      "passed": false,
+      "fail_reasons": [
+        "TIMEOUT on job 6 (>420s)"
+      ],
+      "early_exit": true,
+      "confusion_matrix": {
+        "good_fit": {
+          "good_fit": 3,
+          "maybe": 0,
+          "bad_fit": 0,
+          "parse_fail": 0
+        },
+        "maybe": {
+          "good_fit": 0,
+          "maybe": 2,
+          "bad_fit": 0,
+          "parse_fail": 1
+        },
+        "bad_fit": {
+          "good_fit": 0,
+          "maybe": 0,
+          "bad_fit": 0,
+          "parse_fail": 0
+        }
+      },
+      "job_results": []
+    }
+  ]
+}

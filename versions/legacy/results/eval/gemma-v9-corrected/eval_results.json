@@ -1,0 +1,46 @@
+{
+  "tag": "gemma-v9-corrected",
+  "timestamp": "2026-02-28T17:21:16.276Z",
+  "thresholds": {
+    "job_count": 103,
+    "max_parse_fail_pct": 10,
+    "min_label_accuracy_pct": 40,
+    "max_avg_seconds": 120,
+    "max_score_mae": 30
+  },
+  "models": [
+    {
+      "model_id": "node-llama-cpp:gemma-3-4b-it",
+      "label_accuracy_pct": 44.7,
+      "parse_fail_pct": 0,
+      "score_mae": 20.2,
+      "score_bias": 18.8,
+      "avg_seconds": 22.4,
+      "total_tests": 103,
+      "passed": true,
+      "fail_reasons": [],
+      "early_exit": false,
+      "confusion_matrix": {
+        "good_fit": {
+          "good_fit": 10,
+          "maybe": 3,
+          "bad_fit": 0,
+          "parse_fail": 0
+        },
+        "maybe": {
+          "good_fit": 18,
+          "maybe": 33,
+          "bad_fit": 0,
+          "parse_fail": 0
+        },
+        "bad_fit": {
+          "good_fit": 8,
+          "maybe": 28,
+          "bad_fit": 3,
+          "parse_fail": 0
+        }
+      },
+      "job_results": []
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "model_id": "node-llama-cpp:gemma-3-4b-it",
+  "label_accuracy_pct": 71.4,
+  "parse_fail_pct": 14.3,
+  "score_mae": 6.7,
+  "score_bias": 1.7,
+  "avg_seconds": 75.8,
+  "total_tests": 7,
+  "passed": false,
+  "fail_reasons": [
+    "TIMEOUT on job 7 (>420s)"
+  ],
+  "early_exit": true,
+  "confusion_matrix": {
+    "good_fit": {
+      "good_fit": 2,
+      "maybe": 1,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "maybe": {
+      "good_fit": 0,
+      "maybe": 3,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "bad_fit": {
+      "good_fit": 0,
+      "maybe": 0,
+      "bad_fit": 0,
+      "parse_fail": 1
+    }
+  },
+  "job_results": [
+    {
+      "job_description": "2448773367 | Lead DevOps Architect @ Zulauf - McCullough",
+      "expected_label": "good_fit",
+      "expected_score": 70,
+      "predicted_label": "maybe",
+      "predicted_score": 65,
+      "predicted_reasoning": "The role is for a Lead DevOps Architect, which aligns with the candidate's interest in senior roles. However, the tech stack primarily focuses on Python and LLMs, not Node/React/TypeScript, and the location is Manchester, UK, not London, impacting the overall fit.",
+      "label_correct": false,
+      "score_error": -5,
+      "latency_ms": 22704,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"maybe\",\"score\":65,\"reasoning\":\"The role is for a Lead DevOps Architect, which aligns with the candidate's interest in senior roles. However, the tech stack primarily focuses on Python and LLMs, not Node/React/TypeScript, and the location is Manchester, UK, not London, impacting the overall fit.\"}"
+    },
+    {
+      "job_description": "4371308941 | Senior Backend Engineer @ ScaleXP",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "maybe",
+      "predicted_score": 40,
+      "predicted_reasoning": "The job description requires 5+ years of BE development experience and 2+ years of Python experience, aligning with a senior role. However, it doesn't explicitly mention Node.js, React, TypeScript, or AI/ML, and the location is hybrid in London, not fully remote. The salary is not stated.",
+      "label_correct": true,
+      "score_error": -10,
+      "latency_ms": 19813,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"maybe\",\"score\":40,\"reasoning\":\"The job description requires 5+ years of BE development experience and 2+ years of Python experience, aligning with a senior role. However, it doesn't explicitly mention Node.js, React, TypeScript, or AI/ML, and the location is hybrid in London, not fully remote. The salary is not stated.\"}"
+    },
+    {
+      "job_description": "4374147500 | Senior Backend Engineer @ Happl",
+      "expected_label": "maybe",
+      "expected_score": 65,
+      "predicted_label": "maybe",
+      "predicted_score": 65,
+      "predicted_reasoning": "The role is for a Senior Backend Engineer requiring Typescript and experience with AI tools. It’s located in London and offers a hybrid working arrangement, but the salary is not explicitly stated, only experience requirements. The job description does not explicitly state Senior or Staff level.",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 18551,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"maybe\",\"score\":65,\"reasoning\":\"The role is for a Senior Backend Engineer requiring Typescript and experience with AI tools. It’s located in London and offers a hybrid working arrangement, but the salary is not explicitly stated, only experience requirements. The job description does not explicitly state Senior or Staff level.\"}"
+    },
+    {
+      "job_description": "1785765898 | Senior Product Engineer @ Jenkins - Zboncak",
+      "expected_label": "good_fit",
+      "expected_score": 75,
+      "predicted_label": "good_fit",
+      "predicted_score": 85,
+      "predicted_reasoning": "The role is explicitly for a Senior Product Engineer (Role & Seniority: 15), and the location is Remote (UK) (Location & Work Arrangement: 25). The salary range midpoint is £130k (Compensation: 15).",
+      "label_correct": true,
+      "score_error": 10,
+      "latency_ms": 15652,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"good_fit\",\"score\":85,\"reasoning\":\"The role is explicitly for a Senior Product Engineer (Role & Seniority: 15), and the location is Remote (UK) (Location & Work Arrangement: 25). The salary range midpoint is £130k (Compensation: 15).\"}"
+    },
+    {
+      "job_description": "4364768645 | Senior Software Engineer @ Maxwell Bond",
+      "expected_label": "good_fit",
+      "expected_score": 90,
+      "predicted_label": "good_fit",
+      "predicted_score": 90,
+      "predicted_reasoning": "The job description explicitly states 'Senior Software Engineer' and requires experience with Typescript and Node.js. The salary range falls within the £75k–£99k bracket, and the location is London - Hybrid, aligning with the candidate's preferences.",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 15774,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"good_fit\",\"score\":90,\"reasoning\":\"The job description explicitly states 'Senior Software Engineer' and requires experience with Typescript and Node.js. The salary range falls within the £75k–£99k bracket, and the location is London - Hybrid, aligning with the candidate's preferences.\"}"
+    },
+    {
+      "job_description": "7820757944 | Backend Systems Developer @ Spencer Inc",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "maybe",
+      "predicted_score": 65,
+      "predicted_reasoning": "The role requires Node.js and TypeScript (10 + 5 = 15 points), and the salary is within the £75k - £99k range (15 points). However, the location is Bristol, UK, not London, and the seniority level isn't explicitly stated, limiting the score.",
+      "label_correct": true,
+      "score_error": 15,
+      "latency_ms": 17912,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"maybe\",\"score\":65,\"reasoning\":\"The role requires Node.js and TypeScript (10 + 5 = 15 points), and the salary is within the £75k - £99k range (15 points). However, the location is Bristol, UK, not London, and the seniority level isn't explicitly stated, limiting the score.\"}"
+    },
+    {
+      "job_description": "4374501376 | Front End Software Develper @ Oracle",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": null,
+      "predicted_score": null,
+      "predicted_reasoning": null,
+      "label_correct": false,
+      "score_error": null,
+      "latency_ms": 420139,
+      "parse_failed": true,
+      "raw_output": "TIMEOUT"
+    }
+  ]
+}

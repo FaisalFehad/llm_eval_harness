@@ -1,0 +1,88 @@
+{
+  "model_id": "node-llama-cpp:gemma-3-4b-it",
+  "label_accuracy_pct": 25,
+  "parse_fail_pct": 25,
+  "score_mae": 13.3,
+  "score_bias": 6.7,
+  "avg_seconds": 119.1,
+  "total_tests": 4,
+  "passed": false,
+  "fail_reasons": [
+    "TIMEOUT on job 4 (>420s)"
+  ],
+  "early_exit": true,
+  "confusion_matrix": {
+    "good_fit": {
+      "good_fit": 0,
+      "maybe": 1,
+      "bad_fit": 0,
+      "parse_fail": 1
+    },
+    "maybe": {
+      "good_fit": 0,
+      "maybe": 1,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "bad_fit": {
+      "good_fit": 0,
+      "maybe": 1,
+      "bad_fit": 0,
+      "parse_fail": 0
+    }
+  },
+  "job_results": [
+    {
+      "job_description": "4367475871 | Full Stack Engineer @ Ellipse",
+      "expected_label": "bad_fit",
+      "expected_score": 40,
+      "predicted_label": "maybe",
+      "predicted_score": 65,
+      "predicted_reasoning": "The candidate possesses some relevant experience (Python, SQL, AWS), but the job description emphasizes Full Stack and React, which the candidate doesn't explicitly state. The AI/ML interest is a 'nice to have' and the compensation is not listed.",
+      "label_correct": false,
+      "score_error": 25,
+      "latency_ms": 20474,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"maybe\",\"score\":65,\"reasoning\":\"The candidate possesses some relevant experience (Python, SQL, AWS), but the job description emphasizes Full Stack and React, which the candidate doesn't explicitly state. The AI/ML interest is a 'nice to have' and the compensation is not listed.\"}"
+    },
+    {
+      "job_description": "4372539086 | Full Stack Developer @ Abtrace",
+      "expected_label": "maybe",
+      "expected_score": 65,
+      "predicted_label": "maybe",
+      "predicted_score": 70,
+      "predicted_reasoning": "The candidate possesses several relevant skills (Node.js, TypeScript, Python) and experience (full stack development), aligning with the 'Senior' level requirements. However, the job description doesn't explicitly state 'AI/ML' as a requirement, and the compensation is slightly below the stated range, preventing a 'good_fit' score.",
+      "label_correct": true,
+      "score_error": 5,
+      "latency_ms": 21248,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"maybe\",\"score\":70,\"reasoning\":\"The candidate possesses several relevant skills (Node.js, TypeScript, Python) and experience (full stack development), aligning with the 'Senior' level requirements. However, the job description doesn't explicitly state 'AI/ML' as a requirement, and the compensation is slightly below the stated range, preventing a 'good_fit' score.\"}"
+    },
+    {
+      "job_description": "2448773367 | Lead DevOps Architect @ Zulauf - McCullough",
+      "expected_label": "good_fit",
+      "expected_score": 70,
+      "predicted_label": "maybe",
+      "predicted_score": 60,
+      "predicted_reasoning": "The role requires Python and LLM expertise (AI/ML), and the salary is within the desired range. However, it doesn't explicitly mention Node.js, TypeScript, or a senior/staff level, and the location is Manchester, not London.",
+      "label_correct": false,
+      "score_error": -10,
+      "latency_ms": 14696,
+      "parse_failed": false,
+      "raw_output": "{\"label\":\"maybe\",\"score\":60,\"reasoning\":\"The role requires Python and LLM expertise (AI/ML), and the salary is within the desired range. However, it doesn't explicitly mention Node.js, TypeScript, or a senior/staff level, and the location is Manchester, not London.\"}"
+    },
+    {
+      "job_description": "4372524932 | Node.JS Engineer @ Digital Waffle",
+      "expected_label": "good_fit",
+      "expected_score": 70,
+      "predicted_label": null,
+      "predicted_score": null,
+      "predicted_reasoning": null,
+      "label_correct": false,
+      "score_error": null,
+      "latency_ms": 420114,
+      "parse_failed": true,
+      "raw_output": "TIMEOUT"
+    }
+  ]
+}

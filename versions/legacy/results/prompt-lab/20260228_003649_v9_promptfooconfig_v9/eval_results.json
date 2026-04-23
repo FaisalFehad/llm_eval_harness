@@ -1,0 +1,46 @@
+{
+  "tag": "v9",
+  "timestamp": "2026-02-28T00:40:45.842Z",
+  "thresholds": {
+    "job_count": 10,
+    "max_parse_fail_pct": 10,
+    "min_label_accuracy_pct": 40,
+    "max_avg_seconds": 120,
+    "max_score_mae": 30
+  },
+  "models": [
+    {
+      "model_id": "node-llama-cpp:meta-llama-3.1-8b-instruct",
+      "label_accuracy_pct": 60,
+      "parse_fail_pct": 0,
+      "score_mae": 15.5,
+      "score_bias": -15.5,
+      "avg_seconds": 23.1,
+      "total_tests": 10,
+      "passed": true,
+      "fail_reasons": [],
+      "early_exit": false,
+      "confusion_matrix": {
+        "good_fit": {
+          "good_fit": 1,
+          "maybe": 3,
+          "bad_fit": 0,
+          "parse_fail": 0
+        },
+        "maybe": {
+          "good_fit": 0,
+          "maybe": 2,
+          "bad_fit": 1,
+          "parse_fail": 0
+        },
+        "bad_fit": {
+          "good_fit": 0,
+          "maybe": 0,
+          "bad_fit": 3,
+          "parse_fail": 0
+        }
+      },
+      "job_results": []
+    }
+  ]
+}

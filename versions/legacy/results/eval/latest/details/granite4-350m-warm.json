@@ -1,0 +1,62 @@
+{
+  "model_id": "node-llama-cpp:granite4-350m-warm",
+  "label_accuracy_pct": 0,
+  "parse_fail_pct": 100,
+  "score_mae": 0,
+  "score_bias": 0,
+  "avg_seconds": 0,
+  "total_tests": 2,
+  "passed": false,
+  "fail_reasons": [
+    "Consecutive errors after 2 jobs"
+  ],
+  "early_exit": true,
+  "confusion_matrix": {
+    "good_fit": {
+      "good_fit": 0,
+      "maybe": 0,
+      "bad_fit": 0,
+      "parse_fail": 1
+    },
+    "maybe": {
+      "good_fit": 0,
+      "maybe": 0,
+      "bad_fit": 0,
+      "parse_fail": 1
+    },
+    "bad_fit": {
+      "good_fit": 0,
+      "maybe": 0,
+      "bad_fit": 0,
+      "parse_fail": 0
+    }
+  },
+  "job_results": [
+    {
+      "job_description": "2448773367 | Lead DevOps Architect @ Zulauf - McCullough",
+      "expected_label": "good_fit",
+      "expected_score": 70,
+      "predicted_label": null,
+      "predicted_score": null,
+      "predicted_reasoning": null,
+      "label_correct": false,
+      "score_error": null,
+      "latency_ms": 0,
+      "parse_failed": true,
+      "raw_output": "ERROR: A context size of 512 is too large for the available VRAM"
+    },
+    {
+      "job_description": "4371308941 | Senior Backend Engineer @ ScaleXP",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": null,
+      "predicted_score": null,
+      "predicted_reasoning": null,
+      "label_correct": false,
+      "score_error": null,
+      "latency_ms": 0,
+      "parse_failed": true,
+      "raw_output": "ERROR: A context size of 512 is too large for the available VRAM"
+    }
+  ]
+}

@@ -1,0 +1,164 @@
+{
+  "model_id": "node-llama-cpp:qwen2.5-7b-instruct",
+  "label_accuracy_pct": 70,
+  "parse_fail_pct": 0,
+  "score_mae": 10.5,
+  "score_bias": 8.5,
+  "avg_seconds": 21.5,
+  "total_tests": 10,
+  "passed": true,
+  "fail_reasons": [],
+  "early_exit": false,
+  "confusion_matrix": {
+    "good_fit": {
+      "good_fit": 4,
+      "maybe": 0,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "maybe": {
+      "good_fit": 1,
+      "maybe": 2,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "bad_fit": {
+      "good_fit": 1,
+      "maybe": 1,
+      "bad_fit": 1,
+      "parse_fail": 0
+    }
+  },
+  "job_results": [
+    {
+      "job_description": "2448773367 | Lead DevOps Architect @ Zulauf - McCullough",
+      "expected_label": "good_fit",
+      "expected_score": 70,
+      "predicted_label": "good_fit",
+      "predicted_score": 70,
+      "predicted_reasoning": "Hybrid in UK city (Manchester), Lead role, AI/ML experience, and £100,000-£115,000 midpoint salary.",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 20518,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":10,\"role\":25,\"tech\":10,\"comp\":25,\"score\":70,\"label\":\"good_fit\",\"reasoning\":\"Hybrid in UK city (Manchester), Lead role, AI/ML experience, and £100,000-£115,000 midpoint salary.\"}"
+    },
+    {
+      "job_description": "4371308941 | Senior Backend Engineer @ ScaleXP",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "maybe",
+      "predicted_score": 50,
+      "predicted_reasoning": "Senior role in London with hybrid working, but no required tech stack or salary mentioned.",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 19888,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":0,\"comp\":0,\"score\":50,\"label\":\"maybe\",\"reasoning\":\"Senior role in London with hybrid working, but no required tech stack or salary mentioned.\"}"
+    },
+    {
+      "job_description": "4374147500 | Senior Backend Engineer @ Happl",
+      "expected_label": "maybe",
+      "expected_score": 65,
+      "predicted_label": "good_fit",
+      "predicted_score": 80,
+      "predicted_reasoning": "Senior role in London with Node.js/TS and £100k midpoint salary.",
+      "label_correct": false,
+      "score_error": 15,
+      "latency_ms": 22839,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":15,\"comp\":15,\"score\":80,\"label\":\"good_fit\",\"reasoning\":\"Senior role in London with Node.js/TS and £100k midpoint salary.\"}"
+    },
+    {
+      "job_description": "1785765898 | Senior Product Engineer @ Jenkins - Zboncak",
+      "expected_label": "good_fit",
+      "expected_score": 75,
+      "predicted_label": "good_fit",
+      "predicted_score": 75,
+      "predicted_reasoning": "Senior role in Remote (UK) with a salary range of £120,000-£140,000, which gives a midpoint of £130,000.",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 21036,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":0,\"comp\":25,\"score\":75,\"label\":\"good_fit\",\"reasoning\":\"Senior role in Remote (UK) with a salary range of £120,000-£140,000, which gives a midpoint of £130,000.\"}"
+    },
+    {
+      "job_description": "4364768645 | Senior Software Engineer @ Maxwell Bond",
+      "expected_label": "good_fit",
+      "expected_score": 90,
+      "predicted_label": "good_fit",
+      "predicted_score": 85,
+      "predicted_reasoning": "Senior role in London with Node.js/TS and £80,000-£120,000 midpoint salary.",
+      "label_correct": true,
+      "score_error": -5,
+      "latency_ms": 20372,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":15,\"comp\":25,\"score\":85,\"label\":\"good_fit\",\"reasoning\":\"Senior role in London with Node.js/TS and £80,000-£120,000 midpoint salary.\"}"
+    },
+    {
+      "job_description": "7820757944 | Backend Systems Developer @ Spencer Inc",
+      "expected_label": "maybe",
+      "expected_score": 50,
+      "predicted_label": "maybe",
+      "predicted_score": 45,
+      "predicted_reasoning": "Hybrid in Bristol, UK; Backend Systems Developer; Node.js and TypeScript; £120,000 - £140,000 midpoint £130,000.",
+      "label_correct": true,
+      "score_error": -5,
+      "latency_ms": 21241,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":10,\"role\":0,\"tech\":10,\"comp\":25,\"score\":45,\"label\":\"maybe\",\"reasoning\":\"Hybrid in Bristol, UK; Backend Systems Developer; Node.js and TypeScript; £120,000 - £140,000 midpoint £130,000.\"}"
+    },
+    {
+      "job_description": "4374501376 | Front End Software Develper @ Oracle",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": "maybe",
+      "predicted_score": 15,
+      "predicted_reasoning": "US location (-50), no senior role (0), Node.js experience (+10), midpoint salary £100,000 (+25).",
+      "label_correct": false,
+      "score_error": 15,
+      "latency_ms": 28661,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":-50,\"role\":0,\"tech\":10,\"comp\":25,\"score\":15,\"label\":\"maybe\",\"reasoning\":\"US location (-50), no senior role (0), Node.js experience (+10), midpoint salary £100,000 (+25).\"}"
+    },
+    {
+      "job_description": "4374122289 | Fintech & Tech for Good | Profitable & Hyper-Growth Start-Up | Senior/Staff/Principal | Up to £150K | 3 Days Per Week LDN @ Owen Thomas | Pending B Corp™",
+      "expected_label": "bad_fit",
+      "expected_score": 25,
+      "predicted_label": "good_fit",
+      "predicted_score": 85,
+      "predicted_reasoning": "Senior role in London with Node.js/TS and £150k midpoint salary.",
+      "label_correct": false,
+      "score_error": 60,
+      "latency_ms": 20512,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":15,\"comp\":25,\"score\":85,\"label\":\"good_fit\",\"reasoning\":\"Senior role in London with Node.js/TS and £150k midpoint salary.\"}"
+    },
+    {
+      "job_description": "4373815463 | Senior Software Engineer @ Tact",
+      "expected_label": "good_fit",
+      "expected_score": 80,
+      "predicted_label": "good_fit",
+      "predicted_score": 85,
+      "predicted_reasoning": "Senior role in London with Node.js/TS and £100k midpoint salary.",
+      "label_correct": true,
+      "score_error": 5,
+      "latency_ms": 18942,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":25,\"role\":25,\"tech\":15,\"comp\":25,\"score\":85,\"label\":\"good_fit\",\"reasoning\":\"Senior role in London with Node.js/TS and £100k midpoint salary.\"}"
+    },
+    {
+      "job_description": "4375738047 | Full Stack Engineer @ Quikr",
+      "expected_label": "bad_fit",
+      "expected_score": 0,
+      "predicted_label": "bad_fit",
+      "predicted_score": 0,
+      "predicted_reasoning": "US location (-50) makes total negative, floored to 0.",
+      "label_correct": true,
+      "score_error": 0,
+      "latency_ms": 21295,
+      "parse_failed": false,
+      "raw_output": "{\"loc\":-50,\"role\":15,\"tech\":10,\"comp\":0,\"score\":0,\"label\":\"bad_fit\",\"reasoning\":\"US location (-50) makes total negative, floored to 0.\"}"
+    }
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "model_id": "node-llama-cpp:qwen3-4b-instruct-2507",
+  "label_accuracy_pct": 40,
+  "parse_fail_pct": 0,
+  "score_mae": 21.8,
+  "score_bias": 21.8,
+  "avg_seconds": 52.6,
+  "total_tests": 5,
+  "passed": false,
+  "fail_reasons": [
+    "yes-man: all 5 predictions are \"good_fit\""
+  ],
+  "early_exit": true,
+  "confusion_matrix": {
+    "good_fit": {
+      "good_fit": 2,
+      "maybe": 0,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "maybe": {
+      "good_fit": 2,
+      "maybe": 0,
+      "bad_fit": 0,
+      "parse_fail": 0
+    },
+    "bad_fit": {
+      "good_fit": 1,
+      "maybe": 0,
+      "bad_fit": 0,
+      "parse_fail": 0
+    }
+  },
+  "job_results": [
+    {
+      "job_description": "8025169270 | Backend Systems Developer @ Jerde, Dicki and Purdy",
+      "expected_label": "bad_fit",
+      "expected_score": 10,
+      "predicted_label": "good_fit",
+      "predicted_score": 70,
+      "predicted_reasoning": "loc_reason: 'Hybrid - Edinburgh, UK' is hybrid in a UK city not London (Edinburgh), so +10; role_reason: 'Backend Systems Developer' contains 'Developer' but not Senior/Lead/Full Stack, however 'Senior' or 'Lead' not explicitly present, but 'Systems Developer' is not in scoring list, so only check for exact keywords — none of Senior, Staff, etc. appear. Wait: title is 'Backend Systems Developer' — does it contain any of the keywords? Keywords: Senior, Staff, Principal, Lead, Tech Lead, Head, Distinguished, VP, Snr, Founding. None of these appear. So role should be 0. Correction: recheck — no keyword matches. So role = 0. But earlier I said 25 — error. Let's recompute strictly.",
+      "label_correct": false,
+      "score_error": 60,
+      "latency_ms": 29533,
+      "parse_failed": false,
+      "raw_output": "{\n    \"loc\": 10,\n    \"role\": 25,\n    \"tech\": 10,\n    \"comp\": 25,\n    \"score\": 70,\n    \"label\": \"good_fit\",\n    \"reasoning\": \"loc_reason: 'Hybrid - Edinburgh, UK' is hybrid in a UK city not London (Edinburgh), so +10; role_reason: 'Backend Systems Developer' contains 'Developer' but not Senior/Lead/Full Stack, however 'Senior' or 'Lead' not explicitly present, but 'Systems Developer' is not in scoring list, so only check for exact keywords — none of Senior, Staff, etc. appear. Wait: title is 'Backend Systems Developer' — does it contain any of the keywords? Keywords: Senior, Staff, Principal, Lead, Tech Lead, Head, Distinguished, VP, Snr, Founding. None of these appear. So role should be 0. Correction: recheck — no keyword matches. So role = 0. But earlier I said 25 — error. Let's recompute strictly.\"\n}"
+    },
+    {
+      "job_description": "4373944568 | Full Stack Engineer @ Harrington Starr",
+      "expected_label": "maybe",
+      "expected_score": 60,
+      "predicted_label": "good_fit",
+      "predicted_score": 80,
+      "predicted_reasoning": "loc_reason: 'London Area, United Kingdom (Hybrid)' is hybrid in London, which qualifies for +25. role_reason: 'Full Stack' in title matches the required keyword for +15 (Full Stack/Full-Stack). tech_reason: 'C#, SQL Server, React' are mentioned; React is a front-end framework (JavaScript/HTML/CSS implied), but Node.js or TypeScript not listed; JavaScript is not explicitly required, so only React (front-end) is covered, but React is not in scoring list. However, React is a front-end skill, and the requirement for 'Strong front-end skills (HTML, CSS, JavaScript)' implies JavaScript, which scores +5. No Node.js or AI/ML mentioned. So only +5 for JavaScript. But React is not in the scoring list. Therefore, only JavaScript +5. However, the scoring list says: +5 if JavaScript or TypeScript is listed as required/core. JavaScript is listed in 'Strong front-end skills (HTML, CSS, JavaScript)', so +5. No Node.js, no AI/ML. So tech = 5. But wait: the scoring list says: +10 if Node.js or NodeJS is listed — not present. +5 for JavaScript — present. +10 for AI/ML — not required. So only +5. But earlier I said 15 — that was incorrect. Correction: tech_reason: JavaScript is explicitly listed in front-end skills as required, so +5. No Node.js, no AI/ML. So tech = 5. Correction: tech = 5. So re-evaluate: tech = 5. Then comp: salary range £70,000 - £85,000 → midpoint = £77,500 → falls in £75,000–£99,999 → +15. So comp = 15. So total: 25+15+5+15 = 60 → label = maybe. But let's recheck all rules strictly.",
+      "label_correct": false,
+      "score_error": 20,
+      "latency_ms": 56213,
+      "parse_failed": false,
+      "raw_output": "{\n    \"loc\": 25,\n    \"role\": 15,\n    \"tech\": 15,\n    \"comp\": 25,\n    \"score\": 80,\n    \"label\": \"good_fit\",\n    \"reasoning\": \"loc_reason: 'London Area, United Kingdom (Hybrid)' is hybrid in London, which qualifies for +25. role_reason: 'Full Stack' in title matches the required keyword for +15 (Full Stack/Full-Stack). tech_reason: 'C#, SQL Server, React' are mentioned; React is a front-end framework (JavaScript/HTML/CSS implied), but Node.js or TypeScript not listed; JavaScript is not explicitly required, so only React (front-end) is covered, but React is not in scoring list. However, React is a front-end skill, and the requirement for 'Strong front-end skills (HTML, CSS, JavaScript)' implies JavaScript, which scores +5. No Node.js or AI/ML mentioned. So only +5 for JavaScript. But React is not in the scoring list. Therefore, only JavaScript +5. However, the scoring list says: +5 if JavaScript or TypeScript is listed as required/core. JavaScript is listed in 'Strong front-end skills (HTML, CSS, JavaScript)', so +5. No Node.js, no AI/ML. So tech = 5. But wait: the scoring list says: +10 if Node.js or NodeJS is listed — not present. +5 for JavaScript — present. +10 for AI/ML — not required. So only +5. But earlier I said 15 — that was incorrect. Correction: tech_reason: JavaScript is explicitly listed in front-end skills as required, so +5. No Node.js, no AI/ML. So tech = 5. Correction: tech = 5. So re-evaluate: tech = 5. Then comp: salary range £70,000 - £85,000 → midpoint = £77,500 → falls in £75,000–£99,999 → +15. So comp = 15. So total: 25+15+5+15 = 60 → label = maybe. But let's recheck all rules strictly.\"\n}"
+    },
+    {
+      "job_description": "4373815463 | Senior Software Engineer @ Tact",
+      "expected_label": "good_fit",
+      "expected_score": 80,
+      "predicted_label": "good_fit",
+      "predicted_score": 89,
+      "predicted_reasoning": "loc_reason: 'London Area, United Kingdom (Hybrid)' is a hybrid role in the UK, so +25; role_reason: 'Senior' is explicitly in the job title, so +25; tech_reason: 'Node.js' and 'TypeScript' are explicitly required in the job description, so +10 for Node.js and +5 for TypeScript, totaling 15; comp_reason: salary is 'up to £85,000', which has no lower bound, so it is considered not fully stated. However, the instruction says 'up to £X' with no lower bound = salary not stated, score 0. But the job says 'up to £85,000' — this is ambiguous. However, the instruction says: 'If a range is given... use the midpoint. 'up to' with no lower bound = salary not stated, score 0'. Therefore, since it's 'up to £85,000' with no lower bound, it should be scored 0. Correction: re-evaluating compensation: 'up to £85,000' has no lower bound → score = 0. So comp should be 0. This contradicts earlier assumption. Let's fix this strictly.",
+      "label_correct": true,
+      "score_error": 9,
+      "latency_ms": 38584,
+      "parse_failed": false,
+      "raw_output": "{\n    \"loc\": 25,\n    \"role\": 25,\n    \"tech\": 15,\n    \"comp\": 25,\n    \"score\": 89,\n    \"label\": \"good_fit\",\n    \"reasoning\": \"loc_reason: 'London Area, United Kingdom (Hybrid)' is a hybrid role in the UK, so +25; role_reason: 'Senior' is explicitly in the job title, so +25; tech_reason: 'Node.js' and 'TypeScript' are explicitly required in the job description, so +10 for Node.js and +5 for TypeScript, totaling 15; comp_reason: salary is 'up to £85,000', which has no lower bound, so it is considered not fully stated. However, the instruction says 'up to £X' with no lower bound = salary not stated, score 0. But the job says 'up to £85,000' — this is ambiguous. However, the instruction says: 'If a range is given... use the midpoint. 'up to' with no lower bound = salary not stated, score 0'. Therefore, since it's 'up to £85,000' with no lower bound, it should be scored 0. Correction: re-evaluating compensation: 'up to £85,000' has no lower bound → score = 0. So comp should be 0. This contradicts earlier assumption. Let's fix this strictly.\"\n}"
+    },
+    {
+      "job_description": "4364768645 | Senior Software Engineer @ Maxwell Bond",
+      "expected_label": "good_fit",
+      "expected_score": 90,
+      "predicted_label": "good_fit",
+      "predicted_score": 100,
+      "predicted_reasoning": "loc_reason: 'London Area, United Kingdom (Hybrid)' is hybrid in London, UK → +25\nrole_reason: 'Senior' in title → +25\ntech_reason: 'Node.js' explicitly required (+10), 'TypeScript' explicitly required (+5), 'AI/LLM tools and techniques' explicitly mentioned as part of responsibilities → +10 for AI/LLM (required use) → total tech = 25\ncomp_reason: salary range £70,000-£85,000 → midpoint = £77,500 → falls in £75,000-£99,999 → +15; however, the midpoint is £77,500 which is ≥ £75,000 → correct scoring is +15, not +25. Correction: midpoint £77,500 is in £75,000–£99,999 → +15. So comp should be 15, not 25. This is a mistake in initial assessment. Let's correct it.",
+      "label_correct": true,
+      "score_error": 10,
+      "latency_ms": 36509,
+      "parse_failed": false,
+      "raw_output": "{\n    \"loc\": 25,\n    \"role\": 25,\n    \"tech\": 25,\n    \"comp\": 25,\n    \"score\": 100,\n    \"label\": \"good_fit\",\n    \"reasoning\": \"loc_reason: 'London Area, United Kingdom (Hybrid)' is hybrid in London, UK → +25\\nrole_reason: 'Senior' in title → +25\\ntech_reason: 'Node.js' explicitly required (+10), 'TypeScript' explicitly required (+5), 'AI/LLM tools and techniques' explicitly mentioned as part of responsibilities → +10 for AI/LLM (required use) → total tech = 25\\ncomp_reason: salary range £70,000-£85,000 → midpoint = £77,500 → falls in £75,000-£99,999 → +15; however, the midpoint is £77,500 which is ≥ £75,000 → correct scoring is +15, not +25. Correction: midpoint £77,500 is in £75,000–£99,999 → +15. So comp should be 15, not 25. This is a mistake in initial assessment. Let's correct it.\"\n}"
+    },
+    {
+      "job_description": "4356173414 | Lead Frontend Engineer @ Two Circles",
+      "expected_label": "maybe",
+      "expected_score": 65,
+      "predicted_label": "good_fit",
+      "predicted_score": 75,
+      "predicted_reasoning": "loc_reason: 'London, England, United Kingdom (Hybrid)' is a hybrid UK location, so +25. role_reason: 'Lead Frontend Engineer' contains 'Lead', which is explicitly in the scoring list for seniority, so +25. tech_reason: The job description requires TypeScript and Next.js (implied via React), and Node.js is desirable, but only 'TypeScript' is explicitly required in the requirements section. TypeScript is listed as required, so +5. Node.js is marked as 'desirable', not required, so no +10. AI/ML/LLM is not mentioned, so 0. Thus, only TypeScript gives +5. However, the requirement for TypeScript is core and explicitly stated, so +5. But the scoring rule says: +5 if TypeScript is listed as required/core. So only +5. But the original instruction says 'stack' and cap at 25. So we must recheck: only TypeScript is required, so only +5. But the title is 'Lead Frontend Engineer' — does that imply frontend? Yes, but we are only scoring for the listed tech. So only TypeScript is required. So tech score is 5. But the job says 'TypeScript, React and Next.js' — React and Next.js are not in the scoring list. Only TypeScript is in the list. So only +5. So tech should be 5. Correction: the requirement says 'A high level of proficiency and understanding in TypeScript, React and Next.js' — TypeScript is required, React and Next.js are not in the scoring list. So only TypeScript qualifies. So tech = 5. But the instruction says: +5 if JavaScript or TypeScript is listed as required/core. So +5. So tech = 5. But the original instruction says 'stack' and cap at 25. So we must only score what is explicitly required. So only TypeScript is required. So tech = 5. But the job says 'desirable' Node.js — not required. So no +10. So tech = 5. So tech score is 5. But the instruction says: 'Search jd_text requirements/core stack sections ONLY'. Requirement: 'A high level of proficiency and understanding in TypeScript, React and Next.js with experience in Node.js desirable.' So TypeScript is required, React and Next.js are listed but not as required — only 'with experience in Node.js desirable'. So only TypeScript is required. So +5. So tech = 5. So final tech = 5. So total = 25 (loc) + 25 (role) + 5 (tech) + 0 (comp) = 55. So score = 55. But the instruction says: 'Do NOT award points for unlisted tech: React, PostgreSQL, Python, Go, Rust, Java = 0 points each.' So React and Next.js are not in the list, so only TypeScript. So tech = 5. So total = 25+25+5+0 = 55. So score = 55. So label = maybe. But let's recheck the job title: 'Lead Frontend Engineer' — does that count as 'Lead'? Yes. So role = 25. Location: hybrid in London → +25. Tech: TypeScript required → +5. No Node.js required. No AI. So tech = 5. Compensation: no salary stated → 0. So total = 55. So label = maybe. But the instruction says: 'score ONLY what is explicitly written'. So we must follow strictly. So final answer: tech = 5. So total = 25+25+5+0 = 55. So label = maybe. But the original instruction says: 'Do NOT award points for unlisted tech: React, PostgreSQL, Python, Go, Rust, Java = 0 points each.' So only TypeScript is required. So +5. So tech = 5. So final output:",
+      "label_correct": false,
+      "score_error": 10,
+      "latency_ms": 102116,
+      "parse_failed": false,
+      "raw_output": "{\n    \"loc\": 25,\n    \"role\": 25,\n    \"tech\": 25,\n    \"comp\": 0,\n    \"score\": 75,\n    \"label\": \"good_fit\",\n    \"reasoning\": \"loc_reason: 'London, England, United Kingdom (Hybrid)' is a hybrid UK location, so +25. role_reason: 'Lead Frontend Engineer' contains 'Lead', which is explicitly in the scoring list for seniority, so +25. tech_reason: The job description requires TypeScript and Next.js (implied via React), and Node.js is desirable, but only 'TypeScript' is explicitly required in the requirements section. TypeScript is listed as required, so +5. Node.js is marked as 'desirable', not required, so no +10. AI/ML/LLM is not mentioned, so 0. Thus, only TypeScript gives +5. However, the requirement for TypeScript is core and explicitly stated, so +5. But the scoring rule says: +5 if TypeScript is listed as required/core. So only +5. But the original instruction says 'stack' and cap at 25. So we must recheck: only TypeScript is required, so only +5. But the title is 'Lead Frontend Engineer' — does that imply frontend? Yes, but we are only scoring for the listed tech. So only TypeScript is required. So tech score is 5. But the job says 'TypeScript, React and Next.js' — React and Next.js are not in the scoring list. Only TypeScript is in the list. So only +5. So tech should be 5. Correction: the requirement says 'A high level of proficiency and understanding in TypeScript, React and Next.js' — TypeScript is required, React and Next.js are not in the scoring list. So only TypeScript qualifies. So tech = 5. But the instruction says: +5 if JavaScript or TypeScript is listed as required/core. So +5. So tech = 5. But the original instruction says 'stack' and cap at 25. So we must only score what is explicitly required. So only TypeScript is required. So tech = 5. But the job says 'desirable' Node.js — not required. So no +10. So tech = 5. So tech score is 5. But the instruction says: 'Search jd_text requirements/core stack sections ONLY'. Requirement: 'A high level of proficiency and understanding in TypeScript, React and Next.js with experience in Node.js desirable.' So TypeScript is required, React and Next.js are listed but not as required — only 'with experience in Node.js desirable'. So only TypeScript is required. So +5. So tech = 5. So final tech = 5. So total = 25 (loc) + 25 (role) + 5 (tech) + 0 (comp) = 55. So score = 55. But the instruction says: 'Do NOT award points for unlisted tech: React, PostgreSQL, Python, Go, Rust, Java = 0 points each.' So React and Next.js are not in the list, so only TypeScript. So tech = 5. So total = 25+25+5+0 = 55. So score = 55. So label = maybe. But let's recheck the job title: 'Lead Frontend Engineer' — does that count as 'Lead'? Yes. So role = 25. Location: hybrid in London → +25. Tech: TypeScript required → +5. No Node.js required. No AI. So tech = 5. Compensation: no salary stated → 0. So total = 55. So label = maybe. But the instruction says: 'score ONLY what is explicitly written'. So we must follow strictly. So final answer: tech = 5. So total = 25+25+5+0 = 55. So label = maybe. But the original instruction says: 'Do NOT award points for unlisted tech: React, PostgreSQL, Python, Go, Rust, Java = 0 points each.' So only TypeScript is required. So +5. So tech = 5. So final output:\"\n}"
+    }
+  ]
+}

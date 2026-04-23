@@ -1,0 +1,48 @@
+{
+  "tag": "v5",
+  "timestamp": "2026-02-27T21:38:42.801Z",
+  "thresholds": {
+    "job_count": 103,
+    "max_parse_fail_pct": 10,
+    "min_label_accuracy_pct": 40,
+    "max_avg_seconds": 120,
+    "max_score_mae": 30
+  },
+  "models": [
+    {
+      "model_id": "node-llama-cpp:gemma-3-4b-it",
+      "label_accuracy_pct": 54.5,
+      "parse_fail_pct": 9.1,
+      "score_mae": 20,
+      "score_bias": 19,
+      "avg_seconds": 53.5,
+      "total_tests": 11,
+      "passed": false,
+      "fail_reasons": [
+        "TIMEOUT on job 11 (>420s)"
+      ],
+      "early_exit": true,
+      "confusion_matrix": {
+        "good_fit": {
+          "good_fit": 1,
+          "maybe": 1,
+          "bad_fit": 0,
+          "parse_fail": 0
+        },
+        "maybe": {
+          "good_fit": 0,
+          "maybe": 4,
+          "bad_fit": 0,
+          "parse_fail": 0
+        },
+        "bad_fit": {
+          "good_fit": 1,
+          "maybe": 2,
+          "bad_fit": 1,
+          "parse_fail": 1
+        }
+      },
+      "job_results": []
+    }
+  ]
+}

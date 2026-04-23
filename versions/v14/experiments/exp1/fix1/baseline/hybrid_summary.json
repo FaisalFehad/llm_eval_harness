@@ -1,0 +1,117 @@
+{
+  "model_only": {
+    "correct": 187,
+    "total": 226,
+    "accuracy_pct": 82.7,
+    "parse_fail": 13,
+    "field_accuracy": {
+      "loc": 98.7,
+      "arr": 88.5,
+      "sen": 92.9,
+      "tech": 68.1,
+      "comp": 76.5
+    }
+  },
+  "regex_only": {
+    "correct": 226,
+    "total": 239,
+    "accuracy_pct": 94.6,
+    "parse_fail": 0,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 77.4,
+      "sen": 79.9,
+      "tech": 90.4,
+      "comp": 96.2
+    }
+  },
+  "hybrid_A": {
+    "correct": 233,
+    "total": 239,
+    "accuracy_pct": 97.5,
+    "parse_fail": 13,
+    "field_accuracy": {
+      "loc": 93.3,
+      "arr": 83.7,
+      "sen": 87.9,
+      "tech": 85.4,
+      "comp": 90.8
+    }
+  },
+  "hybrid_B": {
+    "correct": 233,
+    "total": 239,
+    "accuracy_pct": 97.5,
+    "parse_fail": 13,
+    "field_accuracy": {
+      "loc": 0.0,
+      "arr": 0.0,
+      "sen": 0.0,
+      "tech": 0.0,
+      "comp": 0.0
+    }
+  },
+  "v12_hybrid": {
+    "correct": 235,
+    "total": 239,
+    "accuracy_pct": 98.3,
+    "parse_fail": 13,
+    "field_accuracy": {
+      "loc": 100.0,
+      "arr": 88.3,
+      "sen": 92.1,
+      "tech": 90.4,
+      "comp": 96.2
+    }
+  },
+  "v12_errors": [
+    {
+      "job_index": 14,
+      "golden": "maybe",
+      "predicted": "bad_fit",
+      "diffs": [
+        "tech:['NODE', 'REACT', 'JS_TS', 'AI_ML']->['REACT', 'JS_TS', 'AI_ML']"
+      ]
+    },
+    {
+      "job_index": 17,
+      "golden": "maybe",
+      "predicted": "bad_fit",
+      "diffs": [
+        "sen:LEVEL_3->LEVEL_1",
+        "tech:['JS_TS']->['AI_ML']"
+      ]
+    },
+    {
+      "job_index": 175,
+      "golden": "good_fit",
+      "predicted": "maybe",
+      "diffs": [
+        "sen:LEVEL_3->LEVEL_2"
+      ]
+    },
+    {
+      "job_index": 181,
+      "golden": "maybe",
+      "predicted": "bad_fit",
+      "diffs": [
+        "sen:LEVEL_3->LEVEL_2",
+        "tech:['NODE', 'REACT']->['NODE', 'REACT', 'JS_TS']"
+      ]
+    }
+  ],
+  "v12_per_label": {
+    "good_fit": {
+      "correct": 56,
+      "total": 57
+    },
+    "maybe": {
+      "correct": 51,
+      "total": 54
+    },
+    "bad_fit": {
+      "correct": 128,
+      "total": 128
+    }
+  }
+}

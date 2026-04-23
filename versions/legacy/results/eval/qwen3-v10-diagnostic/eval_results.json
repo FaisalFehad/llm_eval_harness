@@ -1,0 +1,48 @@
+{
+  "tag": "qwen3-v10-diagnostic",
+  "timestamp": "2026-02-28T17:48:21.929Z",
+  "thresholds": {
+    "job_count": 103,
+    "max_parse_fail_pct": 10,
+    "min_label_accuracy_pct": 40,
+    "max_avg_seconds": 120,
+    "max_score_mae": 30
+  },
+  "models": [
+    {
+      "model_id": "node-llama-cpp:qwen3-4b-instruct-2507",
+      "label_accuracy_pct": 40,
+      "parse_fail_pct": 0,
+      "score_mae": 21.8,
+      "score_bias": 21.8,
+      "avg_seconds": 52.6,
+      "total_tests": 5,
+      "passed": false,
+      "fail_reasons": [
+        "yes-man: all 5 predictions are \"good_fit\""
+      ],
+      "early_exit": true,
+      "confusion_matrix": {
+        "good_fit": {
+          "good_fit": 2,
+          "maybe": 0,
+          "bad_fit": 0,
+          "parse_fail": 0
+        },
+        "maybe": {
+          "good_fit": 2,
+          "maybe": 0,
+          "bad_fit": 0,
+          "parse_fail": 0
+        },
+        "bad_fit": {
+          "good_fit": 1,
+          "maybe": 0,
+          "bad_fit": 0,
+          "parse_fail": 0
+        }
+      },
+      "job_results": []
+    }
+  ]
+}
