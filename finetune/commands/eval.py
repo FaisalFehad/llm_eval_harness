@@ -11,6 +11,7 @@ All paths in --model / --adapter / --prompt / --test-file support ~ expansion.
 """
 import os
 import subprocess
+from datetime import datetime
 from pathlib import Path
 from typing import Optional
 import typer
@@ -44,8 +45,8 @@ def run(
         help="Override test set (default from pipeline)."),
     backend: Optional[str] = typer.Option(None, "--backend", "-b",
         help="mlx | gguf | hf (default from pipeline)."),
-    output_dir: Path = typer.Option(..., "--output-dir", "-o",
-        help="Where to write predictions + summary."),
+    output_dir: Optional[Path] = typer.Option(None, "--output-dir", "-o",
+        help="Where to write predictions + summary. Default: versions/vN/eval_results/<timestamp>_model/"),
     save_predictions: bool = typer.Option(True, "--save-predictions/--no-save-predictions"),
 ):
     """Run an eval. Flags layer on top of --version defaults."""
@@ -64,6 +65,21 @@ def run(
     if not final_model or not final_prompt:
         typer.echo("\u2717 --model and --prompt are required (directly or via --version).", err=True)
         raise typer.Exit(1)
+
+    # Auto output-dir: versions/vN/eval_results/<timestamp>_model/
+    if output_dir is None:
+        # Extract version key for path (handle variants like v14-4B \u2192 v14)
+        version_key = version or default_version()
+        base_key = pipe.base_version or version_key
+        # For multi-model keys like v14-4B, v14-0.6B \u2192 extract v14
+        if base_key and '-' in base_key:
+            parts = base_key.split('-')
+            if parts[0].startswith('v') and parts[0][1:].split('_')[0].isdigit():
+                base_key = parts[0]  # v14-4B \u2192 v14, v13_1-foo \u2192 v13_1
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        model_name = final_model.split("/")[-1].replace(".gguf", "").replace("-4bit", "").replace("-bf16", "")[:20]
+        output_dir = REPO / f"versions/{base_key}/eval_results/{timestamp}_{model_name}"
+        output_dir.mkdir(parents=True, exist_ok=True)
 
     script = REPO / ("finetune/eval_student_v14_gguf.py" if final_backend == "gguf"
                      else "finetune/eval_student_v7.py")

@@ -7,7 +7,6 @@ dist
 CLAUDE.md
 tokenizer.json
 imatrix.dat
-
 # Large model files (download separately)
 models/
 fused_model/

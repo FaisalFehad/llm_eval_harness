@@ -84,13 +84,31 @@ PIPELINES: dict[str, Pipeline] = {
         description="V15 GGUF Q6_K for llama-cpp-python",
     ),
 
-    # ── V14 — needs rehydration (use `harness convert from-hf-adapter`) ─
-    "v14": Pipeline(
+    # ── V14 — multi-model (0.6B, 1.5B, 4B) ──────────────────────
+    "v14-4B": Pipeline(
         model="~/qwen3_4B_v14_mlx6bit",
         prompt="versions/v14/experiments/exp1/prompts/student.txt",
         sweep_script="versions/v14/scripts/sweep.py",
         base_model_hf="Qwen/Qwen3-4B-Instruct-2507",
-        description="V14 4B (98.7% hybrid) — model MISSING, rehydrate via `harness convert from-hf-adapter --version v14`",
+        description="V14 4B (98.7% hybrid) — MLX 6-bit, exp1 fix1, no-think",
+    ),
+    "v14-0.6B": Pipeline(
+        model="mlx-community/Qwen3-0.6B-4bit",
+        adapter="versions/v14/adapters/0.6B/checkpoint-2000",
+        prompt="versions/v14/prompts/student.txt",
+        sweep_script="versions/v14/scripts/sweep.py",
+        lora_config="versions/v14/configs/lora_0.6B.yaml",
+        base_model_hf="Qwen/Qwen3-0.6B",
+        description="V14 0.6B (97.9% hybrid) — iter 2000",
+    ),
+    "v14-1.5B": Pipeline(
+        model="mlx-community/Qwen2.5-1.5B-Instruct-4bit",
+        adapter="versions/v14/adapters/1.5B/checkpoint-1200",
+        prompt="versions/v14/prompts/student.txt",
+        sweep_script="versions/v14/scripts/sweep.py",
+        lora_config="versions/v14/configs/lora_1.5B.yaml",
+        base_model_hf="Qwen/Qwen2.5-1.5B-Instruct",
+        description="V14 1.5B (96.7% hybrid) — iter 1200",
     ),
 
     # ── V13.1 — 1.5B reference ──────────────────────────────────
