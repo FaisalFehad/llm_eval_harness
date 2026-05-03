@@ -155,7 +155,7 @@ The student prompt grew as the model shrank (0.6B needs more help at inference).
 
 ## Technical highlights
 
-### Six creative solutions that made the difference
+### The most surprising discoveries
 
 **1. The 5-minute fix that gave +14pp (Phase 6)**
 
@@ -206,6 +206,12 @@ GPT-4.1-mini: 115 lines, infinite flexibility, 52.5% self-disagreement on AI_ML 
 Qwen3-4B V15 student: 34 lines, limited to 21 token categories + deterministic regex, **99.6% hybrid accuracy**.
 
 **The win:** Constraint eliminates teacher's self-consistency problem. Student offloads mechanical tasks to regex (near-perfect), leaving only judgment calls to model.
+
+**7. The impact of prompt engineering on inference speed**
+
+Prompt engineering is a free latency optimization. V14 showed that the thinking-mode prompt averaged ~20s/job on the same M1 Mac because it generated compact JSON, while the no-thinking prompt with verbose evidence output took ~32–45s. V15 tightened the production prompt to eliminate output preambles and cut token waste.
+
+**Output tokens cost wall-clock time — the prompt that generates fewer tokens is faster regardless of hardware.**
 
 ---
 
@@ -400,6 +406,59 @@ ai_eval_harness/
 | **Pipeline**       | TypeScript CLI tools + Python eval scripts                      |
 | **Hardware**       | Apple M5 Pro Max 128GB / M1 16GB / Lambda GH200                 |
 | **Model storage**  | [FF-01/qwen3-4b-v15](https://huggingface.co/FF-01/qwen3-4b-v15) |
+
+---
+
+## Further reading
+
+This project is a practical application of ideas from the following papers and resources.
+
+### Knowledge distillation & small models
+
+| Paper | Link |
+|-------|------|
+| **LoRA: Low-Rank Adaptation of Large Language Models** — Hu et al., ICLR 2022 | [arXiv:2106.09685](https://arxiv.org/abs/2106.09685) |
+| **Neural-Symbolic Collaborative Distillation** — Liao et al., AAAI 2025 | [arXiv:2409.13203](https://arxiv.org/abs/2409.13203) |
+| **On the Surprising Efficacy of Distillation** — Farhat & Chen, ICLR 2024 | [arXiv:2404.03263](https://arxiv.org/abs/2404.03263) |
+| **Big Reasoning with Small Models** — Alkiek et al., 2025 | [arXiv:2510.13935](https://arxiv.org/abs/2510.13935) |
+
+### Chain-of-thought & reasoning
+
+| Paper | Link |
+|-------|------|
+| **Chain-of-Thought Prompting Elicits Reasoning in LLMs** — Wei et al., NeurIPS 2022 | [arXiv:2201.11903](https://arxiv.org/abs/2201.11903) |
+| **Towards Reasoning in Large Language Models: A Survey** — Huang & Chang, ACL 2023 | [arXiv:2212.10403](https://arxiv.org/abs/2212.10403) |
+
+### Hybrid neural-symbolic systems
+
+| Paper | Link |
+|-------|------|
+| **Neural-Symbolic Collaborative Distillation** — Liao et al., AAAI 2025 | [arXiv:2409.13203](https://arxiv.org/abs/2409.13203) |
+| **From Regex to Transformers: A Hybrid Framework** — Jideani & Gerber, Springer ICC 2025 | [Springer](https://link.springer.com/chapter/10.1007/978-3-031-88720-8_5) |
+
+### Prompt engineering & latency
+
+| Paper | Link |
+|-------|------|
+| **Compress, then prompt** — Xu et al., 2023 | [arXiv:2303.05732](https://arxiv.org/abs/2303.05732) |
+| **Parallel Prompt Decoding** — Chen et al., FPGA 2024 | [PDF](https://www.imperial.ac.uk/media/imperial-college/faculty-of-engineering/eee/csc-group/ChenH_ParallelPromptDecoding_FPGA24.pdf) |
+| **Survey on Inference Engines for LLMs** — Park et al., ACM TOCS 2025 | [ACM](https://dl.acm.org/doi/10.1145/3725362) |
+| **Advanced prompt engineering** — Huttula, 2025 | [PDF](https://www.theseus.fi/bitstream/handle/10024/835000/Huttula_Antti.pdf?sequence=2) |
+
+### Data contamination & deduplication
+
+| Paper | Link |
+|-------|------|
+| **Deduplicating Training Data** — Lee et al., 2021 | [arXiv:2107.06499](https://arxiv.org/abs/2107.06499) |
+| **Quantifying Memorization** — Carlini et al., 2022 | [arXiv:2202.07646](https://arxiv.org/abs/2202.07646) |
+
+### Quantization & deployment
+
+| Paper | Link |
+|-------|------|
+| **TinyUSFM: Compact Foundation Models** — Ma et al., 2025 | [arXiv:2510.19239](https://arxiv.org/abs/2510.19239) |
+| **BrainDistill: Quantization-Aware Distillation** — Xie et al., 2026 | [arXiv:2601.17625](https://arxiv.org/abs/2601.17625) |
+| **Qwen3 Technical Report** — Alibaba Cloud | [HuggingFace](https://huggingface.co/Qwen/Qwen3-4B) |
 
 ## License
 

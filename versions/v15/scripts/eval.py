@@ -18,7 +18,7 @@ Usage:
     python3 finetune/eval_student_v15.py \\
         --model Qwen/Qwen2.5-1.5B-Instruct \\
         --adapter finetune/adapters_v15_4B/checkpoint-1800 \\
-        --test-file data/v12/test_labeled_audited.jsonl \\
+        --test-file versions/v12/data/v12_original/test_labeled_audited.jsonl \\
         --prompt prompts/student_v15.txt \\
         --output-dir eval_results/v15 \\
         --save-predictions
@@ -63,7 +63,7 @@ class Tee:
 # ── Config ────────────────────────────────────────────────────────────────────
 
 MODEL_ID = "Qwen/Qwen2.5-1.5B-Instruct"
-DEFAULT_TEST_FILE = "data/v12/test_labeled_audited.jsonl"
+DEFAULT_TEST_FILE = "versions/v12/data/v12_original/test_labeled_audited.jsonl"
 DEFAULT_PROMPT = "prompts/student_v15.txt"
 MAX_TOKENS = 1000
 

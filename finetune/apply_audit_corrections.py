@@ -12,6 +12,8 @@ import json
 from copy import deepcopy
 from pathlib import Path
 
+REPO = Path(__file__).resolve().parents[1]
+
 LOCATION_MAP = {"IN_LONDON": 25, "REMOTE": 25, "UK_OTHER": 10, "OUTSIDE_UK": -50, "UNK": 0}
 SENIORITY_MAP = {"LEVEL_3": 25, "LEVEL_2": 15, "LEVEL_1": 0}
 TECH_INDIVIDUAL_MAP = {"OOS": 0, "NODE": 10, "REACT": 5, "JS_TS": 5, "AI_ML": 10}
@@ -45,8 +47,8 @@ CORRECTIONS = {
 
 
 def main():
-    test_file = "data/v7/test_labeled.jsonl"
-    output_file = "data/v12/test_labeled_audited.jsonl"
+    test_file = str(REPO / "versions/v7/data/v7/test_labeled.jsonl")
+    output_file = str(REPO / "versions/v12/data/v12_original/test_labeled_audited.jsonl")
 
     jobs = []
     with open(test_file) as f:

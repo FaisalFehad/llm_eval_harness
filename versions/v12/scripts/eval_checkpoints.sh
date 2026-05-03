@@ -13,7 +13,7 @@
 ADAPTER_DIR="${1:-finetune/adapters_v12}"
 MAX_ITER="${2:-2500}"
 STEP="${3:-200}"
-TEST_FILE="data/v12/test_labeled_audited.jsonl"
+TEST_FILE="versions/v12/data/v12_original/test_labeled_audited.jsonl"
 PROMPT="prompts/student_v7.txt"
 MODEL="mlx-community/Qwen2.5-1.5B-Instruct-4bit"
 OUTPUT_DIR="eval_results/v12"

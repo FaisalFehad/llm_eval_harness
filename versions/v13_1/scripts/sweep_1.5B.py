@@ -33,7 +33,7 @@ from pathlib import Path
 
 MODEL = "mlx-community/Qwen2.5-1.5B-Instruct-4bit"
 ADAPTER_DIR = Path("finetune/adapters_v13_1_1.5B")
-TEST_FILE = "data/v12/test_labeled_audited.jsonl"
+TEST_FILE = "versions/v12/data/v12_original/test_labeled_audited.jsonl"
 PROMPT = "prompts/student_v13_1.txt"
 RESULTS_DIR = "eval_results/v13_1_1.5B_sweep"
 

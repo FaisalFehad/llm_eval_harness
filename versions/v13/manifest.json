@@ -11,7 +11,7 @@
   "adapter_hf": "FaisalFehad/qwen3-0.6b-v13",
   "adapter_hf_status": "TODO — see docs/HF_PUSH_TODO.md",
   "champion_checkpoint": "iter_1500",
-  "test_set": {"path": "data/v12/test_labeled_audited.jsonl", "note": "shared, chmod 444"},
+  "test_set": {"path": "versions/v12/data/v12_original/test_labeled_audited.jsonl", "note": "shared, chmod 444"},
   "metrics": {"hybrid_accuracy": 0.979, "parse_failures": 19, "notes": "V13 regex pairing = 97.9%. With V13.1 regex = 97.5% (Job 14 OTE interdependency)."},
   "eval_harness": "compute_hybrid_v13.py (regex + model)",
   "training_platform": "local MLX on M1 16GB",

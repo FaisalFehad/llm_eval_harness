@@ -22,6 +22,9 @@ from typing import Optional
 
 DEFAULT_VERSION = "v15"
 ENV_VERSION = "HARNESS_VERSION"
+# All V12+ versions share this audited test set (239 jobs, chmod 444).
+# Path lives in v12/ because that version established it.
+SHARED_TEST_FILE = "versions/v12/data/v12_original/test_labeled_audited.jsonl"
 
 
 @dataclass(frozen=True)
@@ -39,7 +42,7 @@ class Pipeline:
     backend: str = "mlx"                        # mlx | gguf | hf
 
     # ── Eval defaults ───────────────────────────────────────────
-    test_file: str = "data/v12/test_labeled_audited.jsonl"
+    test_file: str = SHARED_TEST_FILE
     regex_version: str = "v13_1"                # For hybrid scoring
 
     # ── Training / sweep / conversion ───────────────────────────

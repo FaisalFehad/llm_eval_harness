@@ -25,7 +25,7 @@ Inherits from exp1:
 Run with: (no --no-think flag)
   .venv/bin/python3 finetune/eval_v14_exp2_think.py \\
     --model ~/qwen3_4B_v14_mlx6bit \\
-    --test-file data/v12/test_labeled_audited.jsonl \\
+    --test-file versions/v12/data/v12_original/test_labeled_audited.jsonl \\
     --prompt prompts/student_v14_exp2_no_raw.txt \\
     --output-dir eval_results/v14_exp2_think \\
     --save-predictions

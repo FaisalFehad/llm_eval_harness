@@ -58,7 +58,7 @@ REGEX_VERSIONS = {
 
 # ── Paths ────────────────────────────────────────────────────────────────────
 
-TEST_FILE   = REPO / "data/v12/test_labeled_audited.jsonl"
+TEST_FILE   = REPO / "versions/v12/data/v12_original/test_labeled_audited.jsonl"
 RESULTS_DIR = Path(__file__).parent / "results"
 ADAPTERS_DIR = Path(__file__).parent / "adapters"
 

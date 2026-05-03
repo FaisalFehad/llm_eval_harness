@@ -62,7 +62,7 @@ rsync -avz --progress \
 
 # Transfer test set (for eval)
 rsync -avz --progress \
-  data/v12/test_labeled_audited.jsonl \
+  versions/v12/data/v12_original/test_labeled_audited.jsonl \
   "${LAMBDA_USER}@${LAMBDA_IP}:${REMOTE_DIR}/data/v12/"
 
 echo ""

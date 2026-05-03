@@ -34,7 +34,7 @@ from pathlib import Path
 PYTHON = ".venv/bin/python3"
 MODEL = "mlx-community/Qwen3-4B-bf16"
 ADAPTER_DIR = Path("finetune/adapters_v15_4B")
-TEST_FILE = "data/v12/test_labeled_audited.jsonl"
+TEST_FILE = "versions/v12/data/v12_original/test_labeled_audited.jsonl"
 PROMPT = "prompts/student_v15.txt"
 RESULTS_DIR = "eval_results/v15_sweep_4B"
 

@@ -15,7 +15,7 @@
   "prompt_sha": "TODO",
   "data_sha": "TODO",
   "test_set": {
-    "path": "data/v12/test_labeled_audited.jsonl",
+    "path": "versions/v12/data/v12_original/test_labeled_audited.jsonl",
     "note": "shared across versions, chmod 444"
   },
   "metrics": {

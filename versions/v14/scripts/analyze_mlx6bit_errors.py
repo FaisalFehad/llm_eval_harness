@@ -6,12 +6,14 @@ Shows every job where the model got something wrong, with full JD text for manua
 
 import json
 import sys
+from pathlib import Path
 
+REPO = Path(__file__).resolve().parents[3]
 PREDICTIONS_FILE = (
-    "/Users/faisal/Code/automation/ai_eval_harness/eval_results/v14_mlx6bit/baseline/"
+    REPO / "eval_results/v14_mlx6bit/baseline/"
     "2026-03-19_120501_test_labeled_audited_student_v14_qwen3_4B_v14_mlx6bit.predictions.jsonl"
 )
-GOLDEN_FILE = "/Users/faisal/Code/automation/ai_eval_harness/data/v12/test_labeled_audited.jsonl"
+GOLDEN_FILE = REPO / "versions/v12/data/v12_original/test_labeled_audited.jsonl"
 
 FIELDS = ["loc", "arr", "sen", "tech", "comp"]
 

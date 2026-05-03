@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Optional
 import typer
 
-from finetune.registry import default_version, get as get_pipeline
+from finetune.registry import SHARED_TEST_FILE, default_version, get as get_pipeline
 
 app = typer.Typer(no_args_is_help=True, help="Hybrid (regex + model) scoring.")
 
@@ -23,7 +23,7 @@ def _default_regex_version(version: Optional[str]) -> str:
 @app.command()
 def score(
     predictions: Path = typer.Option(..., "--predictions", "-p"),
-    test_file: Path = typer.Option("data/v12/test_labeled_audited.jsonl", "--test-file", "-t"),
+    test_file: Path = typer.Option(SHARED_TEST_FILE, "--test-file", "-t"),
     regex_version: str = typer.Option("v13_1", "--regex-version", "-r", help="v13 or v13_1 (V13.1 regex is stricter)"),
     output: Path = typer.Option(None, "--output", "-o"),
     v12_compat: bool = typer.Option(True, "--v12/--no-v12", help="Use V12 hybrid evaluator semantics"),
@@ -46,7 +46,7 @@ def score(
 
 @app.command()
 def regex_baseline(
-    test_file: Path = typer.Option("data/v12/test_labeled_audited.jsonl", "--test-file", "-t"),
+    test_file: Path = typer.Option(SHARED_TEST_FILE, "--test-file", "-t"),
     regex_version: str = typer.Option("v13_1", "--regex-version", "-r"),
 ):
     """Run regex-only baseline (no model) to measure ceiling of deterministic rules."""

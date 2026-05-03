@@ -42,7 +42,7 @@ PYTHON = "python3"
 MODEL = "Qwen/Qwen2.5-1.5B-Instruct"
 NO_THINK = False
 ADAPTER_DIR = Path("finetune/adapters_v14")
-TEST_FILE = "data/v12/test_labeled_audited.jsonl"
+TEST_FILE = "versions/v12/data/v12_original/test_labeled_audited.jsonl"
 PROMPT = "prompts/student_v14.txt"
 RESULTS_DIR = "eval_results/v14_sweep"
 
@@ -238,7 +238,7 @@ def main():
     parser.add_argument("--results-dir", default="eval_results/v14_sweep",
                         help="Where to write eval results and sweep_summary.json")
     parser.add_argument("--prompt", default="prompts/student_v14.txt")
-    parser.add_argument("--test-file", default="data/v12/test_labeled_audited.jsonl")
+    parser.add_argument("--test-file", default="versions/v12/data/v12_original/test_labeled_audited.jsonl")
     parser.add_argument("--steps", type=int, nargs="+",
                         help="Specific step numbers to score (default: all)")
     parser.add_argument("--skip-existing", action="store_true",

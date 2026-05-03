@@ -42,7 +42,7 @@ from pathlib import Path
 
 REPO         = Path(__file__).parent.parent
 PYTHON       = str(REPO / ".venv/bin/python3")
-TEST_FILE    = str(REPO / "data/v12/test_labeled_audited.jsonl")
+TEST_FILE    = str(REPO / "versions/v12/data/v12_original/test_labeled_audited.jsonl")
 EVAL_MLX     = str(REPO / "finetune/eval_student_v7.py")
 EVAL_GGUF    = str(REPO / "finetune/eval_student_v14_gguf.py")
 HYBRID       = str(REPO / "finetune/compute_hybrid_v13_1.py")

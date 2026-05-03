@@ -21,7 +21,7 @@
     }
   },
   "adapter_hf_status": "TODO — see docs/HF_PUSH_TODO.md",
-  "test_set": {"path": "data/v12/test_labeled_audited.jsonl", "note": "shared, chmod 444"},
+  "test_set": {"path": "versions/v12/data/v12_original/test_labeled_audited.jsonl", "note": "shared, chmod 444"},
   "regex": {
     "path": "lib/v13_1/deterministic_baseline.py",
     "note": "V13.1 regex is the production baseline — tech 90.4%, comp 96.2%. Used by V14 + V15 hybrid evals. Pair V13.1 regex with V13.1+ models only (V13 model + V13.1 regex = 97.5%, worse than V13 model + V13 regex = 97.9% due to Job 14 OTE interdependency)."

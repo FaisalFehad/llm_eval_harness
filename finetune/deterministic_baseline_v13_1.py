@@ -12,7 +12,7 @@ V13.1 changes over V13:
   - Comp: midpoint exactly £100k now maps to RANGE_75_99K (not ABOVE_100K)
 
 Usage:
-    .venv/bin/python3 finetune/deterministic_baseline_v13_1.py --test-file data/v12/test_labeled_audited.jsonl
+    .venv/bin/python3 finetune/deterministic_baseline_v13_1.py --test-file versions/v12/data/v12_original/test_labeled_audited.jsonl
 """
 
 import argparse

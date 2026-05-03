@@ -8,6 +8,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from deterministic_baseline import classify_job
 
+REPO = Path(__file__).resolve().parents[1]
+
 LOCATION_MAP = {"IN_LONDON": 25, "REMOTE": 25, "UK_OTHER": 10, "OUTSIDE_UK": -50, "UNK": 0}
 SENIORITY_MAP = {"LEVEL_3": 25, "LEVEL_2": 15, "LEVEL_1": 0}
 TECH_INDIVIDUAL_MAP = {"OOS": 0, "NODE": 10, "REACT": 5, "JS_TS": 5, "AI_ML": 10}
@@ -30,9 +32,9 @@ def compute_label(loc, sen, tech, comp):
 
 
 def main():
-    test_file = sys.argv[1] if len(sys.argv) > 1 else "data/v7/test_labeled.jsonl"
-    pred_file = sys.argv[2] if len(sys.argv) > 2 else "eval_results/adapters_v7_1.5B/2026-03-11_085836_test_labeled_student_v7_final.predictions.jsonl"
-    output_file = sys.argv[3] if len(sys.argv) > 3 else "data/v12/hybrid_error_jobs.txt"
+    test_file = sys.argv[1] if len(sys.argv) > 1 else str(REPO / "versions/v7/data/v7/test_labeled.jsonl")
+    pred_file = sys.argv[2] if len(sys.argv) > 2 else str(REPO / "eval_results/adapters_v7_1.5B/2026-03-11_085836_test_labeled_student_v7_final.predictions.jsonl")
+    output_file = sys.argv[3] if len(sys.argv) > 3 else str(REPO / "versions/v12/data/v12_original/hybrid_error_jobs.txt")
 
     test_jobs = []
     with open(test_file) as f:

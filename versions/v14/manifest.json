@@ -12,7 +12,7 @@
   "champion_checkpoint": "checkpoint-800",
   "champion_prompt": "student.txt (base V14 prompt — exp1 variant for Mac MLX use)",
   "test_set": {
-    "path": "data/v12/test_labeled_audited.jsonl",
+    "path": "versions/v12/data/v12_original/test_labeled_audited.jsonl",
     "note": "shared across versions, chmod 444"
   },
   "metrics": {

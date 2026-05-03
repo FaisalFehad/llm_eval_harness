@@ -6,7 +6,7 @@ Compatible with IQ2_XXS, Q2_K, Q4_K_M etc. Outputs same format as eval_student_v
 Usage:
     python3 finetune/eval_student_v14_gguf.py \
         --model ~/qwen3_4B_v14_IQ2_XXS.gguf \
-        --test-file data/v12/test_labeled_audited.jsonl \
+        --test-file versions/v12/data/v12_original/test_labeled_audited.jsonl \
         --prompt prompts/student_v14.txt \
         --output-dir eval_results/v14_gguf_IQ2_XXS
 """
@@ -75,7 +75,7 @@ def build_prompt(prompt_template: str, job: dict) -> str:
 def main():
     parser = argparse.ArgumentParser(description="GGUF eval for V14 quantized models")
     parser.add_argument("--model", required=True, help="Path to .gguf file")
-    parser.add_argument("--test-file", default="data/v12/test_labeled_audited.jsonl")
+    parser.add_argument("--test-file", default="versions/v12/data/v12_original/test_labeled_audited.jsonl")
     parser.add_argument("--prompt", default="prompts/student_v14.txt")
     parser.add_argument("--output-dir", default="eval_results/v14_gguf")
     parser.add_argument("--n-gpu-layers", type=int, default=-1,

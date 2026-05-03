@@ -170,7 +170,7 @@ def main():
     parser.add_argument("--model", default="mlx-community/Qwen3-4B-bf16")
     parser.add_argument("--adapter", default="finetune/adapters_v15_4B")
     parser.add_argument("--prompt", default="prompts/student_v15_fix4.txt")
-    parser.add_argument("--test-file", default="data/v12/test_labeled_audited.jsonl")
+    parser.add_argument("--test-file", default="versions/v12/data/v12_original/test_labeled_audited.jsonl")
     parser.add_argument("--limit", type=int, default=None, help="Limit to N jobs")
     parser.add_argument("--experiment", default="V15-Student-Model")
     parser.add_argument("--run-name", default=None)

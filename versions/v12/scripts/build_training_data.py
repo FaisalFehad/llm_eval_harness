@@ -135,7 +135,7 @@ def apply_regex_corrections(job, regex_pred, corrections_log):
 def main():
     v7_file = "data/v7/train_labeled.jsonl"
     v9_file = "data/v9/train_labeled.jsonl"
-    test_file = "data/v12/test_labeled_audited.jsonl"
+    test_file = "versions/v12/data/v12_original/test_labeled_audited.jsonl"
     output_file = "data/v12/train_labeled.jsonl"
     report_file = "data/v12/build_report.json"
 
