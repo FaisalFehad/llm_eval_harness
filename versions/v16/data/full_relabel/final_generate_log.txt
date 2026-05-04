@@ -1,0 +1,7 @@
+Already completed: 865 jobs
+Remaining:         43 / 908
+  [ollama_0] launched: 21 jobs
+  [ollama_1] launched: 22 jobs
+
+Worker         Done  Total      %   Jobs/min     Status
+-------------------------------------------------------

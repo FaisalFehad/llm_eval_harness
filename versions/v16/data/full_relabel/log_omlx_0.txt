@@ -1,0 +1,190 @@
+
+[02:08:48] Starting 182 jobs
+Traceback (most recent call last):
+  File "/Users/faisal/Code/automation/ai_eval_harness/finetune/relabel_for_drift_v16.py", line 159, in <module>
+    main()
+  File "/Users/faisal/Code/automation/ai_eval_harness/finetune/relabel_for_drift_v16.py", line 135, in main
+    parsed = parse_response(text)
+  File "/Users/faisal/Code/automation/ai_eval_harness/finetune/relabel_for_drift_v16.py", line 59, in parse_response
+    text = text.strip()
+AttributeError: 'NoneType' object has no attribute 'strip'
+
+[02:15:26] Starting 187 jobs (existing: 0)
+  [Retry 1/3] Error: Empty response from API – waiting 2s...
+  [Retry 2/3] Error: Empty response from API – waiting 4s...
+  [Retry 3/3] Error: Empty response from API – waiting 8s...
+[0] API FAILED after 3 retries: Empty response from API
+Traceback (most recent call last):
+  File "/Users/faisal/Code/automation/ai_eval_harness/finetune/relabel_for_drift_v16.py", line 167, in <module>
+    main()
+  File "/Users/faisal/Code/automation/ai_eval_harness/finetune/relabel_for_drift_v16.py", line 135, in main
+    text, error = call_with_retry(client, args.model, messages, args.api_key, max_retries=args.retries)
+  File "/Users/faisal/Code/automation/ai_eval_harness/finetune/relabel_for_drift_v16.py", line 77, in call_with_retry
+    resp = client.chat.completions.create(
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/openai/_utils/_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/openai/resources/chat/completions/completions.py", line 1211, in create
+    return self._post(
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 1314, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 1019, in request
+    response = self._send_request(
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/openai/_client.py", line 400, in _send_request
+    return self._send_with_auth_retry(request, stream=stream, **kwargs)
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/openai/_client.py", line 378, in _send_with_auth_retry
+    response = super()._send_request(request, stream=stream, **kwargs)
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 947, in _send_request
+    return self._client.send(request, stream=stream, **kwargs)
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpx/_client.py", line 928, in send
+    raise exc
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpx/_client.py", line 922, in send
+    response.read()
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpx/_models.py", line 881, in read
+    self._content = b"".join(self.iter_bytes())
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpx/_models.py", line 897, in iter_bytes
+    for raw_bytes in self.iter_raw():
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpx/_models.py", line 951, in iter_raw
+    for raw_stream_bytes in self.stream:
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpx/_client.py", line 153, in __iter__
+    for chunk in self._stream:
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpx/_transports/default.py", line 127, in __iter__
+    for part in self._httpcore_stream:
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpcore/_sync/connection_pool.py", line 407, in __iter__
+    raise exc from None
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpcore/_sync/connection_pool.py", line 403, in __iter__
+    for part in self._stream:
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpcore/_sync/http11.py", line 342, in __iter__
+    raise exc
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpcore/_sync/http11.py", line 334, in __iter__
+    for chunk in self._connection._receive_response_body(**kwargs):
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpcore/_sync/http11.py", line 203, in _receive_response_body
+    event = self._receive_event(timeout=timeout)
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpcore/_sync/http11.py", line 217, in _receive_event
+    data = self._network_stream.read(
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpcore/_backends/sync.py", line 128, in read
+    return self._sock.recv(max_bytes)
+KeyboardInterrupt
+
+[02:20:57] Starting 159 jobs (existing: 1)
+Resuming versions/v16/data/full_relabel/batch_omlx_0.jsonl (1 done, skipping truncation)
+Processed 10/159 (errors: 0)
+Processed 20/159 (errors: 0)
+[20] Parse fail: ```json
+{"loc_raw":"Lincoln, England, United Kingdom","loc":"UK_OTHER","arr_raw":"Remote Working","a
+Processed 30/159 (errors: 0)
+Processed 40/159 (errors: 0)
+Processed 50/159 (errors: 0)
+Processed 60/159 (errors: 0)
+Processed 70/159 (errors: 0)
+Processed 80/159 (errors: 0)
+Processed 90/159 (errors: 0)
+Traceback (most recent call last):
+  File "/Users/faisal/Code/automation/ai_eval_harness/finetune/relabel_for_drift_v16.py", line 167, in <module>
+    main()
+  File "/Users/faisal/Code/automation/ai_eval_harness/finetune/relabel_for_drift_v16.py", line 135, in main
+    text, error = call_with_retry(client, args.model, messages, args.api_key, max_retries=args.retries)
+  File "/Users/faisal/Code/automation/ai_eval_harness/finetune/relabel_for_drift_v16.py", line 77, in call_with_retry
+    resp = client.chat.completions.create(
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/openai/_utils/_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/openai/resources/chat/completions/completions.py", line 1211, in create
+    return self._post(
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 1314, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 1019, in request
+    response = self._send_request(
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/openai/_client.py", line 400, in _send_request
+    return self._send_with_auth_retry(request, stream=stream, **kwargs)
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/openai/_client.py", line 378, in _send_with_auth_retry
+    response = super()._send_request(request, stream=stream, **kwargs)
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 947, in _send_request
+    return self._client.send(request, stream=stream, **kwargs)
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpx/_client.py", line 928, in send
+    raise exc
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpx/_client.py", line 922, in send
+    response.read()
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpx/_models.py", line 881, in read
+    self._content = b"".join(self.iter_bytes())
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpx/_models.py", line 897, in iter_bytes
+    for raw_bytes in self.iter_raw():
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpx/_models.py", line 951, in iter_raw
+    for raw_stream_bytes in self.stream:
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpx/_client.py", line 153, in __iter__
+    for chunk in self._stream:
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpx/_transports/default.py", line 127, in __iter__
+    for part in self._httpcore_stream:
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpcore/_sync/connection_pool.py", line 407, in __iter__
+    raise exc from None
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpcore/_sync/connection_pool.py", line 403, in __iter__
+    for part in self._stream:
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpcore/_sync/http11.py", line 342, in __iter__
+    raise exc
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpcore/_sync/http11.py", line 334, in __iter__
+    for chunk in self._connection._receive_response_body(**kwargs):
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpcore/_sync/http11.py", line 203, in _receive_response_body
+    event = self._receive_event(timeout=timeout)
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpcore/_sync/http11.py", line 217, in _receive_event
+    data = self._network_stream.read(
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpcore/_backends/sync.py", line 128, in read
+    return self._sock.recv(max_bytes)
+KeyboardInterrupt
+
+[02:57:02] Starting 41 jobs (existing: 97)
+Resuming versions/v16/data/full_relabel/batch_omlx_0.jsonl (97 done, skipping truncation)
+Processed 10/41 (errors: 0)
+Processed 20/41 (errors: 0)
+Traceback (most recent call last):
+  File "/Users/faisal/Code/automation/ai_eval_harness/finetune/relabel_for_drift_v16.py", line 167, in <module>
+    main()
+  File "/Users/faisal/Code/automation/ai_eval_harness/finetune/relabel_for_drift_v16.py", line 135, in main
+    text, error = call_with_retry(client, args.model, messages, args.api_key, max_retries=args.retries)
+  File "/Users/faisal/Code/automation/ai_eval_harness/finetune/relabel_for_drift_v16.py", line 77, in call_with_retry
+    resp = client.chat.completions.create(
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/openai/_utils/_utils.py", line 287, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/openai/resources/chat/completions/completions.py", line 1211, in create
+    return self._post(
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 1314, in post
+    return cast(ResponseT, self.request(cast_to, opts, stream=stream, stream_cls=stream_cls))
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 1019, in request
+    response = self._send_request(
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/openai/_client.py", line 400, in _send_request
+    return self._send_with_auth_retry(request, stream=stream, **kwargs)
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/openai/_client.py", line 378, in _send_with_auth_retry
+    response = super()._send_request(request, stream=stream, **kwargs)
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/openai/_base_client.py", line 947, in _send_request
+    return self._client.send(request, stream=stream, **kwargs)
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpx/_client.py", line 928, in send
+    raise exc
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpx/_client.py", line 922, in send
+    response.read()
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpx/_models.py", line 881, in read
+    self._content = b"".join(self.iter_bytes())
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpx/_models.py", line 897, in iter_bytes
+    for raw_bytes in self.iter_raw():
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpx/_models.py", line 951, in iter_raw
+    for raw_stream_bytes in self.stream:
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpx/_client.py", line 153, in __iter__
+    for chunk in self._stream:
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpx/_transports/default.py", line 127, in __iter__
+    for part in self._httpcore_stream:
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpcore/_sync/connection_pool.py", line 407, in __iter__
+    raise exc from None
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpcore/_sync/connection_pool.py", line 403, in __iter__
+    for part in self._stream:
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpcore/_sync/http11.py", line 342, in __iter__
+    raise exc
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpcore/_sync/http11.py", line 334, in __iter__
+    for chunk in self._connection._receive_response_body(**kwargs):
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpcore/_sync/http11.py", line 203, in _receive_response_body
+    event = self._receive_event(timeout=timeout)
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpcore/_sync/http11.py", line 217, in _receive_event
+    data = self._network_stream.read(
+  File "/Users/faisal/Code/automation/ai_eval_harness/.venv/lib/python3.10/site-packages/httpcore/_backends/sync.py", line 128, in read
+    return self._sock.recv(max_bytes)
+KeyboardInterrupt
+
+[03:26:50] Starting 10 jobs (existing: 117)
+Resuming versions/v16/data/full_relabel/batch_omlx_0.jsonl (117 done, skipping truncation)
+Processed 10/10 (errors: 0)
+Done. Wrote 10 jobs to versions/v16/data/full_relabel/batch_omlx_0.jsonl (errors: 0)

@@ -1,0 +1,62 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+#
+# V15 Single-Prompt Eval — quick iteration on one prompt at a time
+#
+# Usage:
+#   npx promptfoo eval -c configs/promptfooconfig_v15.yaml                # run production prompt
+#   npx promptfoo eval -c ... -p file://wrap_prompt.cjs:v15_fix4          # swap prompt
+#   npx promptfoo eval -c ... --filter-first-n 10                         # smoke test
+#   npx promptfoo view                                                    # view results
+#
+# For multi-prompt comparison, use promptfooconfig_v15_master.yaml instead.
+
+description: "V15 Student Model — single-prompt eval"
+
+# ── Prompt ───────────────────────────────────────────────────────
+# Default: production prompt. Override with -p flag on CLI.
+prompts:
+  - id: file://wrap_prompt.cjs:v15_production
+    label: "v15-production"
+
+# ── Provider ─────────────────────────────────────────────────────
+# OMLX server must be running:
+#   .venv/bin/python3 -m mlx_lm server --model ~/MLX\ Models/qwen3_4B_v15_oQ6 --port 8000
+providers:
+  - id: openai:chat:qwen3_4B_v15_oQ6
+    label: "V15-4B-oQ6-MLX"
+    config:
+      apiBaseUrl: http://127.0.0.1:8000/v1
+      apiKey: "not-needed"
+      temperature: 0
+      max_tokens: 500
+
+# ── Test cases ───────────────────────────────────────────────────
+# 239 audited jobs — golden labels in metadata
+tests: file://v15_tests.jsonl
+
+# ── Scoring ──────────────────────────────────────────────────────
+defaultTest:
+  assert:
+    - type: python
+      value: file://v15_scorer.py
+      metric: "hybrid_accuracy"
+    - type: is-json
+      weight: 0.1
+      metric: "valid_json"
+
+# ── Extension hooks ──────────────────────────────────────────────
+# Summary table + Langfuse score upload after each run
+extensions:
+  - file://v15_hooks.py:after_all
+
+# ── Output ───────────────────────────────────────────────────────
+outputPath:
+  - eval_results/v15_promptfoo.json
+  - eval_results/v15_promptfoo.csv
+
+# ── Execution ────────────────────────────────────────────────────
+# OMLX server is single-threaded — one request at a time
+maxConcurrency: 1
+
+commandLineOptions:
+  tableCellMaxLength: 200

@@ -1,0 +1,8 @@
+
+[13:08:50] 13 jobs (existing: 0)
+[0] FAIL: Connection error.
+[9] FAIL: Connection error.
+Done. Wrote 13 jobs to versions/v16/data/full_relabel_v2/batch_omlx_6.jsonl (errors: 2)
+
+[15:49:43] 3 jobs (existing: 13)
+Done. Wrote 3 jobs to versions/v16/data/full_relabel_v2/batch_omlx_6.jsonl (errors: 0)

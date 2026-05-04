@@ -1,0 +1,1832 @@
+{
+  "total_jobs": 908,
+  "jobs_with_bugs": 240,
+  "total_bugs": 303,
+  "by_field": {
+    "comp": 101,
+    "loc": 50,
+    "arr": 36,
+    "tech": 115,
+    "sen": 1
+  },
+  "bugs": [
+    {
+      "index": 0,
+      "title": "Senior Full Stack Engineer - Team Web",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Competitive salary and equity in a fast-growing start-up'"
+    },
+    {
+      "index": 5,
+      "title": "Director Of Engineering",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$210,000 \u2013 $260,000'"
+    },
+    {
+      "index": 7,
+      "title": "Associate Software Engineer - Bristol, UK (hybrid)",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 8,
+      "title": "Full Stack Engineer",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 10,
+      "title": "C# .NET Software Developer (up To \u00a355,806)",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 16,
+      "title": "Lead Software Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Lead Software Engineer'"
+    },
+    {
+      "index": 16,
+      "title": "Lead Software Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Competitive salary + Performance Bonus + Share Options.'"
+    },
+    {
+      "index": 18,
+      "title": "Software Engineer (100% Backend, Python & Aws)",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Software Engineer (100% Backend, Python & Aws)'"
+    },
+    {
+      "index": 19,
+      "title": "Web Developer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 20,
+      "title": "Software Test Engineer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 20,
+      "title": "Software Test Engineer",
+      "field": "comp",
+      "error": "comp=40_50K but raw has OTE/DOE"
+    },
+    {
+      "index": 22,
+      "title": "Software Engineer Internship For HPI Students",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'top-of-market cash compensation package and benefits'"
+    },
+    {
+      "index": 24,
+      "title": "Graduate Software Engineer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 24,
+      "title": "Graduate Software Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Graduate Software Engineer'"
+    },
+    {
+      "index": 26,
+      "title": "Junior Embedded Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Junior Embedded Engineer'"
+    },
+    {
+      "index": 32,
+      "title": "Front End Web Developer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$55k - $85k'"
+    },
+    {
+      "index": 38,
+      "title": "IT Support Engineer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 38,
+      "title": "IT Support Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'IT Support Engineer'"
+    },
+    {
+      "index": 52,
+      "title": "Test Automation Engineer (mobile)",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 63,
+      "title": "Senior Software Engineer (php/laravel)",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Software Engineer (php/laravel)'"
+    },
+    {
+      "index": 64,
+      "title": "Full Stack Software Engineer",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 69,
+      "title": "PHP Web Developer | $60/hr Remote",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$30 \u2013 $60/hour'"
+    },
+    {
+      "index": 70,
+      "title": ".NET Developer | .net, Azure, Web | British Passport Of ILR",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 70,
+      "title": ".NET Developer | .net, Azure, Web | British Passport Of ILR",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: '.NET Developer | .net, Azure, Web | British Passport Of ILR'"
+    },
+    {
+      "index": 71,
+      "title": "DevOps Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'DevOps Engineer'"
+    },
+    {
+      "index": 74,
+      "title": "Frontend Developer (Next.js & TypeScript)",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Competitive salary \u2013 negotiable based on experience'"
+    },
+    {
+      "index": 75,
+      "title": "Graduate Web Application Developer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 75,
+      "title": "Graduate Web Application Developer",
+      "field": "arr",
+      "error": "arr=IN_OFFICE but description shows REMOTE"
+    },
+    {
+      "index": 80,
+      "title": "Software Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Software Engineer'"
+    },
+    {
+      "index": 82,
+      "title": "DevOps Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'DevOps Engineer'"
+    },
+    {
+      "index": 82,
+      "title": "DevOps Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$90,000'"
+    },
+    {
+      "index": 90,
+      "title": "Senior Data Engineer | Aws, Python",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Data Engineer | Aws, Python'"
+    },
+    {
+      "index": 100,
+      "title": "Embedded Software Engineer Bristol/Hybrid - \u00a355,000\ud83d\ude80",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 100,
+      "title": "Embedded Software Engineer Bristol/Hybrid - \u00a355,000\ud83d\ude80",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Embedded Software Engineer Bristol/Hybrid - \u00a355,000\ud83d\ude80'"
+    },
+    {
+      "index": 101,
+      "title": "Data Scientist",
+      "field": "tech",
+      "error": "tech=['AI_ML'] but title is not SWE: 'Data Scientist'"
+    },
+    {
+      "index": 104,
+      "title": "Mid-Senior Software Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$120,000 - $150,000'"
+    },
+    {
+      "index": 106,
+      "title": "Full-Stack Engineer (Front-End Leaning)",
+      "field": "arr",
+      "error": "arr=REMOTE but no remote/hybrid/office in description"
+    },
+    {
+      "index": 106,
+      "title": "Full-Stack Engineer (Front-End Leaning)",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$170K - $300K'"
+    },
+    {
+      "index": 113,
+      "title": "Software Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Software Engineer'"
+    },
+    {
+      "index": 117,
+      "title": "Junior Front-End Developer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 117,
+      "title": "Junior Front-End Developer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Up to  25k ?? 30k (dependent on experience)'"
+    },
+    {
+      "index": 121,
+      "title": "Cloud Engineer Intern",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Hourly Salary USD 35.00 - 46.00'"
+    },
+    {
+      "index": 122,
+      "title": "Lead Software Engineer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 123,
+      "title": "Full Stack Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$165,000 base salary'"
+    },
+    {
+      "index": 125,
+      "title": "Silicon Characterisation Engineer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 125,
+      "title": "Silicon Characterisation Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Silicon Characterisation Engineer'"
+    },
+    {
+      "index": 125,
+      "title": "Silicon Characterisation Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'competitive salary'"
+    },
+    {
+      "index": 127,
+      "title": "Software Engineer",
+      "field": "arr",
+      "error": "arr=IN_OFFICE but description shows REMOTE"
+    },
+    {
+      "index": 127,
+      "title": "Software Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'above-market pay & equity'"
+    },
+    {
+      "index": 132,
+      "title": "Graduate Software Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Competitive salary'"
+    },
+    {
+      "index": 134,
+      "title": "Site Reliability Engineer - (aws/ Kubernetes/ Terraform/ArgoCD) - \u00a380K To \u00a395,000 - London Hybrid Working",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 134,
+      "title": "Site Reliability Engineer - (aws/ Kubernetes/ Terraform/ArgoCD) - \u00a380K To \u00a395,000 - London Hybrid Working",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Site Reliability Engineer - (aws/ Kubernetes/ Terraform/ArgoCD) - \u00a380K To \u00a395,000 - London Hybrid Working'"
+    },
+    {
+      "index": 136,
+      "title": "Software Engineer, Full-Stack",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 136,
+      "title": "Software Engineer, Full-Stack",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Base pay 120k - 190k'"
+    },
+    {
+      "index": 148,
+      "title": "Software Developer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 158,
+      "title": "Full Stack Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$100K - $180K'"
+    },
+    {
+      "index": 165,
+      "title": "Staff Software Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$120,000 - $150,000'"
+    },
+    {
+      "index": 171,
+      "title": "Quality Assurance Engineer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 176,
+      "title": "Software Developer (remote)",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Competitive base salary plus commission on each project'"
+    },
+    {
+      "index": 179,
+      "title": "Java Software Engineer",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 181,
+      "title": "Staff Product Engineer (ai Focus)",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Highly competitive salary'"
+    },
+    {
+      "index": 194,
+      "title": "Engineering Manager",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '\u20ac125,000 per annum'"
+    },
+    {
+      "index": 196,
+      "title": "Fullstack Software Engineer",
+      "field": "arr",
+      "error": "arr=REMOTE but no remote/hybrid/office in description"
+    },
+    {
+      "index": 196,
+      "title": "Fullstack Software Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Great salary plus the opportunity for equity or stock grants'"
+    },
+    {
+      "index": 197,
+      "title": "Head of Infrastructure",
+      "field": "tech",
+      "error": "tech=['JS_TS', 'AI_ML'] but title is not SWE: 'Head of Infrastructure'"
+    },
+    {
+      "index": 197,
+      "title": "Head of Infrastructure",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Competitive / Market Rate'"
+    },
+    {
+      "index": 200,
+      "title": "Frontend Developer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 202,
+      "title": "Lead Infrastructure Engineer (cloud & Compute Security)",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Lead Infrastructure Engineer (cloud & Compute Security)'"
+    },
+    {
+      "index": 204,
+      "title": "Full Stack Engineer, Collaboration",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 204,
+      "title": "Full Stack Engineer, Collaboration",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$187,500 - $281,300'"
+    },
+    {
+      "index": 206,
+      "title": "Data Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Data Engineer'"
+    },
+    {
+      "index": 208,
+      "title": "Second Line Support Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Second Line Support Engineer'"
+    },
+    {
+      "index": 211,
+      "title": "Senior Software Engineer (backend)",
+      "field": "loc",
+      "error": "loc=IN_LONDON but no London in location field"
+    },
+    {
+      "index": 211,
+      "title": "Senior Software Engineer (backend)",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Software Engineer (backend)'"
+    },
+    {
+      "index": 218,
+      "title": "Second Line Support Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Second Line Support Engineer'"
+    },
+    {
+      "index": 222,
+      "title": "Fullstack Senior Software Engineer (cards)",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 222,
+      "title": "Fullstack Senior Software Engineer (cards)",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 227,
+      "title": "Frontend Developer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 228,
+      "title": "Principal Software Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'competitive salary'"
+    },
+    {
+      "index": 235,
+      "title": "Senior Software Engineer | Full Stack",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 235,
+      "title": "Senior Software Engineer | Full Stack",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'CAD $114,400 - CAD $203,900 per year'"
+    },
+    {
+      "index": 243,
+      "title": "Senior Software Engineer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 250,
+      "title": "Sofware Engineer, England",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Sofware Engineer, England'"
+    },
+    {
+      "index": 253,
+      "title": "Senior Infrastructure Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Infrastructure Engineer'"
+    },
+    {
+      "index": 265,
+      "title": "Senior Software Engineer L5",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 265,
+      "title": "Senior Software Engineer L5",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Software Engineer L5'"
+    },
+    {
+      "index": 270,
+      "title": "Software Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Software Engineer'"
+    },
+    {
+      "index": 273,
+      "title": "Senior Test Engineer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 273,
+      "title": "Senior Test Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Test Engineer'"
+    },
+    {
+      "index": 279,
+      "title": "Node.js Developer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Node.js Developer'"
+    },
+    {
+      "index": 279,
+      "title": "Node.js Developer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'C$100K PA to C$110K PA /year'"
+    },
+    {
+      "index": 282,
+      "title": "Senior Data Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Data Engineer'"
+    },
+    {
+      "index": 283,
+      "title": "Director Of Engineering @ Leading AI Company",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Salary up to 125k\u20ac + bonus'"
+    },
+    {
+      "index": 285,
+      "title": "AI Delivery Lead",
+      "field": "tech",
+      "error": "tech=['AI_ML'] but title is not SWE: 'AI Delivery Lead'"
+    },
+    {
+      "index": 286,
+      "title": "Infrastructure Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Infrastructure Engineer'"
+    },
+    {
+      "index": 293,
+      "title": "Senior Software Engineer - Cloud Platform",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Software Engineer - Cloud Platform'"
+    },
+    {
+      "index": 295,
+      "title": "Graduate Software Developer - 2026 Intake",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Graduate Software Developer - 2026 Intake'"
+    },
+    {
+      "index": 297,
+      "title": "Senior Java Developer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 302,
+      "title": "Software Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Software Engineer'"
+    },
+    {
+      "index": 303,
+      "title": "Data Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Data Engineer'"
+    },
+    {
+      "index": 304,
+      "title": "Java Software Engineer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 306,
+      "title": "Back End Developer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 306,
+      "title": "Back End Developer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Back End Developer'"
+    },
+    {
+      "index": 308,
+      "title": "Full Stack Software Engineer",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 308,
+      "title": "Full Stack Software Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$150K - $220K'"
+    },
+    {
+      "index": 311,
+      "title": "\ud83d\udd25founding Fullstack Developer - SaaS\ud83d\udd25",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 315,
+      "title": "Senior Data Scientist (Python)",
+      "field": "tech",
+      "error": "tech=['AI_ML'] but title is not SWE: 'Senior Data Scientist (Python)'"
+    },
+    {
+      "index": 316,
+      "title": "Senior Data Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Data Engineer'"
+    },
+    {
+      "index": 318,
+      "title": "ML/AI Engineer",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 322,
+      "title": "Frontend Development Intern",
+      "field": "tech",
+      "error": "tech=['JS_TS', 'REACT'] but title is not SWE: 'Frontend Development Intern'"
+    },
+    {
+      "index": 323,
+      "title": "Data Scientist",
+      "field": "tech",
+      "error": "tech=['AI_ML'] but title is not SWE: 'Data Scientist'"
+    },
+    {
+      "index": 323,
+      "title": "Data Scientist",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Competitive salary based on German tech market standards'"
+    },
+    {
+      "index": 325,
+      "title": "Backend Software Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Backend Software Engineer'"
+    },
+    {
+      "index": 327,
+      "title": "Distinguished Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$120,000 - $150,000'"
+    },
+    {
+      "index": 329,
+      "title": "Senior Software Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Software Engineer'"
+    },
+    {
+      "index": 335,
+      "title": "Associate Software Engineer - (graduate)",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 335,
+      "title": "Associate Software Engineer - (graduate)",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Competitive salary, commission and equity'"
+    },
+    {
+      "index": 338,
+      "title": "Robotics Software Engineer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 338,
+      "title": "Robotics Software Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Robotics Software Engineer'"
+    },
+    {
+      "index": 345,
+      "title": "PHP Developer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'PHP Developer'"
+    },
+    {
+      "index": 345,
+      "title": "PHP Developer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'competitive salary'"
+    },
+    {
+      "index": 349,
+      "title": "Full Stack Software Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Top of market salary and a generous equity stake in the company'"
+    },
+    {
+      "index": 356,
+      "title": "DevOps Engineer, Associate",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'DevOps Engineer, Associate'"
+    },
+    {
+      "index": 359,
+      "title": "Next.js Developer - Remote",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Competitive salary.'"
+    },
+    {
+      "index": 361,
+      "title": "Software Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'highly competitive rewards and benefits package'"
+    },
+    {
+      "index": 364,
+      "title": "Full Stack Engineer (Node.js / Vue.js)",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Competitive salary aligned with German tech industry'"
+    },
+    {
+      "index": 366,
+      "title": "Tech Lead, Software Engineering",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '130,000.00 - 160,000.00'"
+    },
+    {
+      "index": 374,
+      "title": "Software Engineer - Data Platforms",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Software Engineer - Data Platforms'"
+    },
+    {
+      "index": 377,
+      "title": "Platform Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Platform Engineer'"
+    },
+    {
+      "index": 380,
+      "title": "Frontend Developer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 383,
+      "title": "WoW - Software Engineer",
+      "field": "loc",
+      "error": "loc=IN_LONDON but no London in location field"
+    },
+    {
+      "index": 387,
+      "title": "Frontend Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'competitive salary + performance based bonus'"
+    },
+    {
+      "index": 395,
+      "title": "Full-Stack Software Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$100K - $200K'"
+    },
+    {
+      "index": 396,
+      "title": "Senior Test Engineer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 397,
+      "title": "Staff Software Engineer, Backend",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$171,000 CAD - $206,000 CAD'"
+    },
+    {
+      "index": 401,
+      "title": "Lead DevOps Architect",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Lead DevOps Architect'"
+    },
+    {
+      "index": 404,
+      "title": "Software Test Engineer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 404,
+      "title": "Software Test Engineer",
+      "field": "comp",
+      "error": "comp=40_50K but raw has OTE/DOE"
+    },
+    {
+      "index": 407,
+      "title": "Apprentice Software Engineer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 408,
+      "title": "Cloud Solutions Architect (Contract)",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Cloud Solutions Architect (Contract)'"
+    },
+    {
+      "index": 409,
+      "title": "Product Engineer (senior, Staff & Principal)",
+      "field": "comp",
+      "error": "comp=120_140K but raw has no GBP: 'Senior: 90-120k | Staff: 120-140k | Principal: 140-160k'"
+    },
+    {
+      "index": 413,
+      "title": "Senior Product Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Product Engineer'"
+    },
+    {
+      "index": 414,
+      "title": "Software Engineer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 416,
+      "title": "Junior Python Developer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 425,
+      "title": "Software Developer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'starting base salary between $88,000 and $128,700'"
+    },
+    {
+      "index": 426,
+      "title": "Platform Engineer",
+      "field": "loc",
+      "error": "loc=IN_LONDON but no London in location field"
+    },
+    {
+      "index": 427,
+      "title": "ML Platform Engineer Ii, Feature & Embeddings Infra",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 427,
+      "title": "ML Platform Engineer Ii, Feature & Embeddings Infra",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$153,000.00 - $199,000.00'"
+    },
+    {
+      "index": 431,
+      "title": "Staff Software Engineer, Infrastructure",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$248,000 - $282,000'"
+    },
+    {
+      "index": 436,
+      "title": "Software Engineer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 439,
+      "title": "Senior Data Engineer I",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Data Engineer I'"
+    },
+    {
+      "index": 448,
+      "title": "Senior Full Stack Web Developer",
+      "field": "loc",
+      "error": "loc=IN_LONDON but no London in location field"
+    },
+    {
+      "index": 456,
+      "title": "Software Engineer - Backend",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 456,
+      "title": "Software Engineer - Backend",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Software Engineer - Backend'"
+    },
+    {
+      "index": 459,
+      "title": "Senior Data Engineer AWS",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 461,
+      "title": "Jr Full-stack Web Developer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$60-70k'"
+    },
+    {
+      "index": 462,
+      "title": "Software Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Software Engineer'"
+    },
+    {
+      "index": 464,
+      "title": "Senior Software Engineer, Full Stack",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Competitive salary plus equity'"
+    },
+    {
+      "index": 470,
+      "title": "Senior Software Developer, Backend Platform",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Software Developer, Backend Platform'"
+    },
+    {
+      "index": 470,
+      "title": "Senior Software Developer, Backend Platform",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$166,000\u2014$195,000 CAD'"
+    },
+    {
+      "index": 471,
+      "title": "Full Stack Software Engineer - (TypeScript and Python)",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Competitive salary & equity package'"
+    },
+    {
+      "index": 473,
+      "title": "Backend Developer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Backend Developer'"
+    },
+    {
+      "index": 479,
+      "title": "Web Frontend Engineer\uff08Work Location: Remote In Taiwan)",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '66k - 72k USD/year'"
+    },
+    {
+      "index": 483,
+      "title": "Senior Frontend Engineer, Web",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '80k\u20ac-100k\u20ac'"
+    },
+    {
+      "index": 488,
+      "title": "Software Developer (Mid-Level)",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Software Developer (Mid-Level)'"
+    },
+    {
+      "index": 489,
+      "title": "Machine Learning Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$105,000 - $125,000 CAD annually'"
+    },
+    {
+      "index": 490,
+      "title": "Data Engineer (analytics)",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Data Engineer (analytics)'"
+    },
+    {
+      "index": 496,
+      "title": "Tech Lead H/F - 80-85K",
+      "field": "tech",
+      "error": "tech=['NODE'] but title is not SWE: 'Tech Lead H/F - 80-85K'"
+    },
+    {
+      "index": 496,
+      "title": "Tech Lead H/F - 80-85K",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '80/85K\u20ac'"
+    },
+    {
+      "index": 499,
+      "title": "Graduate Machine Learning And AI Engineer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 499,
+      "title": "Graduate Machine Learning And AI Engineer",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 500,
+      "title": "Developer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 502,
+      "title": "Senior Software Developer (react) - Up To \u00a3180k Base + Exceptional Bonus - Elite FinTech Firm - London",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 503,
+      "title": "Tech Lead Manager",
+      "field": "tech",
+      "error": "tech=['NODE'] but title is not SWE: 'Tech Lead Manager'"
+    },
+    {
+      "index": 503,
+      "title": "Tech Lead Manager",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Competitive salary'"
+    },
+    {
+      "index": 509,
+      "title": "Software Engineer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 511,
+      "title": "Full Stack Software Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$120K \u2013 $200K'"
+    },
+    {
+      "index": 517,
+      "title": "Senior Software Engineer (tech Lead)",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Software Engineer (tech Lead)'"
+    },
+    {
+      "index": 518,
+      "title": "Sr. Software Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$145,000-$170,000 CAD annually'"
+    },
+    {
+      "index": 519,
+      "title": "Junior Data Scientist",
+      "field": "tech",
+      "error": "tech=['AI_ML'] but title is not SWE: 'Junior Data Scientist'"
+    },
+    {
+      "index": 526,
+      "title": "Backend Developer (NodeJS & C#)",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '50-80K'"
+    },
+    {
+      "index": 532,
+      "title": "DevOps Solutions Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Range between 135,000 - 155,000'"
+    },
+    {
+      "index": 534,
+      "title": "Javascript Developer",
+      "field": "loc",
+      "error": "loc=IN_LONDON but no London in location field"
+    },
+    {
+      "index": 536,
+      "title": "Senior Full Stack Software Engineer",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 546,
+      "title": "Web Designer & Developer",
+      "field": "comp",
+      "error": "comp=30_40K but raw has no GBP: '30K'"
+    },
+    {
+      "index": 559,
+      "title": "Software Engineer, Fullstack, Early Career",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 559,
+      "title": "Software Engineer, Fullstack, Early Career",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$126,000 - $180,000 per year'"
+    },
+    {
+      "index": 562,
+      "title": "Lead Software Engineer (founding)",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '\u20ac100K / \u20ac110K p/a'"
+    },
+    {
+      "index": 571,
+      "title": "Associate Software Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Associate Software Engineer'"
+    },
+    {
+      "index": 577,
+      "title": "Senior Software Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Software Engineer'"
+    },
+    {
+      "index": 584,
+      "title": "Graduate Backend Developer",
+      "field": "loc",
+      "error": "loc=IN_LONDON but no London in location field"
+    },
+    {
+      "index": 585,
+      "title": "Enterprise Network Engineer ( Zscaler/ CISCO / AWS Networking Services) \u00a375k - \u00a385k \u2013 London",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Enterprise Network Engineer ( Zscaler/ CISCO / AWS Networking Services) \u00a375k - \u00a385k \u2013 London'"
+    },
+    {
+      "index": 587,
+      "title": "Graduate Data Platform Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Graduate Data Platform Engineer'"
+    },
+    {
+      "index": 590,
+      "title": "Platform Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Platform Engineer'"
+    },
+    {
+      "index": 591,
+      "title": "Cloud Solutions Architect",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Cloud Solutions Architect'"
+    },
+    {
+      "index": 602,
+      "title": "Senior Java Engineer - Football Squad",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Java Engineer - Football Squad'"
+    },
+    {
+      "index": 611,
+      "title": "Mobile App Developer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Mobile App Developer'"
+    },
+    {
+      "index": 611,
+      "title": "Mobile App Developer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$120,000'"
+    },
+    {
+      "index": 615,
+      "title": "Sr. Software Engineer (ui)",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '\u20ac80K - \u20ac110K'"
+    },
+    {
+      "index": 616,
+      "title": "Senior Infrastructure Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Infrastructure Engineer'"
+    },
+    {
+      "index": 617,
+      "title": "Full Stack Developer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$80,000 - $100,000 salary'"
+    },
+    {
+      "index": 625,
+      "title": "Graduate Software Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Graduate Software Engineer'"
+    },
+    {
+      "index": 625,
+      "title": "Graduate Software Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Competitive salary'"
+    },
+    {
+      "index": 629,
+      "title": "Platform Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Platform Engineer'"
+    },
+    {
+      "index": 629,
+      "title": "Platform Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$100,000\u2013$150,000 CAD'"
+    },
+    {
+      "index": 630,
+      "title": "Machine Learning Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '\u20ac80,000'"
+    },
+    {
+      "index": 633,
+      "title": "Software Developer",
+      "field": "comp",
+      "error": "comp=40_50K but raw has no GBP: '35K-50K per year'"
+    },
+    {
+      "index": 635,
+      "title": "Lead Web Developer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Premium compensation for the region'"
+    },
+    {
+      "index": 637,
+      "title": "Frontend Developer",
+      "field": "comp",
+      "error": "comp=50_60K but raw has no GBP: 'Up to 60k'"
+    },
+    {
+      "index": 643,
+      "title": "Data Engineer",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 643,
+      "title": "Data Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Data Engineer'"
+    },
+    {
+      "index": 652,
+      "title": "Senior AI Research Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior AI Research Engineer'"
+    },
+    {
+      "index": 661,
+      "title": "Senior Web Developer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 664,
+      "title": "Head of Data",
+      "field": "loc",
+      "error": "loc=IN_LONDON but no London in location field"
+    },
+    {
+      "index": 664,
+      "title": "Head of Data",
+      "field": "tech",
+      "error": "tech=['REACT', 'JS_TS', 'NODE'] but title is not SWE: 'Head of Data'"
+    },
+    {
+      "index": 665,
+      "title": "VP of Engineering",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 669,
+      "title": "Software Engineer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 669,
+      "title": "Software Engineer",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 669,
+      "title": "Software Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Software Engineer'"
+    },
+    {
+      "index": 670,
+      "title": "Principal Cloud Engineer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 670,
+      "title": "Principal Cloud Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Principal Cloud Engineer'"
+    },
+    {
+      "index": 676,
+      "title": "Software Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '\u20ac40,000 - \u20ac80,000'"
+    },
+    {
+      "index": 682,
+      "title": "Python Developer",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 696,
+      "title": "Associate Quality Assurance Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Associate Quality Assurance Engineer'"
+    },
+    {
+      "index": 701,
+      "title": "Mid-Level Backend Developer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Mid-Level Backend Developer'"
+    },
+    {
+      "index": 709,
+      "title": "Mid-Level Java Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Mid-Level Java Engineer'"
+    },
+    {
+      "index": 712,
+      "title": "Data Analyst (Python & SQL)",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'No salary details provided'"
+    },
+    {
+      "index": 717,
+      "title": "Full Stack Developer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$110,000 - $130,000'"
+    },
+    {
+      "index": 719,
+      "title": "Software Engineer I",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Software Engineer I'"
+    },
+    {
+      "index": 720,
+      "title": "QA Automation Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'QA Automation Engineer'"
+    },
+    {
+      "index": 721,
+      "title": "Senior Software Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Competitive Salary Package'"
+    },
+    {
+      "index": 722,
+      "title": "Data Scientist",
+      "field": "tech",
+      "error": "tech=['AI_ML'] but title is not SWE: 'Data Scientist'"
+    },
+    {
+      "index": 722,
+      "title": "Data Scientist",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'CAD $80,000 - $100,000'"
+    },
+    {
+      "index": 727,
+      "title": "Data Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Data Engineer'"
+    },
+    {
+      "index": 730,
+      "title": "PHP Developer (Mid-Level)",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'PHP Developer (Mid-Level)'"
+    },
+    {
+      "index": 730,
+      "title": "PHP Developer (Mid-Level)",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Our salaries are competitive and reviewed regularly to ensure they remain fair and in line with the wider industry.'"
+    },
+    {
+      "index": 734,
+      "title": "Machine Learning Engineer Ii, Tim Hortons",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Base salary range of $100,000 \u2013 $120,000 CAD'"
+    },
+    {
+      "index": 738,
+      "title": "Software Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Competitive salaries'"
+    },
+    {
+      "index": 741,
+      "title": "Test Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Test Engineer'"
+    },
+    {
+      "index": 741,
+      "title": "Test Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Competitive salaries'"
+    },
+    {
+      "index": 742,
+      "title": "Information Technology Support Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Information Technology Support Engineer'"
+    },
+    {
+      "index": 743,
+      "title": "Information Technology Support Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Information Technology Support Engineer'"
+    },
+    {
+      "index": 748,
+      "title": "Web Developer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Web Developer'"
+    },
+    {
+      "index": 748,
+      "title": "Web Developer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'competitive salary'"
+    },
+    {
+      "index": 749,
+      "title": "Software Engineer I - Infrastructure (new Grad)",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Software Engineer I - Infrastructure (new Grad)'"
+    },
+    {
+      "index": 749,
+      "title": "Software Engineer I - Infrastructure (new Grad)",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$125,000\u2014$150,000 USD'"
+    },
+    {
+      "index": 750,
+      "title": "Software Engineer - Embedded Systems",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Software Engineer - Embedded Systems'"
+    },
+    {
+      "index": 753,
+      "title": "Junior Software Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Junior Software Engineer'"
+    },
+    {
+      "index": 753,
+      "title": "Junior Software Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '19 688 PLN - 23 400 PLN gross per month'"
+    },
+    {
+      "index": 754,
+      "title": "Junior Software Engineer (m/w/d) - (frankfurt/ Remote)",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Competitive salary'"
+    },
+    {
+      "index": 757,
+      "title": "Senior Software Engineer",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 758,
+      "title": "Software Engineer (backend / Distributed Systems)",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 758,
+      "title": "Software Engineer (backend / Distributed Systems)",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Software Engineer (backend / Distributed Systems)'"
+    },
+    {
+      "index": 764,
+      "title": "Lead Software Engineer - People Manager (london Based 2-3x Week)",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'competitive compensation'"
+    },
+    {
+      "index": 768,
+      "title": "Graduate Software Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Graduate Software Engineer'"
+    },
+    {
+      "index": 771,
+      "title": "Senior Software Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Software Engineer'"
+    },
+    {
+      "index": 771,
+      "title": "Senior Software Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$110k - $130k per year'"
+    },
+    {
+      "index": 774,
+      "title": "Lead Software Engineer",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 778,
+      "title": "Machine Learning Engineer, Search",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 778,
+      "title": "Machine Learning Engineer, Search",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$153,000.00 - $199,000.00'"
+    },
+    {
+      "index": 784,
+      "title": "Graduate Software Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Graduate Software Engineer'"
+    },
+    {
+      "index": 791,
+      "title": "Platform Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Platform Engineer'"
+    },
+    {
+      "index": 792,
+      "title": "Lead Azure Databricks Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Lead Azure Databricks Engineer'"
+    },
+    {
+      "index": 795,
+      "title": "Lead QA Engineer (accessibility)",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Lead QA Engineer (accessibility)'"
+    },
+    {
+      "index": 798,
+      "title": "AI Data Scientist",
+      "field": "tech",
+      "error": "tech=['AI_ML'] but title is not SWE: 'AI Data Scientist'"
+    },
+    {
+      "index": 812,
+      "title": "Senior Software Engineer",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 814,
+      "title": "Senior Data Engineer",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 814,
+      "title": "Senior Data Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Data Engineer'"
+    },
+    {
+      "index": 815,
+      "title": "Backend Engineer (node.js) - Leaply",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Competitive compensation'"
+    },
+    {
+      "index": 816,
+      "title": "Quality Assurance Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Quality Assurance Engineer'"
+    },
+    {
+      "index": 818,
+      "title": "Senior Software Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Software Engineer'"
+    },
+    {
+      "index": 820,
+      "title": "Senior Backend Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Backend Engineer'"
+    },
+    {
+      "index": 820,
+      "title": "Senior Backend Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'competitive salary package aligned with US market standards'"
+    },
+    {
+      "index": 822,
+      "title": "Senior Software Engineer - DevOps Focus",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Software Engineer - DevOps Focus'"
+    },
+    {
+      "index": 823,
+      "title": "Devops Engineer",
+      "field": "loc",
+      "error": "loc=IN_LONDON but no London in location field"
+    },
+    {
+      "index": 824,
+      "title": "Sr Software Engineer - Fullstack",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '($130,500.00 - $193,600.00 Annually)'"
+    },
+    {
+      "index": 829,
+      "title": "Graduate AI Software Engineer",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 833,
+      "title": "Senior Software Engineer I (java)",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 833,
+      "title": "Senior Software Engineer I (java)",
+      "field": "sen",
+      "error": "sen=LEVEL_1 but title has L3 marker: 'Senior Software Engineer I (java)'"
+    },
+    {
+      "index": 833,
+      "title": "Senior Software Engineer I (java)",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Software Engineer I (java)'"
+    },
+    {
+      "index": 833,
+      "title": "Senior Software Engineer I (java)",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Competitive compensation package'"
+    },
+    {
+      "index": 837,
+      "title": "Senior Software Engineer, Full Stack - Fintech Airlines - Europe (100% Remote - Uk)",
+      "field": "arr",
+      "error": "arr=REMOTE but no remote/hybrid/office in description"
+    },
+    {
+      "index": 837,
+      "title": "Senior Software Engineer, Full Stack - Fintech Airlines - Europe (100% Remote - Uk)",
+      "field": "comp",
+      "error": "comp=90_100K but raw has OTE/DOE"
+    },
+    {
+      "index": 838,
+      "title": "Graduate Engineering Programme",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 839,
+      "title": "Scene Generation Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Scene Generation Engineer'"
+    },
+    {
+      "index": 844,
+      "title": "Head Of Engineering",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Head Of Engineering'"
+    },
+    {
+      "index": 851,
+      "title": "Senior Backend Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Competitive base salary and commission'"
+    },
+    {
+      "index": 854,
+      "title": "Senior Data Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Data Engineer'"
+    },
+    {
+      "index": 857,
+      "title": "DevOps Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'DevOps Engineer'"
+    },
+    {
+      "index": 858,
+      "title": "Senior Software Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'Competitive Compensation'"
+    },
+    {
+      "index": 860,
+      "title": "Associate Developer",
+      "field": "loc",
+      "error": "loc=OUTSIDE_UK but UK location in data"
+    },
+    {
+      "index": 869,
+      "title": "Junior DevOps Engineer",
+      "field": "arr",
+      "error": "arr=HYBRID but only office mentioned"
+    },
+    {
+      "index": 869,
+      "title": "Junior DevOps Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Junior DevOps Engineer'"
+    },
+    {
+      "index": 875,
+      "title": "Senior Data Engineer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Senior Data Engineer'"
+    },
+    {
+      "index": 876,
+      "title": "Senior Software Engineer, Backend (TypeScript)",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: 'competitive pay'"
+    },
+    {
+      "index": 878,
+      "title": "Product Developer",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Product Developer'"
+    },
+    {
+      "index": 879,
+      "title": "Senior Software Developer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$110,000 - $130,000 CAD annually'"
+    },
+    {
+      "index": 889,
+      "title": "Full Stack Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '\u20ac90K \u2013 \u20ac120K'"
+    },
+    {
+      "index": 891,
+      "title": "Cloud Platform DevOps Engineer GCP",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Cloud Platform DevOps Engineer GCP'"
+    },
+    {
+      "index": 894,
+      "title": "Engineering Manager",
+      "field": "tech",
+      "error": "tech=['OOS'] but title suggests SWE: 'Engineering Manager'"
+    },
+    {
+      "index": 894,
+      "title": "Engineering Manager",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$200,000\u2014$235,000 CAD'"
+    },
+    {
+      "index": 899,
+      "title": "Senior Software Engineer",
+      "field": "loc",
+      "error": "loc=IN_LONDON but no London in location field"
+    },
+    {
+      "index": 903,
+      "title": "Software Engineer",
+      "field": "comp",
+      "error": "comp=NO_GBP but raw has no GBP: '$100K - $200K'"
+    }
+  ]
+}

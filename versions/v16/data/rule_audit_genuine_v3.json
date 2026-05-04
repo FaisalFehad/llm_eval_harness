@@ -1,0 +1,671 @@
+{
+  "total_jobs": 908,
+  "rule_mismatches": {
+    "loc": 287,
+    "sen": 147,
+    "tech": 332,
+    "comp": 241
+  },
+  "genuine_issues_count": 63,
+  "genuine_issues": [
+    {
+      "index": 419,
+      "title": "IT Support Engineer",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_1",
+      "field": "sen",
+      "xgboost_confidence": 0.989,
+      "xgboost_gap": 0.983,
+      "severity": "HIGH"
+    },
+    {
+      "index": 268,
+      "title": "IT Support Technician",
+      "location": "Remote - United Kingdom",
+      "rule": "UK_OTHER",
+      "true": "REMOTE",
+      "jd_snippet": "IT Support Technician | Birmingham | \u00a328,000 DoEOscar Technology has partnered exclusively with a leading Education MSP in Birimingham to recruit for a skilled 1st/2nd Line Support Technician to join ",
+      "field": "loc",
+      "xgboost_confidence": 0.983,
+      "xgboost_gap": 0.982,
+      "severity": "HIGH"
+    },
+    {
+      "index": 727,
+      "title": "Data Engineer",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_3",
+      "field": "sen",
+      "xgboost_confidence": 0.989,
+      "xgboost_gap": 0.98,
+      "severity": "HIGH"
+    },
+    {
+      "index": 733,
+      "title": "Data Scientist",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_1",
+      "field": "sen",
+      "xgboost_confidence": 0.986,
+      "xgboost_gap": 0.98,
+      "severity": "HIGH"
+    },
+    {
+      "index": 571,
+      "title": "Associate Software Engineer",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_1",
+      "field": "sen",
+      "xgboost_confidence": 0.986,
+      "xgboost_gap": 0.979,
+      "severity": "HIGH"
+    },
+    {
+      "index": 58,
+      "title": "Senior Backend Developer (Node.js)",
+      "rule": "RANGE_55_74K",
+      "true": "RANGE_75_99K",
+      "jd_snippet": "About Us:\nMediCore Health Systems creates backend platforms for healthcare providers, focusing on secure and compliant data management.\n\nThe Role:\nWe are looking for a Senior Backend Developer with st",
+      "field": "comp",
+      "xgboost_confidence": 0.975,
+      "xgboost_gap": 0.966,
+      "severity": "HIGH"
+    },
+    {
+      "index": 371,
+      "title": "Infrastructure Engineer",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_3",
+      "field": "sen",
+      "xgboost_confidence": 0.973,
+      "xgboost_gap": 0.958,
+      "severity": "HIGH"
+    },
+    {
+      "index": 794,
+      "title": "Junior Machine Learning Developer",
+      "location": "New York, USA - Remote",
+      "rule": "UK_OTHER",
+      "true": "OUTSIDE_UK",
+      "jd_snippet": "Junior Machine Learning Developer BristolFull- Time 37.5 hours over 5 days. Office centric from Bristol Office\u00a325k - \u00a330kAbout One Big Circle Be part of an award-winning workplace: The Sunday Times Be",
+      "field": "loc",
+      "xgboost_confidence": 0.963,
+      "xgboost_gap": 0.954,
+      "severity": "HIGH"
+    },
+    {
+      "index": 166,
+      "title": "Service Desk Engineer (1st Line)",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_1",
+      "field": "sen",
+      "xgboost_confidence": 0.964,
+      "xgboost_gap": 0.952,
+      "severity": "HIGH"
+    },
+    {
+      "index": 215,
+      "title": "IT Support Placement",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_1",
+      "field": "sen",
+      "xgboost_confidence": 0.964,
+      "xgboost_gap": 0.952,
+      "severity": "HIGH"
+    },
+    {
+      "index": 43,
+      "title": "Electrical Design Engineer",
+      "rule": "BELOW_45K",
+      "true": "UP_TO_ONLY",
+      "jd_snippet": "Job Title: Electrical Design EngineerJob Location: EdinburghJob Type: PermanentAnnual Salary: Up to \u00a340,000 (DoE)Client OverviewYou\u2019ll be joining a forward thinking building services consultancy known",
+      "field": "comp",
+      "xgboost_confidence": 0.962,
+      "xgboost_gap": 0.951,
+      "severity": "HIGH"
+    },
+    {
+      "index": 384,
+      "title": "Software Engineer",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_3",
+      "field": "sen",
+      "xgboost_confidence": 0.959,
+      "xgboost_gap": 0.945,
+      "severity": "HIGH"
+    },
+    {
+      "index": 860,
+      "title": "Associate Developer",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_1",
+      "field": "sen",
+      "xgboost_confidence": 0.948,
+      "xgboost_gap": 0.945,
+      "severity": "HIGH"
+    },
+    {
+      "index": 92,
+      "title": "Support Engineer 1st/2nd Line",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_1",
+      "field": "sen",
+      "xgboost_confidence": 0.97,
+      "xgboost_gap": 0.941,
+      "severity": "HIGH"
+    },
+    {
+      "index": 797,
+      "title": "Mid-Level Software Engineer - E-Commerce",
+      "rule": "RANGE_55_74K",
+      "true": "RANGE_45_54K",
+      "jd_snippet": "About Us:\nVertex Commerce Ltd is an e-commerce platform provider helping retailers scale online.\n\nThe Role:\nWe need a Mid-Level Software Engineer to work on our core platform using Ruby on Rails and R",
+      "field": "comp",
+      "xgboost_confidence": 0.951,
+      "xgboost_gap": 0.94,
+      "severity": "HIGH"
+    },
+    {
+      "index": 546,
+      "title": "Web Designer & Developer",
+      "rule": "NO_GBP",
+      "true": "BELOW_45K",
+      "jd_snippet": "Web Designer & Developer Location: Manchester (on-site) 37.5 hours a week, Mon - Fri. Salary: 30KDo you have a creative flair and a passion for designing and developing visually engaging, high-perform",
+      "field": "comp",
+      "xgboost_confidence": 0.946,
+      "xgboost_gap": 0.937,
+      "severity": "HIGH"
+    },
+    {
+      "index": 352,
+      "title": "PHP Developer",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_3",
+      "field": "sen",
+      "xgboost_confidence": 0.958,
+      "xgboost_gap": 0.935,
+      "severity": "HIGH"
+    },
+    {
+      "index": 546,
+      "title": "Web Designer & Developer",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_3",
+      "field": "sen",
+      "xgboost_confidence": 0.958,
+      "xgboost_gap": 0.929,
+      "severity": "HIGH"
+    },
+    {
+      "index": 178,
+      "title": "Customer Support / Admin Support Roles",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_1",
+      "field": "sen",
+      "xgboost_confidence": 0.959,
+      "xgboost_gap": 0.927,
+      "severity": "HIGH"
+    },
+    {
+      "index": 313,
+      "title": "Service Desk Engineer - Glasgow",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_3",
+      "field": "sen",
+      "xgboost_confidence": 0.936,
+      "xgboost_gap": 0.925,
+      "severity": "HIGH"
+    },
+    {
+      "index": 362,
+      "title": "Associate Software Engineer",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_1",
+      "field": "sen",
+      "xgboost_confidence": 0.938,
+      "xgboost_gap": 0.92,
+      "severity": "HIGH"
+    },
+    {
+      "index": 439,
+      "title": "Senior Data Engineer I",
+      "rule": "LEVEL_3",
+      "true": "LEVEL_1",
+      "field": "sen",
+      "xgboost_confidence": 0.92,
+      "xgboost_gap": 0.917,
+      "severity": "HIGH"
+    },
+    {
+      "index": 162,
+      "title": "EC&I Engineer - Fire Detection Systems",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_3",
+      "field": "sen",
+      "xgboost_confidence": 0.94,
+      "xgboost_gap": 0.915,
+      "severity": "HIGH"
+    },
+    {
+      "index": 892,
+      "title": "Software Engineer",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_1",
+      "field": "sen",
+      "xgboost_confidence": 0.929,
+      "xgboost_gap": 0.911,
+      "severity": "HIGH"
+    },
+    {
+      "index": 270,
+      "title": "Software Engineer",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_3",
+      "field": "sen",
+      "xgboost_confidence": 0.952,
+      "xgboost_gap": 0.907,
+      "severity": "HIGH"
+    },
+    {
+      "index": 466,
+      "title": "IT Support Technician",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_1",
+      "field": "sen",
+      "xgboost_confidence": 0.932,
+      "xgboost_gap": 0.907,
+      "severity": "HIGH"
+    },
+    {
+      "index": 274,
+      "title": "Accounts Payable Clerk",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_1",
+      "field": "sen",
+      "xgboost_confidence": 0.924,
+      "xgboost_gap": 0.895,
+      "severity": "HIGH"
+    },
+    {
+      "index": 511,
+      "title": "Full Stack Software Engineer",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_3",
+      "field": "sen",
+      "xgboost_confidence": 0.932,
+      "xgboost_gap": 0.892,
+      "severity": "HIGH"
+    },
+    {
+      "index": 507,
+      "title": "DevOps Engineer",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_3",
+      "field": "sen",
+      "xgboost_confidence": 0.928,
+      "xgboost_gap": 0.861,
+      "severity": "HIGH"
+    },
+    {
+      "index": 381,
+      "title": "Machine Learning Engineer, New Grad",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_1",
+      "field": "sen",
+      "xgboost_confidence": 0.902,
+      "xgboost_gap": 0.854,
+      "severity": "HIGH"
+    },
+    {
+      "index": 749,
+      "title": "Software Engineer I - Infrastructure (new Grad)",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_1",
+      "field": "sen",
+      "xgboost_confidence": 0.876,
+      "xgboost_gap": 0.85,
+      "severity": "HIGH"
+    },
+    {
+      "index": 556,
+      "title": "Operations Engineer - UK",
+      "location": "United Kingdom",
+      "rule": "IN_LONDON",
+      "true": "UK_OTHER",
+      "jd_snippet": "About UsWe\u2019re building the future of sport. Bolt6 is a sports technology company at the forefront of visual innovation \u2013 from real-time tracking and data overlays, to immersive broadcast graphics and ",
+      "field": "loc",
+      "xgboost_confidence": 0.913,
+      "xgboost_gap": 0.835,
+      "severity": "HIGH"
+    },
+    {
+      "index": 356,
+      "title": "DevOps Engineer, Associate",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_1",
+      "field": "sen",
+      "xgboost_confidence": 0.881,
+      "xgboost_gap": 0.835,
+      "severity": "HIGH"
+    },
+    {
+      "index": 540,
+      "title": "Second Line Support Engineer",
+      "rule": "BELOW_45K",
+      "true": "UP_TO_ONLY",
+      "jd_snippet": "Second Line Support Engineer Our long-standing client, who provides IT consultancy services to a variety of industries across the UK are hiring a IT Support Engineer to provide 2nd Line support within",
+      "field": "comp",
+      "xgboost_confidence": 0.885,
+      "xgboost_gap": 0.828,
+      "severity": "HIGH"
+    },
+    {
+      "index": 614,
+      "title": "Staff Software Engineer",
+      "rule": "ABOVE_100K",
+      "true": "UP_TO_ONLY",
+      "jd_snippet": "About the job                                                               TL;DR\ud83e\udde2 Role | Staff Software Engineer\ud83d\udcab Company | InsurTech, Scale-up, Data\ud83c\udfaf Areas | Forward Engineering\u2728 Tech | Kotlin/Java/",
+      "field": "comp",
+      "xgboost_confidence": 0.827,
+      "xgboost_gap": 0.808,
+      "severity": "HIGH"
+    },
+    {
+      "index": 316,
+      "title": "Senior Data Engineer",
+      "location": "United Kingdom",
+      "rule": "REMOTE",
+      "true": "UK_OTHER",
+      "jd_snippet": "Your roleAs a Senior Data Engineer with Atto, you will be part of our Data Science & Engineering team, helping our customers use transactional intelligence to drive smarter financial decisions and bui",
+      "field": "loc",
+      "xgboost_confidence": 0.854,
+      "xgboost_gap": 0.798,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 615,
+      "title": "Sr. Software Engineer (ui)",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_3",
+      "field": "sen",
+      "xgboost_confidence": 0.881,
+      "xgboost_gap": 0.791,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 875,
+      "title": "Senior Data Engineer",
+      "rule": "RANGE_75_99K",
+      "true": "RANGE_55_74K",
+      "jd_snippet": "Senior Data EngineerLondon \u00a365-85k + 15% bonusA London-based software company on a mission to make data work smarter. Their products power thousands of businesses, and as they grow, they\u2019re building a",
+      "field": "comp",
+      "xgboost_confidence": 0.863,
+      "xgboost_gap": 0.79,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 170,
+      "title": "Technical Engineer Placement Year",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_1",
+      "field": "sen",
+      "xgboost_confidence": 0.812,
+      "xgboost_gap": 0.787,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 637,
+      "title": "Frontend Developer",
+      "rule": "NO_GBP",
+      "true": "UP_TO_ONLY",
+      "jd_snippet": "Frontend Developer (Angular) - Up to 60k - Manchester/Remote (1 day p/w office)Morson Edge are delighted to have teamed up with a Manchester based Tech brand on their search for a skilled Frontend Dev",
+      "field": "comp",
+      "xgboost_confidence": 0.812,
+      "xgboost_gap": 0.785,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 476,
+      "title": "Mechanical And Electrical (m&e) Design Engineer",
+      "rule": "NO_GBP",
+      "true": "RANGE_45_54K",
+      "jd_snippet": "Related JobsMechanical and Electrical Senior Quantity SurveyorMechanical and Electrical Engineer Level 3 ApprenticeMechanical and Electrical Quantity SurveyorMechanical and Electrical EstimatorMechani",
+      "field": "comp",
+      "xgboost_confidence": 0.773,
+      "xgboost_gap": 0.752,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 520,
+      "title": "Javascript Developer",
+      "location": "United Kingdom",
+      "rule": "REMOTE",
+      "true": "UK_OTHER",
+      "jd_snippet": "Software Engineer (JavaScript / TypeScript / Angular)\u00a335,000\u2013\u00a340,000 + benefitsRemote (must be UK based) We\u2019re hiring a Software Engineer to join a small, ambitious product team working on a modern we",
+      "field": "loc",
+      "xgboost_confidence": 0.856,
+      "xgboost_gap": 0.747,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 399,
+      "title": "Frontend Developer",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_3",
+      "field": "sen",
+      "xgboost_confidence": 0.852,
+      "xgboost_gap": 0.742,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 883,
+      "title": "Software Engineer, Product",
+      "rule": "LEVEL_3",
+      "true": "LEVEL_2",
+      "field": "sen",
+      "xgboost_confidence": 0.864,
+      "xgboost_gap": 0.74,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 345,
+      "title": "PHP Developer",
+      "location": "Scotland, United Kingdom",
+      "rule": "UNK",
+      "true": "UK_OTHER",
+      "jd_snippet": "About UsSnappy Shopper is the UK\u2019s fastest\u2011growing quick commerce (Q\u2011commerce) platform powering rapid grocery delivery from local convenience stores. We enable independent retailers and major partner",
+      "field": "loc",
+      "xgboost_confidence": 0.853,
+      "xgboost_gap": 0.738,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 701,
+      "title": "Mid-Level Backend Developer",
+      "location": "United Kingdom",
+      "rule": "IN_LONDON",
+      "true": "UK_OTHER",
+      "jd_snippet": "Backend Engineer - Python, Postgres, Kubernetes, TerraformOB have partnered with a ClimateTech SaaS scale-up, who work with clients across the US, EU and Asia, that are looking to grow their Engineeri",
+      "field": "loc",
+      "xgboost_confidence": 0.859,
+      "xgboost_gap": 0.732,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 693,
+      "title": "Technical Supervisor",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_3",
+      "field": "sen",
+      "xgboost_confidence": 0.847,
+      "xgboost_gap": 0.731,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 147,
+      "title": "IT Support Engineer",
+      "rule": "BELOW_45K",
+      "true": "UP_TO_ONLY",
+      "jd_snippet": "IT Support Technician - 2nd line | Wigan | Up to \u00a332KI'm working with a well-established, market-leading business that's at an exciting point in their growth journey. They're building out their intern",
+      "field": "comp",
+      "xgboost_confidence": 0.773,
+      "xgboost_gap": 0.725,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 758,
+      "title": "Software Engineer (backend / Distributed Systems)",
+      "rule": "LEVEL_3",
+      "true": "LEVEL_1",
+      "field": "sen",
+      "xgboost_confidence": 0.766,
+      "xgboost_gap": 0.71,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 643,
+      "title": "Data Engineer",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_1",
+      "field": "sen",
+      "xgboost_confidence": 0.704,
+      "xgboost_gap": 0.695,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 817,
+      "title": "Next.js Full Stack Developer",
+      "rule": "RANGE_55_74K",
+      "true": "RANGE_45_54K",
+      "jd_snippet": "About Us:\nEcoSphere Tech builds sustainable digital solutions for environmental monitoring and reporting. We use cutting-edge web frameworks to deliver real-time data platforms.\n\nThe Role:\nWe are hiri",
+      "field": "comp",
+      "xgboost_confidence": 0.836,
+      "xgboost_gap": 0.693,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 867,
+      "title": "Software Engineer",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_3",
+      "field": "sen",
+      "xgboost_confidence": 0.835,
+      "xgboost_gap": 0.68,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 749,
+      "title": "Software Engineer I - Infrastructure (new Grad)",
+      "location": "Description: StubHub is on a mission to redefine the live event experience on a global scale. Whether someone is looking to attend their first event or their hundredth, we\u2019re here to delight them all the way from the moment they start looking for a ticket until they step through the gate. The same goes for our sellers. From fans selling a single ticket to the promoters of a worldwide stadium tour, we want StubHub to be the safest, most convenient way to offer a ticket to the millions of fans who browse our platform around the world.StubHub is looking for a Software Engineer I to design and develop next-generation technologies and complex features. As a Software Engineer at StubHub, you will be at the forefront of tackling significant, ambiguous, and non-trivial challenges as a core contributor and innovator, bringing creative technical solutions to life. To ensure our company's success, our Software Engineers must demonstrate initiative and enthusiasm in the problems they tackle.As a Software Engineer I, you will design and implement systems and services with an eye for elegance, maintainability, and practicality. Over the course of your career at the company, you will have the opportunity to contribute to diverse projects and the needs of the business. The best candidates and most successful team members exhibit versatility, a growth mindset, the ability to learn, and enthusiasm in tackling new challenges across the company.Location: Hybrid (3 days in office/2 days remote) \u2013 New York, NYAbout The TeamThe Infrastructure team is a group of highly motivated engineers focused on enabling the foundation for rapid, reliable, and scalable product development at StubHub. We own and evolve the internal service catalog and core compute platforms which power the creation of applications and services across the company.Our responsibilities include build systems, deployment tooling, artifact management, infrastructure provisioning, and cloud resource management. We also own foundational capabilities like service attribution. We work closely with engineering teams across the organization to promote infrastructure best practices, self-service platforms, and operational excellence.What You'll DoDesign, develop, test, deploy, and maintain impactful improvements across all StubHub\u2019s platforms and products, resulting in high-quality outcomes Collaborate with team members to ensure best practices across our code Manage individual initiative priorities, deadlines, and deliverables with your technical expertise What You've Done1-2 software engineering internships, or equivalent demonstrationExposure to designing and developing robust, distributed systems using multiple general-purpose programming languages (e.g., Java, C#, Python, Golang) Exposure to designing and developing solutions to complex problems with significant business impact Proven ability to learn other coding languages, platforms, frameworks, and tools Understanding of the full software development life cycle, including coding standards, code reviews, source control management, build processes, testing, and operations What We OfferAccelerated Growth Environment: An environment designed for swift skill and knowledge enhancement, where you have the autonomy to lead experiments and tests on a massive scale.Top Tier Compensation Package: Competitive base, equity, and upside that tracks with your impact.Flexible Time Off: Enjoy unlimited Flex Time Off, giving you the flexibility to manage your schedule and take time to recharge as needed.Comprehensive Benefits Package: Prioritize your well-being with a comprehensive benefits package, featuring 401k, and premium Health, Vision, and Dental Insurance options.The anticipated gross base pay range is below for this role. Actual compensation will vary depending on factors such as a candidate\u2019s qualifications, skills, experience, and competencies. Base annual salary is one component of StubHub\u2019s total compensation and competitive benefits package, which includes equity, 401(k), paid time off, paid parental leave, and comprehensive health benefits.Salary Range$125,000\u2014$150,000 USDAbout UsStubHub is the world\u2019s leading marketplace to buy and sell tickets to any live event, anywhere. Through StubHub in North America and viagogo, our international platform, we service customers in 195 countries in 33 languages and 49 available currencies. With more than 300 million tickets available annually on our platform to events around the world -- from sports to music, comedy to dance, festivals to theater -- StubHub offers the safest, most convenient way to buy or sell tickets to the most memorable live experiences. Come join our team for a front-row seat to the action.For California Residents: California Job Applicant Privacy Notice found hereWe are an equal opportunity employer and value diversity on our team. We do not discriminate on the basis of race, color, religion, sex, national origin, gender, sexual orientation, age, disability, veteran status, or any other legally protected status.",
+      "rule": "UK_OTHER",
+      "true": "OUTSIDE_UK",
+      "jd_snippet": "StubHub is on a mission to redefine the live event experience on a global scale. Whether someone is looking to attend their first event or their hundredth, we\u2019re here to delight them all the way from ",
+      "field": "loc",
+      "xgboost_confidence": 0.787,
+      "xgboost_gap": 0.661,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 815,
+      "title": "Backend Engineer (node.js) - Leaply",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_3",
+      "field": "sen",
+      "xgboost_confidence": 0.811,
+      "xgboost_gap": 0.66,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 131,
+      "title": "IT Support Engineer",
+      "rule": "NO_GBP",
+      "true": "BELOW_45K",
+      "jd_snippet": "Venn Group are working with an entertainment company to hire an IT Support Engineer on a permanent basis, to provide expert-level technical support, resolve complex issues, and lead the delivery of IT",
+      "field": "comp",
+      "xgboost_confidence": 0.786,
+      "xgboost_gap": 0.66,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 730,
+      "title": "PHP Developer (Mid-Level)",
+      "rule": "LEVEL_3",
+      "true": "LEVEL_2",
+      "field": "sen",
+      "xgboost_confidence": 0.747,
+      "xgboost_gap": 0.655,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 617,
+      "title": "Full Stack Developer",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_3",
+      "field": "sen",
+      "xgboost_confidence": 0.752,
+      "xgboost_gap": 0.642,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 7,
+      "title": "Associate Software Engineer - Bristol, UK (hybrid)",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_1",
+      "field": "sen",
+      "xgboost_confidence": 0.724,
+      "xgboost_gap": 0.632,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 766,
+      "title": "PHP Developer - Hybrid Remote",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_1",
+      "field": "sen",
+      "xgboost_confidence": 0.77,
+      "xgboost_gap": 0.61,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 650,
+      "title": "Industrial Placement Test Software Engineer",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_1",
+      "field": "sen",
+      "xgboost_confidence": 0.769,
+      "xgboost_gap": 0.598,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 339,
+      "title": "Senior C# Software Engineer| Payments | \u00a3130,000 | Greenfield Payments Platform | 3 Days in Office",
+      "rule": "NO_GBP",
+      "true": "ABOVE_100K",
+      "jd_snippet": "Senior C# .NET Software Engineer is required to join a Capital Markets Payments Technology team building a greenfield Global Payments platform. This is a hands-on C# .NET backend engineering role focu",
+      "field": "comp",
+      "xgboost_confidence": 0.714,
+      "xgboost_gap": 0.54,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 725,
+      "title": "Founding Engineer (\u00a370k-\u00a3100k + Equity) At Getjelly.co.uk",
+      "rule": "LEVEL_2",
+      "true": "LEVEL_3",
+      "field": "sen",
+      "xgboost_confidence": 0.732,
+      "xgboost_gap": 0.492,
+      "severity": "MEDIUM"
+    },
+    {
+      "index": 811,
+      "title": "Software Engineer \u2013 Full Stack",
+      "rule": "LEVEL_3",
+      "true": "LEVEL_2",
+      "field": "sen",
+      "xgboost_confidence": 0.729,
+      "xgboost_gap": 0.469,
+      "severity": "MEDIUM"
+    }
+  ]
+}

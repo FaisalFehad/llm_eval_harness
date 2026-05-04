@@ -1,0 +1,64 @@
+{
+  "total_jobs": 100,
+  "flagged_jobs": 3,
+  "flag_rate_pct": 3.0,
+  "flag_breakdown": {
+    "COMP: NO_GBP but £ found in JD": 2,
+    "SEN: L3 but no title signal": 1
+  },
+  "flagged_details": [
+    {
+      "index": 39,
+      "title": "Full Stack Engineer",
+      "flags": [
+        "COMP: NO_GBP but £ found in JD"
+      ],
+      "v16_labels": {
+        "loc": "IN_LONDON",
+        "arr": "HYBRID",
+        "sen": "LEVEL_2",
+        "tech": [
+          "REACT",
+          "NODE",
+          "JS_TS"
+        ],
+        "comp": "NO_GBP"
+      }
+    },
+    {
+      "index": 55,
+      "title": "Full Stack Engineer",
+      "flags": [
+        "SEN: L3 but no title signal"
+      ],
+      "v16_labels": {
+        "loc": "UK_OTHER",
+        "arr": "HYBRID",
+        "sen": "LEVEL_3",
+        "tech": [
+          "REACT",
+          "JS_TS"
+        ],
+        "comp": "RANGE_55_74K"
+      }
+    },
+    {
+      "index": 96,
+      "title": "Mid-Senior Software Engineer",
+      "flags": [
+        "COMP: NO_GBP but £ found in JD"
+      ],
+      "v16_labels": {
+        "loc": "REMOTE",
+        "arr": "REMOTE",
+        "sen": "LEVEL_3",
+        "tech": [
+          "NODE",
+          "JS_TS",
+          "AI_ML"
+        ],
+        "comp": "NO_GBP"
+      }
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+
+[12:27:10] 106 jobs (existing: 0)
+Traceback (most recent call last):
+  File "/Users/faisal/Code/automation/ai_eval_harness/finetune/relabel_for_drift_v16.py", line 84, in <module>
+    main()
+  File "/Users/faisal/Code/automation/ai_eval_harness/finetune/relabel_for_drift_v16.py", line 74, in main
+    out[f"v16_{field}"] = parsed.get(field)
+AttributeError: 'NoneType' object has no attribute 'get'
+
+[12:36:38] 91 jobs (existing: 18)
+Done. Wrote 91 jobs to versions/v16/data/full_relabel_v2/batch_ollama_3.jsonl (errors: 0)
+
+[13:05:50] 30 jobs (existing: 109)
+
+[13:08:50] 13 jobs (existing: 117)
+[6] FAIL: Error code: 502 - {'error': 'Post "https://ollama.com:443/v1/chat/completions?ts
+[7] FAIL: Error code: 502 - {'error': 'Post "https://ollama.com:443/v1/chat/completions?ts
+
+[15:49:43] 3 jobs (existing: 125)
+Done. Wrote 3 jobs to versions/v16/data/full_relabel_v2/batch_ollama_3.jsonl (errors: 0)

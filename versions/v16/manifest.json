@@ -1,0 +1,40 @@
+{
+  "version": "v16",
+  "status": "in-progress",
+  "date": "2026-05-03",
+  "base_v15": "versions/v15",
+  "base_model": {
+    "hf_repo": "mlx-community/Qwen3-4B-bf16",
+    "type": "mlx",
+    "size_params": "4B",
+    "dtype": "bf16"
+  },
+  "adapter_hf": "FaisalFehad/qwen3-4b-v16",
+  "adapter_hf_status": "TODO — see docs/HF_PUSH_TODO.md",
+  "champion_checkpoint": "TBD",
+  "champion_prompt": "student_v16_base.txt",
+  "prompt_sha": "TODO",
+  "data_sha": "TODO",
+  "test_set": {
+    "path": "versions/v12/data/v12_original/test_labeled_audited.jsonl",
+    "note": "shared across versions, chmod 444"
+  },
+  "metrics": {
+    "hybrid_accuracy": "TBD",
+    "hybrid_errors": "TBD",
+    "parse_failures": "TBD",
+    "model_only_label_accuracy": "TBD",
+    "notes": "V16 restores teacher prompt sen fallback (TITLE primarily, Description as fallback). Retrain from V15 base using mlx-community/Qwen3-4B-bf16 + fix6 prompt. Champion expected ~90%+ model-only accuracy (same as V15)."
+  },
+  "metric_source": {
+    "hybrid": "eval_results/v16_production/adapters_v16_4B/hybrid_summary.json",
+    "model_only": "eval_results/v16_production/adapters_v16_4B/*.summary.json",
+    "sweep": "eval_results/v16_sweep_4B/sweep_analysis.json"
+  },
+  "eval_harness": "promptfoo + compute_hybrid_v13_1.py",
+  "training_platform": "local MLX on M5 Max 128GB",
+  "training_cmd": "harness train lora --version v16",
+  "eval_cmd": "harness eval run --version v16",
+  "git_sha": "TODO",
+  "git_tag": "TODO" 
+}

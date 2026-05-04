@@ -1,0 +1,17 @@
+
+[12:22:55] 227 jobs (existing: 0)
+
+[12:24:20] 225 jobs (existing: 2)
+
+[12:27:10] 106 jobs (existing: 19)
+
+[12:36:38] 91 jobs (existing: 46)
+
+[13:05:50] 30 jobs (existing: 129)
+
+[13:08:50] 13 jobs (existing: 139)
+[4] FAIL: Error code: 502 - {'error': 'Post "https://ollama.com:443/v1/chat/completions?ts
+[5] FAIL: Error code: 502 - {'error': 'Post "https://ollama.com:443/v1/chat/completions?ts
+
+[15:49:43] 3 jobs (existing: 145)
+Done. Wrote 3 jobs to versions/v16/data/full_relabel_v2/batch_ollama_1.jsonl (errors: 0)

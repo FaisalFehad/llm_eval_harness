@@ -1,0 +1,67 @@
+# MLX LoRA config for V15 — Qwen3-4B-8bit (SPEED OPTIMIZED for M5 Pro Max 128GB)
+#
+# Hardware: M5 Pro Max 128GB — trains locally, no Lambda needed
+#
+# V15 changes from V14:
+#   - Prompt: student_v15.txt (Anywhere→REMOTE, Next.js≠Node.js, expanded tech/comp rules)
+#   - Data: full V14 (no downsample) + 154 synthetic augmentation jobs
+#   - Training on MLX 8-bit (vs bfloat16 on Lambda in V14)
+#   - Fresh from base (new prompt + data distribution)
+#
+# Data: 965 jobs (data/v15/mlx) — 869 train / 96 valid
+#   ALL examples use V15 student prompt (re-formatted from V14)
+#   8 NestJS/Next.js NODE labels corrected, 42 ultra-short JDs removed, 1 dupe removed
+#
+# Speed optimizations applied (agent review 2026-04-12):
+#   1. bf16 base model: full precision weights (~8GB) — best gradient fidelity
+#   2. batch_size=16, grad_accum=1: zero accumulation overhead, max GPU throughput
+#   3. lr_schedule: cosine decay + warmup (fixes orphan warmup_steps bug — was never read)
+#   4. steps_per_eval 100→200: cuts validation overhead
+#   5. grad_checkpoint: true — peak ~80-100GB, fits in 128GB
+#
+# Iter budget: 1600 iters
+#   869 train examples at batch=16 / grad_accum=1 → effective batch 16, zero accum overhead
+#   1600 iters ≈ 29 epochs
+#
+# Model: bf16 Qwen3-4B (~8 GB). grad_checkpoint=true cuts activation memory ~60%.
+# bf16 without grad_checkpoint OOM'd at batch=4. With it, peak ~20-30 GB.
+
+model: "mlx-community/Qwen3-4B-bf16"
+data: "versions/v16/data/mlx"
+train: true
+fine_tune_type: "lora"
+
+optimizer: "adamw"
+optimizer_config:
+  adamw:
+    weight_decay: 0.01
+
+lora_parameters:
+  rank: 16
+  alpha: 32
+  dropout: 0.05
+  scale: 1.0
+
+batch_size: 12
+grad_accumulation_steps: 1
+iters: 2500
+
+# Cosine decay with linear warmup
+# NOTE: warmup_steps as a top-level key does NOTHING in mlx_lm — must use lr_schedule
+# Warmup: 0 → 2e-5 over 50 steps, then cosine decay to 0 over remaining steps
+lr_schedule:
+  name: cosine_decay
+  arguments: [2.0e-5, 2500]
+  warmup: 50
+  warmup_init: 0.0
+
+max_seq_length: 5120
+
+val_batches: 96
+steps_per_eval: 200
+
+adapter_path: "finetune/adapters_v15_4B"
+save_every: 100
+
+mask_prompt: true
+grad_checkpoint: true
