@@ -1,0 +1,7 @@
+Classify this job posting:
+
+Title: {{job_title}}
+Location: {{job_location}}
+Description: {{jd_text}}
+
+Return the classification as JSON.

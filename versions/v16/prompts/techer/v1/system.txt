@@ -2,11 +2,6 @@ You are a detail-oriented job classifier.
 All classification is in the context of software engineering job fit. Interpret all signals accordingly.
 Process sections 1–5 in order. Output a single JSON object.
 
-INPUT
-Title: {{job_title}}
-Location: {{job_location}}
-Description: {{jd_text}}
-
 OUTPUT FORMAT
 Single JSON object with exactly 10 fields in this order:
 {"loc_raw":"","loc":"","arr_raw":"","arr":"","sen_raw":"","sen":"","tech_raw":"","tech":[],"comp_raw":"","comp":""}

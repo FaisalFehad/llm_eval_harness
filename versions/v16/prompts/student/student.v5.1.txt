@@ -1,0 +1,223 @@
+Classify this job. Respond with exactly one JSON object, no extra text.
+
+loc: IN_LONDON | REMOTE | UK_OTHER | OUTSIDE_UK | UNK
+  CRITICAL: If location field is empty or problematic, extract from description.
+  
+  If location field empty or "Not specified" → UNK (do NOT guess).
+  
+  UK Remote variants (case-insensitive):
+  - "UK Remote" → UK_OTHER
+  - "United Kingdom" → UK_OTHER
+  - "Remote - United Kingdom" → UK_OTHER
+  - "Fully Remote (UK based)" → UK_OTHER
+  - "UK-based", "UK based", "United Kingdom based" → UK_OTHER
+  
+  London variants:
+  - "London", "Central London", "Greater London", "London Area", "London, England" → IN_LONDON
+  - "West London", "East London", "North London", "South London" → IN_LONDON
+  
+  UK cities (whitelist): Manchester, Birmingham, Leeds, Bristol, Edinburgh, Glasgow, 
+  Cambridge, Oxford, Brighton, Sheffield, Liverpool, Newcastle, Nottingham, Cardiff, 
+  Belfast, Southampton, Reading, York, Bath, Coventry, Leicester, Aberdeen, Dundee, 
+  Swansea, Hull, Plymouth, Exeter, Norwich, Ipswich, Portsmouth, Bournemouth, 
+  Chester, Derby, Milton Keynes, Cheltenham, Basingstoke, Guildford, Warwick,
+  Hove, Billericay, Luton, Oxfordshire, Peterborough, Lincoln, Colchester, 
+  Chelmsford, Sunderland, Preston, Wolverhampton, Stoke-on-Trent, Walsall, 
+  Dudley, Wokingham, Slough, Windsor, Maidenhead, Bracknell, Newbury,
+  Bedford, Stevenage, Hemel Hempstead, Watford, St Albans, Gloucester, 
+  Worcester, Hereford, Shrewsbury, Newport, Pembroke Dock, Barry, Bridgend, 
+  Pontypool, Torfaen, Warrington, Widnes, Runcorn, Halton, Middlesbrough,
+  Stockton-on-Tees, Darlington, Hartlepool, Northallerton, Thirsk,
+  Skipton, Harrogate, Knaresborough, Easingwold, Malton, Pickering,
+  Scarborough, Filey, Bridlington, Hornsea, Withernsea, Driffield,
+  Pocklington, Howden, Goole, Askern, Doncaster, Scunthorpe, Gainsborough,
+  Retford, Worksop, Sleaford, North Hykeham, Lincoln, Spalding, Wisbech,
+  March, Downham Market, King's Lynn, Dereham, Fakenham, Wells-next-the-Sea,
+  Blakeney, Cley-next-the-Sea, Hunstanton, West Norfolk, Farnham, Godalming,
+  Haslemere, Petworth, Midhurst, Chichester, Arundel, Bognor Regis, 
+  Littlehampton, Worthing, Sidley, Battle, Hastings, Rye, Winchelsea, 
+  Heathfield, Polegate, Peacehaven, Telscombe, Newhaven, Seaford, Lewes,
+  Uckfield, Forest Row, Hartfield, Mayfield, Sedlescombe, Wadhurst,
+  Hamstreet, Woodchurch, Titchfield, Fareham, Gosport, Havant, Waterlooville,
+  Aldershot, Dymchurch, Romney Marsh, Lydd, Appledore, New Romney, 
+  Old Romney, Walland Marsh → UK_OTHER (if not London)
+  
+  London → IN_LONDON
+  "Greater Manchester" → UK_OTHER. "Little London" → UK_OTHER.
+  
+  Non-UK country: Germany, Netherlands, France, USA, Canada, Australia, India, Singapore, etc.
+  → OUTSIDE_UK (even if "Remote" appears). E.g. "Paris, France (Remote)" → OUTSIDE_UK.
+  
+  Description fallback (if location field problematic):
+  - If location field empty or "Not specified" → extract UK patterns from description
+  - UK patterns: "UK", "United Kingdom", "England", "Scotland", "Wales", London, Manchester, etc.
+  - If description suggests UK but location field says non-UK → trust description
+  - "London" in description when location is "United Kingdom" → IN_LONDON
+
+arr: REMOTE | HYBRID | IN_OFFICE | UNK
+
+Explicit keyword scanning (case-insensitive):
+
+REMOTE:
+- "100% remote", "fully remote", "remote-first", "remote only"
+- "100% remote role", "remote only role", "remote position"
+- "work from home", "WFH", "remote working"
+- "no office required", "no office days", "no office presence"
+- "remote team", "distributed team"
+
+HYBRID:
+- "hybrid", "hybrid working", "hybrid role"
+- "X days remote", "X days in office", "X days office"
+- "2-3 days remote", "3-4 days in office"
+- "split role", "part remote", "part office"
+- "flexible working", "flexible office"
+
+IN_OFFICE:
+- "on-site", "in-office", "office-based", "office role"
+- "required in office", "must be in office", "office only"
+- "full-time office", "on-site only", "office-based role"
+- "no remote option", "no remote work", "no remote flexibility"
+
+UNK:
+- No clear remote/hybrid/office indication
+- "Not specified", "TBD", "To be confirmed"
+
+CRITICAL: Use EXACT keywords, do NOT infer from context.
+If "hybrid" mentioned but "in-office" also mentioned → HYBRID.
+If "remote" mentioned but "on-site" also mentioned → HYBRID (conflict = HYBRID).
+If neither clear pattern → UNK.
+
+sen: LEVEL_3 | LEVEL_2 | LEVEL_1
+
+Title-based decision (primary), description fallback only if title ambiguous.
+
+L3: senior, lead, staff, principal, head, director, VP, CTO, founding, 
+    distinguished, sr, III, manager, mid-senior, mid/senior.
+
+Special cases:
+- "Senior X I" or "Senior X II" or "Senior X III" → L3 (senior overrides I/II/III)
+- "Senior X Jr" → L3 (senior wins)
+- "Scrum Master" → L2
+- "Manager" → L3 unless "Junior Manager", "Entry-level Manager", "Associate Manager", "Trainee Manager"
+
+L1: junior, jr, graduate, intern, trainee, apprentice, associate, I (roman), 
+    internship.
+
+L1 keywords override L3 (e.g. "Entry-level Account Manager" → L1).
+
+L2: everything else, including II.
+
+role: array of [FE, BE, MOBILE, AI, DATA, DEVOPS, SEC, OOS]
+  Role categories that apply to this job. Can be multiple roles.
+  FE = Frontend Engineer, Frontend Developer, UI Developer, Web Developer
+  BE = Backend Engineer, Backend Developer, Server-side Engineer, API Engineer
+  MOBILE = Mobile Engineer (iOS/Android), Mobile Developer
+  AI = AI Engineer, ML Engineer, AI Specialist, Deep Learning Engineer
+  DATA = Data Engineer, Data Platform Engineer, Data Infra Engineer, ETL Engineer
+  DEVOPS = DevOps Engineer, SRE, Platform Engineer, Cloud Engineer, Site Reliability Engineer
+  SEC = Security Engineer, Security Developer, InfoSec, Cybersecurity Engineer
+  OOS = Only if NONE of the above roles match (non-SWE roles: Data Scientist, PM, IT Support, etc.)
+
+tech: array of [JS, PYTHON, DATA, JAVA, AI_ML, SEC, OOS]
+  Technologies mentioned in the job description.
+  
+  CRITICAL: Only include technologies MENTIONED in the job description.
+  Never add technologies based on role title alone.
+  
+  JS = JavaScript or TypeScript mentioned (includes React, Node.js, Next.js, etc.)
+  PYTHON = Python language mentioned
+  DATA = Data tools: Spark, SQL, Airflow, dbt, Snowflake, BigQuery
+  JAVA = Java language (NOT JavaScript, JavaFX)
+  AI_ML = AI/ML tech mentioned (machine learning, deep learning, LLM, generative AI)
+  SEC = Security tools: OWASP, SAST, DAST, security frameworks
+  ["OOS"] only when NONE of the above appear anywhere in the JD.
+  
+  RULES:
+  1. Role title does NOT determine tech tokens
+  2. Must appear in description to be included
+  3. "SWE", "Software Engineer" in title → does NOT imply JS/PYTHON
+  4. "Data Engineer" in title → does NOT imply DATA unless mentioned in description
+  5. "DevOps Engineer" in title → does NOT imply tech tokens
+  6. If description mentions specific tech → include
+  7. If description is empty or has no tech → OOS
+  8. Never mix OOS with other tokens
+  9. Never use empty arrays
+
+curr: GBP | USD | EUR | AUD | JPY | OTHER_CURRENCY | NO_SALARY
+  Extract the currency from salary information in EITHER job_title OR description.
+  
+  £ or "GBP" → GBP
+  $ or "USD" → USD
+  € or "EUR" → EUR
+  A$ or "AUD" → AUD
+  ¥ or "JPY" → JPY
+  Other currency symbol → OTHER_CURRENCY
+  No salary, OTE, DOE, "Competitive" → NO_SALARY
+  Explicit currency patterns: "[USD/EUR/AUD/JPY] [amount]" or "[amount] [USD/EUR/AUD/JPY]"
+
+comp: NO_GBP | UP_TO_ONLY | BELOW_30K | 30_40K | 40_50K | 50_60K | 60_70K | 70_80K | 80_90K | 90_100K | 100_120K | 120_140K | 140_160K | 160_180K | 180_200K | ABOVE_200K
+  Extract the numeric salary range from EITHER job_title OR description.
+  V5: Use fine-grained 10K buckets (NOT legacy RANGE_ buckets).
+  
+  CRITICAL: Check BOTH job_title AND description for salary information.
+  
+  Currency detection (extract first):
+  - £ or "GBP" → GBP
+  - $ or "USD" → USD
+  - € or "EUR" → EUR
+  - A$ or "AUD" → AUD
+  - ¥ or "JPY" → JPY
+  - Other → OTHER_CURRENCY
+  - No salary → NO_SALARY
+  
+  Extract the AMOUNT (number) from salary info:
+  1. OTE/DOE patterns:
+     - "OTE: £X" or "OTE £X" or "OTE of £X"
+     - "DOE: £X" or "DOE £X" or "DOE of £X"
+  
+  2. Hourly rates:
+     - "$X - $Y per hour" or "£X - £Y per hour"
+     - Extract both values
+  
+  3. Daily rates:
+     - "£X/day" or "X - Y/day"
+     - Extract both values
+  
+  4. Ranges:
+     - "X - Y" or "X–Y" or "X to Y"
+     - Extract both values (midpoint calculated in code)
+  
+  5. Single value:
+     - "£100k" or "$120,000"
+     - Extract the value
+  
+  6. "Up to X" or "to X" with no lower bound:
+     - "Up to £50k" or "to £60k"
+     - UP_TO_ONLY
+  
+  7. "Competitive" without amount:
+     - "Competitive salary" or "Competitive pay"
+     - NO_GBP (if currency not specified)
+  
+  8. Multiple bands:
+     - "£50k-60k, £70k-80k" → use LOWEST band
+     - "50-60K, 70-80K" → use 50_60K
+  
+  Boundary fix:
+  - £100,000 → 100_120K (midpoint bucket, NOT 90_100K)
+
+INSTRUCTIONS:
+- Check BOTH job_title AND description for salary information
+- Currency detection: look for £, $, €, A$, ¥ symbols or currency names
+- OTE/DOE detection: "OTE: £X" or "OTE £X" or "DOE" with amount
+- "Competitive salary" without amount → NO_GBP / NO_SALARY
+- Salary in title only is valid — never ignore job_title
+- For loc: if location field empty, extract from description
+- For arr: use EXACT keywords, do NOT infer
+- For tech: only include technologies MENTIONED in description
+
+Title: {{job_title}}
+Location: {{job_location}}
+Description: {{jd_text}}
+
+Begin your response with {

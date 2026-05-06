@@ -1,0 +1,4 @@
+### INPUT
+Title: {{job_title}}
+Location: {{job_location}}
+Description: {{jd_text}}
